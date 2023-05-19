@@ -1,0 +1,212 @@
+.all_items_container{
+    background-color: #F8F6F2;
+    border: 1px solid rgb(15, 1, 1);
+    display: flex;
+    overflow-x :auto ;
+    padding: 20px 5px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    }
+
+
+
+    .ingredient_class{
+      background-color: rgb(253, 252, 251);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid black;
+      margin: 0rem 0.5rem;
+      padding: 0;
+      height: 12rem;
+      border-radius: 1rem;
+      }
+      
+      
+      .ingredient_class img{
+          max-height: 5rem;
+          background-color: rgb(255, 255, 255);
+          margin: 0.5rem 0;
+          }
+      
+          .ingredient_class h4{
+         text-transform: capitalize;
+         font-size: 22px; 
+         text-align: center;
+          } 
+      
+          .ingredient_class p{
+              margin-Top: 0px ;
+              text-align: center;
+          }
+  
+          .pContainerCard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 10rem;
+            background-color: #E8CC95;
+            height: 2rem;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+          }
+
+          .my_list_container{
+            display: flex;
+            }
+
+
+            .formContainer{
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .crud {
+              width: 80%;
+              margin: auto;
+            }
+            
+           #crud .head {
+              text-align: center;
+              text-transform: uppercase;
+              margin: 10px 0;
+            }
+            
+            #crud input {
+              width: 100%;
+              height: 30px;
+              outline: none;
+              border: 1px solid black;
+              background: #e2d6bc;
+              margin: 4px 0;
+              border-radius: 4px;
+              padding: 4px;
+              color: #000000;
+            }
+            
+            #crud  input:focus {
+              /* background: #000; */
+              transform: scale(1.01);
+            }
+            
+            #crud   .price input {
+              width: 20%;
+            }
+            
+            #crud   #total {
+              background: red;
+              padding: 4px 2px;
+              border-radius: 4px;
+            }
+            
+            #crud  #total::before {
+              content: "total";
+            }
+            
+            #crud   button {
+              width: 100%;
+              height: 30px;
+              border: none;
+              cursor: pointer;
+              background: #e8bd67;
+              color: #fff;
+              border-radius: 10px;
+              transition: 0.5s;
+            }
+            
+            #crud   button:hover {
+              background: #f8f6f2;
+              letter-spacing: 1px;
+            }
+            
+            #crud   .btnsearch {
+              display: flex;
+              justify-content: space-between;
+            }
+            
+            #crud   .btnsearch button {
+              width: 45%;
+            }
+            
+            #crud   table {
+              width: 100%;
+              text-align: center;
+              margin: 10px 0;
+            }
+            #crud   table th {
+              text-transform: uppercase;
+            }
+            #crud   th,
+            #crud    td {
+              padding: 5px;
+            }
+            
+            .autocomplete {
+              position: relative;
+              display: inline-block;
+              color: rgb(5, 5, 5);
+            }
+            
+            .autocomplete-items {
+              background-color: red;
+              position: absolute;
+              border: 1px solid #d4d4d4;
+              border-bottom: none;
+              border-top: none;
+              z-index: 99;
+              /*position the autocomplete items to be the same width as the container:*/
+              top: 100%;
+              left: 0;
+              right: 0;
+            }
+            
+            .autocomplete-items div {
+              padding: 10px;
+              cursor: pointer;
+              background-color: #e2d6bc;
+              border-bottom: 1px solid #d4d4d4;
+            }
+            
+            /*when hovering an item:*/
+            .autocomplete-items div:hover {
+              background-color: #f0eded;
+            }
+            
+            /*when navigating through the items using the arrow keys:*/
+            .autocomplete-active {
+              background-color: DodgerBlue !important;
+              color: #f1f1f1;
+            }
+            
+            .master1 {
+              visibility: visible;
+            }
+            .search99 {
+              text-align: left;
+              padding: 5px;
+              /* background-color:#34495e;  */
+              border: 1px solid black;
+            }
+            
+            #crud   .inputs {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            
+            .link_div_submit {
+              display: flex;
+              align-items: center;
+            }
+            
+            .links_input00 {
+              max-width: 10rem;
+              margin-right: 0.5rem;
+            }
+            .links_input001 {
+              max-width: 10rem;
+              margin-right: 0.5rem;
+            }

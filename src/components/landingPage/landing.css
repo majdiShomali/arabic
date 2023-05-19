@@ -1,0 +1,90 @@
+
+
+
+.GiftCardContainer{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #e4e4e7;
+}
+
+.GiftCardSection1{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    font-size: x-large;
+    width: 40%;
+}
+
+.GiftCardSection1 h3{
+  font-size: 3rem;
+  font-weight: bolder;
+  margin-bottom: 1rem;
+}
+
+.GiftCardSection1 p{
+    max-width: 80%;
+}
+
+.GiftCardSection1 button{
+   width: 10rem;
+   height: 5rem;
+   border: 1px solid black;
+   text-align: center;
+   margin-top: 1rem;
+}
+
+.GiftCardSection2{
+    display: flex;
+    width: 40%;
+}
+
+.GiftCardSection2 img{
+  max-width: 80%;
+}
+
+@media (max-width: 1400px){
+    .GiftCardContainer {
+   height: 100vh;
+    }
+
+    .GiftCardSection2 img{
+        max-width: 50%;
+        max-height: 90%;
+        margin-top: 1rem;
+      }
+
+}
+
+
+
+
+@media (max-width: 1068px){
+    .GiftCardContainer{
+    flex-direction: column;
+    padding: 1rem;
+   
+    }
+
+    .GiftCardSection1 p{
+        width: 100%;
+        font-size: medium;
+    }
+
+
+    .GiftCardSection1{
+     
+        width: 100%;
+    }
+
+    .GiftCardSection2{
+ 
+        width: 90%;
+    }
+
+}
+
+

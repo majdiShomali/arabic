@@ -1,0 +1,72 @@
+.cardContainer{
+    display: flex;
+   align-items: center;
+   justify-content: center;
+     width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid black;
+
+}
+
+
+.card{
+     width: 15rem;
+     border: 2px solid black;
+     margin: 1rem;
+     border-radius: 1rem;
+ }
+ 
+ .card img{
+     width: 100%;
+     height: 8rem;
+     border-top-right-radius: 1rem;
+     border-top-left-radius: 1rem;
+ }
+ 
+ .cardContent p{
+    text-align: center;
+ }
+ 
+ .cardMain1{
+     display: flex;   
+     align-items: center;
+     justify-content: space-between;
+     margin: 0.5rem 0;
+     padding: 0.5rem;
+ }
+ 
+ .cardRating{
+     display: flex;
+ }
+ 
+ .cardRating img{
+ width: 1rem;
+ height: 1rem;
+ }
+ 
+ 
+ .cardMain2{
+ display: flex;
+ align-items: center;
+ margin: 0.5rem 0;
+ padding: 0.5rem;
+ }
+ 
+ .cardMain2 img{
+ width: 1rem;
+ height: 1rem;
+ }
+ 
+ .cardButtons{
+     display: flex;
+     align-items: center;
+     justify-content: space-around;
+     border-top: 2px solid black;
+     padding: 0.5rem;
+ }
+ 
+ .cardButtons button{
+    background-color: bisque;
+ padding: 0.25rem;
+ border-radius: 0.5rem;
+ }
