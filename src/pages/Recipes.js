@@ -34,27 +34,31 @@ const Recipes = () => {
     const [MyListN, updateMyListN] = useState(localListN);
 
 
-    const [Meals, setMeals] = useState([]);
-    const [Drinks, setDrinks] = useState([]);
-    const [Sweet, setSweet] = useState([]);
+    // const [Meals, setMeals] = useState([]);
+    // const [Drinks, setDrinks] = useState([]);
+    // const [Sweet, setSweet] = useState([]);
+
+    const { Meals, updateMeals   } = useContext(UserContext);
+    const { Drinks, updateDrinks } = useContext(UserContext);
+    const { Sweet, updateSweet   } = useContext(UserContext);
 
     useEffect(() => {
 
-        setMeals((prevAccounts) => {
+      updateMeals((prevAccounts) => {
             const newItems = table.filter(
               (item) => item.Category === "cook_now_container"
             );
             return  (newItems)
             
           });
-          setDrinks((prevAccounts) => {
+          updateDrinks((prevAccounts) => {
             const newItems = table.filter(
               (item) => item.Category === "cook_now_container2"
             );
             return  (newItems)
             
           });
-          setSweet((prevAccounts) => {
+          updateSweet((prevAccounts) => {
             const newItems = table.filter(
               (item) => item.Category === "cook_now_container3"
             );
@@ -62,9 +66,9 @@ const Recipes = () => {
             
           });
 
-   
       },[]);
 
+      console.log(Meals)
 
     function checkIfAllExist(meal_c, my_list_c )  {
     return meal_c.filter(h=> !my_list_c.includes(h)).length===0;  }

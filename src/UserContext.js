@@ -12,7 +12,19 @@ const UserProvider = ( {children} ) => {
   const [currentLinks, setCurrentLinks] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
 
+  const [Meals, setMeals] = useState([]);
+  const [Drinks, setDrinks] = useState([]);
+  const [Sweet, setSweet] = useState([]);
 
+  const updateMeals = (newValue) => {
+    setMeals(newValue);
+  };
+  const updateDrinks = (newValue) => {
+    setDrinks(newValue);
+  };
+  const updateSweet = (newValue) => {
+    setSweet(newValue);
+  };
 
   const updateCurrentLinks = (newValue) => {
     setCurrentLinks(newValue);
@@ -47,7 +59,10 @@ const UserProvider = ( {children} ) => {
                  MyList,updateMyList,
                  MyListN,updateMyListN,
                  currentLinks,updateCurrentLinks,
-                 currentItems,updateCurrentItems
+                 currentItems,updateCurrentItems,
+                 Meals,updateMeals,
+                 Drinks,updateDrinks,
+                 Sweet,updateSweet,
                 }}
             >
                 {children}

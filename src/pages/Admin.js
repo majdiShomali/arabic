@@ -60,8 +60,8 @@ const Admin = () => {
 
       const [items, setItems] = useState(newArrayAll);
 
-      const { MyList, updateMyList } = useContext(UserContext);
-      const { MyListN, updateMyListN } = useContext(UserContext);
+      const [MyListAdmin, setMyListAdmin] = useState([]);
+      const [MyListNAdmin, setMyListNAdmin] = useState([]);
 
       function changeStatus(name,i){
         const newArrayAll =[...items]
@@ -69,8 +69,8 @@ const Admin = () => {
             if(name==e.name){
                 if(e.clicked=='Click to add'){
                    e.clicked='Added'
-                   updateMyList(prevArray => [...prevArray, e])
-                   updateMyListN(prevArray => [...prevArray, e.name])
+                   setMyListAdmin(prevArray => [...prevArray, e])
+                   setMyListNAdmin(prevArray => [...prevArray, e.name])
                    updateValue(prevArray => [...prevArray, e])
                    updateValue1(prevArray => [...prevArray, e.name])
    
@@ -85,7 +85,7 @@ const Admin = () => {
 
 
       function removeItem(name) {
-        updateMyList((prevAccounts) => {
+        setMyListAdmin((prevAccounts) => {
           const newItems = prevAccounts.filter(
             (item) => item.name !== name
           );
@@ -100,7 +100,7 @@ const Admin = () => {
           return  (newItems)
           
         });
-        updateMyListN((prevAccounts) => {
+        setMyListNAdmin((prevAccounts) => {
           const newItems = prevAccounts.filter(
             (item) => item !== name
           );
@@ -140,7 +140,7 @@ const Admin = () => {
     
         <div  class ="my_list_container">
 {
-MyList?.map((e,i)=>{
+MyListAdmin?.map((e,i)=>{
 
     return(
     <div onClick={()=> changeStatus(e.name,i)}  id={e.name} className="ingredient_class vegetables" data-target={e.name}>

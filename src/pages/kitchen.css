@@ -1,15 +1,27 @@
-.vegetables_container ,.fruit_container , .my_list_container{
+.vegetables_container ,.fruit_container{
     background-color: #F8F6F2;
-    border: 1px solid rgb(15, 1, 1);
     display: flex;
-    overflow-x :auto ;
     padding: 20px 5px;
     cursor: pointer;
-    margin-bottom: 1rem;
+   
+    }
+    .my_list_container00{
+      background-color:#F8F6F2;
+      display: grid;
+      grid-template-columns: repeat(8,1fr);
+      gap: 1rem 0.1rem;
     }
 
-
-
+    fieldset{
+      border: 1px solid rgb(15, 1, 1);
+      width: 90%;
+      margin: 1rem auto;
+    }
+    legend {
+      margin: 0 1%;
+      font-size: 1.2rem;
+   
+    }
     .ingredient_class{
       background-color: rgb(253, 252, 251);
       display: flex;
@@ -20,7 +32,9 @@
       margin: 0rem 0.5rem;
       padding: 0;
       height: 12rem;
+      width: 10rem;
       border-radius: 1rem;
+      cursor: pointer;
       }
       
       
@@ -52,6 +66,4 @@
             border-bottom-right-radius: 1rem;
           }
 
-          .my_list_container{
-            display: flex;
-            }
+      

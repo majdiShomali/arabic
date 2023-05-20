@@ -1,7 +1,10 @@
 import React from 'react'
 import './kitchen.css'
 import { useState ,useEffect } from 'react';
+import Pagination from "@mui/material/Pagination";
+
 const Kitchen = () => {
+
 
     let vegetables_name=['potato','onion','garlic','Broccoli','Cabbage','Bean','Arugula','Carrot','Cauliflower','Celery','Cherry Tomato','Common Beans','Cucumbers','Eggplant','Ginger','Lemon','Lettuce','Mulukhiyah','Mushrooms','Okra','Parsley','pea','radish','red pepper','Spinach','sweet pepper','tomato'];
     let vegetables_img=[];
@@ -25,6 +28,7 @@ const Kitchen = () => {
       }
 
       let vegetables_obj=[];
+      
       arraytoobject(vegetables_name,vegetables_img,vegetables_type,vegetables_obj,'vegetables');
   
       let fruit_obj=[];
@@ -47,6 +51,9 @@ const Kitchen = () => {
         }
     
       }
+
+
+
 
       const newArrayV =[...vegetables_obj]
       const newArrayF =[...fruit_obj]
@@ -71,8 +78,84 @@ const Kitchen = () => {
     
       }
       
+
+
+
+
+
+
+
+      
       const [vegetables, setVegetables] = useState(newArrayV);
       const [fruit, setFruit] = useState(newArrayF);
+
+//--------------------------------
+
+//-----------------------search------------------------//
+const [searchTermVegetables, setSearchTermVegetables] = useState('');
+const [FilterDataVegetables, setFilterDataVegetables] = useState([...vegetables_obj]);
+
+const [searchTermFruit, setSearchTermFruit] = useState('');
+const [FilterDataFruit, setFilterDataFruit] = useState([...fruit_obj]);
+
+const filterDataByNameVegetables = (searchTermVegetables) => {
+  
+  const filteredDataVegetables = vegetables.filter(item =>
+
+    item.name.toLowerCase().includes(searchTermVegetables.toLowerCase())
+  );
+  setFilterDataVegetables(filteredDataVegetables);
+}
+
+const filterDataByNameFruit = (searchTermFruit) => {
+  
+  const filteredDataFruit = fruit.filter(item =>
+
+    item.name.toLowerCase().includes(searchTermFruit.toLowerCase())
+  );
+  setFilterDataFruit(filteredDataFruit);
+}
+//----------------------------------------------------//
+
+  const [currentPageVegetables, setCurrentPageVegetables] = useState(1);
+  const [currentPageFruit, setCurrentPageFruit] = useState(1);
+
+  let totalItemsVegetables;
+  let totalItemsFruit;
+
+  let totalPagesVegetables;
+  let totalPagesFruit;
+
+  let slicedArrayVegetables;
+  let slicedArrayFruit;
+
+  const itemsPerPage = 8;
+
+  totalItemsVegetables = FilterDataVegetables.length;
+  totalItemsFruit = FilterDataFruit.length;
+
+  totalPagesVegetables = Math.ceil(totalItemsVegetables / itemsPerPage);
+  totalPagesFruit = Math.ceil(totalItemsFruit / itemsPerPage);
+
+  const startIndexVegetables = (currentPageVegetables - 1) * itemsPerPage;
+  const startIndexFruit = (currentPageFruit - 1) * itemsPerPage;
+
+  const endIndexVegetables = startIndexVegetables + itemsPerPage;
+  const endIndexFruit = startIndexFruit + itemsPerPage;
+
+  slicedArrayVegetables = FilterDataVegetables.slice(startIndexVegetables, endIndexVegetables);
+  slicedArrayFruit = FilterDataFruit.slice(startIndexFruit, endIndexFruit);
+
+  const handlePageChangeVegetables = (event, pageNumber) => {
+    setCurrentPageVegetables(pageNumber);
+  };
+  const handlePageChangeFruit = (event, pageNumber) => {
+    setCurrentPageFruit(pageNumber);
+  };
+
+//--------------------------------
+
+
 
         const [MyList, setMyList] = useState(localList);
         const [MyListN, setMyListN] = useState(localListN);
@@ -151,13 +234,31 @@ const Kitchen = () => {
         });
 
       }
+
+ 
+
   
       return (
         <>
+          <fieldset>
+      <legend >
+        Vegetables:
+        <input type='text'placeholder='Search' style={{border:"1px solid black",}}
+        
+        value={searchTermVegetables}
+       onChange={(e) =>{
+        setSearchTermVegetables(e.target.value);
+       filterDataByNameVegetables(e.target.value);
+      }
+  }
+        
+        />
+        </legend>
     <div  class ="vegetables_container">
+    
         {
 
-    vegetables.map((e,i)=>{
+      slicedArrayVegetables.map((e,i)=>{
      return(
       <div onClick={()=> changeStatusV(e.name,i)} id={e.name} className="ingredient_class vegetables" data-target={e.name}>
        <h4>{e.name}</h4>
@@ -172,9 +273,38 @@ const Kitchen = () => {
     </div> 
 
 
+    </fieldset>
+
+    <div className='PaginationCards'>   
+    {(
+        <Pagination
+          count={totalPagesVegetables}
+          page={currentPageVegetables}
+          onChange={handlePageChangeVegetables}
+        />
+      )}
+    </div> 
+
+
+
+    <fieldset>
+      <legend >
+      Fruits:
+        <input type='text'placeholder='Search' style={{border:"1px solid black",}}
+        
+        value={searchTermFruit}
+       onChange={(e) =>{
+        setSearchTermFruit(e.target.value);
+       filterDataByNameFruit(e.target.value);
+      }
+  }
+        
+        />
+        </legend>
+
     <div  class ="fruit_container">
 {
-    fruit.map((e,i)=>{
+    slicedArrayFruit.map((e,i)=>{
      return(
       <div onClick={()=> changeStatusF(e.name,i)} id={e.name} className="ingredient_class fruit" data-target={e.name}>
        <h4>{e.name}</h4>
@@ -186,9 +316,25 @@ const Kitchen = () => {
 }
         
     </div>
+    </fieldset>
 
 
-<div  class ="my_list_container">
+    <div className='PaginationCards'>   
+    {(
+        <Pagination
+          count={totalPagesFruit}
+          page={currentPageFruit}
+          onChange={handlePageChangeFruit}
+        />
+      )}
+    </div> 
+
+
+    <fieldset>
+      <legend >
+        MyList:
+        </legend>
+<div  className ="my_list_container00">
 {
 MyList?.map((e,i)=>{
 
@@ -204,6 +350,9 @@ MyList?.map((e,i)=>{
 })
 }
 </div>
+
+</fieldset>
+
 {localStorage.setItem("MyList", JSON.stringify(MyList))}
 {localStorage.setItem("MyListN", JSON.stringify(MyListN))}
 
