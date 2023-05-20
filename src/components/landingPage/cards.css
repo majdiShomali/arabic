@@ -70,3 +70,9 @@
  padding: 0.25rem;
  border-radius: 0.5rem;
  }
+
+ .PaginationCards{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }

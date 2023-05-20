@@ -7,6 +7,7 @@ import { UserContext } from "../UserContext";
 
 const Admin = () => {
   const { foodCards, updateValue } = useContext(UserContext);
+  const { foodCardsName, updateValue1 } = useContext(UserContext);
 
     let vegetables_name=['potato','onion','garlic','Broccoli','Cabbage','Bean','Arugula','Carrot','Cauliflower','Celery','Cherry Tomato','Common Beans','Cucumbers','Eggplant','Ginger','Lemon','Lettuce','Mulukhiyah','Mushrooms','Okra','Parsley','pea','radish','red pepper','Spinach','sweet pepper','tomato'];
     let vegetables_img=[];
@@ -59,8 +60,8 @@ const Admin = () => {
 
       const [items, setItems] = useState(newArrayAll);
 
-      const [MyList, setMyList] = useState([]);
-      const [MyListN, setMyListN] = useState([]);
+      const { MyList, updateMyList } = useContext(UserContext);
+      const { MyListN, updateMyListN } = useContext(UserContext);
 
       function changeStatus(name,i){
         const newArrayAll =[...items]
@@ -68,9 +69,10 @@ const Admin = () => {
             if(name==e.name){
                 if(e.clicked=='Click to add'){
                    e.clicked='Added'
-                   setMyList(prevArray => [...prevArray, e])
-                   setMyListN(prevArray => [...prevArray, e.name])
+                   updateMyList(prevArray => [...prevArray, e])
+                   updateMyListN(prevArray => [...prevArray, e.name])
                    updateValue(prevArray => [...prevArray, e])
+                   updateValue1(prevArray => [...prevArray, e.name])
    
                 }else{
                    e.clicked='Click to add'
@@ -83,7 +85,7 @@ const Admin = () => {
 
 
       function removeItem(name) {
-        setMyList((prevAccounts) => {
+        updateMyList((prevAccounts) => {
           const newItems = prevAccounts.filter(
             (item) => item.name !== name
           );
@@ -98,7 +100,7 @@ const Admin = () => {
           return  (newItems)
           
         });
-        setMyListN((prevAccounts) => {
+        updateMyListN((prevAccounts) => {
           const newItems = prevAccounts.filter(
             (item) => item !== name
           );

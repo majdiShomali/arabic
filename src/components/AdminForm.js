@@ -1,40 +1,87 @@
 import React from 'react'
 import { useState ,useEffect } from 'react';
-import Select from 'react-select'
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
-
 const AdminForm = () => {
   const { foodCards, updateValue } = useContext(UserContext);
+  const { foodCardsName, updateValue1 } = useContext(UserContext);
 
-    const [name, setName] = useState("");
+    const [name, setName]   = useState("");
     const [name1, setName1] = useState("");
     const [name2, setName2] = useState("");
     const [name3, setName3] = useState("");
     const [link1, setLink1] = useState("");
     const [link2, setLink2] = useState("");
     const [link3, setLink3] = useState("");
+    const [currentLinks, setCurrentLinks] = useState([]);
+    let localTable =[]
 
-    const [table, setTable] = useState([]);
-    const [yourSelectedStateValue, setOption] = useState("Meals");
+    if(localStorage.table !=[] && localStorage.table !=null && localStorage.table !=undefined ){
+      localTable=JSON.parse(localStorage.table)
 
-  
+    }
+    const [table, setTable] = useState(localTable);
 
-
+    const [yourSelectedStateValue, setOption] = useState("cook_now_container");
 
     function CreateNew(){
+      let link_name001;
+      let link_name002;
+      let link_name003;
+      if (link1 != "") {
+        link_name001 = "https://www.youtube.com/embed/".concat(
+        link1.replace("https://youtu.be/", "")
+      );
+      }else{
+        link_name001=link1
+      }
+
+      if (link2 != "") {
+        link_name002 = "https://www.youtube.com/embed/".concat(
+        link2.replace("https://youtu.be/", "")
+      );
+      }else{
+        link_name002=link2
+      }
+      if (link3 != "") {
+        link_name003 = "https://www.youtube.com/embed/".concat(
+        link3.replace("https://youtu.be/", "")
+      );
+      }else{
+        link_name003=link3
+      }
+     
+
     let tableObj={
       Id:table.length,
       Name:name,
       Category:yourSelectedStateValue,
       Names:[name1,name2,name3],
-      Links:[link1,link2,link3],
-      Items:foodCards
-
+      Links:[link_name001,link_name002,link_name003],
+      Items:foodCards,
+      ItemsName:foodCardsName
     }
     setTable(prevArray => [...prevArray, tableObj])
-console.log(table)
     }
+
+  function ShowVideos(index){
+  table[index].Links.map((e)=>{
+    setCurrentLinks(prevArray => [...prevArray, e])
+
+  })
+  console.log(currentLinks)
+  }
+
+  function DeleteRecipe(id){
+    setTable((prevAccounts) => {
+      const newItems = prevAccounts.filter(
+        (item) => item.Id !== id
+      );
+      return  (newItems)
+      
+    });
+  }
+
   return (
     <>
      <div id="crud">
@@ -93,15 +140,15 @@ console.log(table)
               </thead>
               <tbody id="tbody" >
               {
-              table.map((e)=>{
+              table.map((e,i)=>{
               return(
                 <tr>
                 <th>{e.Id}</th>
                 <th>{e.Name}</th>
                 <th>{e.Category}</th>
-                <th> <button>view</button> </th>
+                <th> <button onClick={()=>ShowVideos(i)}>view</button> </th>
                 <th> <button>update</button> </th>
-                <th> <button>delete</button> </th>
+                <th> <button onClick={()=>DeleteRecipe(e.Id)}>delete</button> </th>
               </tr>  
                 )
               })
@@ -113,9 +160,23 @@ console.log(table)
           </div>
         </div>
       </div>
-    
-    
+
+      <div class="cook_now_videos">
+        <div class="video-list">
+
+        {
+        currentLinks.map((e)=>{
+          return(
+        <iframe src={e} style={{height:"315px" ,width:"560px"}} title="YouTube video player" allowfullscreen ></iframe>
+        )
+           })
+           }
+        </div>
+      </div>
+      {localStorage.setItem('table',JSON.stringify(table))}
+
     </>
+
   )
 }
 

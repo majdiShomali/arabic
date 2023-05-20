@@ -48,7 +48,7 @@ const navListMenuItems = [
     icon: FlagIcon,
     title: "About us",
     description: "Learn about our story and our mission statement.",
-    path:"./kitchen"
+    path:"./About"
   },
   {
     color: "orange",
@@ -93,16 +93,16 @@ const navListMenuItems = [
   {
     color: "teal",
     icon: FaceSmileIcon,
-    title: "Icons",
-    description: "Set of beautiful icons that you can use in your project.",
+    title: "Admin",
+    description: "Add you recipes",
     path:"./Admin"
   },
   {
     color: "cyan",
     icon: PuzzlePieceIcon,
-    title: "UI Kits",
-    description: "High quality UI Kits helps you to 2x faster.",
-    path:"./"
+    title: "recipes",
+    description: "What I can cook",
+    path:"./Recipes"
   },
   {
     color: "pink",
@@ -237,24 +237,31 @@ export default function Example() {
   return (
     <Navbar className="w-screen sticky top-0 z-10">
       <div className="flex items-center justify-between text-blue-gray-900">
+       
         <Typography
           as="a"
-          href="#"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2"
         >
-          Material Tailwind
+           <Link to="/">
+          Arabic Recipes
+          </Link>
         </Typography>
         <div className="hidden lg:block">
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
+          <Link to="/LogIn">
           <Button variant="text" size="sm" color="blue-gray">
             Sign In
           </Button>
+          </Link>
+
+          <Link to="/SignUp">
           <Button variant="gradient" size="sm">
             Sign Up
           </Button>
+          </Link>
         </div>
         <IconButton
           variant="text"
