@@ -29,7 +29,15 @@ const Cards = () => {
   const { Meals, updateMeals   } = useContext(UserContext);
   const { Drinks, updateDrinks } = useContext(UserContext);
   const { Sweet, updateSweet   } = useContext(UserContext);
-  
+
+  //-----------------------search------------------------//
+const [searchTermMeals, setSearchTermMeals] = useState('');
+const [FilterDataMeals, setFilterDataMeals] = useState([]);
+
+const [searchTermDrinks, setSearchTermDrinks] = useState('');
+const [FilterDataDrinks, setFilterDataDrinks] = useState([]);
+
+
   useEffect(() => {
 
     updateMeals(() => {
@@ -39,6 +47,15 @@ const Cards = () => {
           return  (newItems)
           
         });
+
+        setFilterDataMeals(() => {
+          const newItems = table.filter(
+            (item) => item.Category === "cook_now_container"
+          );
+          return  (newItems)
+          
+        });
+
         updateDrinks(() => {
           const newItems = table.filter(
             (item) => item.Category === "cook_now_container2"
@@ -46,6 +63,16 @@ const Cards = () => {
           return  (newItems)
           
         });
+
+
+        setFilterDataDrinks(() => {
+          const newItems = table.filter(
+            (item) => item.Category === "cook_now_container2"
+          );
+          return  (newItems)
+          
+        });
+
         updateSweet(() => {
           const newItems = table.filter(
             (item) => item.Category === "cook_now_container3"
@@ -57,9 +84,27 @@ const Cards = () => {
     },[]);
 
 
+//-----------------------search------------------------//
 
+const filterDataByNameMeals = (searchTermMeals) => {
+  
+  const filteredDataMeals = Meals.filter(item =>
 
+    item.Name.toLowerCase().includes(searchTermMeals.toLowerCase())
+  );
+  setFilterDataMeals(filteredDataMeals);
+  setCurrentPageMeals(1)
+}
 
+const filterDataByNameDrinks = (searchTermDrinks) => {
+  
+  const filteredDataDrinks = Drinks.filter(item =>
+
+    item.Name.toLowerCase().includes(searchTermDrinks.toLowerCase())
+  );
+  setFilterDataDrinks(filteredDataDrinks);
+  setCurrentPageDrinks(1)
+}
 
   const [currentPageMeals, setCurrentPageMeals] = useState(1);
   const [currentPageDrinks, setCurrentPageDrinks] = useState(1);
@@ -69,17 +114,19 @@ const Cards = () => {
   let totalItemsMeals;
   let totalItemsDrinks;
   let totalItemsSweet;
+
   let totalPagesMeals;
   let totalPagesDrinks;
   let totalPagesSweet;
+
   let slicedArrayMeals;
   let slicedArrayDrinks;
   let slicedArraySweet;
 
   const itemsPerPage = 2;
 
-  totalItemsMeals = Meals.length;
-  totalItemsDrinks = Drinks.length;
+  totalItemsMeals = FilterDataMeals.length;
+  totalItemsDrinks = FilterDataDrinks.length;
   totalItemsSweet = Sweet.length;
 
   totalPagesMeals = Math.ceil(totalItemsMeals / itemsPerPage);
@@ -94,8 +141,8 @@ const Cards = () => {
   const endIndexDrinks = startIndexDrinks + itemsPerPage;
   const endIndexSweet = startIndexSweet + itemsPerPage;
 
-  slicedArrayMeals = Meals.slice(startIndexMeals, endIndexMeals);
-  slicedArrayDrinks = Drinks.slice(startIndexDrinks, endIndexDrinks);
+  slicedArrayMeals = FilterDataMeals.slice(startIndexMeals, endIndexMeals);
+  slicedArrayDrinks = FilterDataDrinks.slice(startIndexDrinks, endIndexDrinks);
   slicedArraySweet = Sweet.slice(startIndexSweet, endIndexSweet);
 
   const handlePageChangeMeals = (event, pageNumber) => {
@@ -131,8 +178,31 @@ const Cards = () => {
                   updateCurrentLinks(currentVideos0)
                   }
 
+
+
+
+
+
   return (
     <>
+
+<fieldset>
+      <legend >
+        All Meals:
+        <input type='text'placeholder='Search' style={{border:"1px solid black",}}
+        
+        value={searchTermMeals}
+       onChange={(e) =>{
+        setSearchTermMeals(e.target.value);
+       filterDataByNameMeals(e.target.value);
+      }
+  }
+        
+        />
+</legend>
+
+
+
     <div className='cardContainer'>
  {
 slicedArrayMeals.map((e,i) => {
@@ -166,6 +236,7 @@ return(
   }
    
    </div>
+   </fieldset>
         <div className='PaginationCards'>   
     {(
         <Pagination
@@ -175,6 +246,25 @@ return(
         />
       )}
     </div> 
+
+
+    <fieldset>
+      <legend >
+        All Drinks:
+        <input type='text'placeholder='Search' style={{border:"1px solid black",}}
+        
+        value={searchTermDrinks}
+         onChange={(e) =>{
+        setSearchTermDrinks(e.target.value);
+       filterDataByNameDrinks(e.target.value);
+      }
+  }
+        
+        />
+</legend>
+
+
+
 
     <div className='cardContainer'>
  {
@@ -209,6 +299,7 @@ return(
   }
    
    </div>
+   </fieldset>
         <div className='PaginationCards'>   
     {(
         <Pagination

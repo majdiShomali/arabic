@@ -105,6 +105,7 @@ const filterDataByNameVegetables = (searchTermVegetables) => {
     item.name.toLowerCase().includes(searchTermVegetables.toLowerCase())
   );
   setFilterDataVegetables(filteredDataVegetables);
+  setCurrentPageVegetables(1)
 }
 
 const filterDataByNameFruit = (searchTermFruit) => {
@@ -114,6 +115,7 @@ const filterDataByNameFruit = (searchTermFruit) => {
     item.name.toLowerCase().includes(searchTermFruit.toLowerCase())
   );
   setFilterDataFruit(filteredDataFruit);
+  setCurrentPageFruit(1)
 }
 //----------------------------------------------------//
 

@@ -4,8 +4,13 @@ import { useState ,useEffect } from 'react';
 import AdminForm from '../components/AdminForm';
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
+import Pagination from "@mui/material/Pagination";
+
 
 const Admin = () => {
+
+
+
   const { foodCards, updateValue } = useContext(UserContext);
   const { foodCardsName, updateValue1 } = useContext(UserContext);
 
@@ -59,6 +64,53 @@ const Admin = () => {
       const newArrayAll =newArrayV.concat(newArrayF)
 
       const [items, setItems] = useState(newArrayAll);
+
+
+//-----------------------search------------------------//
+const [searchTerm, setSearchTerm] = useState('');
+const [FilterData, setFilterData] = useState([...newArrayAll]);
+
+const filterDataByName = (searchTerm) => {
+  
+  const filteredData = items.filter(item =>
+
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  setFilterData(filteredData);
+  setCurrentPage(1)
+}
+
+
+
+      //----------------------pagination----------------------------//
+
+      const [currentPage, setCurrentPage] = useState(1);
+
+      let totalItems;
+      let totalPages;
+      let slicedArray;
+    
+      const itemsPerPage = 8;
+    
+      totalItems = FilterData.length;
+    
+      totalPages = Math.ceil(totalItems / itemsPerPage);
+    
+      const startIndex = (currentPage - 1) * itemsPerPage;
+    
+      const endIndex = startIndex + itemsPerPage;
+    
+      slicedArray = FilterData.slice(startIndex, endIndex);
+    
+      const handlePageChange = (event, pageNumber) => {
+        setCurrentPage(pageNumber);
+      };
+
+
+      //--------------------------------------------------//
+
+
+
 
       const [MyListAdmin, setMyListAdmin] = useState([]);
       const [MyListNAdmin, setMyListNAdmin] = useState([]);
@@ -117,13 +169,27 @@ const Admin = () => {
 
 
 
-
   return (
     <>
 
+<fieldset>
+      <legend >
+        All ingredients:
+        <input type='text'placeholder='Search' style={{border:"1px solid black",}}
+        
+        value={searchTerm}
+       onChange={(e) =>{
+        setSearchTerm(e.target.value);
+       filterDataByName(e.target.value);
+      }
+  }
+        
+        />
+</legend>
+
         <div class="all_items_container">
 {
-        items.map((e,i)=>{
+        slicedArray.map((e,i)=>{
      return(
       <div onClick={()=> changeStatus(e.name,i)} id={e.name} className="ingredient_class vegetables" data-target={e.name}>
        <h4>{e.name}</h4>
@@ -136,7 +202,18 @@ const Admin = () => {
 }
         </div>
 
-    
+        </fieldset>
+
+
+        <div className='PaginationCards'>   
+    {(
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
+      )}
+    </div> 
     
         <div  class ="my_list_container">
 {

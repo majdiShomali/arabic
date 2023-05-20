@@ -68,7 +68,6 @@ const Recipes = () => {
 
       },[]);
 
-      console.log(Meals)
 
     function checkIfAllExist(meal_c, my_list_c )  {
     return meal_c.filter(h=> !my_list_c.includes(h)).length===0;  }
