@@ -40,8 +40,8 @@
       position: relative;
       }
       .ingredient_class:hover{
-        border: 1px solid #E8CC95;
-        box-shadow: 2px 2px 0px 1px #74f20679 ;
+        border: 0;
+        box-shadow: 2px 2px 0px 1px #F7E1AE ;
       }
 
     

@@ -20,7 +20,13 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+
+import { mdiPlus } from '@mdi/js';
+import { mdiMinus } from '@mdi/js';
 const Admin = () => {
+  let AddPlus = mdiPlus
+let removMinus = mdiMinus
+
   const [MyListAdmin, setMyListAdmin] = useState([]);
   const [MyListNAdmin, setMyListNAdmin] = useState([]);
 
@@ -64,7 +70,8 @@ const Admin = () => {
               name:'name',
               img:'img',
               type:type ,
-              clicked:"Click to add"
+              clicked:"Click to add",
+              icon:AddPlus
               }
               item_obj.name=item_name[i];
               item_obj.img=item_img[i];
@@ -147,6 +154,7 @@ const filterDataByName = (searchTerm) => {
           
                         Swal.fire(` ${name} added `, '', 'success');
                         e.clicked='Added'
+                        e.icon=removMinus
                         setMyListAdmin(prevArray => [...prevArray, e])
                         setMyListNAdmin(prevArray => [...prevArray, e.name])
                         setFoodCards(prevArray => [...prevArray, e])
@@ -173,6 +181,7 @@ const filterDataByName = (searchTerm) => {
           
                         Swal.fire(` ${name} removed `, '', 'success');
                         e.clicked='Click to add'
+                        e.icon=AddPlus
                         removeItem(name)
                     } else
                         Swal.fire(' Cancelled', '', 'error')
@@ -447,6 +456,7 @@ if(ButtonStatus=="create"){
      return(
       <div onClick={()=> changeStatus(e.name,i)} id={e.name} className="ingredient_class vegetables" data-target={e.name}>
        <h4>{e.name}</h4>
+       <Icon className='iconAddOrRemove' path={e.icon} size={1} />
        <img className="vegetablesimg"  src={require(`../${e.img}`)}/>      
        <div className="pContainerCard vegetablespd" ><p className="vegetablesp">{e.clicked}</p></div>   
        </div>
@@ -476,6 +486,7 @@ MyListAdmin?.map((e,i)=>{
     return(
     <div onClick={()=> changeStatus(e.name,i)}  id={e.name} className="ingredient_class vegetables" data-target={e.name}>
     <h4>{e.name}</h4>
+    <Icon className='iconAddOrRemove' path={e.icon} size={1} />
     <img className="vegetablesimg"  src={require(`../${e.img}`)}/>      
     <div className="pContainerCard vegetablespd" ><p className="vegetablesp">{e.clicked}</p></div>   
     </div>

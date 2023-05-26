@@ -6,7 +6,7 @@ import AboutUsed from "../pages/aboutPage/AboutUsed"
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 import { mdiMinus } from '@mdi/js';
-
+import IngredientsCard from '../components/IngredientsCard';
 const Kitchen = () => {
 let AddPlus = mdiPlus
 let removMinus = mdiMinus
@@ -278,6 +278,8 @@ const filterDataByNameFruit = (searchTermFruit) => {
        <img className="vegetablesimg"  src={require(`../${e.img}`)}/>      
        <div className="pContainerCard vegetablespd" ><p className="vegetablesp">{e.clicked}</p>  </div>   
        </div>
+
+      
      )
       })
 

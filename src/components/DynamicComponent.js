@@ -10,7 +10,6 @@ function DynamicComponent({ card , Name ,index ,SAMeals} ) {
   const { currentItems, updateCurrentItems } = useContext(UserContext);
 
   function ShowVideosMeals(index,slicedArrayMeals){
-    console.log(index)
     let currentVideos0=   slicedArrayMeals[index].Links.map((e)=>{ 
        return e
          })
