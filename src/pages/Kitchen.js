@@ -252,7 +252,7 @@ const filterDataByNameFruit = (searchTermFruit) => {
 
 
 
-          <fieldset>
+          <fieldset className='AdminFieldset'>
       <legend >
         Vegetables:
         <input type='text'placeholder='Search' style={{border:"1px solid black",}}
@@ -300,7 +300,7 @@ const filterDataByNameFruit = (searchTermFruit) => {
 
 
 
-    <fieldset>
+    <fieldset className='AdminFieldset'>
       <legend >
       Fruits:
         <input type='text'placeholder='Search' style={{border:"1px solid black",}}
@@ -344,7 +344,7 @@ const filterDataByNameFruit = (searchTermFruit) => {
     </div> 
 
 
-    <fieldset>
+    <fieldset className='AdminFieldset'>
       <legend >
         MyList:
         </legend>

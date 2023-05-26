@@ -426,7 +426,7 @@ if(ButtonStatus=="create"){
     </div>
 
 
-<fieldset>
+<fieldset className='AdminFieldset'>
       <legend >
         All ingredients:
         <input type='text'placeholder='Search' style={{border:"1px solid black",}}
@@ -488,10 +488,10 @@ MyListAdmin?.map((e,i)=>{
 
 <div className="CrudFormContainer mb-4 mt-4">
       <Card color="transparent" shadow={false}>
-        <fieldset className='AdminFieldset'>
+        <fieldset className='AdminFieldset0'>
           <legend>
         <Typography color="gray" className="mt-1 font-normal">
-         <span style={{color:"#E8CC95"}}>Enter your recipe details:</span> 
+         <span style={{color:"black"}}>Enter your recipe details:</span> 
         </Typography>
         </legend>
         <form  className="mt-4 mb-2 ">

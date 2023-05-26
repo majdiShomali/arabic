@@ -1,12 +1,12 @@
 .vegetables_container ,.fruit_container{
-    background-color: #f8f6f27d;
+    /* background-color: #f8f6f27d; */
     display: flex;
     padding: 20px 5px;
     cursor: pointer;
    
     }
     .my_list_container00{
-      background-color:#f8f6f270;
+      /* background-color:#f8f6f270; */
       display: grid;
       grid-template-columns: repeat(8,1fr);
       gap: 1rem 0.1rem;
@@ -24,7 +24,7 @@
    
     }
     .ingredient_class{
-      background-color: rgb(253, 252, 251);
+      /* background-color: rgb(253, 252, 251); */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -63,18 +63,20 @@
           .ingredient_class p{
              padding-top: 0.25rem;
           }
+
+
   .iconAddOrRemove{
     position: absolute;
     top: 0.25rem;
     right: 0.25rem;
-    background-color: #e8cc953d;
+    background-color: #A4D0A4;
     border-radius: 1rem;
   }
           .pContainerCard {
             content: "";
             width: 100%;
             height: 2rem;
-            background-color: #E8CC95 ;
+            background-color: #A4D0A4 ;
             position: absolute;
             top: 70%;
             left: 0;

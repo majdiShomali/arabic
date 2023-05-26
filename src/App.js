@@ -12,7 +12,7 @@ import Recipes from './pages/Recipes';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/Login';
 import ShowRecipe from './pages/ShowRecipe';
-
+import UserProfile from './pages/UserProfile';
 
 
 export default function App() {
@@ -30,6 +30,7 @@ export default function App() {
           <Route path="Recipes" element={<Recipes />} />
           <Route path="Kitchen" element={<Kitchen />} />
           <Route path="Admin" element={<Admin />} />
+          <Route path="UserProfile" element={<UserProfile />} />
       </Routes>
          <Footer/>
     </BrowserRouter>

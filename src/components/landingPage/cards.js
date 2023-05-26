@@ -185,7 +185,7 @@ const filterDataByNameDrinks = (searchTermDrinks) => {
 
   return (
     <>
-
+<div className='mt-10'>
 <fieldset className='AdminFieldset'>
       <legend >
         All Meals:
@@ -337,7 +337,7 @@ return(
         />
       )}
     </div> 
-
+    </div>
     </>
   )
 }

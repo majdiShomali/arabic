@@ -86,9 +86,9 @@ const navListMenuItems = [
   {
     color: "purple",
     icon: RocketLaunchIcon,
-    title: "Products",
-    description: "Checkout our products that helps a startup running.",
-    path:"./"
+    title: "User Profile",
+    description: "Checkout your profile",
+    path:"./UserProfile"
   },
   {
     color: "teal",
@@ -251,11 +251,11 @@ export default function Example() {
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          <Link to="/LogIn">
+          {/* <Link to="/LogIn">
           <Button variant="text" size="sm" color="blue-gray">
             Sign In
           </Button>
-          </Link>
+          </Link> */}
 
           <Link to="/SignUp">
           <Button variant="gradient" size="sm">
