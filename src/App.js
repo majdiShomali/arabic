@@ -12,6 +12,9 @@ import Recipes from './pages/Recipes';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/Login';
 import ShowRecipe from './pages/ShowRecipe';
+
+
+
 export default function App() {
   return (
     <UserProvider>
@@ -19,7 +22,7 @@ export default function App() {
           <NavListMenu />
       <Routes>
           <Route index element={<Home />} />
-          <Route path="Contact" element={<Contact />} />
+          <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
           <Route path="SignUp" element={<SignUp />} />
           <Route path="LogIn" element={<LogIn />} />

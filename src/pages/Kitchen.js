@@ -2,9 +2,14 @@ import React from 'react'
 import './kitchen.css'
 import { useState ,useEffect } from 'react';
 import Pagination from "@mui/material/Pagination";
+import AboutUsed from "../pages/aboutPage/AboutUsed"
+import Icon from '@mdi/react';
+import { mdiPlus } from '@mdi/js';
+import { mdiMinus } from '@mdi/js';
 
 const Kitchen = () => {
-
+let AddPlus = mdiPlus
+let removMinus = mdiMinus
 
     let vegetables_name=['potato','onion','garlic','Broccoli','Cabbage','Bean','Arugula','Carrot','Cauliflower','Celery','Cherry Tomato','Common Beans','Cucumbers','Eggplant','Ginger','Lemon','Lettuce','Mulukhiyah','Mushrooms','Okra','Parsley','pea','radish','red pepper','Spinach','sweet pepper','tomato'];
     let vegetables_img=[];
@@ -42,7 +47,8 @@ const Kitchen = () => {
               name:'name',
               img:'img',
               type:type ,
-              clicked:"Click to add"
+              clicked:"Click to add",
+              icon:AddPlus
               }
               item_obj.name=item_name[i];
               item_obj.img=item_img[i];
@@ -66,26 +72,21 @@ const Kitchen = () => {
 
          newArrayV.map((e)=>{
           if(localListN.includes(e.name) ){
-                 e.clicked='Added'   
+                 e.clicked='Added' 
+                 e.icon=removMinus  
           }
          })
 
          newArrayF.map((e)=>{
           if(localListN.includes(e.name) ){
-                 e.clicked='Added'   
+                 e.clicked='Added' 
+                 e.icon=removMinus  
           }
          })
     
       }
       
 
-
-
-
-
-
-
-      
       const [vegetables, setVegetables] = useState(newArrayV);
       const [fruit, setFruit] = useState(newArrayF);
 
@@ -172,10 +173,12 @@ const filterDataByNameFruit = (searchTermFruit) => {
          if(name==e.name ){
              if(e.clicked=='Click to add'){
                 e.clicked='Added'
+                e.icon=removMinus
                 setMyList(prevArray => [...prevArray, e])
                 setMyListN(prevArray => [...prevArray, e.name])
              }else{
                 e.clicked='Click to add'
+                e.icon=AddPlus
                 removeItem(name)
              }
          }
@@ -192,11 +195,13 @@ const filterDataByNameFruit = (searchTermFruit) => {
          if(name==e.name){
              if(e.clicked=='Click to add'){
                 e.clicked='Added'
+                e.icon=removMinus
                 setMyList(prevArray => [...prevArray, e])
                 setMyListN(prevArray => [...prevArray, e.name])
 
              }else{
                 e.clicked='Click to add'
+                e.icon=AddPlus
                 removeItem(name)
              }
          }
@@ -242,6 +247,11 @@ const filterDataByNameFruit = (searchTermFruit) => {
   
       return (
         <>
+
+          <AboutUsed/>
+
+
+
           <fieldset>
       <legend >
         Vegetables:
@@ -264,8 +274,9 @@ const filterDataByNameFruit = (searchTermFruit) => {
      return(
       <div onClick={()=> changeStatusV(e.name,i)} id={e.name} className="ingredient_class vegetables" data-target={e.name}>
        <h4>{e.name}</h4>
+       <Icon className='iconAddOrRemove' path={e.icon} size={1} />
        <img className="vegetablesimg"  src={require(`../${e.img}`)}/>      
-       <div className="pContainerCard vegetablespd" ><p className="vegetablesp">{e.clicked}</p></div>   
+       <div className="pContainerCard vegetablespd" ><p className="vegetablesp">{e.clicked}</p>  </div>   
        </div>
      )
       })
@@ -310,6 +321,7 @@ const filterDataByNameFruit = (searchTermFruit) => {
      return(
       <div onClick={()=> changeStatusF(e.name,i)} id={e.name} className="ingredient_class fruit" data-target={e.name}>
        <h4>{e.name}</h4>
+       <Icon className='iconAddOrRemove' path={e.icon} size={1} />
        <img className="fruitimg"  src={require(`../${e.img}`)}/>      
        <div className="pContainerCard fruitpd" ><p className="fruitp">{e.clicked}</p></div>   
        </div>
@@ -343,6 +355,7 @@ MyList?.map((e,i)=>{
     return(
     <div onClick={()=> changeStatus(e.name,i)}  id={e.name} className="ingredient_class vegetables" data-target={e.name}>
     <h4>{e.name}</h4>
+    <Icon className='iconAddOrRemove' path={e.icon} size={1} />
     <img className="vegetablesimg"  src={require(`../${e.img}`)}/>      
     <div className="pContainerCard vegetablespd" ><p className="vegetablesp">{e.clicked}</p></div>   
     </div>

@@ -53,9 +53,9 @@ const navListMenuItems = [
   {
     color: "orange",
     icon: ChatBubbleOvalLeftIcon,
-    title: "Press",
+    title: "Contact Us",
     description: "News and writings, press releases, and resources",
-    path:"./"
+    path:"./ContactUs"
   },
   {
     color: "green",

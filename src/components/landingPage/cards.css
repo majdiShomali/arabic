@@ -1,9 +1,8 @@
 .cardContainer{
-    background-color: #F8F6F2;
-    display: flex;
-    padding: 20px 5px;
+    /* background-color: #F8F6F2; */
     cursor: pointer;
-
+    display: grid;
+grid-template-columns: repeat(4,1fr);
 }
 
 

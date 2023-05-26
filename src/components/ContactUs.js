@@ -87,17 +87,16 @@ const ContactUs = () => {
                   w-full
                   px-6
                   py-2.5
-                  bg-blue-600
-                  text-white
+                  bg-[#E8CC95]
+                  text-gray
                   font-medium
-                  text-xs
                   leading-tight
                   uppercase
                   rounded
                   shadow-md
-                  hover:bg-blue-700 hover:shadow-lg
-                  focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-                  active:bg-blue-800 active:shadow-lg
+                  hover:bg-[#E8CC95]hover:shadow-lg
+                  focus:bg-[#E8CC95] focus:shadow-lg focus:outline-none focus:ring-0
+                  active:bg-[#E8CC95]active:shadow-lg
                   transition
                   duration-150
                   ease-in-out">Send</button>

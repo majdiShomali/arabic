@@ -1,47 +1,43 @@
 import React from "react";
-import makeup from "./makeup.png";
 import "./AboutUsed.css";
 import Icon from "@mdi/react";
-import { mdiLeafCircleOutline } from "@mdi/js";
-import { mdiWhiteBalanceIncandescent } from "@mdi/js";
-import { mdiCertificate } from "@mdi/js";
+import { mdiFridge } from "@mdi/js";
+import { mdiHamburgerPlus } from "@mdi/js";
+import { mdiStove } from "@mdi/js";
+import aboutMeal from "../../Images/meals/majdi.jpg";
 
 const AboutUsed = () => {
   return (
-    <div className="AboutUsed m-5 px-8">
+<div className="AboutUsed m-5 px-8">
       <div className="containerr">
         <div className="text">
-          <h1 className="text-3xl pb-5 ">About used cosmetics</h1>
+          <h1 className="text-3xl pb-5 ">Add ingredients to your List</h1>
           <p className="aboutP">
-            We appreciate the certainty, quality, and beauty with which all of
-            you carry on with your life. We need to be your buddy as you go up
-            against numerous symbols and find your own character and individual
-            style be your buddy as you go up
-            against numerous symbols.
+          Now you can add ingredients to your list to see what recipes you  can make 
           </p>
           <div className="icons">
             <div className="icoon">
               <div>
-                <Icon path={mdiLeafCircleOutline} size={2} />
+              <Icon path={mdiFridge} size={2} />
               </div>
-              <p>100% Organic</p>
+              <p>Fridge</p>
             </div>
             <div className="icoon">
               <div>
-                <Icon path={mdiWhiteBalanceIncandescent} size={2} />
+              <Icon path={mdiHamburgerPlus} size={2} />
               </div>
-              <p>Creative items</p>
+              <p>Add items</p>
             </div>
             <div className="icoon">
               <div>
-                <Icon path={mdiCertificate} size={2} />
+              <Icon path={mdiStove} size={2} />
               </div>
-              <p>Certificated</p>
+              <p>Start cooking</p>
             </div>
           </div>
         </div>
         <div className="imgAbout">
-          <img className="img-new" src={makeup} alt="" />
+          <img className="img-new" src={aboutMeal} alt="" />
         </div>
       </div>
     </div>
