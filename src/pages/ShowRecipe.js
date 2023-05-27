@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import Pagination from "@mui/material/Pagination";
 
-
 const ShowRecipe = () => {
 
     const { currentLinks, updateCurrentLinks } = useContext(UserContext);
@@ -17,7 +16,7 @@ const ShowRecipe = () => {
      let totalPages;
      let slicedArray;
    
-     const itemsPerPage = 3;
+     const itemsPerPage = 4;
    
      totalItems = currentItems.length;
    
@@ -34,10 +33,9 @@ const ShowRecipe = () => {
      };
   return (
    <>
-     <fieldset>
-      <legend >ingredients</legend>
-      
-   <div class="ShowRecipeContainer">
+  <div className='mt-10  '>
+    <div >
+   <div className="ShowRecipeContainer">
 
        {slicedArray.map((e,i)=>{
         return(
@@ -51,8 +49,8 @@ const ShowRecipe = () => {
 
     </div>
    
-    </fieldset>
-    <div className='PaginationCards'>   
+   
+    <div className='PaginationCards mt-5 mb-10 '>   
     {(
         <Pagination
           count={totalPages}
@@ -62,7 +60,7 @@ const ShowRecipe = () => {
       )}
     </div> 
 
-
+    </div>
    <div class="cook_now_videos">
         <div class="video-list">
               {currentLinks.map((e)=>{
@@ -71,7 +69,7 @@ const ShowRecipe = () => {
         </div>
    </div>
    
-   
+   </div>
    </>
   )
 }

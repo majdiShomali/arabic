@@ -17,21 +17,21 @@ const Slider = () => {
             <div className="w-3/4 pl-12 pb-60 md:w-2/4 md:pl-20 lg:pl-32">
               <Typography
                 variant="h1"
-                color="white"
-                className="mb-4 text-3xl md:text-4xl lg:text-5xl"
+                
+                className="mb-4 text-3xl md:text-4xl lg:text-5xl text-[#F7E1AE]"
               >
                 Discover your taste
               </Typography>
               <Typography
                 variant="lead"
-                color="white"
-                className="mb-12 opacity-90"
+                
+                className="mb-12 opacity-90 text-gray-1000 "
               >
                 Explore All Arabic recipes by your kitchen ingredients
               </Typography>
               <div className="flex  gap-2">
               <Link to="/Kitchen">
-                  <Button  size="lg" color="white">
+                  <Button  className="bg-[#F7E1AE] text-gray-800 w-52 text-base"   >
                   Add ingredients to your list
                 </Button>
                 </Link>

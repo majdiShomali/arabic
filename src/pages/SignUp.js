@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo1 from "../Images/Arugula.png";
+import Logo1 from "../Images/vegetables/Lemon.png";
 import { useState } from 'react';
-
+import imageSign from "../Images/Signin0.png"
+import jwt from 'jwt-decode' // import dependency
+import axios from 'axios';
 
 export default function Signup() {
     const [name, setName] = useState("");
@@ -35,18 +37,46 @@ export default function Signup() {
         
             if( validateName(name) && validatePassword(password) && validateEmail(email)&& validatePhone(phone) ){
             alert(`welcome ${name}`)
-            window.location.replace("Login")
             let user={
                 username:name,
                 userPassword:password,
                 userEmail:email,
                 userphone:phone,
+
             }
             arrusers.push(user)
             arrEmail.push(email)
             localStorage.setItem("userinfo",JSON.stringify(arrusers))
             localStorage.setItem("arrEmail",JSON.stringify(arrEmail))
-            console.log(arrusers)
+
+  // Perform registration logic here
+  let username=name
+  const userData = {
+    username,
+    email,
+    password
+  };
+
+
+
+  // Send userData to the backend for registration
+  axios
+  .post('http://localhost:4000/Register', userData)
+  .then(response => {
+    console.log(response.data);
+    const token = response.data.token;
+     const user = jwt(token); // decode your token here
+    // Handle the response from the server
+    localStorage.setItem("auth", JSON.stringify(user));
+    window.location.replace("Login")
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle any errors that occur during the request
+  });
+
+   window.location.replace("Login")
+
             }
             
             
@@ -138,7 +168,7 @@ export default function Signup() {
                             onChange={(e) => setpassword(e.target.value)}/>
                             <p className="text-red-500">{passwordp}</p>
                         <button type='submit' 
-                            className="mt-5 bg-[#BC6247] tracking-wide font-semibold  text-gray-100 w-full py-4 rounded-lg hover:bg-[#E0665B] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                            className="mt-5 bg-[#F7E1AE] tracking-wide font-semibold  text-gray-800 w-full py-4 rounded-lg hover:bg-[#A4D0A4] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                             <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2"
                                 strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -162,7 +192,8 @@ export default function Signup() {
             </div>
         </div>
         <div className="flex-1 bg-indigo-100 text-center hidden lg:flex login_img bg-cover bg-center bg-no-repeat ">
-        <img src={Logo1}/>
+        <img src={imageSign}/>
+
         </div>
     </div>
 </div>

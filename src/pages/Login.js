@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import Logo1 from "../Images/Arugula.png";
+import Logo1 from "../Images/vegetables/Lemon.png";
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useState ,useEffect} from 'react';
-
+import imageSign from "../Images/Signin0.png"
 
 export default function LogIn() {
 
@@ -86,7 +86,7 @@ export default function LogIn() {
 
                             alert(userdata.userEmail);
                             alert("welcome");
-                            window.location.replace("Landing")
+                            window.location.replace("/")
 
                         }else{
                             alert('the email '+res.data.email +' not registered before.');
@@ -108,22 +108,36 @@ export default function LogIn() {
   
 
    
-    // console.log(userdata)
-
     const handleSubmit = (event) => {
-        event.preventDefault();
-    
-        if(check_login(email,password) == true) {
-           let userdata = get_info(email);
-           localStorage.setItem("userinfoLog",JSON.stringify(userdata))
 
-           alert(userdata.userEmail);
-        alert("welcome");
-        localStorage.setItem("userState",JSON.stringify("LogOut"))
-        window.location.replace("Landing")
-        }else{
-        alert("Error in username or password.");
-        }
+       event.preventDefault();
+    // Perform registration logic here
+
+       let user=JSON.parse(localStorage.auth)
+   
+ if(user.email==email && user.password==password){
+ alert("welcome")
+ window.location.replace("/")
+
+
+ }else{
+   alert("please enter a valid email and password")
+  
+ }
+
+
+
+        // if(check_login(email,password) == true) {
+        //    let userdata = get_info(email);
+        //    localStorage.setItem("userinfoLog",JSON.stringify(userdata))
+
+        //    alert(userdata.userEmail);
+        // alert("welcome");
+        // localStorage.setItem("userState",JSON.stringify("LogOut"))
+        // window.location.replace("/")
+        // }else{
+        // alert("Error in username or password.");
+        // }
 
     }
   return (
@@ -142,7 +156,7 @@ export default function LogIn() {
                 <div className="w-full flex-1 mt-8">
                     <div className="flex flex-col items-center ">
                         <button id="google-sign-in" 
-                            className="w-full bg-[#F3CBCc] max-w-xs font-bold  shadow-sm rounded-lg py-3 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+                            className="w-full bg-[#F7E1AE] max-w-xs font-bold hover:bg-[#A4D0A4]  shadow-sm rounded-lg py-3 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                             onClick={() => login()} >
 
                             <div className="bg-white p-2 rounded-full">
@@ -192,7 +206,7 @@ export default function LogIn() {
                             onChange={(e) => setpassword(e.target.value)}/>
                             <p className="text-red-500">{passwordp}</p>
                         <button type='submit'
-                            className="mt-5 bg-[#BC6247] tracking-wide font-semibold text-gray-100 w-full py-4 rounded-lg hover:bg-[#E0665B] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                            className="mt-5 bg-[#F7E1AE] tracking-wide font-semibold text-gray-800 w-full py-4 rounded-lg hover:bg-[#A4D0A4] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                             <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2"
                                 strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -215,8 +229,8 @@ export default function LogIn() {
                 </div>
             </div>
         </div>
-        <div className="flex-1 bg-indigo-100 text-center hidden lg:flex login_img bg-cover bg-center bg-no-repeat ">
-        
+        <div className="flex-1 bg-indigo-100 text-center hidden lg:flex imageSign bg-cover bg-center bg-no-repeat ">
+        <img src={imageSign}/>
         </div>
     </div>
 </div>

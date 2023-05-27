@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { UserContext } from "../UserContext";
 
 
-function DynamicComponent({ card , Name ,index ,SAMeals} ) {
+function DyRecipeCardMeal({ card , Name ,index ,SAMeals} ) {
 
   const { currentLinks, updateCurrentLinks } = useContext(UserContext);
   const { currentItems, updateCurrentItems } = useContext(UserContext);
@@ -31,7 +31,7 @@ function DynamicComponent({ card , Name ,index ,SAMeals} ) {
     </div>
     <div className="p-4">
       <h2 className="text-2xl text-[#E8CC95]">{Name}</h2>
-      <div className="flex justify-between mt-2 mb-2 text-gray-500">
+      <div className="flex justify-between mt-2 mb-2 text-[#158467]">
         <div className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,22 +77,22 @@ function DynamicComponent({ card , Name ,index ,SAMeals} ) {
           <span className="ml-1 lg:text-xl">1-2</span>
         </div>
       </div>
-      <p className="mb-2 text-gray-500">
+      <p className="mb-2 text-gray-800">
         A recipe that's quick and easy to make and super tasty!
       </p>
       <button className="text-white bg-[#E8CC95] p-2 rounded-md w-full uppercase"
      onClick={()=>ShowVideosMeals(index,SAMeals)}>
-     <Link to="/ShowRecipe">Show recipe</Link>
+     <Link className=" text-gray-800" to="/ShowRecipe">Show recipe</Link>
       </button>
     </div>
-    <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-white rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
+    <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-gray-800 rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
       <span>Medium</span>
     </div>
   </div>
   );
 }
 
-export default DynamicComponent;
+export default DyRecipeCardMeal;
 
 
 {/* <>
