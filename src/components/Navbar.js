@@ -149,10 +149,10 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <Link to="/ServicePageAll">
+        <Link to="/Kitchen">
           <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
             <RestaurantIcon style={{ height: "18px", color: "#eab308" }} />
-            Restaurants
+            Kitchen
           </ListItem>
         </Link>
       </Typography>

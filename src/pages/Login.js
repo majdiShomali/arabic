@@ -38,14 +38,14 @@ export default function LogIn() {
          if (response.data != "not passed") {
            console.log(response.data[1]);
           let x =[]
-             if (response.data[1]==0){
+             if (response.data[3]==0){
              x= [false ,true,true]
-           }else if(response.data[1]==1){
+           }else if(response.data[3]==1){
               x= [true ,false,true]
-           }else if(response.data[1]==2){
+           }else if(response.data[3]==2){
               x= [true ,true,false]
            }
-           console.log(response.data[2])
+           console.log(response.data[3])
            updateRouts(x)
            updateSetCurruntUser(response.data[2])
            localStorage.setItem("curruntUser",JSON.stringify(response.data[2]))

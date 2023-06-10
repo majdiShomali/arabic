@@ -70,8 +70,8 @@ let removMinus = mdiMinus
       }
 
 
-          // localStorage.setItem("vegetables_obj",JSON.stringify(vegetables_obj));
-          // localStorage.setItem("fruit_obj",JSON.stringify(fruit_obj));
+          localStorage.setItem("vegetables_obj",JSON.stringify(vegetables_obj));
+          localStorage.setItem("fruit_obj",JSON.stringify(fruit_obj));
 
       // const newArrayV =[...vegetables_obj]
       // const newArrayF =[...fruit_obj]
@@ -648,48 +648,48 @@ const filterDataByNameFruit = (searchTermFruit) => {
     </div> 
     </> :null }
 
-    <fieldset className='AdminFieldset'>
+    {/* <fieldset className='AdminFieldset'>
       <legend >
         MyList:
         </legend>
 <div  className ="my_list_container00">
 {
-// MyList?.map((e,i)=>{
+MyList?.map((e,i)=>{
 
-//     return(
-//     <div onClick={()=> changeStatus(e.name,i)}  id={e.name} className="ingredient_class vegetables" data-target={e.name}>
-//     <h4>{e.name}</h4>
-//     {e.type === "fruit" && (
-//  <Icon className='iconAddOrRemoveF' path={e.icon} size={1} />
-// )}
-//     {e.type === "vegetables" && (
-//  <Icon className='iconAddOrRemoveV' path={e.icon} size={1} />
-// )}
-
-
-//     <img className="vegetablesimg"  src={require(`../${e.img}`)}/>  
-
-//     {e.type === "fruit" && (
-//   <div className="pContainerCardF vegetablespd">
-//     <p className="vegetablesp">{e.clicked}</p>
-//   </div>
-// )}
-//     {e.type === "vegetables" && (
-//   <div className="pContainerCardV vegetablespd">
-//     <p className="vegetablesp">{e.clicked}</p>
-//   </div>
-// )}
+    return(
+    <div onClick={()=> changeStatus(e.name,i)}  id={e.name} className="ingredient_class vegetables" data-target={e.name}>
+    <h4>{e.name}</h4>
+    {e.type === "fruit" && (
+ <Icon className='iconAddOrRemoveF' path={e.icon} size={1} />
+)}
+    {e.type === "vegetables" && (
+ <Icon className='iconAddOrRemoveV' path={e.icon} size={1} />
+)}
 
 
-//     </div>
-//     )
+    <img className="vegetablesimg"  src={require(`../${e.img}`)}/>  
+
+    {e.type === "fruit" && (
+  <div className="pContainerCardF vegetablespd">
+    <p className="vegetablesp">{e.clicked}</p>
+  </div>
+)}
+    {e.type === "vegetables" && (
+  <div className="pContainerCardV vegetablespd">
+    <p className="vegetablesp">{e.clicked}</p>
+  </div>
+)}
 
 
-// })
+    </div>
+    )
+
+
+})
 }
 </div>
 
-</fieldset>
+</fieldset> */}
 
 {/* {localStorage.setItem("MyList", JSON.stringify(MyList))}
 {localStorage.setItem("MyListN", JSON.stringify(MyListN))} */}

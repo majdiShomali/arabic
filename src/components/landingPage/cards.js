@@ -15,12 +15,6 @@ import DyRecipeCardDrink from '../DyRecipeDrinkCard'
 const Cards = () => {
   let localTable =[]
 
-  if(localStorage.table !=[] && localStorage.table !=null && localStorage.table !=undefined ){
-    localTable=JSON.parse(localStorage.table)
-
-  }
-  const [table, setTable] = useState(localTable);
-
 
 
 
@@ -28,6 +22,7 @@ const Cards = () => {
   const { currentItems, updateCurrentItems } = useContext(UserContext);
 
   const { Meals, updateMeals   } = useContext(UserContext);
+  const [ Meals0, updateMeals0   ] = useState();
   const { Drinks, updateDrinks } = useContext(UserContext);
   const { Sweet, updateSweet   } = useContext(UserContext);
 
@@ -38,11 +33,18 @@ const [FilterDataMeals, setFilterDataMeals] = useState([]);
 const [searchTermDrinks, setSearchTermDrinks] = useState('');
 const [FilterDataDrinks, setFilterDataDrinks] = useState([]);
 
+const [table, setTable] = useState([]);
 
   useEffect(() => {
 
-    updateMeals(() => {
-          const newItems = table.filter(
+    if(localStorage.table !=[] && localStorage.table !=null && localStorage.table !=undefined ){
+      localTable=JSON.parse(localStorage.table)
+      setTable([...localTable])
+    }
+    
+
+    updateMeals0(() => {
+          const newItems = localTable?.filter(
             (item) => item.Category === "cook_now_container"
           );
           return  (newItems)
@@ -50,46 +52,46 @@ const [FilterDataDrinks, setFilterDataDrinks] = useState([]);
         });
 
         setFilterDataMeals(() => {
-          const newItems = table.filter(
+          const newItems = localTable?.filter(
             (item) => item.Category === "cook_now_container"
           );
           return  (newItems)
           
         });
 
-        updateDrinks(() => {
-          const newItems = table.filter(
-            (item) => item.Category === "cook_now_container2"
-          );
-          return  (newItems)
+  //       updateDrinks(() => {
+  //         const newItems = table.filter(
+  //           (item) => item.Category === "cook_now_container2"
+  //         );
+  //         return  (newItems)
           
-        });
+  //       });
 
 
-        setFilterDataDrinks(() => {
-          const newItems = table.filter(
-            (item) => item.Category === "cook_now_container2"
-          );
-          return  (newItems)
+  //       setFilterDataDrinks(() => {
+  //         const newItems = table.filter(
+  //           (item) => item.Category === "cook_now_container2"
+  //         );
+  //         return  (newItems)
           
-        });
+  //       });
 
-        updateSweet(() => {
-          const newItems = table.filter(
-            (item) => item.Category === "cook_now_container3"
-          );
-          return  (newItems)
+  //       updateSweet(() => {
+  //         const newItems = table.filter(
+  //           (item) => item.Category === "cook_now_container3"
+  //         );
+  //         return  (newItems)
           
-        });
+  //       });
 
     },[]);
 
-
+    console.log(FilterDataMeals)
 //-----------------------search------------------------//
 
 const filterDataByNameMeals = (searchTermMeals) => {
   
-  const filteredDataMeals = Meals.filter(item =>
+  const filteredDataMeals = Meals0.filter(item =>
 
     item.Name.toLowerCase().includes(searchTermMeals.toLowerCase())
   );
@@ -145,7 +147,7 @@ const filterDataByNameDrinks = (searchTermDrinks) => {
   slicedArrayMeals = FilterDataMeals.slice(startIndexMeals, endIndexMeals);
   slicedArrayDrinks = FilterDataDrinks.slice(startIndexDrinks, endIndexDrinks);
   slicedArraySweet = Sweet.slice(startIndexSweet, endIndexSweet);
-
+console.log(FilterDataMeals)
   const handlePageChangeMeals = (event, pageNumber) => {
     setCurrentPageMeals(pageNumber);
   };
@@ -206,7 +208,7 @@ const filterDataByNameDrinks = (searchTermDrinks) => {
 
     <div className='cardContainer'>
  {
-slicedArrayMeals.map((e,i) => {
+slicedArrayMeals?.map((e,i) => {
 return(
 <>
 <DyRecipeCardMeal
@@ -253,7 +255,7 @@ SAMeals={slicedArrayMeals}
 
     <div className='cardContainer'>
  {
-slicedArrayDrinks.map((e,i) => {
+slicedArrayDrinks?.map((e,i) => {
 return(
 
   <DyRecipeCardDrink
