@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../UserContext";
+import Swal from "sweetalert2";
+
 import {
+  Avatar,
   Navbar,
   Collapse,
   Typography,
@@ -12,9 +16,10 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Chip,
 } from "@material-tailwind/react";
 import {
+  LifebuoyIcon,
+  PowerIcon,
   ChevronDownIcon,
   UserCircleIcon,
   CubeTransparentIcon,
@@ -22,15 +27,14 @@ import {
   XMarkIcon,
   FlagIcon,
   ChatBubbleOvalLeftIcon,
-  UsersIcon,
-  FolderIcon,
-  Square3Stack3DIcon,
   RocketLaunchIcon,
   FaceSmileIcon,
   PuzzlePieceIcon,
-  GiftIcon,
+  HomeIcon,
 } from "@heroicons/react/24/outline";
- 
+import logo from "../Images/fruits/Lime.png";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+
 const colors = {
   blue: "bg-blue-50 text-blue-500",
   orange: "bg-orange-50 text-orange-500",
@@ -41,84 +45,52 @@ const colors = {
   cyan: "bg-cyan-50 text-cyan-500",
   pink: "bg-pink-50 text-pink-500",
 };
- 
+
 const navListMenuItems = [
   {
     color: "blue",
     icon: FlagIcon,
     title: "About us",
     description: "Learn about our story and our mission statement.",
-    path:"./About"
+    path: "./About",
   },
   {
     color: "orange",
     icon: ChatBubbleOvalLeftIcon,
     title: "Contact Us",
     description: "News and writings, press releases, and resources",
-    path:"./ContactUs"
+    path: "./ContactUs",
   },
-  {
-    color: "green",
-    icon: UsersIcon,
-    title: (
-      <div className="flex items-center gap-1">
-        Careers{" "}
-        <Chip
-          size="sm"
-          color="green"
-          variant="ghost"
-          value="We're hiring!"
-          className="capitalize"
-        />
-      </div>
-    ),
-    description: "We are always looking for talented people. Join us!",
-    path:"./"
-  },
-  
-  {
-    color: "blue-gray",
-    icon: FolderIcon,
-    title: "Legal0",
-    description: "All the stuff that we dan from legal made us add.",
-    path:"./"
-  },
+
   {
     color: "purple",
     icon: RocketLaunchIcon,
     title: "User Profile",
     description: "Checkout your profile",
-    path:"./UserProfile"
+    path: "./UserProfile",
   },
   {
     color: "teal",
     icon: FaceSmileIcon,
     title: "Admin",
     description: "Add you recipes",
-    path:"./Admin"
+    path: "./Admin",
   },
   {
     color: "cyan",
     icon: PuzzlePieceIcon,
     title: "recipes",
     description: "What I can cook",
-    path:"./Recipes"
-  },
-  {
-    color: "pink",
-    icon: GiftIcon,
-    title: "Open Source",
-    description: "List of all our open-source projects, it's all free.",
-    path:"./"
+    path: "./Recipes",
   },
 ];
- 
+
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
- 
+
   const renderItems = navListMenuItems.map(
-    ({ icon, title, description, color,path }, key) => (
+    ({ icon, title, description, color, path }, key) => (
       <Link to={path} key={key}>
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className={`rounded-lg p-5 ${colors[color]}`}>
@@ -143,54 +115,19 @@ function NavListMenu() {
       </Link>
     )
   );
- 
+
   return (
     <React.Fragment>
-      <Menu
-        open={isMenuOpen}
-        handler={setIsMenuOpen}
-        offset={{ mainAxis: 20 }}
-        placement="bottom"
-        allowHover={true}
-      >
-        <MenuHandler>
-          <Typography as="div" variant="small" className="font-normal">
-            <ListItem
-              className="flex items-center gap-2 py-2 pr-4"
-              selected={isMenuOpen || isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen((cur) => !cur)}
-            >
-              <Square3Stack3DIcon className="h-[18px] w-[18px]" />
-              Resources
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`hidden h-3 w-3 transition-transform lg:block ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`block h-3 w-3 transition-transform lg:hidden ${
-                  isMobileMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </ListItem>
-          </Typography>
-        </MenuHandler>
-        <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
-          <ul className="grid grid-cols-4 gap-y-2">{renderItems}</ul>
-        </MenuList>
-      </Menu>
       <div className="block lg:hidden">
         <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
       </div>
     </React.Fragment>
   );
 }
- 
+
 function NavList() {
   return (
-    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 ">
+    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
       <Typography
         as="a"
         href="#"
@@ -198,14 +135,40 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        
-        <Link to="/Kitchen">
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          <CubeTransparentIcon className="h-[18px] w-[18px]" />
-          My-kitchen
-        </ListItem>
+        <Link to="/">
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
+            <HomeIcon className="h-[18px] w-[18px] text-amber-600" />
+            Home
+          </ListItem>
         </Link>
-
+      </Typography>
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <Link to="/ServicePageAll">
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
+            <RestaurantIcon style={{ height: "18px", color: "#eab308" }} />
+            Restaurants
+          </ListItem>
+        </Link>
+      </Typography>
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <Link to="/About">
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
+            <CubeTransparentIcon className="h-[18px] w-[18px] text-amber-600" />
+            About Us
+          </ListItem>
+        </Link>
       </Typography>
       <NavListMenu />
       <Typography
@@ -215,53 +178,190 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          <UserCircleIcon className="h-[18px] w-[18px]" />
-          Account
-        </ListItem>
+        <Link to="/ContactUs">
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
+            <UserCircleIcon className="h-[18px] w-[18px] text-amber-600" />
+            Contact Us
+          </ListItem>
+        </Link>
       </Typography>
     </List>
   );
 }
- 
+
 export default function Example() {
   const [openNav, setOpenNav] = React.useState(false);
- 
+  const { SignStatus, updateSignStatus } = useContext(UserContext);
+
+  useEffect(() => {
+    if (localStorage.SignStatus != null) {
+      updateSignStatus(localStorage.SignStatus);
+    }
+  }, []);
+
+  function handleSign() {
+    if (SignStatus == "signUp") {
+      window.location.href = "http://localhost:3000/SignUp";
+    } else {
+      Swal.fire({
+        title: ` logout?  `,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#ea4d24",
+        cancelButtonText: "Cancel",
+        cancelButtonColor: "#ea4d24",
+        icon: "warning",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire(`  done `, "", "success");
+
+          updateSignStatus("signUp");
+          localStorage.setItem("SignStatus", "signUp");
+
+          localStorage.removeItem("auth");
+          localStorage.removeItem("roles");
+          window.location.href = "http://localhost:3000/";
+        } else Swal.fire(" Cancelled", "", "error");
+      });
+    }
+  }
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
- 
+
+  const profileMenuItems = [
+    {
+      label: "Profile",
+      icon: LifebuoyIcon,
+    },
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+    },
+  ];
+
+  function ProfileMenu() {
+    const { SignStatus, updateSignStatus } = useContext(UserContext);
+
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+    const closeMenu = (label) => {
+      setIsMenuOpen(false);
+
+      if (label == "Sign Out") {
+        updateSignStatus("signUp");
+        localStorage.setItem("SignStatus", "signUp");
+        localStorage.removeItem("auth");
+        localStorage.removeItem("roles");
+        window.location.href = "http://localhost:3000/";
+
+        console.log(label);
+      } else if (label == "Profile") {
+        window.location.href = "http://localhost:3000/ProfilePage";
+      }
+    };
+
+    return (
+      <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+        <MenuHandler>
+          <Button
+            variant="text"
+            color="blue-gray"
+            className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+          >
+            <svg
+              xmlns="https://source.unsplash.com/MP0IUfwrn0A"
+              className="h-7 w-7 text-amber-600"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              {" "}
+              <path
+                fillRule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <ChevronDownIcon
+              strokeWidth={2.5}
+              className={`h-3 w-3 transition-transform text-black ${
+                isMenuOpen ? "rotate-180" : ""
+              }`}
+            />
+          </Button>
+        </MenuHandler>
+        <MenuList className="p-1">
+          {profileMenuItems.map(({ label, icon }, key) => {
+            const isLastItem = key === profileMenuItems.length - 1;
+            return (
+              <MenuItem
+                key={label}
+                onClick={() => {
+                  closeMenu(label);
+                }}
+                className={`flex items-center gap-2 rounded ${
+                  isLastItem
+                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                    : ""
+                }`}
+              >
+                {React.createElement(icon, {
+                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                  strokeWidth: 2,
+                })}
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  color={isLastItem ? "red" : "inherit"}
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
+            );
+          })}
+        </MenuList>
+      </Menu>
+    );
+  }
+
   return (
-    <Navbar className="w-screen sticky top-0 z-10">
-      <div className="flex items-center justify-between text-blue-gray-900">
-       
+    <Navbar
+      className="w-screen sticky top-0 z-20"
+      
+    >
+      <div className="flex items-center justify-between text-white">
         <Typography
           as="a"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2"
         >
-           <Link to="/">
-          Arabic Recipes
+          <Link to="/">
+            {/* <img src={logo} alt="logo" width={150} height={50} /> */}
+            <p className="text-black">Arabic Recipes</p>
           </Link>
         </Typography>
         <div className="hidden lg:block">
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          {/* <Link to="/LogIn">
-          <Button variant="text" size="sm" color="blue-gray">
-            Sign In
-          </Button>
-          </Link> */}
-
-          <Link to="/SignUp">
-          <Button variant="gradient" size="sm">
-            Sign Up
-          </Button>
-          </Link>
+          {SignStatus == "signUp" ? (
+            <Button
+              onClick={() => handleSign()}
+              size="sm"
+              className="bg-amber-600 hover:shadow-lg-amber-600"
+            >
+              Sign Up
+            </Button>
+          ) : (
+            <ProfileMenu />
+          )}
         </div>
         <IconButton
           variant="text"
@@ -281,9 +381,6 @@ export default function Example() {
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
           <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
             Sign In
-          </Button>
-          <Button variant="gradient" size="sm" fullWidth>
-            Sign Up
           </Button>
         </div>
       </Collapse>

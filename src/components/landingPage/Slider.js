@@ -29,13 +29,13 @@ const Slider = () => {
               >
                 Explore All Arabic recipes by your kitchen ingredients
               </Typography>
-              <div className="flex  gap-2">
+              
               <Link to="/Kitchen">
                   <Button  className="bg-[#F7E1AE] text-gray-800 w-52 text-base"   >
                   Add ingredients to your list
                 </Button>
                 </Link>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ const Slider = () => {
                 Nourish your skin with toxin-free cosmetic products. With the
                 offers that you can't refuse.
               </Typography>
-              <div className="flex justify-center hover:bg-violet-600">
+              <div className="flex justify-center ">
               <Link to="/Store">
                  <Button size="lg" color="white">
                   BUY NOW

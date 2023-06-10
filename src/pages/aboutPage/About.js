@@ -6,10 +6,20 @@ import TeamMember from './TeamMember'
 const About = () => {
   return (
     <>
+
+
+
+
+
+
+
+
+
+    
     <BackimgAbout/>
-    <AboutUsed/>
+    {/* <AboutUsed/> */}
     <Testimonials/>
-    <TeamMember/> 
+    {/* <TeamMember/>  */}
     </>
   )
 }

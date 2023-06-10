@@ -4,6 +4,9 @@ import { Children, createContext, useState } from "react";
 export const UserContext = createContext();
 const UserProvider = ( {children} ) => {
   
+  const [test, setTest] = useState([]);
+
+
   const [foodCards, setFoodCards] = useState([]);
   const [foodCardsName, setFoodCardsName] = useState([]);
   const [MyList, setMyList] = useState([]);
@@ -18,6 +21,25 @@ const UserProvider = ( {children} ) => {
   const [Meals, setMeals] = useState([]);
   const [Drinks, setDrinks] = useState([]);
   const [Sweet, setSweet] = useState([]);
+
+  const [routs, setRouts] = useState([false,true,true]);
+  const [SignStatus, setSignStatus] = useState("signUp");
+  const [curruntUser, setCurruntUser] = useState({});
+
+  const updateSetCurruntUser = (newValue) => {
+    setCurruntUser(newValue);
+  };
+  const updateTest = (newValue) => {
+    setTest(newValue);
+  };
+
+  const updateRouts = (newValue) => {
+    setRouts(newValue);
+  };
+
+  const updateSignStatus = (newValue) => {
+    setSignStatus(newValue);
+  };
 
   const updateMyListAdminU = (newValue) => {
     setMyListAdminU(newValue);
@@ -77,6 +99,10 @@ const UserProvider = ( {children} ) => {
                  Sweet,updateSweet,
                  MyListAdminU,updateMyListAdminU,
                  MyListNAdminU,updateMyListNAdminU,
+                 routs,updateRouts,
+                 SignStatus,updateSignStatus,
+                 curruntUser,updateSetCurruntUser,
+                 test,updateTest
                 }}
             >
                 {children}

@@ -18,15 +18,9 @@ export default function Signup() {
 
     const [password, setpassword] = useState("");
     const [passwordp, setpasswordp] = useState("");
-    let arrusers=[];
-    let arrEmail = [];
-    if(localStorage.userinfo !== null  && localStorage.userinfo !== undefined){
-        arrusers=JSON.parse(localStorage.userinfo);
-        arrEmail=JSON.parse(localStorage.arrEmail);
-        
-      }
-    
-        
+
+
+       
         const handleSubmit = (event) => {
             event.preventDefault();
         
@@ -44,11 +38,8 @@ export default function Signup() {
                 userphone:phone,
 
             }
-            arrusers.push(user)
-            arrEmail.push(email)
-            localStorage.setItem("userinfo",JSON.stringify(arrusers))
-            localStorage.setItem("arrEmail",JSON.stringify(arrEmail))
 
+  
   // Perform registration logic here
   let username=name
   const userData = {
@@ -59,23 +50,52 @@ export default function Signup() {
 
 
 
-  // Send userData to the backend for registration
   axios
-  .post('http://localhost:4000/Register', userData)
-  .then(response => {
-    console.log(response.data);
-    const token = response.data.token;
-     const user = jwt(token); // decode your token here
-    // Handle the response from the server
-    localStorage.setItem("auth", JSON.stringify(user));
-    window.location.replace("Login")
+  .post("http://localhost:4000/records", {
+    name: name,
+    phone: phone,
+    email: email,
+    password: password,
   })
-  .catch(error => {
-    console.error('Error:', error);
-    // Handle any errors that occur during the request
-  });
+  .then(function (response) {
+    if (response.data != "taken") {
+      console.log(response.data);
 
-   window.location.replace("Login")
+
+
+      axios
+      .post("http://localhost:4000/records0", {
+        vegetables: [],
+        userid:response.data[0].userid
+       
+      })
+      .then(function (response) {
+    
+      })
+      .catch(function (error) {});
+    
+    
+
+
+
+
+
+
+
+
+
+      window.location.href = "http://localhost:3000/LogIn";
+    } else {
+      console.log(response.data);
+      alert("This Email is already taken");
+      // setError("This Email is already taken");
+    }
+  })
+  .catch(function (error) {});
+
+
+
+
 
             }
             

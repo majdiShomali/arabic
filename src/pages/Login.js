@@ -1,143 +1,71 @@
-import React from 'react'
+import React, { useEffect, useState ,useContext} from "react";
 import { Link } from "react-router-dom";
 import Logo1 from "../Images/vegetables/Lemon.png";
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { useState ,useEffect} from 'react';
 import imageSign from "../Images/Signin0.png"
-
+import { UserContext } from '../UserContext';
 export default function LogIn() {
 
 
-
-    function check_login(email,password) {
-        if(localStorage.userinfo !== null && localStorage.userinfo !== undefined){
-            let userinfo = [];
-            let arrEmail = [];
-            
-            userinfo=JSON.parse(localStorage.userinfo);
-            arrEmail=localStorage.arrEmail;
-            
-            if(arrEmail.includes(email)){
-                for(let i=0;i<userinfo.length;i++){
-                    if(userinfo[i].userEmail == email && userinfo[i].userPassword == password){
-                    return true;
-                    }                    
-                }
-   
-            }
-    }
-    return false;  
-}
-    function get_info(email) {
-        if(localStorage.userinfo !== null && localStorage.userinfo !== undefined){
-            let userinfo = [];
-            let arrEmail = [];
-            
-            userinfo=JSON.parse(localStorage.userinfo);
-            arrEmail=localStorage.arrEmail;
-            
-            if(arrEmail.includes(email)){
-                for(let i=0;i<userinfo.length;i++){
-                    if(userinfo[i].userEmail == email){
-                    return userinfo[i];
-                    }                    
-                }
-   
-            }
-    }
-    return [];  
-}
     const [email, setemail] = useState("");
     const [emailp, setemailp] = useState("");
     const [password, setpassword] = useState("");
     const [passwordp, setpasswordp] = useState("");
-    let userdata=[];
-    let useremail=[];
+ 
     /* google login  -start */
     const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState([]);
     
-    const login = useGoogleLogin({
-        onSuccess: (codeResponse) => setUser(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
-    });
+    const { routs,updateRouts } = useContext(UserContext)
+    const { SignStatus,updateSignStatus } = useContext(UserContext)
+    const { curruntUser,updateSetCurruntUser } = useContext(UserContext)
 
-    useEffect(
-        () => {
-            if (user) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
-                    .then((res) => {
-                        setProfile(res.data);
-                     
-                        let arrEmail = [];
-                        if(localStorage.arrEmail !== null  && localStorage.arrEmail !== undefined){
-                        arrEmail = localStorage.getItem('arrEmail');
-                        }
-                        if(arrEmail.includes(res.data.email)){
-                            let userdata = get_info(res.data.email);
-
-
-                            alert(userdata.userEmail);
-                            alert("welcome");
-                            window.location.replace("/")
-
-                        }else{
-                            alert('the email '+res.data.email +' not registered before.');
-                        }
-                    
-                    })
-                    .catch((err) => console.log(err));
-            }
-        },
-        [ user ]
-    );
-
-    // log out function to log the user out of google and set the profile array to null
-    const logOut = () => {
-        googleLogout();
-        setProfile(null);
-    };
-    /* google login  -end */
   
 
    
     const handleSubmit = (event) => {
 
        event.preventDefault();
-    // Perform registration logic here
 
-       let user=JSON.parse(localStorage.auth)
-   
- if(user.email==email && user.password==password){
- alert("welcome")
- window.location.replace("/")
+       axios
+       .post("http://localhost:4000/recordp", {
+         email: email,
+         password: password,
+       })
+ 
+       .then(function (response) {
+         if (response.data != "not passed") {
+           console.log(response.data[1]);
+          let x =[]
+             if (response.data[1]==0){
+             x= [false ,true,true]
+           }else if(response.data[1]==1){
+              x= [true ,false,true]
+           }else if(response.data[1]==2){
+              x= [true ,true,false]
+           }
+           console.log(response.data[2])
+           updateRouts(x)
+           updateSetCurruntUser(response.data[2])
+           localStorage.setItem("curruntUser",JSON.stringify(response.data[2]))
+           console.log("passed");
+           localStorage.setItem("userid",JSON.stringify(response.data[1]))
+
+           updateSignStatus("SignOut")
+           localStorage.setItem("SignStatus","SignOut")
+ 
+           localStorage.setItem("auth",JSON.stringify(response.data[0]))
+           localStorage.setItem("roles",JSON.stringify(x))
+           window.location.href = 'http://localhost:3000/';
+         } else {
+           console.log("not passed");
+         }
+       })
+       .catch(function (error) {});
+ 
 
 
- }else{
-   alert("please enter a valid email and password")
-  
- }
-
-
-
-        // if(check_login(email,password) == true) {
-        //    let userdata = get_info(email);
-        //    localStorage.setItem("userinfoLog",JSON.stringify(userdata))
-
-        //    alert(userdata.userEmail);
-        // alert("welcome");
-        // localStorage.setItem("userState",JSON.stringify("LogOut"))
-        // window.location.replace("/")
-        // }else{
-        // alert("Error in username or password.");
-        // }
 
     }
   return (
@@ -157,7 +85,8 @@ export default function LogIn() {
                     <div className="flex flex-col items-center ">
                         <button id="google-sign-in" 
                             className="w-full bg-[#F7E1AE] max-w-xs font-bold hover:bg-[#A4D0A4]  shadow-sm rounded-lg py-3 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
-                            onClick={() => login()} >
+                            // onClick={() => login()} 
+                            >
 
                             <div className="bg-white p-2 rounded-full">
                                 <svg className="w-4" viewBox="0 0 533.5 544.3">

@@ -25,7 +25,7 @@ import {
   RocketLaunchIcon,
   Bars2Icon,
 } from "@heroicons/react/24/outline";
- 
+import { Link } from "react-router-dom";
 // profile menu component
 const profileMenuItems = [
   {
@@ -201,14 +201,17 @@ const navListItems = [
   {
     label: "Account",
     icon: UserCircleIcon,
+    path: "/UserProfile"
   },
   {
     label: "Blocks",
     icon: CubeTransparentIcon,
+    path: "/"
   },
   {
     label: "Docs",
     icon: CodeBracketSquareIcon,
+    path: "/"
   },
 ];
  
@@ -216,11 +219,12 @@ function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       <NavListMenuD />
-      {navListItems.map(({ label, icon }, key) => (
+      {navListItems.map(({ label, icon,path }, key) => (
+        <Link to={path}>
         <Typography
           key={label}
           as="a"
-          href="#"
+        
           variant="small"
           color="blue-gray"
           className="font-normal"
@@ -230,6 +234,7 @@ function NavList() {
             {label}
           </MenuItem>
         </Typography>
+        </Link>
       ))}
     </ul>
   );

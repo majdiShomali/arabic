@@ -10,7 +10,7 @@ const Landing = () => {
   return (
     <>
        <Slider/>  
-      <Cards/> 
+      {/* <Cards/>  */}
     </>
     
   )
