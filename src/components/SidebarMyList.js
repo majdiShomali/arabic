@@ -64,60 +64,75 @@ export default function Example() {
   const { test, updateTest} = useContext(UserContext);
 
  
+  const handleShowUser = async () => {
+    
+    let userId= JSON.parse(localStorage.userid)
+    try {
+      const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
+      console.log(response.data[0]); 
+      setMyList(response.data[0].MyList)
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+    
+  };
+
+
+
   useEffect(() => {
 
+    handleShowUser();
 
 
-
-    let userid= JSON.parse(localStorage.userid)
+  //   let userid= JSON.parse(localStorage.userid)
  
     
-    axios.get(`http://localhost:4000/reporters/${userid}`)
-    .then((response) => {
+  //   axios.get(`http://localhost:4000/reporters/${userid}`)
+  //   .then((response) => {
       
     
-     let dataUser= response.data[0].userlist
-    //  setLocalList(dataUser)
-     let dataUserN= response.data[0].userlistn
-     const parsedData = dataUser.map(jsonString => JSON.parse(jsonString));
-     console.log(dataUserN[0])
+  //    let dataUser= response.data[0].userlist
+  //   //  setLocalList(dataUser)
+  //    let dataUserN= response.data[0].userlistn
+  //    const parsedData = dataUser.map(jsonString => JSON.parse(jsonString));
+  //    console.log(dataUserN[0])
 
-     vegetables_obj=JSON.parse(localStorage.vegetables_obj)
-     fruit_obj=JSON.parse(localStorage.fruit_obj)
+  //    vegetables_obj=JSON.parse(localStorage.vegetables_obj)
+  //    fruit_obj=JSON.parse(localStorage.fruit_obj)
 
-    const newArrayV =[...vegetables_obj]
-    const newArrayF =[...fruit_obj]
+  //   const newArrayV =[...vegetables_obj]
+  //   const newArrayF =[...fruit_obj]
     
     
-              localList=parsedData
-              localListN=dataUserN
-              setMyList(parsedData)
-              setMyListN(dataUserN)
-            newArrayV.map((e)=>{
-              if(localListN.includes(e.name) ){
-                     e.clicked='Added' 
-                     e.icon=removMinus  
-                     console.log(e.name)
-              }
-             })
+  //             localList=parsedData
+  //             localListN=dataUserN
+  //             setMyList(parsedData)
+  //             setMyListN(dataUserN)
+  //           newArrayV.map((e)=>{
+  //             if(localListN.includes(e.name) ){
+  //                    e.clicked='Added' 
+  //                    e.icon=removMinus  
+  //                    console.log(e.name)
+  //             }
+  //            })
     
-             setVegetables(newArrayV)
+  //            setVegetables(newArrayV)
     
-             newArrayF.map((e)=>{
-              if(localListN.includes(e.name) ){
-                     e.clicked='Added' 
-                     e.icon=removMinus  
-              }
-             })
+  //            newArrayF.map((e)=>{
+  //             if(localListN.includes(e.name) ){
+  //                    e.clicked='Added' 
+  //                    e.icon=removMinus  
+  //             }
+  //            })
     
-             setFruit(newArrayF)
+  //            setFruit(newArrayF)
     
-    console.log(localListN)
+  //   console.log(localListN)
     
     
     
-    })
-    .catch((error) => console.log(error.message))
+  //   })
+  //   .catch((error) => console.log(error.message))
     
 
 
@@ -133,31 +148,31 @@ export default function Example() {
 
 
 
-    // if(localStorage.MyListN !=[] && localStorage.MyListN !=null && localStorage.MyListN !=undefined ){
+  //   // if(localStorage.MyListN !=[] && localStorage.MyListN !=null && localStorage.MyListN !=undefined ){
 
-    //     // setLocalList(JSON.parse(localStorage.MyList))
-    //     // vegetables_obj=JSON.parse(localStorage.vegetables_obj)
-    //     // fruit_obj=JSON.parse(localStorage.fruit_obj)
+  //   //     // setLocalList(JSON.parse(localStorage.MyList))
+  //   //     // vegetables_obj=JSON.parse(localStorage.vegetables_obj)
+  //   //     // fruit_obj=JSON.parse(localStorage.fruit_obj)
    
    
-    //     // let newArrayV =vegetables_obj
-    //     // let newArrayF =fruit_obj
+  //   //     // let newArrayV =vegetables_obj
+  //   //     // let newArrayF =fruit_obj
    
-    //     newArrayV.map((e)=>{
-    //      if(localListN.includes(e.name) ){
-    //             e.clicked='Added' 
-    //             e.icon=removMinus  
-    //      }
-    //     })
+  //   //     newArrayV.map((e)=>{
+  //   //      if(localListN.includes(e.name) ){
+  //   //             e.clicked='Added' 
+  //   //             e.icon=removMinus  
+  //   //      }
+  //   //     })
    
-    //     newArrayF.map((e)=>{
-    //      if(localListN.includes(e.name) ){
-    //             e.clicked='Added' 
-    //             e.icon=removMinus  
-    //      }
-    //     })
+  //   //     newArrayF.map((e)=>{
+  //   //      if(localListN.includes(e.name) ){
+  //   //             e.clicked='Added' 
+  //   //             e.icon=removMinus  
+  //   //      }
+  //   //     })
    
-    //  }
+  //   //  }
 
 
 
@@ -195,7 +210,9 @@ function setSideStatus00(){
 
   return (
     <>
-      {sideStatus === false ? (
+     { (JSON.parse(localStorage.roles)[0]==false) ? 
+     <>
+     {sideStatus === false  ? (
         <Card className="fixed top-20 right-0 z-50 h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
           <div className="mb-2 flex items-center gap-4 p-4">
             <Button onClick={() => setSideStatus00(true)}>x</Button>
@@ -230,7 +247,8 @@ function setSideStatus00(){
         <div className="fixed top-20 right-0 z-50">
           <Button onClick={() => setSideStatus(false)}>My List</Button>
         </div>
-      )}
+      )} 
+</> :null}
     </>
   );
 }

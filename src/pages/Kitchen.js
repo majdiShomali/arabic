@@ -125,29 +125,18 @@ const [MyListN, setMyListN] = useState([]);
 const [vegetables, setVegetables] = useState([...vegetables_obj]);
 const [fruit, setFruit] = useState([...fruit_obj]);
 
-useEffect(()=>{
+const handleShowUser = async () => {
+  let userId= JSON.parse(localStorage.userid)
+  try {
+    const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
 
-let userid= JSON.parse(localStorage.userid)
-
-setUserId(userid)
-console.log(userid)
-
-axios.get(`http://localhost:4000/reporters/${userid}`)
-.then((response) => {
-  
-  console.log(response.data)
- let dataUser= response.data[0].userlist
- let dataUserN= response.data[0].userlistn
- const parsedData = dataUser.map(jsonString => JSON.parse(jsonString));
 
 const newArrayV =[...vegetables_obj]
 const newArrayF =[...fruit_obj]
-
-
-          localList=parsedData
-          localListN=dataUserN
-          setMyList(parsedData)
-          setMyListN(dataUserN)
+          localList=response.data[0].MyList
+          localListN=response.data[0].MyListn
+          setMyList(response.data[0].MyList)
+          setMyListN(response.data[0].MyListn)
         newArrayV.map((e)=>{
           if(localListN.includes(e.name) ){
                  e.clicked='Added' 
@@ -167,12 +156,65 @@ const newArrayF =[...fruit_obj]
 
          setFruit(newArrayF)
 
-console.log(localListN)
+
+  } catch (error) {
+    console.error("Error retrieving data:", error);
+  }
+  
+};
+
+useEffect(()=>{
+  handleShowUser();
+let userid= JSON.parse(localStorage.userid)
+
+setUserId(userid)
+console.log(userid)
 
 
 
-})
-.catch((error) => console.log(error.message))
+
+
+// axios.get(`http://localhost:4000/reporters/${userid}`)
+// .then((response) => {
+  
+//   console.log(response.data)
+//  let dataUser= response.data[0].userlist
+//  let dataUserN= response.data[0].userlistn
+//  const parsedData = dataUser.map(jsonString => JSON.parse(jsonString));
+
+// const newArrayV =[...vegetables_obj]
+// const newArrayF =[...fruit_obj]
+
+
+//           localList=parsedData
+//           localListN=dataUserN
+//           setMyList(parsedData)
+//           setMyListN(dataUserN)
+//         newArrayV.map((e)=>{
+//           if(localListN.includes(e.name) ){
+//                  e.clicked='Added' 
+//                  e.icon=removMinus  
+//                  console.log(e.name)
+//           }
+//          })
+
+//          setVegetables(newArrayV)
+
+//          newArrayF.map((e)=>{
+//           if(localListN.includes(e.name) ){
+//                  e.clicked='Added' 
+//                  e.icon=removMinus  
+//           }
+//          })
+
+//          setFruit(newArrayF)
+
+// console.log(localListN)
+
+
+
+// })
+// .catch((error) => console.log(error.message))
 
 
 
@@ -240,7 +282,7 @@ const filterDataByNameFruit = (searchTermFruit) => {
   let slicedArrayVegetables;
   let slicedArrayFruit;
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 7;
 
   totalItemsVegetables = FilterDataVegetables.length;
   totalItemsFruit = FilterDataFruit.length;
@@ -274,18 +316,13 @@ const filterDataByNameFruit = (searchTermFruit) => {
  
         let arr0= [...MyList]
         let arr1= [...MyListN]
+  
 
-      function changeStatusV(name,i){
-
-
- 
-
-        let userid= JSON.parse(localStorage.userid)
+      const changeStatusV = async (name,i) => {
         
-        console.log(userid)
+        let userid= JSON.parse(localStorage.userid)
         const newArray =[...vegetables]
         newArray.map((e)=>{
-
          if(name==e.name ){
              if(e.clicked=='Click to add'){
                 e.clicked='Added'
@@ -294,15 +331,6 @@ const filterDataByNameFruit = (searchTermFruit) => {
                 setMyListN(prevArray => [...prevArray, e.name])
                 arr0.push(e)
                 arr1.push(e.name)
-
-      
-        
-   
-              
-
-
-
-                
              }else{
                 e.clicked='Click to add'
                 e.icon=AddPlus
@@ -312,15 +340,10 @@ const filterDataByNameFruit = (searchTermFruit) => {
                    arr0 = arr0.filter(
                     (item) => item.name !== name
                   );
-              
-        
-               
+
                    arr1 = arr1.filter(
                     (item) => item !== name
                   );
-               
-
-
 
              }
          }
@@ -328,19 +351,32 @@ const filterDataByNameFruit = (searchTermFruit) => {
         setVegetables(() => { return  newArray});
 
 
-        axios.put(`http://localhost:4000/contactus00/${userid}`, {
-          userlist: arr0,
-          userlistn: arr1,
+     try { 
+          const updatedUser = {
+          // Update the properties of the user as needed
+          MyList: arr0,
+          MyListn:arr1,
+        };
+
+        await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser);
+       
+
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
+        // axios.put(`http://localhost:4000/contactus00/${userid}`, {
+        //   userlist: arr0,
+        //   userlistn: arr1,
           
-        })
-          .then(function (response) {
-            console.log(response.data);
-            // window.location.reload(false);
+        // })
+        //   .then(function (response) {
+        //     console.log(response.data);
+        //     // window.location.reload(false);
       
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
 
           updateTest([...MyList])
 
@@ -350,6 +386,8 @@ const filterDataByNameFruit = (searchTermFruit) => {
       const { test, updateTest} = useContext(UserContext);
 
       const [statusList, setStatusList]=useState(false)
+
+
  function updateList(){
 
  let userid= JSON.parse(localStorage.userid)
@@ -362,7 +400,7 @@ const filterDataByNameFruit = (searchTermFruit) => {
  }
 
 
-      function changeStatusF(name,i){
+  const changeStatusF = async (name,i) => {
         const newArray =[...fruit]
         newArray.map((e)=>{
 
@@ -397,7 +435,19 @@ const filterDataByNameFruit = (searchTermFruit) => {
 
         let userid= JSON.parse(localStorage.userid)
 
+        try { 
+          const updatedUser = {
+          // Update the properties of the user as needed
+          MyList: arr0,
+          MyListn:arr1,
+        };
 
+        await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser);
+       
+
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
         axios.put(`http://localhost:4000/contactus00/${userid}`, {
           userlist: arr0,
           userlistn: arr1,
@@ -413,6 +463,21 @@ const filterDataByNameFruit = (searchTermFruit) => {
           });
 
           updateTest([...MyList])
+        // axios.put(`http://localhost:4000/contactus00/${userid}`, {
+        //   userlist: arr0,
+        //   userlistn: arr1,
+          
+        // })
+        //   .then(function (response) {
+        //     console.log(response.data);
+        //     // window.location.reload(false);
+      
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+
+          // updateTest([...MyList])
 
 
 

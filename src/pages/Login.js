@@ -24,45 +24,64 @@ export default function LogIn() {
   
 
    
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
 
        event.preventDefault();
 
-       axios
-       .post("http://localhost:4000/recordp", {
-         email: email,
-         password: password,
-       })
- 
-       .then(function (response) {
-         if (response.data != "not passed") {
-           console.log(response.data[1]);
-          let x =[]
-             if (response.data[3]==0){
-             x= [false ,true,true]
-           }else if(response.data[3]==1){
-              x= [true ,false,true]
-           }else if(response.data[3]==2){
+
+
+       const userData = {
+        email: email,
+        password:password
+      };
+  
+      try {
+        // Send the data to the server using an HTTP POST request
+        const response = await axios.post(
+          "http://localhost:5000/api/usersLogin",
+          userData
+        );
+        console.log("Data inserted:", response.data);
+        if(response.data.error != 'incorrect password'){
+        //   setStatus("success");
+         console.log("success")
+
+        let x =[]
+             if (response.data[0].role==0){
+             x= [false ,true,true ]
+           }else if(response.data[0].role==1){
+              x= [true ,false,true ]
+           }else if(response.data[0].role==2){
               x= [true ,true,false]
            }
-           console.log(response.data[3])
+
            updateRouts(x)
-           updateSetCurruntUser(response.data[2])
-           localStorage.setItem("curruntUser",JSON.stringify(response.data[2]))
-           console.log("passed");
-           localStorage.setItem("userid",JSON.stringify(response.data[1]))
+           updateSetCurruntUser(response.data[0])
+           localStorage.setItem("curruntUser",JSON.stringify(response.data[0]))
+           localStorage.setItem("userid",JSON.stringify(response.data[0]._id))
+           localStorage.setItem("auth",JSON.stringify(response.data[0].token))
 
            updateSignStatus("SignOut")
            localStorage.setItem("SignStatus","SignOut")
- 
-           localStorage.setItem("auth",JSON.stringify(response.data[0]))
            localStorage.setItem("roles",JSON.stringify(x))
            window.location.href = 'http://localhost:3000/';
-         } else {
-           console.log("not passed");
-         }
-       })
-       .catch(function (error) {});
+        }else{
+        //   setStatus("failed");
+          console.log("failed")
+        }
+        
+      } catch (error) {
+        console.error("Error inserting data:", error);
+        // setStatus("error");
+        console.log("error")
+      }
+
+
+
+
+
+
+
  
 
 

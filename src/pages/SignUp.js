@@ -21,7 +21,7 @@ export default function Signup() {
 
 
        
-        const handleSubmit = (event) => {
+        const handleSubmit = async (event) => {
             event.preventDefault();
         
             validateName(name)
@@ -30,68 +30,74 @@ export default function Signup() {
             validatePhone(phone)
         
             if( validateName(name) && validatePassword(password) && validateEmail(email)&& validatePhone(phone) ){
-            alert(`welcome ${name}`)
-            let user={
-                username:name,
-                userPassword:password,
-                userEmail:email,
-                userphone:phone,
+            // alert(`welcome ${name}`)
+            // let user={
+            //     username:name,
+            //     userPassword:password,
+            //     userEmail:email,
+            //     userphone:phone,
 
-            }
+            // }
 
   
   // Perform registration logic here
-  let username=name
+  // let username=name
+  // const userData = {
+  //   username,
+  //   email,
+  //   password
+  // };
+
   const userData = {
-    username,
-    email,
-    password
+    firstName: name,
+    email: email,
+    password:password
   };
 
+  try {
+    // Send the data to the server using an HTTP POST request
+    const response = await axios.post(
+      "http://localhost:5000/api/users",
+      userData
+    );
+    console.log("Data inserted:", response.data[1]);
+    localStorage.setItem("auth",response.data[1])
+    window.location.href = "http://localhost:3000/LogIn";
+  } catch (error) {
+    console.error("Error inserting data:", error);
+  }
 
+  // axios
+  // .post("http://localhost:4000/records", {
+  //   name: name,
+  //   phone: phone,
+  //   email: email,
+  //   password: password,
+  // })
+  // .then(function (response) {
+  //   if (response.data != "taken") {
+  //     console.log(response.data);
 
-  axios
-  .post("http://localhost:4000/records", {
-    name: name,
-    phone: phone,
-    email: email,
-    password: password,
-  })
-  .then(function (response) {
-    if (response.data != "taken") {
-      console.log(response.data);
-
-
-
-      axios
-      .post("http://localhost:4000/records0", {
-        vegetables: [],
-        userid:response.data[0].userid
+  //     axios
+  //     .post("http://localhost:4000/records0", {
+  //       vegetables: [],
+  //       userid:response.data[0].userid
        
-      })
-      .then(function (response) {
+  //     })
+  //     .then(function (response) {
     
-      })
-      .catch(function (error) {});
+  //     })
+  //     .catch(function (error) {});
     
-    
 
-
-
-
-
-
-
-
-
-      window.location.href = "http://localhost:3000/LogIn";
-    } else {
-      console.log(response.data);
-      alert("This Email is already taken");
-      // setError("This Email is already taken");
-    }
-  })
-  .catch(function (error) {});
+  //     window.location.href = "http://localhost:3000/LogIn";
+  //   } else {
+  //     console.log(response.data);
+  //     alert("This Email is already taken");
+  //     // setError("This Email is already taken");
+  //   }
+  // })
+  // .catch(function (error) {});
 
 
 

@@ -136,8 +136,8 @@ function NavList() {
         className="font-normal"
       >
         <Link to="/">
-          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
-            <HomeIcon className="h-[18px] w-[18px] text-amber-600" />
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
+            <HomeIcon className="h-[18px] w-[18px] text-amber-600 " />
             Home
           </ListItem>
         </Link>
@@ -149,12 +149,15 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <Link to="/Kitchen">
-          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
+      { 
+      
+     localStorage.auth !=null ? <Link to="/Kitchen">
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
             <RestaurantIcon style={{ height: "18px", color: "#eab308" }} />
             Kitchen
           </ListItem>
-        </Link>
+        </Link> :null
+        }
       </Typography>
       <Typography
         as="a"
@@ -164,7 +167,7 @@ function NavList() {
         className="font-normal"
       >
         <Link to="/About">
-          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
             <CubeTransparentIcon className="h-[18px] w-[18px] text-amber-600" />
             About Us
           </ListItem>
@@ -179,7 +182,7 @@ function NavList() {
         className="font-normal"
       >
         <Link to="/ContactUs">
-          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-black hover:text-white focus:bg-amber-600">
+          <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
             <UserCircleIcon className="h-[18px] w-[18px] text-amber-600" />
             Contact Us
           </ListItem>
@@ -222,6 +225,8 @@ export default function Example() {
 
           localStorage.removeItem("auth");
           localStorage.removeItem("roles");
+          localStorage.removeItem("userid");
+          localStorage.removeItem("curruntUser");
           window.location.href = "http://localhost:3000/";
         } else Swal.fire(" Cancelled", "", "error");
       });
@@ -259,6 +264,8 @@ export default function Example() {
         localStorage.setItem("SignStatus", "signUp");
         localStorage.removeItem("auth");
         localStorage.removeItem("roles");
+        localStorage.removeItem("userid");
+        // localStorage.removeItem("curruntUser");
         window.location.href = "http://localhost:3000/";
 
         console.log(label);
@@ -379,10 +386,24 @@ export default function Example() {
       <Collapse open={openNav}>
         <NavList />
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-          <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
+          { localStorage.auth == null ?
+         
+          <Button  variant="outlined" size="sm" color="blue-gray" fullWidth>
+             <Link to="/Login" >
             Sign In
+            </Link>
           </Button>
+          : 
+               
+               <Button  variant="outlined" size="sm" color="blue-gray" fullWidth>
+                <Link to="/Profile" fullWidth >
+                 Profile
+                 </Link>  
+               </Button>
+                 
+          }
         </div>
+      
       </Collapse>
     </Navbar>
   );
