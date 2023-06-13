@@ -60,8 +60,6 @@ export default function Signup() {
       "http://localhost:5000/api/users",
       userData
     );
-    console.log("Data inserted:", response.data[1]);
-    localStorage.setItem("auth",response.data[1])
     window.location.href = "http://localhost:3000/LogIn";
   } catch (error) {
     console.error("Error inserting data:", error);

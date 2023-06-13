@@ -196,14 +196,14 @@ export default function Example() {
   const [openNav, setOpenNav] = React.useState(false);
   const { SignStatus, updateSignStatus } = useContext(UserContext);
 
-  useEffect(() => {
-    if (localStorage.SignStatus != null) {
-      updateSignStatus(localStorage.SignStatus);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.SignStatus != null) {
+  //     updateSignStatus(localStorage.SignStatus);
+  //   }
+  // }, []);
 
   function handleSign() {
-    if (SignStatus == "signUp") {
+    if (localStorage.auth == null) {
       window.location.href = "http://localhost:3000/SignUp";
     } else {
       Swal.fire({
@@ -358,7 +358,7 @@ export default function Example() {
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          {SignStatus == "signUp" ? (
+          {localStorage.auth == null ? (
             <Button
               onClick={() => handleSign()}
               size="sm"

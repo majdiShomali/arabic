@@ -23,7 +23,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import NavListMenuD from "./pages/dashboard/NavDashboard";
 import Test0 from "./pages/dashboard/test0";
 import UserProfile from "./pages/UserProfile";
-
+import UserInfo from "./components/dashboard/UserInfo"
 export default function App() {
   const [hideRouter1, setHideRouterUser] = useState(false);
   const [hideRouter2, setHideRouterAdmin] = useState(true);
@@ -73,6 +73,7 @@ export default function App() {
             <Route index element={<Dashboard />} />
 
             <Route path="Test0" element={<Test0 />} />
+            <Route path="ListUser" element={<UserInfo />} />
             <Route path="UserProfile" element={<UserProfile />} />
           </Routes>
         </div>

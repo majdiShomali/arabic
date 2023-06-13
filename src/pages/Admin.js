@@ -329,6 +329,17 @@ const Admin = () => {
       NewTable[ButtonStatusId].ItemsName = MyListNAdmin;
 
       setTable(NewTable);
+
+
+
+
+
+
+
+
+
+
+      
       setButtonStatus("create");
 
       setName("");

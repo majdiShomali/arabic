@@ -34,7 +34,7 @@ export default function LogIn() {
         email: email,
         password:password
       };
-  
+
       try {
         // Send the data to the server using an HTTP POST request
         const response = await axios.post(
@@ -45,21 +45,22 @@ export default function LogIn() {
         if(response.data.error != 'incorrect password'){
         //   setStatus("success");
          console.log("success")
+         console.log(response.data.token);
 
         let x =[]
-             if (response.data[0].role==0){
+             if (response.data.user0.role==0){
              x= [false ,true,true ]
-           }else if(response.data[0].role==1){
+           }else if(response.data.user0.role==1){
               x= [true ,false,true ]
-           }else if(response.data[0].role==2){
+           }else if(response.data.user0.role==2){
               x= [true ,true,false]
            }
 
            updateRouts(x)
-           updateSetCurruntUser(response.data[0])
-           localStorage.setItem("curruntUser",JSON.stringify(response.data[0]))
-           localStorage.setItem("userid",JSON.stringify(response.data[0]._id))
-           localStorage.setItem("auth",JSON.stringify(response.data[0].token))
+           updateSetCurruntUser(response.data.user0)
+           localStorage.setItem("curruntUser",JSON.stringify(response.data.user0))
+           localStorage.setItem("userid",JSON.stringify(response.data.user0._id))
+           localStorage.setItem("auth",(response.data.token))
 
            updateSignStatus("SignOut")
            localStorage.setItem("SignStatus","SignOut")
