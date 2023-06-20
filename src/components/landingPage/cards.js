@@ -8,7 +8,7 @@ import { useState ,useEffect } from 'react';
 import Pagination from "@mui/material/Pagination";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
-
+import axios from "axios";
 import { Link } from 'react-router-dom'
 import DyRecipeCardMeal from '../DyRecipeCardMeal'
 import DyRecipeCardDrink from '../DyRecipeDrinkCard'
@@ -35,29 +35,47 @@ const [FilterDataDrinks, setFilterDataDrinks] = useState([]);
 
 const [table, setTable] = useState([]);
 
-  useEffect(() => {
 
-    if(localStorage.table !=[] && localStorage.table !=null && localStorage.table !=undefined ){
-      localTable=JSON.parse(localStorage.table)
-      setTable([...localTable])
-    }
-    
+const allRecipes = async () => {
+  try {
+      const response = await axios.get("http://localhost:5000/api/recipes");
+    console.log(response.data)
+    setTable(response.data)
 
     updateMeals0(() => {
-          const newItems = localTable?.filter(
-            (item) => item.Category === "cook_now_container"
-          );
-          return  (newItems)
-          
-        });
+      const newItems = response.data?.filter(
+        (item) => item.category === "cook_now_container"
+      );
+      return  (newItems)
+      
+    });
 
-        setFilterDataMeals(() => {
-          const newItems = localTable?.filter(
-            (item) => item.Category === "cook_now_container"
-          );
-          return  (newItems)
-          
-        });
+
+    setFilterDataMeals(() => {
+      const newItems = response.data?.filter(
+        (item) => item.category === "cook_now_container"
+      );
+      return  (newItems)
+      
+    });
+
+
+
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
+  };
+
+
+
+
+  useEffect(() => {
+    allRecipes()
+
+  
+
+
+
 
   //       updateDrinks(() => {
   //         const newItems = table.filter(
@@ -86,7 +104,7 @@ const [table, setTable] = useState([]);
 
     },[]);
 
-    console.log(FilterDataMeals)
+    console.log(table)
 //-----------------------search------------------------//
 
 const filterDataByNameMeals = (searchTermMeals) => {
@@ -216,6 +234,8 @@ Name={e.Name}
 card={card}
 index={i}
 SAMeals={slicedArrayMeals}
+cardId ={e._id}
+img ={e.img}
 />
 </>
 )

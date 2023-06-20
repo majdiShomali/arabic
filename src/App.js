@@ -19,11 +19,19 @@ import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Sidebar from "./pages/dashboard/Sidebar";
-import Dashboard from "./pages/dashboard/Dashboard";
 import NavListMenuD from "./pages/dashboard/NavDashboard";
-import Test0 from "./pages/dashboard/test0";
+import MainDashboard from "./pages/dashboard/MainDashboard";
 import UserProfile from "./pages/UserProfile";
 import UserInfo from "./components/dashboard/UserInfo"
+import ApproveTable from "./components/dashboard/ApproveTable";
+import AdminInfo from "./components/dashboard/AdminInfo";
+import EditAboutUs from "./components/dashboard/EditAboutUs";
+import PendingRecipes from "./components/dashboard/PendingRecipes";
+
+
+
+import axios from "axios";
+
 export default function App() {
   const [hideRouter1, setHideRouterUser] = useState(false);
   const [hideRouter2, setHideRouterAdmin] = useState(true);
@@ -31,14 +39,50 @@ export default function App() {
 
   const { routs, updateRouts } = useContext(UserContext);
 
+
+  const fetchProtectedData = async () => {
+    try {
+      const token = localStorage.getItem("auth");
+      console.log(token);
+      if (token) {
+        const response = await axios.get("http://localhost:5000/protected", {
+          headers: {
+            Authorization: token,
+          },
+        });
+        let x =[];
+        
+        if(response.data.user.role ==1){
+          x= [true ,false,true ]
+        }else if (response.data.user.role ==2){
+          x= [true ,true,false]
+        }else{
+          x= [false ,true,true ]
+        }
+        setHideRouterUser(x[0]);
+        setHideRouterAdmin(x[1]);
+        setHideRouterProvider(x[2]);
+        updateRouts(x)
+
+      }
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem("auth");
+      window.location.href = "http://localhost:3000/Login";
+    } finally {
+      console.log(false);
+    }
+  };
+
+
+
+
+
+
+
   useEffect(() => {
-    if (localStorage.roles != null) {
-      let roles = JSON.parse(localStorage.roles);
-      let status = localStorage.SignStatus;
-      setHideRouterUser(roles[0]);
-      setHideRouterAdmin(roles[1]);
-      setHideRouterProvider(roles[2]);
-      updateRouts(roles);
+    if (localStorage.auth != null) {
+      fetchProtectedData()
     }
   }, []);
 
@@ -52,7 +96,7 @@ export default function App() {
           <Route path="About" element={<About />} />
           <Route path="SignUp" element={<SignUp />} />
           <Route path="LogIn" element={<LogIn />} />
-          <Route path="ShowRecipe" element={<ShowRecipe />} />
+          <Route path="ShowRecipe/:id" element={<ShowRecipe />} />
           <Route path="Recipes" element={<Recipes />} />
           <Route path="Kitchen" element={<Kitchen />} />
           <Route path="UserProfile" element={<UserProfile />} />
@@ -70,11 +114,13 @@ export default function App() {
         <div style={{ width: "100%" }}>
           <NavListMenuD />
           <Routes>
-            <Route index element={<Dashboard />} />
-
-            <Route path="Test0" element={<Test0 />} />
+            <Route index element={<MainDashboard />} />
             <Route path="ListUser" element={<UserInfo />} />
             <Route path="UserProfile" element={<UserProfile />} />
+            <Route path="ListProviders" element={<ApproveTable />} />
+            <Route path="ListAdmin" element={<AdminInfo />} />
+            <Route path="EditAboutContact" element={<EditAboutUs />} />
+            <Route path="PendingRecipes" element={<PendingRecipes />} />
           </Routes>
         </div>
       </Router>

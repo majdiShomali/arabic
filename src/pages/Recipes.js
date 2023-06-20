@@ -17,7 +17,7 @@ import Pagination from "@mui/material/Pagination";
 
 import DyRecipeCardMeal from '../components/DyRecipeCardMeal'
 import DyRecipeCardDrink from '../components/DyRecipeDrinkCard'
-
+import axios from 'axios'
 const Recipes = () => {
 
     // const { MyList, updateMyList } = useContext(UserContext);
@@ -33,47 +33,112 @@ const Recipes = () => {
     let localTable =[]
     let localListN =[]
 
-    if(localStorage.table !=[] && localStorage.table !=null && localStorage.table !=undefined ){
-      localTable=JSON.parse(localStorage.table)
-      localListN=JSON.parse(localStorage.MyListN)
-    }
+    // if(localStorage.table !=[] && localStorage.table !=null && localStorage.table !=undefined ){
+    //   localTable=JSON.parse(localStorage.table)
+    //   localListN=JSON.parse(localStorage.MyListN)
+    // }
 
-    const [table, setTable] = useState(localTable);
-    const [MyListN, updateMyListN] = useState(localListN);
+    const [table, setTable] = useState([]);
+    const [MyListN, updateMyListN] = useState([]);
 
 
     // const [Meals, setMeals] = useState([]);
     // const [Drinks, setDrinks] = useState([]);
     // const [Sweet, setSweet] = useState([]);
 
-    const { Meals, updateMeals   } = useContext(UserContext);
-    const { Drinks, updateDrinks } = useContext(UserContext);
-    const { Sweet, updateSweet   } = useContext(UserContext);
+    // const { Meals, updateMeals   } = useContext(UserContext);
+    // const { Drinks, updateDrinks } = useContext(UserContext);
+    // const { Sweet, updateSweet   } = useContext(UserContext);
+    const [ Meals, updateMeals   ] = useState([]);
+    const [ Drinks, updateDrinks ] = useState([]);
+    const [ Sweet, updateSweet   ] = useState([]);
+
+    const [userId ,setUserId] = useState()
+    const fetchProtectedData = async () => {
+
+    };
+
+
+
+
+    const allRecipes = async () => {
+
+      try {
+        const token = localStorage.getItem("auth");
+        if (token) {
+          const response = await axios.get("http://localhost:5000/protected", {
+            headers: {
+              Authorization: token,
+            },
+          });
+          let id = response.data.user.id
+          setUserId(response.data.user.id)
+         console.log(id)
+          try {
+            // Send the data to the server using an HTTP POST request
+            const response = await axios.get(`http://localhost:5000/api/users/${id}`);
+            console.log(response.data);
+            updateMyListN(response.data[0].MyListn);
+
+          } catch (error) {
+            console.error("Error inserting data:", error);
+          }
+
+
+
+        }
+      } catch (error) {
+        console.error(error);
+        localStorage.removeItem("auth");
+        window.location.href = "http://localhost:3000/Login";
+      } finally {
+        console.log(false);
+      }
+
+
+
+
+
+
+      try {
+          const response = await axios.get("http://localhost:5000/api/recipes");
+        console.log(response.data)
+        setTable(response.data)
+      let rrr= response.data
+
+        updateMeals((prevAccounts) => {
+          const newItems = rrr.filter(
+            (item) => item.category === "cook_now_container"
+          );
+          return  (newItems)
+          
+        });
+      //   updateDrinks((prevAccounts) => {
+      //     const newItems = rrr.filter(
+      //       (item) => item.Category === "cook_now_container2"
+      //     );
+      //     return  (newItems)
+          
+      //   });
+      //   updateSweet((prevAccounts) => {
+      //     const newItems = rrr.filter(
+      //       (item) => item.Category === "cook_now_container3"
+      //     );
+      //     return  (newItems)
+          
+      //   });
+    
+    
+        } catch (error) {
+          console.error("Error inserting data:", error);
+        }
+      };
+
+
+
 
     useEffect(() => {
-
-      updateMeals((prevAccounts) => {
-            const newItems = table.filter(
-              (item) => item.Category === "cook_now_container"
-            );
-            return  (newItems)
-            
-          });
-          updateDrinks((prevAccounts) => {
-            const newItems = table.filter(
-              (item) => item.Category === "cook_now_container2"
-            );
-            return  (newItems)
-            
-          });
-          updateSweet((prevAccounts) => {
-            const newItems = table.filter(
-              (item) => item.Category === "cook_now_container3"
-            );
-            return  (newItems)
-            
-          });
-
+      allRecipes()
       },[]);
 
 
@@ -209,6 +274,8 @@ Name={e.Name}
 card={card}
 index={i}
 SAMeals={slicedArrayMeals}
+img={e.img}
+cardId={e._id}
 />
 
  )}
@@ -245,6 +312,7 @@ if(checkIfAllExist(e.ItemsName, MyListN )){
       card={card}
       index={i}
       SADrinks={slicedArrayDrinks}
+      img={e.img}
       />
         
         

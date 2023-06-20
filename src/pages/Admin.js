@@ -1,5 +1,5 @@
 import React from "react";
-import "./Admin.css";
+// import "./Admin.css";
 import { useState, useEffect } from "react";
 // import AdminForm from '../components/AdminForm';
 // import { useContext } from "react";
@@ -13,6 +13,7 @@ import { mdiHamburgerPlus } from "@mdi/js";
 import { mdiStove } from "@mdi/js";
 import aboutMeal from "../Images/meals/majdi.jpg";
 import SidebarMyList from "../components/SidebarMyList"
+import axios from "axios";
 import {
   Card,
   Input,
@@ -24,6 +25,48 @@ import {
 import { mdiPlus } from "@mdi/js";
 import { mdiMinus } from "@mdi/js";
 const Admin = () => {
+  const [img, setImg] = useState("");
+
+  const onChange = (e) => {
+    const files = e.target.files;
+    const file = files[0];
+    getBase64(file);
+    console.log(img);
+  };
+  const onLoad = (fileString) => {
+    setImg(fileString);
+  };
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      onLoad(reader.result);
+    };
+  };
+
+
+  const allRecipes = async () => {
+   
+    try {
+      // Send the data to the server using an HTTP POST request
+      const response = await axios.get("http://localhost:5000/api/recipes");
+      console.log(response.data);
+       setTable(response.data)
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
+  };
+
+
+  useEffect(() => {
+
+    allRecipes()
+
+  },[])
+
+
+
+
   let AddPlus = mdiPlus;
   let removMinus = mdiMinus;
 
@@ -259,27 +302,19 @@ const Admin = () => {
   const [link2, setLink2] = useState("");
   const [link3, setLink3] = useState("");
   const [currentLinks, setCurrentLinks] = useState([]);
-  let localTable = [];
 
-  if (
-    localStorage.table != [] &&
-    localStorage.table != null &&
-    localStorage.table != undefined
-  ) {
-    localTable = JSON.parse(localStorage.table);
-  }
-
-  const [table, setTable] = useState(localTable);
+  const [table, setTable] = useState([]);
 
   const [yourSelectedStateValue, setOption] = useState("cook_now_container");
 
   const [ButtonStatus, setButtonStatus] = useState("create");
   const [ButtonStatusId, setButtonStatusId] = useState();
 
-  function CreateNew() {
+  const CreateNew = async() => {
     let link_name001;
     let link_name002;
     let link_name003;
+
 
     if (link1 != "") {
       link_name001 = "https://www.youtube.com/embed/".concat(
@@ -304,43 +339,34 @@ const Admin = () => {
       link_name003 = link3;
     }
 
-    if (ButtonStatus == "create") {
       let tableObj = {
-        Id: table.length,
-        Name: name,
-        Category: yourSelectedStateValue,
-        Names: [name1, name2, name3],
-        Links: [link_name001, link_name002, link_name003],
+        recipeName: name,
+        category: yourSelectedStateValue,
+        names: [name1, name2, name3],
+        links: [link_name001, link_name002, link_name003],
         Items: foodCards,
         ItemsName: foodCardsName,
+        img:img
       };
-      setTable((prevArray) => [...prevArray, tableObj]);
-    } else {
-      let NewTable = [...table];
-      NewTable[ButtonStatusId].Name = name;
-      NewTable[ButtonStatusId].Category = yourSelectedStateValue;
-      NewTable[ButtonStatusId].Names = [name1, name2, name3];
-      NewTable[ButtonStatusId].Links = [
-        link_name001,
-        link_name002,
-        link_name003,
-      ];
-      NewTable[ButtonStatusId].Items = MyListAdmin;
-      NewTable[ButtonStatusId].ItemsName = MyListNAdmin;
 
-      setTable(NewTable);
-
-
-
+    const userData = {
+      recipes: tableObj,
+    };
+  
+    try {
+      // Send the data to the server using an HTTP POST request
+      const response = await axios.post(
+        "http://localhost:5000/api/recipes",
+        tableObj
+      );
+      console.log(response.data)
+     
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
 
 
 
-
-
-
-
-      
-      setButtonStatus("create");
 
       setName("");
       setName1("");
@@ -351,12 +377,17 @@ const Admin = () => {
       setLink3("");
       setMyListAdmin([]);
       setMyListNAdmin([]);
+      setFoodCards([]);
+      setFoodCardsName([]);
       let NewItems = [...items];
       NewItems.map((et) => {
         et.clicked = "Click to add";
       });
       setItems(NewItems);
-    }
+
+      
+      // allRecipes()
+
   }
 
   function ShowVideos(index) {
@@ -365,45 +396,49 @@ const Admin = () => {
     });
   }
 
-  function DeleteRecipe(id) {
-    setTable((prevAccounts) => {
-      const newItems = prevAccounts.filter((item) => item.Id !== id);
-      return newItems;
-    });
-  }
+
+  const DeleteRecipe = async (Id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/recipes/${Id}`);
+      // fetchUsers(); // Refresh the user list after deleting a user
+      // allRecipes()
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
 
   function UpdateRecipe(e, id) {
     let link_name001;
     let link_name002;
     let link_name003;
-    if (e.Links[0] != "") {
+    if (e.links[0] != "") {
       link_name001 = "https://youtu.be/".concat(
-        e.Links[0].replace("https://www.youtube.com/embed/", "")
+        e.links[0].replace("https://www.youtube.com/embed/", "")
       );
     } else {
       link_name001 = "";
     }
 
-    if (e.Links[1] != "") {
+    if (e.links[1] != "") {
       link_name002 = "https://youtu.be/".concat(
-        e.Links[1].replace("https://www.youtube.com/embed/", "")
+        e.links[1].replace("https://www.youtube.com/embed/", "")
       );
     } else {
       link_name002 = "";
     }
 
-    if (e.Links[2] != "") {
+    if (e.links[2] != "") {
       link_name003 = "https://youtu.be/".concat(
-        e.Links[2].replace("https://www.youtube.com/embed/", "")
+        e.links[2].replace("https://www.youtube.com/embed/", "")
       );
     } else {
       link_name003 = "";
     }
-
-    setName(e.Name);
-    setName1(e.Names[0]);
-    setName2(e.Names[1]);
-    setName3(e.Names[2]);
+console.log(e)
+    setName(e.recipeName);
+    setName1(e.names[0]);
+    setName2(e.names[1]);
+    setName3(e.names[2]);
     setLink1(link_name001);
     setLink2(link_name002);
     setLink3(link_name003);
@@ -411,6 +446,7 @@ const Admin = () => {
     setMyListNAdmin(e.ItemsName);
     let NewItems = [...items];
     NewItems.map((et) => {
+
       if (e.ItemsName.includes(et.name)) {
         et.clicked = "Added";
       }
@@ -421,12 +457,36 @@ const Admin = () => {
     setButtonStatusId(id);
   }
 
+  const UpdateNow =async ()=> {
+    try {
+
+      const updatedRecipe = {
+        recipeName: name,
+        Category: yourSelectedStateValue,
+        names:[name1,name2,name3],
+        links: [link1,link2,link3],
+        Items: MyListAdmin,
+        ItemsName: MyListNAdmin,
+      }
+      
+      
+      
+console.log(updatedRecipe)
+
+      await axios.put(`http://localhost:5000/api/recipes/${ButtonStatusId}`, updatedRecipe);
+      // fetchUsers(); // Refresh the user list after updating a user
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+
+
+  }
+
   return (
     <>
     <SidebarMyList/>
     
-   
-      <div class="my_list_container">
+      <div className="flex">
         {MyListAdmin?.map((e, i) => {
           return (
             <div
@@ -481,22 +541,13 @@ const Admin = () => {
 
 
 
-      <fieldset className="AdminFieldset">
+      <fieldset className="">
         <legend>
           All ingredients:
-          {/* <input
-            type="text"
-            placeholder="Search"
-            style={{ border: "1px solid black" }}
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              filterDataByName(e.target.value);
-            }}
-          /> */}
+
         </legend>
 
-        <div class="all_items_container">
+        <div className="flex">
           {slicedArray.map((e, i) => {
             return (
               <div
@@ -517,7 +568,7 @@ const Admin = () => {
         </div>
       </fieldset>
 
-      <div className="PaginationCards">
+      <div className="w-full flex justify-center">
         {
           <Pagination
             count={totalPages}
@@ -527,145 +578,110 @@ const Admin = () => {
         }
       </div>
 
-      <div className="CrudFormContainer mb-4 mt-4">
+      <div className=" mb-4 mt-4">
         <Card color="transparent" shadow={false}>
-          <fieldset className="AdminFieldset0">
-            <legend>
-              <Typography color="gray" className="mt-1 font-normal">
-                <span style={{ color: "black" }}>
-                  Enter your recipe details:
-                </span>
-              </Typography>
-            </legend>
-            <form className="mt-4 mb-2 ">
-              <div style={{ width: "35rem" }} className="mb-4  ">
-                <Input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  size="lg"
-                  label="Meal Name"
-                />
-              </div>
+     
+            <div className="flex justify-center">
 
-              <div className="mb-4 flex ">
-                <Input
-                  value={name1}
-                  onChange={(e) => setName1(e.target.value)}
-                  style={{ width: "10rem" }}
-                  size="lg"
-                  label="Name 1"
-                />
-                <Input
-                  value={name2}
-                  onChange={(e) => setName2(e.target.value)}
-                  style={{ width: "10rem" }}
-                  size="lg"
-                  label="Name 2"
-                />
-                <Input
-                  value={name3}
-                  onChange={(e) => setName3(e.target.value)}
-                  style={{ width: "10rem" }}
-                  size="lg"
-                  label="Name 2"
-                />
-              </div>
+  <form className="mt-4 mb-2">
+    <div className="mb-4">
+      <Input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        label="Meal Name"
+      />
+    </div>
 
-              <div className="mb-4 flex ">
-                <Input
-                  value={link1}
-                  onChange={(e) => setLink1(e.target.value)}
-                  style={{ width: "10rem" }}
-                  size="lg"
-                  label="Youtube link 1"
-                />
-                <Input
-                  value={link2}
-                  onChange={(e) => setLink2(e.target.value)}
-                  style={{ width: "10rem" }}
-                  size="lg"
-                  label="Youtube link 2"
-                />
-                <Input
-                  value={link3}
-                  onChange={(e) => setLink3(e.target.value)}
-                  style={{ width: "10rem" }}
-                  size="lg"
-                  label="Youtube link 2"
-                />
-              </div>
-              <div>
-                <select
-                  value={yourSelectedStateValue}
-                  onChange={(e) => setOption(e.target.value)}
-                >
-                  <option value="cook_now_container">Meals</option>
-                  <option value="cook_now_container2">Drinks</option>
-                  <option value="cook_now_container3">Sweets</option>
-                </select>
-              </div>
+    <div className="mb-4 flex lg:flex-row sm:flex-col">
+      <Input
+        value={name1}
+        onChange={(e) => setName1(e.target.value)}
+        label="Name 1"
+      />
+      <Input
+        value={name2}
+        onChange={(e) => setName2(e.target.value)}
+        label="Name 2"
+      />
+      <Input
+        value={name3}
+        onChange={(e) => setName3(e.target.value)}
+        label="Name 3"
+      />
+    </div>
 
-              <Button
-                onClick={() => CreateNew()}
-                className="mt-6 bg-[#E8CC95]"
-                fullWidth
-              >
-                {ButtonStatus}
-              </Button>
-            </form>
-          </fieldset>
+    <div className="mb-4 flex lg:flex-row sm:flex-col">
+      <Input
+        value={link1}
+        onChange={(e) => setLink1(e.target.value)}
+        label="Youtube link 1"
+      />
+      <Input
+        value={link2}
+        onChange={(e) => setLink2(e.target.value)}
+        label="Youtube link 2"
+      />
+      <Input
+        value={link3}
+        onChange={(e) => setLink3(e.target.value)}
+        label="Youtube link 3"
+      />
+    </div>
+
+
+                <div>
+                  <label className="font-medium">Case Image</label>
+
+                  <input
+                    className="shadow mb-4 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                    type="file"
+                    placeholder="Table Image"
+                    name="guest_num"
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    accept="image/*"
+                  />
+                </div>
+
+
+    <div>
+      <select
+        value={yourSelectedStateValue}
+        onChange={(e) => setOption(e.target.value)}
+        className="w-full border p-2 rounded"
+      >
+        <option value="cook_now_container">Meals</option>
+        <option value="cook_now_container2">Drinks</option>
+        <option value="cook_now_container3">Sweets</option>
+      </select>
+    </div>
+
+    {ButtonStatus === "create" ? (
+      <Button
+        onClick={() => CreateNew()}
+        className="mt-6 bg-[#E8CC95] w-full"
+      >
+        Create
+      </Button>
+    ) : (
+      <Button
+        onClick={() => UpdateNow()}
+        className="mt-6 bg-[#E8CC95] w-full"
+      >
+        Update
+      </Button>
+    )}
+  </form>
+</div>
         </Card>
       </div>
 
       {/* //--------------------------------------------------------------------------// */}
 
       <div id="crud">
-        {/* <div className="head">
-          <h2>meal name</h2>
-          <input value={name} onChange={(e) => setName(e.target.value)}  className="links_input001" placeholder="MEAL name" type="text" id="meal_name_in" />
-        </div>
-        <div className="inputs">
-
-          <div className="link_div_submit">
-            <input value={name1} onChange={(e) => setName1(e.target.value)} className="links_input001" placeholder="name 1" type="text" id="name_link0" />
-            <input value={name2} onChange={(e) => setName2(e.target.value)} className="links_input001" placeholder="name 2" type="text" id="name_link1" />
-            <input value={name3} onChange={(e) => setName3(e.target.value)} className="links_input001" placeholder="name 3" type="text" id="name_link2" />
-          </div>
-
-          <div className="link_div_submit">
-            <input value={link1} onChange={(e) => setLink1(e.target.value)} className="links_input00" placeholder="link 1" type="text" id="link_add_0" />
-            <input value={link2} onChange={(e) => setLink2(e.target.value)} className="links_input00" placeholder="link 2" type="text" id="link_add_1" />
-            <input value={link3} onChange={(e) => setLink3(e.target.value)} className="links_input00" placeholder="link 3" type="text" id="link_add_2" />
-          </div>
-
-          <select
-         value={yourSelectedStateValue} 
-         onChange={e => setOption(e.target.value)} 
-           >
-              <option value="cook_now_container">Meals</option>
-              <option value="cook_now_container2">Drinks</option>
-              <option value="cook_now_container3">Sweets</option>
-         </select>
- 
-          <button onClick={()=>CreateNew()} id="createnew_obj">{ButtonStatus}</button>
-        </div> */}
         <div className="outputs">
-          <div className="searchblock">
-            <input
-              onkeyup="searchData(this.value)"
-              type="text"
-              id="searchby"
-              placeholder="search"
-            />
-            <div className="btnsearch">
-              <button onclick="get_search_mood(this.id)" id="searchbytitle">
-                search by title
-              </button>
-              <button onclick="get_search_mood(this.id)" id="searchbycategory">
-                search by category
-              </button>
-            </div>
-          </div>
+
           <div id="table_div">
             <table id="table_body">
               <thead>
@@ -682,22 +698,23 @@ const Admin = () => {
                 {table.map((e, i) => {
                   return (
                     <tr>
-                      <th>{e.Id}</th>
-                      <th>{e.Name}</th>
-                      <th>{e.Category}</th>
+                           
+                      <th>{e._id}</th>
+                      <th>{e.recipeName}</th>
+                      <th>{e.category}</th>
                       <th>
                         {" "}
                         <button onClick={() => ShowVideos(i)}>view</button>{" "}
                       </th>
                       <th>
                         {" "}
-                        <button onClick={() => UpdateRecipe(e, e.Id)}>
+                        <button onClick={() => UpdateRecipe(e, e._id)}>
                           update
                         </button>{" "}
                       </th>
                       <th>
                         {" "}
-                        <button onClick={() => DeleteRecipe(e.Id)}>
+                        <button onClick={() => DeleteRecipe(e._id)}>
                           delete
                         </button>{" "}
                       </th>
@@ -724,9 +741,6 @@ const Admin = () => {
           })}
         </div>
       </div>
-      {localStorage.setItem("table", JSON.stringify(table))}
-
-      {/* <AdminForm/> */}
     </>
   );
 };

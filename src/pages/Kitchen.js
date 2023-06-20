@@ -48,7 +48,6 @@ const Kitchen = () => {
   ];
   let vegetables_img = [];
   let vegetables_type = [];
-
   let fruit_name = [
     "apple",
     "Apricot",
@@ -237,7 +236,7 @@ const Kitchen = () => {
   let slicedArrayVegetables;
   let slicedArrayFruit;
 
-  const itemsPerPage = 7;
+  const itemsPerPage = 6;
 
   totalItemsVegetables = FilterDataVegetables.length;
   totalItemsFruit = FilterDataFruit.length;
@@ -270,11 +269,11 @@ const Kitchen = () => {
   let arr1 = [...MyListN];
 
   const changeStatusV = async (name, i) => {
-    let userid = JSON.parse(localStorage.userid);
+    // let userid = JSON.parse(localStorage.userid);
     const newArray = [...vegetables];
     newArray.map((e) => {
-      if (name == e.name) {
-        if (e.clicked == "Click to add") {
+      if (name === e.name) {
+        if (e.clicked === "Click to add") {
           e.clicked = "Added";
           e.icon = removMinus;
           setMyList((prevArray) => [...prevArray, e]);
@@ -309,24 +308,21 @@ const Kitchen = () => {
     }
 
 
-    updateTest([...MyList]);
   };
 
-  const { test, updateTest } = useContext(UserContext);
 
   const [statusList, setStatusList] = useState(false);
 
   function updateList() {
-    let userid = JSON.parse(localStorage.userid);
+    // let userid = JSON.parse(localStorage.userid);
 
-    updateTest([...MyList]);
   }
 
   const changeStatusF = async (name, i) => {
     const newArray = [...fruit];
     newArray.map((e) => {
-      if (name == e.name) {
-        if (e.clicked == "Click to add") {
+      if (name === e.name) {
+        if (e.clicked === "Click to add") {
           e.clicked = "Added";
           e.icon = removMinus;
           setMyList((prevArray) => [...prevArray, e]);
@@ -347,7 +343,7 @@ const Kitchen = () => {
       return newArray;
     });
 
-    let userid = JSON.parse(localStorage.userid);
+    // let userid = JSON.parse(localStorage.userid);
 
     try {
       const updatedUser = {
@@ -361,7 +357,7 @@ const Kitchen = () => {
       console.error("Error updating user:", error);
     }
     axios
-      .put(`http://localhost:4000/contactus00/${userid}`, {
+      .put(`http://localhost:4000/contactus00/${userId}`, {
         userlist: arr0,
         userlistn: arr1,
       })
@@ -372,7 +368,6 @@ const Kitchen = () => {
         console.log(error);
       });
 
-    updateTest([...MyList]);
 
   };
 
@@ -404,10 +399,13 @@ const Kitchen = () => {
   console.log(SearchType);
   return (
     <>
+
+
+
       {/* <button onClick={()=>{updateList()
         }}>save</button> */}
       {/* <AboutUsed/> */}
-      <SidebarMyList />
+      <SidebarMyList MyListnnn={MyList}  />
 
       <div
         className="bg-cover bg-center h-screen shadow"
@@ -496,35 +494,100 @@ const Kitchen = () => {
         </div>
       </div>
 
-      {SearchType == "" || SearchType == "vegetables" ? (
+      {SearchType === "" || SearchType === "vegetables" ? (
         <>
-          <fieldset className="AdminFieldset border border-solid border-black">
+          <fieldset className="AdminFieldset border border-solid border-black p-5">
             <legend>Vegetables:</legend>
             <div class="vegetables_container">
               {slicedArrayVegetables.map((e, i) => {
                 return (
+                  // <div key={e.name}
+                  //   onClick={() => changeStatusV(e.name, i)}
+                  //   id={e.name}
+                  //   className="ingredient_class vegetables"
+                  //   data-target={e.name}
+                  // >
+                  //   <h4>{e.name}</h4>
+                  //   <Icon
+                  //     style={{
+                  //       backgroundColor: e.icon === mdiPlus ? "green" : "red",
+                  //     }}
+                  //     color="white"
+                  //     className="iconAddOrRemove"
+                  //     path={e.icon}
+                  //     size={1}
+                  //   />
+                  //   <img
+                  //     className="vegetablesimg"
+                  //     src={require(`../${e.img}`)}
+                  //   />
+                  //   <div className="pContainerCardV vegetablespd">
+                  //     <p className="vegetablesp">{e.clicked}</p>{" "}
+                  //   </div>
+                  // </div>
+
                   <div
+                  key={e.name}
                     onClick={() => changeStatusV(e.name, i)}
-                    id={e.name}
-                    className="ingredient_class vegetables"
-                    data-target={e.name}
-                  >
-                    <h4>{e.name}</h4>
-                    <Icon
-                      style={{
-                        backgroundColor: e.icon === mdiPlus ? "green" : "red",
-                      }}
-                      color="white"
-                      className="iconAddOrRemove"
-                      path={e.icon}
-                      size={1}
-                    />
-                    <img
-                      className="vegetablesimg"
-                      src={require(`../${e.img}`)}
-                    />
-                    <div className="pContainerCardV vegetablespd">
-                      <p className="vegetablesp">{e.clicked}</p>{" "}
+                  
+                    className="flex-shrink-0 m-1 relative overflow-hidden bg-[#44c582] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
+                    >
+                    <svg
+                      className="absolute bottom-0 left-0 mb-8"
+                      viewBox="0 0 375 283"
+                      fill="none"
+                      style={{ transform: "scale(1.5)", opacity: "0.1" }}
+                    >
+                      <rect
+                        x="159.52"
+                        y={175}
+                        width={152}
+                        height={152}
+                        rx={8}
+                        transform="rotate(-45 159.52 175)"
+                        fill="white"
+                      />
+                      <rect
+                        y="107.48"
+                        width={152}
+                        height={152}
+                        rx={8}
+                        transform="rotate(-45 0 107.48)"
+                        fill="white"
+                      />
+                    </svg>
+                    <div className="relative pt-10 px-10 flex items-center justify-center">
+                      <div
+                        className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                        style={{
+                          background: "radial-gradient(black, transparent 60%)",
+                          transform:
+                            "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
+                          opacity: "0.2",
+                        }}
+                      />
+                      <img
+                        className="relative w-40 h-32"
+                        src={require(`../${e.img}`)}
+                        alt=""
+                      />
+                    </div>
+                    <div className=" text-white px-6 pb-6 mt-6">
+                      <span className="block opacity-75 -mb-1">{e.type}</span>
+                      <div className="flex justify-between">
+                        <span className="block font-semibold ">{e.name}</span>
+                
+                        <Icon
+                          style={{
+                            backgroundColor:
+                              e.icon === mdiPlus ? "green" : "red",
+                          }}
+                          color="white"
+                          className="iconAddOrRemove absolute top-0 right-0"
+                          path={e.icon}
+                          size={1}
+                        />
+                      </div>
                     </div>
                   </div>
                 );
@@ -544,35 +607,111 @@ const Kitchen = () => {
         </>
       ) : null}
 
-      {SearchType == "" || SearchType == "fruit" ? (
+      {SearchType === "" || SearchType === "fruit" ? (
         <>
-          <fieldset className="AdminFieldset border border-solid border-black">
+          <fieldset className="AdminFieldset border border-solid border-black p-5">
             <legend>Fruits:</legend>
 
             <div class="fruit_container">
               {slicedArrayFruit.map((e, i) => {
                 return (
+
+
                   <div
+                  key={e.name}
                     onClick={() => changeStatusF(e.name, i)}
-                    id={e.name}
-                    className="ingredient_class fruit"
-                    data-target={e.name}
-                  >
-                    <h4>{e.name}</h4>
-                    <Icon
-                      style={{
-                        backgroundColor: e.icon === mdiPlus ? "green" : "red",
-                      }}
-                      color="white"
-                      className="iconAddOrRemove"
-                      path={e.icon}
-                      size={1}
-                    />
-                    <img className="fruitimg" src={require(`../${e.img}`)} />
-                    <div className="pContainerCardF fruitpd">
-                      <p className="fruitp">{e.clicked}</p>
+                  
+                    className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
+                    >
+                    <svg
+                      className="absolute bottom-0 left-0 mb-8"
+                      viewBox="0 0 375 283"
+                      fill="none"
+                      style={{ transform: "scale(1.5)", opacity: "0.1" }}
+                    >
+                      <rect
+                        x="159.52"
+                        y={175}
+                        width={152}
+                        height={152}
+                        rx={8}
+                        transform="rotate(-45 159.52 175)"
+                        fill="white"
+                      />
+                      <rect
+                        y="107.48"
+                        width={152}
+                        height={152}
+                        rx={8}
+                        transform="rotate(-45 0 107.48)"
+                        fill="white"
+                      />
+                    </svg>
+                    <div className="relative pt-10 px-10 flex items-center justify-center">
+                      <div
+                        className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                        style={{
+                          background: "radial-gradient(black, transparent 60%)",
+                          transform:
+                            "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
+                          opacity: "0.2",
+                        }}
+                      />
+                      <img
+                        className="relative w-40 h-32"
+                        src={require(`../${e.img}`)}
+                        alt=""
+                      />
+                    </div>
+                    <div className=" text-white px-6 pb-6 mt-6">
+                      <span className="block opacity-75 -mb-1">{e.type}</span>
+                      <div className="flex justify-between">
+                        <span className="block font-semibold ">{e.name}</span>
+                
+                        <Icon
+                          style={{
+                            backgroundColor:
+                              e.icon === mdiPlus ? "green" : "red",
+                          }}
+                          color="white"
+                          className="iconAddOrRemove absolute top-0 right-0"
+                          path={e.icon}
+                          size={1}
+                        />
+                      </div>
                     </div>
                   </div>
+
+
+
+
+
+
+
+
+
+
+                  // <div key={e.name}
+                  //   onClick={() => changeStatusF(e.name, i)}
+                  //   id={e.name}
+                  //   className="ingredient_class fruit"
+                  //   data-target={e.name}
+                  // >
+                  //   <h4>{e.name}</h4>
+                  //   <Icon
+                  //     style={{
+                  //       backgroundColor: e.icon === mdiPlus ? "green" : "red",
+                  //     }}
+                  //     color="white"
+                  //     className="iconAddOrRemove"
+                  //     path={e.icon}
+                  //     size={1}
+                  //   />
+                  //   <img className="fruitimg" src={require(`../${e.img}`)} />
+                  //   <div className="pContainerCardF fruitpd">
+                  //     <p className="fruitp">{e.clicked}</p>
+                  //   </div>
+                  // </div>
                 );
               })}
             </div>

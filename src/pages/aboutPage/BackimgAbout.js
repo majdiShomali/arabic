@@ -1,8 +1,37 @@
 import React from 'react'
 import "./Backimg.css"
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import hero from  "./images/about.jpg"
 const BackimgAbout = () => {
+
+  const [about_title, setAbout_title] = useState("");
+  const [about_us, setAbout_us] = useState("");
+  const [aboutUsId, setAboutUsId] = useState();
+
+
+
+  const fetchAboutUs = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/aboutUs");
+      setAbout_title(response.data[0].title);
+      setAbout_us(response.data[0].text);
+      setAboutUsId(response.data[0]._id);
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+  };
+  
+    useEffect(() => {
+      fetchAboutUs()
+    }, []);
+
+
+
+
+
+
   return (
 <>
       <div
@@ -765,10 +794,10 @@ const BackimgAbout = () => {
                   Why Choose Us
                 </span>
                 <h2 className="text-black mb-8 text-3xl font-bold sm:text-4xl">
-                  {/* {aboutUsData.about_title} */}
+                {about_title}
                 </h2>
                 <p className="text-body-color mb-8 text-base">
-                  {/* {aboutUsData.about_us} */}
+                  {about_us}
                 </p>
 
               </div>

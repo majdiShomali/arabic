@@ -56,10 +56,13 @@ export default function LogIn() {
               x= [true ,true,false]
            }
 
-           updateRouts(x)
-           updateSetCurruntUser(response.data.user0)
-           localStorage.setItem("curruntUser",JSON.stringify(response.data.user0))
-           localStorage.setItem("userid",JSON.stringify(response.data.user0._id))
+        //    updateRouts(x)
+        //    updateSetCurruntUser(response.data.user0)
+
+
+        //    localStorage.setItem("curruntUser",JSON.stringify(response.data.user0))
+
+        //    localStorage.setItem("userid",JSON.stringify(response.data.user0._id))
            localStorage.setItem("auth",(response.data.token))
 
            updateSignStatus("SignOut")

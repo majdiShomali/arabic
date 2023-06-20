@@ -3,8 +3,37 @@ import { useState ,useEffect } from 'react';
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import Pagination from "@mui/material/Pagination";
-
+import axios from "axios";
+import { Link, useParams, useNavigate } from "react-router-dom";
 const ShowRecipe = () => {
+  const { id } = useParams();
+const [clinks,setClinks]= useState([])
+const [cItems,setItems]= useState([])
+  console.log(id);
+
+  const oneRecipe = async () => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/recipe/${id}`);
+        console.log(response.data)
+        setItems(response.data[0].Items)
+        setClinks(response.data[0].links)
+    }
+
+  catch (error) {
+    console.error("Error inserting data:", error);
+  }
+  
+  }
+  useEffect(()=>{
+
+    oneRecipe()
+
+
+  },[])
+
+
+
+
 
     const { currentLinks, updateCurrentLinks } = useContext(UserContext);
     const { currentItems, updateCurrentItems } = useContext(UserContext);
@@ -18,7 +47,7 @@ const ShowRecipe = () => {
    
      const itemsPerPage = 4;
    
-     totalItems = currentItems.length;
+     totalItems = cItems.length;
    
      totalPages = Math.ceil(totalItems / itemsPerPage);
    
@@ -26,7 +55,7 @@ const ShowRecipe = () => {
    
      const endIndex = startIndex + itemsPerPage;
    
-     slicedArray = currentItems.slice(startIndex, endIndex);
+     slicedArray = cItems.slice(startIndex, endIndex);
    
      const handlePageChange = (event, pageNumber) => {
        setCurrentPage(pageNumber);
@@ -63,7 +92,7 @@ const ShowRecipe = () => {
     </div>
    <div class="cook_now_videos">
         <div class="video-list">
-              {currentLinks.map((e)=>{
+              {clinks?.map((e)=>{
           return(<iframe src={e} style={{height:"315px" ,width:"560px", marginBottom:"2rem"}} title="YouTube video player" allowFullScreen ></iframe>)
                })}
         </div>

@@ -41,7 +41,7 @@ const Home = () => {
             Which food do you prefer?
           </h2>
           <div className="flex flex-wrap mb-10 mx-20">
-            <div className="w-full sm:w-1/2 md:w-1/3 p-4">
+            <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
               <div className="relative rounded-lg overflow-hidden">
                 {/* Jordanian Food card */}
                 <img
@@ -65,7 +65,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-1/2 md:w-1/3 p-4">
+            <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
               <div className="relative bg-gray-400 rounded-lg shadow-lg overflow-hidden">
                 {/* Arabian Food card */}
                 <img
@@ -89,7 +89,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-1/2 md:w-1/3 p-4">
+            <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
               <div className="relative bg-gray-400 rounded-lg shadow-lg overflow-hidden">
                 {/* Mexican Food card */}
                 <img
@@ -113,7 +113,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-1/2 md:w-1/3 p-4">
+            <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
               <div className="relative bg-gray-400 rounded-lg shadow-lg overflow-hidden">
                 {/* Italian Food card */}
                 <img
@@ -137,7 +137,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-1/2 md:w-1/3 p-4">
+            <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
               <div className="relative bg-gray-400 rounded-lg shadow-lg overflow-hidden">
                 {/* Indian Food card */}
                 <img
@@ -161,7 +161,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="w-full sm:w-1/2 md:w-1/3 p-4">
+            <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
               <div className="relative bg-gray-400 rounded-lg shadow-lg overflow-hidden">
                 {/* American Food card */}
                 <img

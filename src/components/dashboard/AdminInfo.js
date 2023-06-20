@@ -10,7 +10,7 @@ import { mdiSilverware } from "@mdi/js";
 import { mdiShieldCrownOutline } from "@mdi/js";
 import { mdiAccountOutline } from "@mdi/js";
 
-const UsersInfo = () => {
+const AdminInfo = () => {
   const [persons, setPersons] = useState([]);
   const [persons0, setPersons0] = useState([]);
 
@@ -18,19 +18,10 @@ const UsersInfo = () => {
   const [FilterDataUsers, setFilterDataUsers] = useState([]);
   const [HandleP, setHandleP] = useState();
 
-  const allUsers = async () => {
-    const token = localStorage.getItem("auth");
+  const allAdmins = async () => {
     try {
       // Send the data to the server using an HTTP POST request
-      const response = await axios.get("http://localhost:5000/api/users", {
-        headers: {
-          Authorization: token,
-        },
-      });
-
-
-
-
+      const response = await axios.get("http://localhost:5000/api/Admins");
       console.log(response.data);
       setPersons(response.data);
       setFilterDataUsers(response.data);
@@ -40,7 +31,7 @@ const UsersInfo = () => {
   };
 
   useEffect(() => {
-    allUsers();
+    allAdmins();
   }, []);
 
   //-----------------------search------------------------//
@@ -359,4 +350,4 @@ const UsersInfo = () => {
   );
 };
 
-export default UsersInfo;
+export default AdminInfo;

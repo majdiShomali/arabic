@@ -2,22 +2,26 @@ import { Link } from 'react-router-dom'
 import { useState ,useEffect } from 'react';
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
+import { useNavigate } from 'react-router-dom';
 
-
-function DyRecipeCardMeal({ card , Name ,index ,SAMeals} ) {
-
+function DyRecipeCardMeal({ card , Name ,index ,SAMeals,cardId,img} ) {
+const navigate = useNavigate()
   const { currentLinks, updateCurrentLinks } = useContext(UserContext);
   const { currentItems, updateCurrentItems } = useContext(UserContext);
 
   function ShowVideosMeals(index,slicedArrayMeals){
-    let currentVideos0=   slicedArrayMeals[index].Links.map((e)=>{ 
-       return e
-         })
-         let currentItems=   slicedArrayMeals[index].Items.map((e)=>{ 
-             return e
-               })
-         updateCurrentItems(currentItems)
-         updateCurrentLinks(currentVideos0)
+    navigate(`/ShowRecipe/${cardId}`);
+    console.log(cardId)
+    // let currentVideos0=   slicedArrayMeals[index].links.map((e)=>{ 
+    //    return e
+    //      })
+    //      let currentItems=   slicedArrayMeals[index].Items.map((e)=>{ 
+    //          return e
+    //            })
+
+              
+        //  updateCurrentItems(currentItems)
+        //  updateCurrentLinks(currentVideos0)
          }
 
   return (
@@ -25,7 +29,7 @@ function DyRecipeCardMeal({ card , Name ,index ,SAMeals} ) {
     <div>
       <img
         className="w-full h-22"
-        src={card}
+        src={img}
         alt="Recipe Title"
       />
     </div>
@@ -81,8 +85,8 @@ function DyRecipeCardMeal({ card , Name ,index ,SAMeals} ) {
         A recipe that's quick and easy to make and super tasty!
       </p>
       <button className="text-white bg-[#E8CC95] p-2 rounded-md w-full uppercase"
-     onClick={()=>ShowVideosMeals(index,SAMeals)}>
-     <Link className=" text-gray-800" to="/ShowRecipe">Show recipe</Link>
+     onClick={()=>ShowVideosMeals(index,SAMeals)}>Show recipe
+     {/* <Link className=" text-gray-800" to="/ShowRecipe">Show recipe</Link> */}
       </button>
     </div>
     <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-gray-800 rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">

@@ -15,14 +15,21 @@ const ApproveTable = () => {
   const [email, setEmail] = useState("");
 
 
+  const allProviders = async () => {
+    try {
+      // Send the data to the server using an HTTP POST request
+      const response = await axios.get("http://localhost:5000/api/Providers");
+      console.log(response.data);
+      setRestaurants(response.data);
+      setFilterDataRestaurants(response.data);
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
+  };
+
   useEffect(() => {
-    // axios.get('http://localhost:5000/restaurants')
-    // .then((response) => {
-    //      setRestaurants(response.data);
-    //      setFilterDataRestaurants(response.data)
-    // })
-    // .catch((error) => console.log(error.message))
-}, []);
+    allProviders();
+  }, []);
 
 
        //-----------------------search------------------------//
@@ -84,11 +91,11 @@ const ApproveTable = () => {
     
               Swal.fire(` ${name} has been removed `, '', 'success');
            
-              axios.put('http://localhost:5000/restaurants/'+userid)
-              .then((response) => {
-                  console.log(response.data);
-              })
-              .catch((error) => console.log(error.message))
+              // axios.put('http://localhost:5000/restaurants/'+userid)
+              // .then((response) => {
+              //     console.log(response.data);
+              // })
+              // .catch((error) => console.log(error.message))
               // window.location.reload();
           } else
               Swal.fire(' Cancelled', '', 'error')
@@ -101,17 +108,26 @@ const ApproveTable = () => {
 
 
 
-function addrestaurants(){
+const addrestaurants = async () => {
 
-//   axios.post('http://localhost:5000/restaurants', {
-//     email: email,
 
-// })
-// .then(function (response) {
+const userData = {
+  firstName:"provider",
+  email: email,
+  password:"LUNA@IO10m",
+  role:2 
+};
 
-// })
-// .catch(function (error) {
-// });
+try {
+  // Send the data to the server using an HTTP POST request
+  const response = await axios.post(
+    "http://localhost:5000/api/users",
+    userData
+  );
+} catch (error) {
+  console.error("Error inserting data:", error);
+}
+
 
 }
 
@@ -266,7 +282,7 @@ return(
 <tr role="row">
           <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
-              {e.restaurant_name} 
+              {e.firstName} 
             </p>
           </td>
           <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
@@ -283,7 +299,7 @@ return(
           </td>
           <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
-              {e.contact_number}
+              {e.number}
             </p>
           </td>
           <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">

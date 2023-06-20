@@ -37,7 +37,7 @@ import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
 import { mdiMinus } from '@mdi/js';
 
-export default function Example() {
+export default function Example(props) {
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
   let AddPlus = mdiPlus
@@ -61,7 +61,9 @@ export default function Example() {
   const [MyListN, setMyListN] = useState([]);
   const [vegetables, setVegetables] = useState([...vegetables_obj]);
   const [fruit, setFruit] = useState([...fruit_obj]);
+  const [useId, setUserId] = useState();
   const { test, updateTest} = useContext(UserContext);
+  const [FilterDataItems, setFilterDataItemss] = useState([]);
 
  
   const handleShowUser = async () => {
@@ -77,12 +79,52 @@ export default function Example() {
     
   };
 
+  const fetchProtectedData = async () => {
+    try {
+      const token = localStorage.getItem("auth");
+      if (token) {
+        const response = await axios.get("http://localhost:5000/protected", {
+          headers: {
+            Authorization: token,
+          },
+        });
+      
+        
+        setUserId(response.data.user.id)
+  
+console.log(response.data.user.id)
+let userId0 = response.data.user.id
+       
+        try {
+          const response = await axios.get(`http://localhost:5000/api/users/${userId0}`);
+          console.log(response.data[0]); 
+          setMyList(response.data[0].MyList)
+          setFilterDataItemss(response.data[0].MyList)
+        } catch (error) {
+          console.error("Error retrieving data:", error);
+        }
+
+
+      }
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem("auth");
+      window.location.href = "http://localhost:3000/Login";
+    } finally {
+      console.log(false);
+    }
+  };
 
 
   useEffect(() => {
 
-    handleShowUser();
+    
+  },[])
 
+  useEffect(() => {
+    fetchProtectedData()
+
+    // handleShowUser();
 
   //   let userid= JSON.parse(localStorage.userid)
  
@@ -177,7 +219,7 @@ export default function Example() {
 
 
 
-  },[test])
+  },[props.MyListnnn])
 
 
  
@@ -205,15 +247,24 @@ function setSideStatus00(){
 //      });
 
 }
+const [ searchItem,setSearchItem]=useState("")
 
 
+const filterDataByNameItems = (searchTerm) => {
+  console.log("aaaaaaaaaaaaaaa")
+  const filteredDataItems = MyList.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  setFilterDataItemss(filteredDataItems);
+
+};
 
   return (
     <>
      { (JSON.parse(localStorage.roles)[0]==false) ? 
      <>
      {sideStatus === false  ? (
-        <Card className="fixed top-20 right-0 z-50 h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+        <Card className="fixed top-20  right-0 z-50 h-[calc(100vh-4rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 overflow-y-auto">
           <div className="mb-2 flex items-center gap-4 p-4">
             <Button onClick={() => setSideStatus00(true)}>x</Button>
 
@@ -225,15 +276,21 @@ function setSideStatus00(){
             <Input
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               label="Search"
+              value={searchItem}
+              onChange={(e)=>{
+                filterDataByNameItems(e.target.value)
+                setSearchItem(e.target.value)
+              
+              }}
             />
           </div>
 
           <List>
             <hr className="my-2 border-blue-gray-50" />
 
-            {MyList.map((e) => {
+            {FilterDataItems.map((e) => {
               return (
-                <ListItem>
+                <ListItem key={e.name}>
                   <ListItemPrefix>
                   <img className="w-10"  src={require(`../${e.img}`)}/> 
                   </ListItemPrefix>

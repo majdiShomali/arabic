@@ -36,7 +36,7 @@ const Slider = () => {
                 </Button>
                 </Link> : 
                 <Link  to="/LogIn">
-                <Button  className="bg-[#F7E1AE] text-gray-800 w-52"   >
+                <Button  className="bg-[#F7E1AE] text-gray-800 w-52 text-base"   >
                   Add ingredients to your list
                 </Button>
                 </Link>

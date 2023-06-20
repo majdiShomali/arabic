@@ -51,7 +51,8 @@ export default function Signup() {
   const userData = {
     firstName: name,
     email: email,
-    password:password
+    password:password,
+    role:0
   };
 
   try {

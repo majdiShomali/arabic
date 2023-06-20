@@ -2,7 +2,7 @@
 import Icon from '@mdi/react';
 import { mdiSilverwareForkKnife } from '@mdi/js';
 import { mdiAccountMultipleOutline } from '@mdi/js';
-import { mdiInformationOutline } from '@mdi/js';
+import { mdiInformationOutline,mdiShieldCrownOutline  } from '@mdi/js';
 import { UserContext } from '../../UserContext';
 import React,{useState,useEffect,useContext} from "react";
 import { mdiTableFurniture } from '@mdi/js';
@@ -65,7 +65,7 @@ function handleLogOut(){
 
 
     return (
-      <Card className=" min-h-[calc(100vh)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-white-900/5 Sidebar bg-white">
+      <Card className=" min-h-[calc(100vh)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-white-900/5 Sidebar bg-white sideBarDash">
         <div className="mb-2 p-4">
         <Typography className="text-amber-500" variant="h5" color="blue-gray">
         <a> MA6A3MKOM </a>
@@ -82,7 +82,14 @@ function handleLogOut(){
           </Link>
 
 
-
+          <Link to='/ListAdmin'>
+           <ListItem className="hover:bg-amber-500">
+            <ListItemPrefix>
+            <Icon path={mdiShieldCrownOutline } size={1} />
+            </ListItemPrefix>
+            <a style={{color:'black'}}> Admins list </a>
+          </ListItem>
+          </Link>
 
            <Link to='/ListUser'>
            <ListItem className="hover:bg-amber-500">
@@ -93,12 +100,20 @@ function handleLogOut(){
           </ListItem>
           </Link>
 
-          <Link to='/ListRestaurant'>
+          <Link to='/ListProviders'>
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
             <Icon path={mdiSilverwareForkKnife} size={1} />
             </ListItemPrefix>
-            <a style={{color:'black'}}> Restaurants List </a>
+            <a style={{color:'black'}}> Providers List </a>
+          </ListItem>
+          </Link>
+          <Link to='/PendingRecipes'>
+          <ListItem className="hover:bg-amber-500">
+            <ListItemPrefix>
+            <Icon path={mdiSilverwareForkKnife} size={1} />
+            </ListItemPrefix>
+            <a style={{color:'black'}}> Pending Recipes </a>
           </ListItem>
           </Link>
 
