@@ -1,35 +1,36 @@
 import "./App.css";
 import { UserContext } from "./UserContext";
 
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavListMenu from "./components/Navbar";
-import Home from "./pages/Home";
-import Contact from "./pages/Contact";
-import Footer from "./components/footer";
-import Kitchen from "./pages/Kitchen";
-import Admin from "./pages/Admin";
-import About from "./pages/aboutPage/About";
-import Recipes from "./pages/Recipes";
-import SignUp from "./pages/SignUp";
-import LogIn from "./pages/Login";
-import ShowRecipe from "./pages/ShowRecipe";
-import Kitchens from "./pages/Kitchens";
-
 import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// ----------------------user --------------------------/
+import NavListMenu from "./components/Navbar";
+import Home from "./pages/user/Home";
+import Contact from "./pages/Contact";
+import Footer from "./components/footer";
+import Kitchen from "./pages/Kitchen";
+import About from "./pages/aboutPage/About";
+import Recipes from "./pages/user/Recipes";
+import SignUp from "./pages/SignUp";
+import LogIn from "./pages/Login";
+import ShowRecipe from "./pages/user/ShowRecipe";
+import Kitchens from "./pages/user/Kitchens";
+import UserProfile from "./pages/user/UserProfile";
+
+// ----------------------Provider routes----------------- //
+import ProviderHome from "./pages/providerp/ProviderHome";
+
+// -----------------------Dashboard routes----------------//
 import Sidebar from "./pages/dashboard/Sidebar";
 import NavListMenuD from "./pages/dashboard/NavDashboard";
 import MainDashboard from "./pages/dashboard/MainDashboard";
-import UserProfile from "./pages/UserProfile";
-import UserInfo from "./components/dashboard/UserInfo"
-import ApproveTable from "./components/dashboard/ApproveTable";
+import UserInfo from "./components/dashboard/UserInfo";
+import ProvidersList from "./components/dashboard/ProvidersList";
 import AdminInfo from "./components/dashboard/AdminInfo";
 import EditAboutUs from "./components/dashboard/EditAboutUs";
 import PendingRecipes from "./components/dashboard/PendingRecipes";
-
-
-
+import Ingredients from  "./pages/dashboard/Ingredients"
 import axios from "axios";
 
 export default function App() {
@@ -38,7 +39,6 @@ export default function App() {
   const [hideRouter3, setHideRouterProvider] = useState(true);
 
   const { routs, updateRouts } = useContext(UserContext);
-
 
   const fetchProtectedData = async () => {
     try {
@@ -50,20 +50,19 @@ export default function App() {
             Authorization: token,
           },
         });
-        let x =[];
-        
-        if(response.data.user.role ==1){
-          x= [true ,false,true ]
-        }else if (response.data.user.role ==2){
-          x= [true ,true,false]
-        }else{
-          x= [false ,true,true ]
+        let x = [];
+
+        if (response.data.user.role == 1) {
+          x = [true, false, true];
+        } else if (response.data.user.role == 2) {
+          x = [true, true, false];
+        } else {
+          x = [false, true, true];
         }
         setHideRouterUser(x[0]);
         setHideRouterAdmin(x[1]);
         setHideRouterProvider(x[2]);
-        updateRouts(x)
-
+        updateRouts(x);
       }
     } catch (error) {
       console.error(error);
@@ -74,17 +73,13 @@ export default function App() {
     }
   };
 
-
-
-
-
-
-
   useEffect(() => {
     if (localStorage.auth != null) {
-      fetchProtectedData()
+      fetchProtectedData();
     }
   }, []);
+
+  // ----------------------user routes----------------- //
 
   const AppRouter1 = () => {
     return (
@@ -94,7 +89,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
-          <Route path="SignUp" element={<SignUp />} />
+          <Route path="/SignUp/:type" element={<SignUp />} />
           <Route path="LogIn" element={<LogIn />} />
           <Route path="ShowRecipe/:id" element={<ShowRecipe />} />
           <Route path="Recipes" element={<Recipes />} />
@@ -107,6 +102,7 @@ export default function App() {
     );
   };
 
+  // ----------------------dashboard routes----------------- //
   const AppRouter2 = () => {
     return (
       <Router>
@@ -117,22 +113,25 @@ export default function App() {
             <Route index element={<MainDashboard />} />
             <Route path="ListUser" element={<UserInfo />} />
             <Route path="UserProfile" element={<UserProfile />} />
-            <Route path="ListProviders" element={<ApproveTable />} />
+            <Route path="ListProviders" element={<ProvidersList />} />
             <Route path="ListAdmin" element={<AdminInfo />} />
             <Route path="EditAboutContact" element={<EditAboutUs />} />
             <Route path="PendingRecipes" element={<PendingRecipes />} />
+            <Route path="AcceptTables" element={<Ingredients />} />
           </Routes>
         </div>
       </Router>
     );
   };
 
+  // ----------------------Provider routes----------------- //
+
   const AppRouter3 = () => {
     return (
       <Router>
         <NavListMenu />
         <Routes>
-          <Route index element={<Admin />} />
+          <Route index element={<ProviderHome />} />
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
           <Route path="SignUp" element={<SignUp />} />
@@ -164,7 +163,6 @@ export default function App() {
           <AppRouter3 />
         </>
       )}
- 
     </>
 
     // <UserProvider>

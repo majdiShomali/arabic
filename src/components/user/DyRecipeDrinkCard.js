@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState ,useEffect } from 'react';
 import { useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 
 
 function DyRecipeCardDrink({ card , Name ,index ,SADrinks} ) {

@@ -1,309 +1,330 @@
-import React, { Component } from 'react'
-import card from './landing-img/card.jpg'
-import star from './landing-img/star.png'
-import fire from './landing-img/fire.png'
-import "./cards.css"
+import React, { Component } from "react";
+import card from "./landing-img/card.jpg";
+import star from "./landing-img/star.png";
+import fire from "./landing-img/fire.png";
+import "./cards.css";
 // import PaginationNav1Presentation from '../navigation'
-import { useState ,useEffect } from 'react';
+import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 import axios from "axios";
-import { Link } from 'react-router-dom'
-import DyRecipeCardMeal from '../DyRecipeCardMeal'
-import DyRecipeCardDrink from '../DyRecipeDrinkCard'
+import { Link } from "react-router-dom";
+import DyRecipeCardMeal from "../user/DyRecipeCardMeal";
+import DyRecipeCardDrink from "../user/DyRecipeDrinkCard";
 const Cards = () => {
-  let localTable =[]
-
-
-
+  let localTable = [];
 
   const { currentLinks, updateCurrentLinks } = useContext(UserContext);
   const { currentItems, updateCurrentItems } = useContext(UserContext);
 
-  const { Meals, updateMeals   } = useContext(UserContext);
-  const [ Meals0, updateMeals0   ] = useState();
-  const { Drinks, updateDrinks } = useContext(UserContext);
-  const { Sweet, updateSweet   } = useContext(UserContext);
+  // const { Meals, updateMeals } = useContext(UserContext);
+  // const [Meals0, updateMeals0] = useState();
+  // const { Drinks, updateDrinks } = useContext(UserContext);
+  // const { Sweet, updateSweet } = useContext(UserContext);
 
   //-----------------------search------------------------//
-const [searchTermMeals, setSearchTermMeals] = useState('');
-const [FilterDataMeals, setFilterDataMeals] = useState([]);
+  const [searchTermMeals, setSearchTermMeals] = useState("");
+  const [FilterDataMeals, setFilterDataMeals] = useState([]);
 
-const [searchTermDrinks, setSearchTermDrinks] = useState('');
-const [FilterDataDrinks, setFilterDataDrinks] = useState([]);
+  // const [searchTermDrinks, setSearchTermDrinks] = useState("");
+  // const [FilterDataDrinks, setFilterDataDrinks] = useState([]);
 
-const [table, setTable] = useState([]);
+  const [table, setTable] = useState([]);
 
-
-const allRecipes = async () => {
-  try {
-      const response = await axios.get("http://localhost:5000/api/recipes");
-    console.log(response.data)
-    setTable(response.data)
-
-    updateMeals0(() => {
-      const newItems = response.data?.filter(
-        (item) => item.category === "cook_now_container"
-      );
-      return  (newItems)
-      
-    });
-
-
-    setFilterDataMeals(() => {
-      const newItems = response.data?.filter(
-        (item) => item.category === "cook_now_container"
-      );
-      return  (newItems)
-      
-    });
-
-
+  const allRecipes = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/recipesA");
+      console.log(response.data);
+      setTable(response.data);
+      // updateMeals0(response.data);
+      setFilterDataMeals(response.data);
 
     } catch (error) {
       console.error("Error inserting data:", error);
     }
   };
 
-
-
-
   useEffect(() => {
-    allRecipes()
+    allRecipes();
 
-  
+  }, []);
 
-
-
-
-  //       updateDrinks(() => {
-  //         const newItems = table.filter(
-  //           (item) => item.Category === "cook_now_container2"
-  //         );
-  //         return  (newItems)
-          
-  //       });
+  console.log(table);
+  //-----------------------search------------------------//
 
 
-  //       setFilterDataDrinks(() => {
-  //         const newItems = table.filter(
-  //           (item) => item.Category === "cook_now_container2"
-  //         );
-  //         return  (newItems)
-          
-  //       });
 
-  //       updateSweet(() => {
-  //         const newItems = table.filter(
-  //           (item) => item.Category === "cook_now_container3"
-  //         );
-  //         return  (newItems)
-          
-  //       });
-
-    },[]);
-
-    console.log(table)
-//-----------------------search------------------------//
-
-const filterDataByNameMeals = (searchTermMeals) => {
-  
-  const filteredDataMeals = Meals0.filter(item =>
-
-    item.Name.toLowerCase().includes(searchTermMeals.toLowerCase())
-  );
-  setFilterDataMeals(filteredDataMeals);
-  setCurrentPageMeals(1)
-}
-
-const filterDataByNameDrinks = (searchTermDrinks) => {
-  
-  const filteredDataDrinks = Drinks.filter(item =>
-
-    item.Name.toLowerCase().includes(searchTermDrinks.toLowerCase())
-  );
-  setFilterDataDrinks(filteredDataDrinks);
-  setCurrentPageDrinks(1)
-}
+  // const filterDataByNameDrinks = (searchTermDrinks) => {
+  //   const filteredDataDrinks = Drinks.filter((item) =>
+  //     item.Name.toLowerCase().includes(searchTermDrinks.toLowerCase())
+  //   );
+  //   setFilterDataDrinks(filteredDataDrinks);
+  //   setCurrentPageDrinks(1);
+  // };
 
   const [currentPageMeals, setCurrentPageMeals] = useState(1);
-  const [currentPageDrinks, setCurrentPageDrinks] = useState(1);
-  const [currentPageSweet, setCurrentPageSweet] = useState(1);
-
+  // const [currentPageDrinks, setCurrentPageDrinks] = useState(1);
+  // const [currentPageSweet, setCurrentPageSweet] = useState(1);
 
   let totalItemsMeals;
-  let totalItemsDrinks;
-  let totalItemsSweet;
+  // let totalItemsDrinks;
+  // let totalItemsSweet;
 
   let totalPagesMeals;
-  let totalPagesDrinks;
-  let totalPagesSweet;
+  // let totalPagesDrinks;
+  // let totalPagesSweet;
 
   let slicedArrayMeals;
-  let slicedArrayDrinks;
-  let slicedArraySweet;
+  // let slicedArrayDrinks;
+  // let slicedArraySweet;
 
   const itemsPerPage = 4;
 
   totalItemsMeals = FilterDataMeals.length;
-  totalItemsDrinks = FilterDataDrinks.length;
-  totalItemsSweet = Sweet.length;
+  // totalItemsDrinks = FilterDataDrinks.length;
+  // totalItemsSweet = Sweet.length;
 
   totalPagesMeals = Math.ceil(totalItemsMeals / itemsPerPage);
-  totalPagesDrinks = Math.ceil(totalItemsDrinks / itemsPerPage);
-  totalPagesSweet = Math.ceil(totalItemsSweet / itemsPerPage);
+  // totalPagesDrinks = Math.ceil(totalItemsDrinks / itemsPerPage);
+  // totalPagesSweet = Math.ceil(totalItemsSweet / itemsPerPage);
 
   const startIndexMeals = (currentPageMeals - 1) * itemsPerPage;
-  const startIndexDrinks = (currentPageDrinks - 1) * itemsPerPage;
-  const startIndexSweet = (currentPageSweet - 1) * itemsPerPage;
+  // const startIndexDrinks = (currentPageDrinks - 1) * itemsPerPage;
+  // const startIndexSweet = (currentPageSweet - 1) * itemsPerPage;
 
   const endIndexMeals = startIndexMeals + itemsPerPage;
-  const endIndexDrinks = startIndexDrinks + itemsPerPage;
-  const endIndexSweet = startIndexSweet + itemsPerPage;
+  // const endIndexDrinks = startIndexDrinks + itemsPerPage;
+  // const endIndexSweet = startIndexSweet + itemsPerPage;
 
   slicedArrayMeals = FilterDataMeals.slice(startIndexMeals, endIndexMeals);
-  slicedArrayDrinks = FilterDataDrinks.slice(startIndexDrinks, endIndexDrinks);
-  slicedArraySweet = Sweet.slice(startIndexSweet, endIndexSweet);
-console.log(FilterDataMeals)
+  // slicedArrayDrinks = FilterDataDrinks.slice(startIndexDrinks, endIndexDrinks);
+  // slicedArraySweet = Sweet.slice(startIndexSweet, endIndexSweet);
+  console.log(FilterDataMeals);
   const handlePageChangeMeals = (event, pageNumber) => {
     setCurrentPageMeals(pageNumber);
   };
-  const handlePageChangeDrinks = (event, pageNumber) => {
-    setCurrentPageDrinks(pageNumber);
-  };
-  const handlePageChangeSweet = (event, pageNumber) => {
-    setCurrentPageSweet(pageNumber);
-  };
+  // const handlePageChangeDrinks = (event, pageNumber) => {
+  //   setCurrentPageDrinks(pageNumber);
+  // };
+  // const handlePageChangeSweet = (event, pageNumber) => {
+  //   setCurrentPageSweet(pageNumber);
+  // };
+
+  // function ShowVideosMeals(index) {
+  //   let currentVideos0 = slicedArrayMeals[index].Links.map((e) => {
+  //     return e;
+  //   });
+  //   let currentItems = slicedArrayMeals[index].Items.map((e) => {
+  //     return e;
+  //   });
+  //   updateCurrentItems(currentItems);
+  //   updateCurrentLinks(currentVideos0);
+  // }
+
+  // function ShowVideosDrinks(index) {
+  //   let currentVideos0 = slicedArrayDrinks[index].Links.map((e) => {
+  //     return e;
+  //   });
+  //   let currentItems = slicedArrayDrinks[index].Items.map((e) => {
+  //     return e;
+  //   });
+  //   updateCurrentItems(currentItems);
+  //   updateCurrentLinks(currentVideos0);
+  // }
+
+  const [yourSelectedStateValueType, setOptionType] = useState("");
+  const [yourSelectedStateValueAddress, setOptionAddress] = useState("");
+  //-----------------------search------------------------//
+  const [searchTermUsers, setSearchTermUsers] = useState("");
 
 
-  function ShowVideosMeals(index){
-    let currentVideos0=   slicedArrayMeals[index].Links.map((e)=>{ 
-       return e
-         })
-         let currentItems=   slicedArrayMeals[index].Items.map((e)=>{ 
-             return e
-               })
-         updateCurrentItems(currentItems)
-         updateCurrentLinks(currentVideos0)
-         }
- 
-         function ShowVideosDrinks(index){
-             let currentVideos0=   slicedArrayDrinks[index].Links.map((e)=>{ 
-                return e
-                  })
-                  let currentItems=   slicedArrayDrinks[index].Items.map((e)=>{ 
-                      return e
-                        })
-                  updateCurrentItems(currentItems)
-                  updateCurrentLinks(currentVideos0)
-                  }
+  const handleFilterChange = (typeValue, addressValue) => {
 
 
+    const filteredDataUsers = table?.filter(
+      (item) =>
+        item.category?.toLowerCase().includes(typeValue.toLowerCase()) &&
+        item.category?.toLowerCase().includes(addressValue.toLowerCase())
+    );
+    setFilterDataMeals(filteredDataUsers);
+  
+};
 
 
+const filterDataByNameUsers = (searchTermMeals) => {
+  const filteredDataMeals = table.filter((item) =>
+    item.recipeName.toLowerCase().includes(searchTermMeals.toLowerCase())
+  );
+  setFilterDataMeals(filteredDataMeals);
+  setCurrentPageMeals(1);
+};
 
 
   return (
     <>
-<div className='mt-10'>
-<fieldset className='AdminFieldset bg-[#f5f5f5]'>
-      <legend >
-        All Meals:
-        <input type='text'placeholder='Search' style={{border:"1px solid black",}}
-        
-        value={searchTermMeals}
-       onChange={(e) =>{
-        setSearchTermMeals(e.target.value);
-       filterDataByNameMeals(e.target.value);
-      }
-  }
-        
-        />
-</legend>
+
+<div className="flex justify-center mt-5 mb-5">
+        <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
+          <div className="relative">
+            <div className="absolute flex items-center ml-2 h-full">
+              <svg
+                className="w-4 h-4 fill-current text-primary-gray-dark"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M15.8898 15.0493L11.8588 11.0182C11.7869 10.9463 11.6932 10.9088 11.5932 10.9088H11.2713C12.3431 9.74952 12.9994 8.20272 12.9994 6.49968C12.9994 2.90923 10.0901 0 6.49968 0C2.90923 0 0 2.90923 0 6.49968C0 10.0901 2.90923 12.9994 6.49968 12.9994C8.20272 12.9994 9.74952 12.3431 10.9088 11.2744V11.5932C10.9088 11.6932 10.9495 11.7869 11.0182 11.8588L15.0493 15.8898C15.1961 16.0367 15.4336 16.0367 15.5805 15.8898L15.8898 15.5805C16.0367 15.4336 16.0367 15.1961 15.8898 15.0493ZM6.49968 11.9994C3.45921 11.9994 0.999951 9.54016 0.999951 6.49968C0.999951 3.45921 3.45921 0.999951 6.49968 0.999951C9.54016 0.999951 11.9994 3.45921 11.9994 6.49968C11.9994 9.54016 9.54016 11.9994 6.49968 11.9994Z" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder="Search by listing, location, bedroom number..."
+              className="px-8 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
+              value={searchTermUsers}
+              onChange={(e) => {
+                setSearchTermUsers(e.target.value);
+                filterDataByNameUsers(e.target.value);
+              }}
+            />
+          </div>
+          <div className="flex items-center justify-between mt-4">
+            <p className="font-medium">Filters</p>
+          </div>
+          <div className="flex justify-between">
+            <div className="grid grid-cols-1  md:grid-cols-3 sm:grid-cols-1  gap-4 mt-4 ">
+              <select
+                className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance mr-5"
+                value={yourSelectedStateValueType}
+                onChange={(e) => {
+                  setOptionType(e.target.value);
+                  handleFilterChange(
+                    e.target.value,
+                    yourSelectedStateValueAddress
+                  );
+                }}
+              >
+                <option value=""> All Recipes</option>
+                <option value="Meal">Meals</option>
+                <option value="Drink">Drinks</option>
+                <option value="Sweet">Sweets</option>
+              </select>
+
+              <select
+                className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-[#E8AA42] focus:bg-white focus:ring-0 text-sm appearance"
+                value={yourSelectedStateValueAddress}
+                onChange={(e) => {
+                  setOptionAddress(e.target.value);
+                  handleFilterChange(
+                    yourSelectedStateValueType,
+                    e.target.value
+                  );
+                }}
+              >
+                <option value="">all donation Case</option>
+                <option value="Stray Animals">Stray Animals</option>
+                <option value="injured animals">injured animals</option>
+              </select>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
 
 
 
-    <div className='cardContainer'>
- {
-slicedArrayMeals?.map((e,i) => {
-return(
-<>
-<DyRecipeCardMeal
-Name={e.Name}
-card={card}
-index={i}
-SAMeals={slicedArrayMeals}
-cardId ={e._id}
-img ={e.img}
-/>
-</>
-)
-      })
-  }
-   
-   </div>
-   </fieldset>
-        <div className='PaginationCards'>   
-    {(
-        <Pagination
-          count={totalPagesMeals}
-          page={currentPageMeals}
-          onChange={handlePageChangeMeals}
-        />
-      )}
-    </div> 
-
-
-    <fieldset className='AdminFieldset bg-[#f5f5f5]'>
-      <legend >
-        All Drinks:
-        <input type='text'placeholder='Search' style={{border:"1px solid black",}}
-        
-        value={searchTermDrinks}
-         onChange={(e) =>{
-        setSearchTermDrinks(e.target.value);
-       filterDataByNameDrinks(e.target.value);
-      }
-  }
-        
-        />
-</legend>
 
 
 
 
-    <div className='cardContainer'>
- {
-slicedArrayDrinks?.map((e,i) => {
-return(
-
-  <DyRecipeCardDrink
-Name={e.Name}
-card={card}
-index={i}
-SADrinks={slicedArrayDrinks}
-/>
 
 
-)
-      })
-  }
-   
-   </div>
-   </fieldset>
-        <div className='PaginationCards'>   
-    {(
-        <Pagination
-          count={totalPagesDrinks}
-          page={currentPageDrinks}
-          onChange={handlePageChangeDrinks}
-        />
-      )}
-    </div> 
-    </div>
+
+      <div className="mt-10">
+        {/* <fieldset className="AdminFieldset bg-[#f5f5f5]"> */}
+          {/* <legend>
+            All Meals:
+            <input
+              type="text"
+              placeholder="Search"
+              style={{ border: "1px solid black" }}
+              value={searchTermMeals}
+              onChange={(e) => {
+                setSearchTermMeals(e.target.value);
+                filterDataByNameMeals(e.target.value);
+              }}
+            />
+          </legend> */}
+
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1">
+            {slicedArrayMeals?.map((e, i) => {
+              return (
+                <>
+                  <DyRecipeCardMeal
+                    key={e._id}
+                    Name={e.Name}
+                    card={card}
+                    index={i}
+                    SAMeals={slicedArrayMeals}
+                    cardId={e._id}
+                    img={e.img}
+                  />
+                </>
+              );
+            })}
+          </div>
+        {/* </fieldset> */}
+        <div className="PaginationCards">
+          {
+            <Pagination
+              count={totalPagesMeals}
+              page={currentPageMeals}
+              onChange={handlePageChangeMeals}
+            />
+          }
+        </div>
+
+        {/* <fieldset className="AdminFieldset bg-[#f5f5f5]">
+          <legend>
+            All Drinks:
+            <input
+              type="text"
+              placeholder="Search"
+              style={{ border: "1px solid black" }}
+              value={searchTermDrinks}
+              onChange={(e) => {
+                setSearchTermDrinks(e.target.value);
+                filterDataByNameDrinks(e.target.value);
+              }}
+            />
+          </legend>
+
+          <div className="cardContainer">
+            {slicedArrayDrinks?.map((e, i) => {
+              return (
+                <DyRecipeCardDrink
+                  Name={e.Name}
+                  card={card}
+                  index={i}
+                  SADrinks={slicedArrayDrinks}
+                />
+              );
+            })}
+          </div>
+        </fieldset> */}
+        {/* <div className="PaginationCards">
+          {
+            <Pagination
+              count={totalPagesDrinks}
+              page={currentPageDrinks}
+              onChange={handlePageChangeDrinks}
+            />
+          }
+        </div> */}
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Cards
+export default Cards;

@@ -5,7 +5,10 @@ export const UserContext = createContext();
 const UserProvider = ( {children} ) => {
   
   const [test, setTest] = useState([]);
-
+  const [MyListSideBarCon, setMyListSideBarCon] = useState([]);
+  const updateMyListSideBarCon = (newValue) => {
+    setMyListSideBarCon(newValue);
+  };
 
   const [foodCards, setFoodCards] = useState([]);
   const [foodCardsName, setFoodCardsName] = useState([]);
@@ -102,7 +105,8 @@ const UserProvider = ( {children} ) => {
                  routs,updateRouts,
                  SignStatus,updateSignStatus,
                  curruntUser,updateSetCurruntUser,
-                 test,updateTest
+                 test,updateTest,
+                 MyListSideBarCon,updateMyListSideBarCon
                 }}
             >
                 {children}

@@ -204,7 +204,7 @@ export default function Example() {
 
   function handleSign() {
     if (localStorage.auth == null) {
-      window.location.href = "http://localhost:3000/SignUp";
+      window.location.href = "http://localhost:3000/LogIn";
     } else {
       Swal.fire({
         title: ` logout?  `,
@@ -220,13 +220,13 @@ export default function Example() {
         if (result.isConfirmed) {
           Swal.fire(`  done `, "", "success");
 
-          updateSignStatus("signUp");
-          localStorage.setItem("SignStatus", "signUp");
+          // updateSignStatus("signUp");
+          // localStorage.setItem("SignStatus", "signUp");
 
           localStorage.removeItem("auth");
-          localStorage.removeItem("roles");
-          localStorage.removeItem("userid");
-          localStorage.removeItem("curruntUser");
+          // localStorage.removeItem("roles");
+          // localStorage.removeItem("userid");
+          // localStorage.removeItem("curruntUser");
           window.location.href = "http://localhost:3000/";
         } else Swal.fire(" Cancelled", "", "error");
       });
@@ -260,17 +260,17 @@ export default function Example() {
       setIsMenuOpen(false);
 
       if (label == "Sign Out") {
-        updateSignStatus("signUp");
-        localStorage.setItem("SignStatus", "signUp");
+        // updateSignStatus("signUp");
+        // localStorage.setItem("SignStatus", "signUp");
         localStorage.removeItem("auth");
-        localStorage.removeItem("roles");
-        localStorage.removeItem("userid");
+        // localStorage.removeItem("roles");
+        // localStorage.removeItem("userid");
         // localStorage.removeItem("curruntUser");
         window.location.href = "http://localhost:3000/";
 
         console.log(label);
       } else if (label == "Profile") {
-        window.location.href = "http://localhost:3000/ProfilePage";
+        window.location.href = "http://localhost:3000/UserProfile";
       }
     };
 
@@ -364,7 +364,7 @@ export default function Example() {
               size="sm"
               className="bg-amber-600 hover:shadow-lg-amber-600"
             >
-              Sign Up
+              LogIn
             </Button>
           ) : (
             <ProfileMenu />
@@ -396,7 +396,7 @@ export default function Example() {
           : 
                
                <Button  variant="outlined" size="sm" color="blue-gray" fullWidth>
-                <Link to="/Profile" fullWidth >
+                <Link to="/UserProfile" fullWidth >
                  Profile
                  </Link>  
                </Button>

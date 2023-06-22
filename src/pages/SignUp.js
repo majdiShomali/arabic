@@ -1,12 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo1 from "../Images/vegetables/Lemon.png";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import imageSign from "../Images/Signin0.png"
 import jwt from 'jwt-decode' // import dependency
 import axios from 'axios';
+import {useParams, useNavigate } from "react-router-dom";
 
 export default function Signup() {
+
+
+  const [Cards, setCards] = useState([]);
+
+  useEffect(()=>{
+      fetchIng()
+  },[])
+
+
+  const fetchIng = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/Ingredients");
+        setCards(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.error("Error retrieving data:", error);
+      }
+    };
+
+
+
+
+
+
+
+  const { type} = useParams();
+
     const [name, setName] = useState("");
     const [namep, setNamep] = useState("");
 
@@ -52,7 +80,8 @@ export default function Signup() {
     firstName: name,
     email: email,
     password:password,
-    role:0
+    role: type === 'user' ? 0 : 2,
+    AllIngredientsId:Cards
   };
 
   try {
@@ -61,7 +90,18 @@ export default function Signup() {
       "http://localhost:5000/api/users",
       userData
     );
-    window.location.href = "http://localhost:3000/LogIn";
+  //   let x =[]
+  //   if (response.data.user0.role==0){
+  //   x= [false ,true,true ]
+  // }else if(response.data.user0.role==1){
+  //    x= [true ,false,true ]
+  // }else if(response.data.user0.role==2){
+  //    x= [true ,true,false]
+  // }
+    localStorage.setItem("auth",(response.data.token))
+    // localStorage.setItem("SignStatus","SignOut")
+    // localStorage.setItem("roles",JSON.stringify(x))
+    window.location.href = "http://localhost:3000/";
   } catch (error) {
     console.error("Error inserting data:", error);
   }

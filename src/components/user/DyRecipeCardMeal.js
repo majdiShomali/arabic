@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState ,useEffect } from 'react';
 import { useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 import { useNavigate } from 'react-router-dom';
 
 function DyRecipeCardMeal({ card , Name ,index ,SAMeals,cardId,img} ) {
@@ -28,7 +28,7 @@ const navigate = useNavigate()
     <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-25">
     <div>
       <img
-        className="w-full h-22"
+        className="w-full h-72 "
         src={img}
         alt="Recipe Title"
       />

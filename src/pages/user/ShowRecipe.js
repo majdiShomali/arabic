@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState ,useEffect } from 'react';
 import { useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../../UserContext";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -9,12 +9,10 @@ const ShowRecipe = () => {
   const { id } = useParams();
 const [clinks,setClinks]= useState([])
 const [cItems,setItems]= useState([])
-  console.log(id);
 
   const oneRecipe = async () => {
     try {
         const response = await axios.get(`http://localhost:5000/api/recipe/${id}`);
-        console.log(response.data)
         setItems(response.data[0].Items)
         setClinks(response.data[0].links)
     }
@@ -32,11 +30,6 @@ const [cItems,setItems]= useState([])
   },[])
 
 
-
-
-
-    const { currentLinks, updateCurrentLinks } = useContext(UserContext);
-    const { currentItems, updateCurrentItems } = useContext(UserContext);
      //----------------------pagination----------------------------//
 
      const [currentPage, setCurrentPage] = useState(1);
@@ -64,14 +57,14 @@ const [cItems,setItems]= useState([])
    <>
   <div className='mt-10  '>
     <div >
-   <div className="ShowRecipeContainer">
+   <div className="">
 
        {slicedArray.map((e,i)=>{
         return(
-       <div id={e.name} className="ingredient_class vegetables" data-target={e.name}>
+       <div key={e.name} id={e.name} className=" " data-target={e.name}>
        <h4>{e.name}</h4>
-       <img className="vegetablesimg"  src={require(`../${e.img}`)}/>      
-       <div className="pContainerCard vegetablespd" ><p className="vegetablesp">{e.clicked}</p></div>   
+       <img className=""  src={require(`../../${e.img}`)}/>      
+       <div className=" " ><p className="">{e.clicked}</p></div>   
        </div>
           )
       })}
@@ -93,7 +86,7 @@ const [cItems,setItems]= useState([])
    <div class="cook_now_videos">
         <div class="video-list">
               {clinks?.map((e)=>{
-          return(<iframe src={e} style={{height:"315px" ,width:"560px", marginBottom:"2rem"}} title="YouTube video player" allowFullScreen ></iframe>)
+          return(<iframe src={e} className='w-96 h-60' title="YouTube video player" allowFullScreen ></iframe>)
                })}
         </div>
    </div>

@@ -68,7 +68,7 @@ function handleLogOut(){
       <Card className=" min-h-[calc(100vh)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-white-900/5 Sidebar bg-white sideBarDash">
         <div className="mb-2 p-4">
         <Typography className="text-amber-500" variant="h5" color="blue-gray">
-        <a> MA6A3MKOM </a>
+        <a> Arabic Recipes </a>
           </Typography>
         </div>
         <List>
@@ -131,7 +131,7 @@ function handleLogOut(){
             <ListItemPrefix>
             <Icon path={mdiTableFurniture} size={1} />
             </ListItemPrefix>
-            <a style={{color:'black'}}> Pending Tables </a>
+            <a style={{color:'black'}}> add Ingredients </a>
           </ListItem>
           </Link>
 

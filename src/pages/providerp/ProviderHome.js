@@ -5,14 +5,14 @@ import { useState, useEffect } from "react";
 // import { useContext } from "react";
 // import { UserContext } from "../UserContext";
 import Pagination from "@mui/material/Pagination";
-import AdminRecipeForm from "../components/AdminRecipeForm";
+// import AdminRecipeForm from "../components/providerp/AdminRecipeForm";
 import Swal from "sweetalert2";
 import Icon from "@mdi/react";
 import { mdiFridge } from "@mdi/js";
 import { mdiHamburgerPlus } from "@mdi/js";
 import { mdiStove } from "@mdi/js";
-import aboutMeal from "../Images/meals/majdi.jpg";
-import SidebarMyList from "../components/SidebarMyList"
+import aboutMeal from "../../Images/meals/majdi.jpg";
+import SidebarMyList from "../../components/user/SidebarMyList"
 import axios from "axios";
 import {
   Card,
@@ -24,7 +24,7 @@ import {
 
 import { mdiPlus } from "@mdi/js";
 import { mdiMinus } from "@mdi/js";
-const Admin = () => {
+const ProviderHome = () => {
   const [img, setImg] = useState("");
 
   const onChange = (e) => {
@@ -305,7 +305,7 @@ const Admin = () => {
 
   const [table, setTable] = useState([]);
 
-  const [yourSelectedStateValue, setOption] = useState("cook_now_container");
+  const [yourSelectedStateValue, setOption] = useState("Meal");
 
   const [ButtonStatus, setButtonStatus] = useState("create");
   const [ButtonStatusId, setButtonStatusId] = useState();
@@ -489,19 +489,89 @@ console.log(updatedRecipe)
       <div className="flex">
         {MyListAdmin?.map((e, i) => {
           return (
+            // <div
+            //   onClick={() => changeStatus(e.name, i)}
+            //   id={e.name}
+            //   className="ingredient_class vegetables"
+            //   data-target={e.name}
+            // >
+            //   <h4>{e.name}</h4>
+            //   <Icon className="iconAddOrRemove" path={e.icon} size={1} />
+            //   <img className="vegetablesimg" src={require(`../../${e.img}`)} />
+            //   <div className="pContainerCard vegetablespd">
+            //     <p className="vegetablesp">{e.clicked}</p>
+            //   </div>
+            // </div>
+
+
             <div
-              onClick={() => changeStatus(e.name, i)}
-              id={e.name}
-              className="ingredient_class vegetables"
-              data-target={e.name}
+            key={e.name}
+            onClick={() => changeStatus(e.name, i)}
+            className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
+          >
+            <svg
+              className="absolute bottom-0 left-0 mb-8"
+              viewBox="0 0 375 283"
+              fill="none"
+              style={{ transform: "scale(1.5)", opacity: "0.1" }}
             >
-              <h4>{e.name}</h4>
-              <Icon className="iconAddOrRemove" path={e.icon} size={1} />
-              <img className="vegetablesimg" src={require(`../${e.img}`)} />
-              <div className="pContainerCard vegetablespd">
-                <p className="vegetablesp">{e.clicked}</p>
+              <rect
+                x="159.52"
+                y={175}
+                width={152}
+                height={152}
+                rx={8}
+                transform="rotate(-45 159.52 175)"
+                fill="white"
+              />
+              <rect
+                y="107.48"
+                width={152}
+                height={152}
+                rx={8}
+                transform="rotate(-45 0 107.48)"
+                fill="white"
+              />
+            </svg>
+            <div className="relative pt-10 px-10 flex items-center justify-center">
+              <div
+                className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                style={{
+                  background: "radial-gradient(black, transparent 60%)",
+                  transform:
+                    "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
+                  opacity: "0.2",
+                }}
+              />
+              <img
+                className="relative w-40 h-32"
+                src={require(`../../${e.img}`)}
+                alt=""
+              />
+            </div>
+            <div className=" text-white px-6 pb-6 mt-6">
+              <span className="block opacity-75 -mb-1">{e.type}</span>
+              <div className="flex justify-between">
+                <span className="block font-semibold ">{e.name}</span>
+
+                <Icon
+                  style={{
+                    backgroundColor:
+                      e.icon === mdiPlus ? "green" : "red",
+                  }}
+                  color="white"
+                  className="iconAddOrRemove absolute top-1 right-1 rounded-lg"
+                  path={e.icon}
+                  size={1}
+                />
               </div>
             </div>
+          </div>
+
+
+
+
+            
           );
         })}
       </div>
@@ -550,19 +620,89 @@ console.log(updatedRecipe)
         <div className="flex">
           {slicedArray.map((e, i) => {
             return (
+              // <div
+              //   onClick={() => changeStatus(e.name, i)}
+              //   id={e.name}
+              //   className="ingredient_class vegetables"
+              //   data-target={e.name}
+              // >
+              //   <h4>{e.name}</h4>
+              //   <Icon className="iconAddOrRemove" path={e.icon} size={1} />
+              //   <img className="vegetablesimg" src={require(`../../${e.img}`)} />
+              //   <div className="pContainerCard vegetablespd">
+              //     <p className="vegetablesp">{e.clicked}</p>
+              //   </div>
+              // </div>
+
+
               <div
-                onClick={() => changeStatus(e.name, i)}
-                id={e.name}
-                className="ingredient_class vegetables"
-                data-target={e.name}
+              key={e.name}
+              onClick={() => changeStatus(e.name, i)}
+              className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
+            >
+              <svg
+                className="absolute bottom-0 left-0 mb-8"
+                viewBox="0 0 375 283"
+                fill="none"
+                style={{ transform: "scale(1.5)", opacity: "0.1" }}
               >
-                <h4>{e.name}</h4>
-                <Icon className="iconAddOrRemove" path={e.icon} size={1} />
-                <img className="vegetablesimg" src={require(`../${e.img}`)} />
-                <div className="pContainerCard vegetablespd">
-                  <p className="vegetablesp">{e.clicked}</p>
+                <rect
+                  x="159.52"
+                  y={175}
+                  width={152}
+                  height={152}
+                  rx={8}
+                  transform="rotate(-45 159.52 175)"
+                  fill="white"
+                />
+                <rect
+                  y="107.48"
+                  width={152}
+                  height={152}
+                  rx={8}
+                  transform="rotate(-45 0 107.48)"
+                  fill="white"
+                />
+              </svg>
+              <div className="relative pt-10 px-10 flex items-center justify-center">
+                <div
+                  className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                  style={{
+                    background: "radial-gradient(black, transparent 60%)",
+                    transform:
+                      "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
+                    opacity: "0.2",
+                  }}
+                />
+                <img
+                  className="relative w-40 h-32"
+                  src={require(`../../${e.img}`)}
+                  alt=""
+                />
+              </div>
+              <div className=" text-white px-6 pb-6 mt-6">
+                <span className="block opacity-75 -mb-1">{e.type}</span>
+                <div className="flex justify-between">
+                  <span className="block font-semibold ">{e.name}</span>
+
+                  <Icon
+                    style={{
+                      backgroundColor:
+                        e.icon === mdiPlus ? "green" : "red",
+                    }}
+                    color="white"
+                    className="iconAddOrRemove absolute top-1 right-1 rounded-lg"
+                    path={e.icon}
+                    size={1}
+                  />
                 </div>
               </div>
+            </div>
+
+
+
+
+
             );
           })}
         </div>
@@ -651,9 +791,9 @@ console.log(updatedRecipe)
         onChange={(e) => setOption(e.target.value)}
         className="w-full border p-2 rounded"
       >
-        <option value="cook_now_container">Meals</option>
-        <option value="cook_now_container2">Drinks</option>
-        <option value="cook_now_container3">Sweets</option>
+        <option value="Meal">Meals</option>
+        <option value="Drink">Drinks</option>
+        <option value="Sweet">Sweets</option>
       </select>
     </div>
 
@@ -745,4 +885,4 @@ console.log(updatedRecipe)
   );
 };
 
-export default Admin;
+export default ProviderHome;

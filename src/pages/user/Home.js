@@ -1,13 +1,13 @@
 import React from 'react'
-import Landing from '../components/landingPage/Landing'
+import Landing from '../../components/landingPage/Landing'
 import { Button } from "@material-tailwind/react";
 import { HashLink } from "react-router-hash-link";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import mcd from '../Images/fruits/Lime.png'
-import kfc from '../Images/fruits/Lime.png'
-import dom from '../Images/fruits/Lime.png'
-import burger from '../Images/fruits/Lime.png'
+import mcd from '../../Images/fruits/Lime.png'
+import kfc from '../../Images/fruits/Lime.png'
+import dom from '../../Images/fruits/Lime.png'
+import burger from '../../Images/fruits/Lime.png'
 
 
 const Home = () => {

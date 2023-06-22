@@ -1,11 +1,14 @@
 import React, { useEffect, useState ,useContext} from "react";
 import { Link } from "react-router-dom";
-import Logo1 from "../Images/vegetables/Lemon.png";
+import Logo1 from "../Images/vegetables/Broccoli.png";
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import imageSign from "../Images/Signin0.png"
 import { UserContext } from '../UserContext';
 export default function LogIn() {
+
+
+
 
 
     const [email, setemail] = useState("");
@@ -25,6 +28,12 @@ export default function LogIn() {
 
    
     const handleSubmit = async (event) => {
+       
+
+ 
+
+
+
 
        event.preventDefault();
 
@@ -47,14 +56,14 @@ export default function LogIn() {
          console.log("success")
          console.log(response.data.token);
 
-        let x =[]
-             if (response.data.user0.role==0){
-             x= [false ,true,true ]
-           }else if(response.data.user0.role==1){
-              x= [true ,false,true ]
-           }else if(response.data.user0.role==2){
-              x= [true ,true,false]
-           }
+        // let x =[]
+        //      if (response.data.user0.role==0){
+        //      x= [false ,true,true ]
+        //    }else if(response.data.user0.role==1){
+        //       x= [true ,false,true ]
+        //    }else if(response.data.user0.role==2){
+        //       x= [true ,true,false]
+        //    }
 
         //    updateRouts(x)
         //    updateSetCurruntUser(response.data.user0)
@@ -65,9 +74,9 @@ export default function LogIn() {
         //    localStorage.setItem("userid",JSON.stringify(response.data.user0._id))
            localStorage.setItem("auth",(response.data.token))
 
-           updateSignStatus("SignOut")
-           localStorage.setItem("SignStatus","SignOut")
-           localStorage.setItem("roles",JSON.stringify(x))
+        //    updateSignStatus("SignOut")
+        //    localStorage.setItem("SignStatus","SignOut")
+        //    localStorage.setItem("roles",JSON.stringify(x))
            window.location.href = 'http://localhost:3000/';
         }else{
         //   setStatus("failed");

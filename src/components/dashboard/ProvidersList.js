@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 
  import Pagination from "@mui/material/Pagination";
 
-const ApproveTable = () => {
+const ProvidersList = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [FilterDataRestaurants, setFilterDataRestaurants] = useState([]);
   const [email, setEmail] = useState("");
@@ -362,4 +362,4 @@ return(
   )
 }
 
-export default ApproveTable
+export default ProvidersList
