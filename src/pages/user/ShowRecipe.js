@@ -13,6 +13,7 @@ const [cItems,setItems]= useState([])
   const oneRecipe = async () => {
     try {
         const response = await axios.get(`http://localhost:5000/api/recipe/${id}`);
+        console.log(response.data)
         setItems(response.data[0].Items)
         setClinks(response.data[0].links)
     }
@@ -61,10 +62,10 @@ const [cItems,setItems]= useState([])
 
        {slicedArray.map((e,i)=>{
         return(
-       <div key={e.name} id={e.name} className=" " data-target={e.name}>
-       <h4>{e.name}</h4>
-       <img className=""  src={require(`../../${e.img}`)}/>      
-       <div className=" " ><p className="">{e.clicked}</p></div>   
+       <div key={e.ingredientName} id={e.ingredientName} className=" " data-target={e.ingredientName}>
+       <h4>{e.ingredientName}</h4>
+       <img className=""  src={e.img}/>      
+       <div className=" " ><p className="">{e.ingredientFlag}</p></div>   
        </div>
           )
       })}

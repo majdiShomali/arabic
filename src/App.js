@@ -20,7 +20,8 @@ import UserProfile from "./pages/user/UserProfile";
 
 // ----------------------Provider routes----------------- //
 import ProviderHome from "./pages/providerp/ProviderHome";
-
+import ProviderProfile from "./pages/providerp/ProviderProfile";
+import NavbarProvider from "./components/providerc/NavbarProvider"
 // -----------------------Dashboard routes----------------//
 import Sidebar from "./pages/dashboard/Sidebar";
 import NavListMenuD from "./pages/dashboard/NavDashboard";
@@ -37,6 +38,7 @@ export default function App() {
   const [hideRouter1, setHideRouterUser] = useState(false);
   const [hideRouter2, setHideRouterAdmin] = useState(true);
   const [hideRouter3, setHideRouterProvider] = useState(true);
+  const [userIdApp, setUserIdApp] = useState("");
 
   const { routs, updateRouts } = useContext(UserContext);
 
@@ -51,7 +53,7 @@ export default function App() {
           },
         });
         let x = [];
-
+        setUserIdApp(response.data.user.id)
         if (response.data.user.role == 1) {
           x = [true, false, true];
         } else if (response.data.user.role == 2) {
@@ -125,17 +127,18 @@ export default function App() {
   };
 
   // ----------------------Provider routes----------------- //
-
+console.log(userIdApp)
   const AppRouter3 = () => {
     return (
       <Router>
-        <NavListMenu />
+        <NavbarProvider />
         <Routes>
-          <Route index element={<ProviderHome />} />
+          <Route index element={<ProviderHome userIdApp0 ={userIdApp} />} />
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
-          <Route path="SignUp" element={<SignUp />} />
-          <Route path="LogIn" element={<LogIn />} />
+          <Route path="ProviderProfile"  element={<ProviderProfile userIdApp0 ={userIdApp} />} />
+          {/* <Route path="SignUp" element={<SignUp />} />
+          <Route path="LogIn" element={<LogIn />} /> */}
         </Routes>
         <Footer />
       </Router>

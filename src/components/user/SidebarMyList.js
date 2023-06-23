@@ -321,7 +321,7 @@ export default function Example(props) {
               </div>
               <div className="p-2">
                 <Input
-                color="green"
+                color
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                   label="Search"
                   value={searchItem}

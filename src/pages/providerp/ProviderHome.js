@@ -1,11 +1,8 @@
 import React from "react";
-// import "./Admin.css";
 import { useState, useEffect } from "react";
-// import AdminForm from '../components/AdminForm';
-// import { useContext } from "react";
-// import { UserContext } from "../UserContext";
+import { useContext } from "react";
+import { RecipeContext } from "../../RecipeContext";
 import Pagination from "@mui/material/Pagination";
-// import AdminRecipeForm from "../components/providerp/AdminRecipeForm";
 import Swal from "sweetalert2";
 import Icon from "@mdi/react";
 import { mdiFridge } from "@mdi/js";
@@ -24,7 +21,12 @@ import {
 
 import { mdiPlus } from "@mdi/js";
 import { mdiMinus } from "@mdi/js";
-const ProviderHome = () => {
+
+import SideBarRecipe from "../../components/providerc/SideBarRecipe";
+const ProviderHome = ({userIdApp0}) => {
+
+
+
   const [img, setImg] = useState("");
 
   const onChange = (e) => {
@@ -44,25 +46,109 @@ const ProviderHome = () => {
     };
   };
 
+  const [userId ,setUserId] = useState()
+  const [providerRecipes ,setProviderRecipes] = useState([])
+  const [ingredientsApi ,setIngredientsApi] = useState([])
+  const [userDataMyListId, setUserDataMyListId] = useState();
+  const [MyList, setMyList] = useState([]);
+  const [MyListN, setMyListN] = useState([]);
+  const [userAllIngredients, setUserAllIngredients] = useState();
+  const [filterDataVegetables0, setFilterDataVegetables0] = useState();
+  const [filterDataVegetables1, setFilterDataVegetables1] = useState();
 
-  const allRecipes = async () => {
+  const fetchProtectedData = async () => {
+ 
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/providerRecipes/${userIdApp0}`
+          );
+          setProviderRecipes(response.data)
+          setTable(response.data)
+        } catch (error) {
+          console.error("Error retrieving data:", error);
+        }
+
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/Ingredients`
+          );
+          setIngredientsApi(response.data)
+        } catch (error) {
+          console.error("Error retrieving data:", error);
+        }
+
+
+
+        try {
+          const response = await axios.get(`http://localhost:5000/api/users/${userIdApp0}`);
+
+          setMyList(response.data[0].MyList);
+          setMyListN(response.data[0].MyListn);
+          setUserDataMyListId(response.data[0].MyListId)
+          setUserAllIngredients(response.data[0].AllIngredientsId)
+         
+          // setFilterDataVegetables1(() => {
+          //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== false);
+          //   {console.log(newItems);}
+          //   return newItems;
+          // });
+          // setFilterDataVegetables0(() => {
+          //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== true);
+          //   {console.log(newItems);}
+          //   return newItems;
+          // })
+
+     
+          
+        } catch (error) {
+          console.error("Error retrieving data:", error);
+        }
+ 
+
+
+
+
+
+
+
+
+      }
+ 
+
+
+useEffect(()=>{
+  if(localStorage.auth != null){   
+    fetchProtectedData()
+  }
+},[])
+
+
+
+
+
+
+  // const allRecipes = async () => {
    
-    try {
-      // Send the data to the server using an HTTP POST request
-      const response = await axios.get("http://localhost:5000/api/recipes");
-      console.log(response.data);
-       setTable(response.data)
-    } catch (error) {
-      console.error("Error inserting data:", error);
-    }
-  };
+  //   try {
+  //     // Send the data to the server using an HTTP POST request
+  //     const response = await axios.get("http://localhost:5000/api/recipes");
+  //     console.log(response.data);
+  //      setTable(response.data)
+  //   } catch (error) {
+  //     console.error("Error inserting data:", error);
+  //   }
 
 
-  useEffect(() => {
 
-    allRecipes()
 
-  },[])
+  // };
+
+
+  // useEffect(() => {
+
+  //   allRecipes()
+
+  // },[])
 
 
 
@@ -341,6 +427,7 @@ const ProviderHome = () => {
 
       let tableObj = {
         recipeName: name,
+        providerId:userIdApp0,
         category: yourSelectedStateValue,
         names: [name1, name2, name3],
         links: [link_name001, link_name002, link_name003],
@@ -349,9 +436,9 @@ const ProviderHome = () => {
         img:img
       };
 
-    const userData = {
-      recipes: tableObj,
-    };
+    // const userData = {
+    //   recipes: tableObj,
+    // };
   
     try {
       // Send the data to the server using an HTTP POST request
@@ -413,7 +500,7 @@ const ProviderHome = () => {
     let link_name003;
     if (e.links[0] != "") {
       link_name001 = "https://youtu.be/".concat(
-        e.links[0].replace("https://www.youtube.com/embed/", "")
+      e.links[0].replace("https://www.youtube.com/embed/", "")
       );
     } else {
       link_name001 = "";
@@ -434,7 +521,7 @@ const ProviderHome = () => {
     } else {
       link_name003 = "";
     }
-console.log(e)
+
     setName(e.recipeName);
     setName1(e.names[0]);
     setName2(e.names[1]);
@@ -444,6 +531,7 @@ console.log(e)
     setLink3(link_name003);
     setMyListAdmin(e.Items);
     setMyListNAdmin(e.ItemsName);
+    setImg(e.img)
     let NewItems = [...items];
     NewItems.map((et) => {
 
@@ -458,20 +546,50 @@ console.log(e)
   }
 
   const UpdateNow =async ()=> {
+
+    let link_name001;
+    let link_name002;
+    let link_name003;
+
+
+    if (link1 != "") {
+      link_name001 = "https://www.youtube.com/embed/".concat(
+        link1.replace("https://youtu.be/", "")
+      );
+    } else {
+      link_name001 = link1;
+    }
+
+    if (link2 != "") {
+      link_name002 = "https://www.youtube.com/embed/".concat(
+        link2.replace("https://youtu.be/", "")
+      );
+    } else {
+      link_name002 = link2;
+    }
+    if (link3 != "") {
+      link_name003 = "https://www.youtube.com/embed/".concat(
+        link3.replace("https://youtu.be/", "")
+      );
+    } else {
+      link_name003 = link3;
+    }
+
+
+console.log(MyListNAdmin)
+
     try {
 
       const updatedRecipe = {
         recipeName: name,
-        Category: yourSelectedStateValue,
+        category: yourSelectedStateValue,
         names:[name1,name2,name3],
-        links: [link1,link2,link3],
+        links: [link_name001,link_name002,link_name003],
         Items: MyListAdmin,
         ItemsName: MyListNAdmin,
+        img:img
       }
       
-      
-      
-console.log(updatedRecipe)
 
       await axios.put(`http://localhost:5000/api/recipes/${ButtonStatusId}`, updatedRecipe);
       // fetchUsers(); // Refresh the user list after updating a user
@@ -482,28 +600,234 @@ console.log(updatedRecipe)
 
   }
 
+
+  function removeItem0(name) {
+    setMyListAdmin((prevAccounts) => {
+      const newItems = prevAccounts.filter((item) => item.ingredientName !== name);
+      return newItems;
+    });
+
+    updateSidebarIng((prevAccounts) => {
+      const newItems = prevAccounts.filter((item) => item.ingredientName !== name);
+      return newItems;
+    });
+
+    setFoodCards((prevAccounts) => {
+      const newItems = prevAccounts.filter((item) => item.ingredientName !== name);
+      return newItems;
+    });
+    setMyListNAdmin((prevAccounts) => {
+      const newItems = prevAccounts.filter((item) => item !== name);
+      return newItems;
+    });
+
+    setFoodCardsName((prevAccounts) => {
+      const newItems = prevAccounts.filter((item) => item !== name);
+      return newItems;
+    });
+  }
+
+
+  const { SidebarIngName, updateSidebarIngName}= useContext(RecipeContext);
+
+  useEffect(() => {
+if(SidebarIngName !== ""){
+  console.log(SidebarIngName)
+  UpdateBeneficiaryId(SidebarIngName)
+
+}
+
+  },[SidebarIngName])
+
+  const UpdateBeneficiaryId = async (ingredientName) => {
+
+ 
+    const newArrayAll = [...userAllIngredients];
+    newArrayAll.map((e) => {
+      
+      if (ingredientName.toLowerCase() == e.ingredientName.toLowerCase()) {
+
+        console.log(ingredientName,e.ingredientFlag)
+      }
+      if (ingredientName.toLowerCase() == e.ingredientName.toLowerCase()) {
+        if (e.ingredientFlag == false) {
+              e.ingredientFlag = true;           
+              setMyListAdmin((prevArray) => [...prevArray, e]);
+              updateSidebarIng((prevArray) => [...prevArray, e])
+              setMyListNAdmin((prevArray) => [...prevArray, e.ingredientName]);
+              setFoodCards((prevArray) => [...prevArray, e]);
+              setFoodCardsName((prevArray) => [...prevArray, e.ingredientName]);       
+        } else {
+             e.ingredientFlag = false;
+              removeItem0(ingredientName);      
+        }
+      }
+    });
+    setItems(() => {
+      return newArrayAll;
+    });
+
+
+    
+  };
+
+
+
+  const { SidebarIng, updateSidebarIng } = useContext(RecipeContext);
+
+
+
   return (
     <>
-    <SidebarMyList/>
-    
-      <div className="flex">
+
+<SideBarRecipe/>
+<div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1">
+              {userAllIngredients?.map((e, i) => {
+                return (
+                 
+
+                  <div
+                    key={i}
+                    onClick={() => UpdateBeneficiaryId(e.ingredientName)}
+                    className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#2bda2b]" : "bg-[#d7e423]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
+                  >
+                    <svg
+                      className="absolute bottom-0 left-0 mb-8"
+                      viewBox="0 0 375 283"
+                      fill="none"
+                      style={{ transform: "scale(1.5)", opacity: "0.1" }}
+                    >
+                      <rect
+                        x="159.52"
+                        y={175}
+                        width={152}
+                        height={152}
+                        rx={8}
+                        transform="rotate(-45 159.52 175)"
+                        fill="white"
+                      />
+                      <rect
+                        y="107.48"
+                        width={152}
+                        height={152}
+                        rx={8}
+                        transform="rotate(-45 0 107.48)"
+                        fill="white"
+                      />
+                    </svg>
+                    <div className="relative pt-10 px-10 flex items-center justify-center">
+                      <div
+                        className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                        style={{
+                          background: "radial-gradient(black, transparent 60%)",
+                          transform:
+                            "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
+                          opacity: "0.2",
+                        }}
+                      />
+                      <img
+                        className="relative w-40 h-32"
+                        src={e.img}
+                        alt=""
+                      />
+                    </div>
+                    <div className=" text-white px-6 pb-6 mt-6">
+                      <span className="block opacity-75 -mb-1">{e.ingredientType}</span>
+                      <div className="flex justify-between">
+                        <span className="block font-semibold ">{e.ingredientName}</span>
+
+          
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+
+
+
+
+
+
+    {/* <SidebarMyList/> */}
+
+
+
+    <div className="flex">
         {MyListAdmin?.map((e, i) => {
           return (
-            // <div
-            //   onClick={() => changeStatus(e.name, i)}
-            //   id={e.name}
-            //   className="ingredient_class vegetables"
-            //   data-target={e.name}
-            // >
-            //   <h4>{e.name}</h4>
-            //   <Icon className="iconAddOrRemove" path={e.icon} size={1} />
-            //   <img className="vegetablesimg" src={require(`../../${e.img}`)} />
-            //   <div className="pContainerCard vegetablespd">
-            //     <p className="vegetablesp">{e.clicked}</p>
-            //   </div>
-            // </div>
+            <div
+            key={e.ingredientName}
+            onClick={() => UpdateBeneficiaryId(e.ingredientName)}
+            className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
+          >
+            <svg
+              className="absolute bottom-0 left-0 mb-8"
+              viewBox="0 0 375 283"
+              fill="none"
+              style={{ transform: "scale(1.5)", opacity: "0.1" }}
+            >
+              <rect
+                x="159.52"
+                y={175}
+                width={152}
+                height={152}
+                rx={8}
+                transform="rotate(-45 159.52 175)"
+                fill="white"
+              />
+              <rect
+                y="107.48"
+                width={152}
+                height={152}
+                rx={8}
+                transform="rotate(-45 0 107.48)"
+                fill="white"
+              />
+            </svg>
+            <div className="relative pt-10 px-10 flex items-center justify-center">
+              <div
+                className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                style={{
+                  background: "radial-gradient(black, transparent 60%)",
+                  transform:
+                    "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
+                  opacity: "0.2",
+                }}
+              />
+              <img
+                className="relative w-40 h-32"
+                src={e.img}
+                alt=""
+              />
+            </div>
+            <div className=" text-white px-6 pb-6 mt-6">
+              <span className="block opacity-75 -mb-1">{e.ingredientType}</span>
+              <div className="flex justify-between">
+                <span className="block font-semibold ">{e.ingredientName}</span>
+              </div>
+            </div>
+          </div>
 
 
+
+
+            
+          );
+        })}
+      </div>
+
+
+
+
+
+
+
+    
+      {/* <div className="flex">
+        {MyListAdmin?.map((e, i) => {
+          return (
             <div
             key={e.name}
             onClick={() => changeStatus(e.name, i)}
@@ -574,11 +898,11 @@ console.log(updatedRecipe)
             
           );
         })}
-      </div>
+      </div> */}
 
 
 
-      <div className="flex justify-center mt-5 mb-5">
+      {/* <div className="flex justify-center mt-5 mb-5">
         <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
           <div className="relative">
             <div className="absolute flex items-center ml-2 h-full">
@@ -605,12 +929,12 @@ console.log(updatedRecipe)
 
 
         </div>
-      </div>
+      </div> */}
 
 
 
 
-
+{/* 
       <fieldset className="">
         <legend>
           All ingredients:
@@ -620,19 +944,19 @@ console.log(updatedRecipe)
         <div className="flex">
           {slicedArray.map((e, i) => {
             return (
-              // <div
-              //   onClick={() => changeStatus(e.name, i)}
-              //   id={e.name}
-              //   className="ingredient_class vegetables"
-              //   data-target={e.name}
-              // >
-              //   <h4>{e.name}</h4>
-              //   <Icon className="iconAddOrRemove" path={e.icon} size={1} />
-              //   <img className="vegetablesimg" src={require(`../../${e.img}`)} />
-              //   <div className="pContainerCard vegetablespd">
-              //     <p className="vegetablesp">{e.clicked}</p>
-              //   </div>
-              // </div>
+              <div
+                onClick={() => changeStatus(e.name, i)}
+                id={e.name}
+                className="ingredient_class vegetables"
+                data-target={e.name}
+              >
+                <h4>{e.name}</h4>
+                <Icon className="iconAddOrRemove" path={e.icon} size={1} />
+                <img className="vegetablesimg" src={require(`../../${e.img}`)} />
+                <div className="pContainerCard vegetablespd">
+                  <p className="vegetablesp">{e.clicked}</p>
+                </div>
+              </div>
 
 
               <div
@@ -706,9 +1030,9 @@ console.log(updatedRecipe)
             );
           })}
         </div>
-      </fieldset>
+      </fieldset> */}
 
-      <div className="w-full flex justify-center">
+      {/* <div className="w-full flex justify-center">
         {
           <Pagination
             count={totalPages}
@@ -716,7 +1040,7 @@ console.log(updatedRecipe)
             onChange={handlePageChange}
           />
         }
-      </div>
+      </div> */}
 
       <div className=" mb-4 mt-4">
         <Card color="transparent" shadow={false}>
@@ -837,7 +1161,7 @@ console.log(updatedRecipe)
               <tbody id="tbody">
                 {table.map((e, i) => {
                   return (
-                    <tr>
+                    <tr key={i}>
                            
                       <th>{e._id}</th>
                       <th>{e.recipeName}</th>
