@@ -50,14 +50,14 @@ const SideBarRecipe = () => {
   
 
     // const { test, updateTest } = useContext(UserContext);
-    const [FilterDataItems, setFilterDataItemss] = useState([]);
+    const [FilterDataItems, setFilterDataItemss] = useState();
   
     const [userAllIngredients0, setUserAllIngredients0] = useState();
   
 
     useEffect(() => {
- 
-    }, []);
+      setFilterDataItemss([...SidebarIng])
+    }, [SidebarIng]);
   
   
   
@@ -65,7 +65,9 @@ const SideBarRecipe = () => {
     const [searchItem, setSearchItem] = useState("");
   
     const filterDataByNameItems = (searchTerm) => {
-      const filteredDataItems = userAllIngredients0.filter((item) =>
+      console.log(searchTerm)
+      console.log(SidebarIng)
+      const filteredDataItems = SidebarIng.filter((item) =>
         item.ingredientName.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilterDataItemss(filteredDataItems);
@@ -101,7 +103,7 @@ const SideBarRecipe = () => {
                 onClick={() => setSideStatus00(true)}>x</Button>
 
                 <Typography variant="h5" color="blue-gray">
-                  My List
+                Ingredients
                 </Typography>
               </div>
               <div className="p-2">
@@ -116,16 +118,11 @@ const SideBarRecipe = () => {
                   }}
                 />
               </div>
-           <Link className="w-full px-2 " to="/Recipes"><Button 
-              className=" w-full border  border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
-              variant="text"
-           
-           
-           >Show Recipes</Button></Link>
+      
               <List>
                 <hr className="my-2 border-blue-gray-50" />
 
-                {SidebarIng?.map((e) => {
+                {FilterDataItems?.map((e) => {
                   return (
                     <ListItem
                       key={e.ingredientName}
@@ -147,7 +144,7 @@ const SideBarRecipe = () => {
               <Button
                  className="mr-5 border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
                  variant="text"             
-              onClick={() => setSideStatus(false)}>My List</Button>
+              onClick={() => setSideStatus(false)}>Ingredients</Button>
             </div>
           )}
         </>
