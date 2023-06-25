@@ -14,11 +14,17 @@ import { mdiHamburgerPlus } from "@mdi/js";
 import { mdiStove } from "@mdi/js";
 import aboutMeal from "../../Images/meals/majdi.jpg";
 import Pagination from "@mui/material/Pagination";
-
+import { KitContext } from "../../KitchenContext";
+import {AllContext } from "../../AllDataContext";
 import DyRecipeCardMeal from "../../components/user/DyRecipeCardMeal";
 import DyRecipeCardDrink from "../../components/user/DyRecipeDrinkCard";
 import axios from "axios";
-const Recipes = () => {
+const Recipes = ({userIdApp0}) => {
+  const { SidebarIngName0, updateSidebarIngName0 } = useContext(KitContext);
+  const { AllDataRecipesA,setAllDataRecipesA} = useContext(AllContext);
+  const { AllDataGetK,setAllDataGetK} = useContext(AllContext);
+
+// console.log(AllDataRecipesA)
   // const { MyList, updateMyList } = useContext(UserContext);
   // const { MyListN, updateMyListN } = useContext(UserContext);
 
@@ -57,81 +63,95 @@ const Recipes = () => {
 
   const [userAllIngredients, setUserAllIngredients] = useState();
   const [userAllIngredients0, setUserAllIngredients0] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const allRecipes = async () => {
-    try {
-      const token = localStorage.getItem("auth");
-      if (token) {
-        const response = await axios.get("http://localhost:5000/protected", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        let id = response.data.user.id;
-        setUserId(response.data.user.id);
-        console.log(id);
-        try {
-          // Send the data to the server using an HTTP POST request
-          const response = await axios.get(
-            `http://localhost:5000/api/users/${id}`
+
+    updateMyListN(AllDataGetK[0]?.MyListn)
+    setUserAllIngredients(AllDataGetK[0]?.AllIngredientsId)
+    setUserAllIngredients0(() => {
+          const newItems = AllDataGetK[0]?.AllIngredientsId.filter(
+            (item) => item.ingredientFlag !== true
           );
-          console.log(response.data);
-          updateMyListN(response.data[0].MyListn);
-          setUserAllIngredients(response.data[0].AllIngredientsId);
+          {
+            console.log(newItems);
+          }
+          return newItems;
+        });
 
-          setUserAllIngredients0(() => {
-            const newItems = response.data[0].AllIngredientsId.filter(
-              (item) => item.ingredientFlag !== true
-            );
-            {
-              console.log(newItems);
-            }
-            return newItems;
-          });
-        } catch (error) {
-          console.error("Error inserting data:", error);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      localStorage.removeItem("auth");
-      window.location.href = "http://localhost:3000/Login";
-    } finally {
-    }
+    // try {
+    //   // Send the data to the server using an HTTP POST request
+    //   const response = await axios.get(
+    //     `http://localhost:5000/api/users/${userIdApp0}`
+    //   );
+    //   console.log(response.data);
+    //   updateMyListN(response.data[0].MyListn);
 
-    try {
-      const response = await axios.get("http://localhost:5000/api/recipesA");
-      console.log(response.data);
-      setTable(response.data);
-      let rrr = response.data;
-      setAllRecipesA(rrr)
-      setFilterDataMeals(rrr)
-      updateMeals((prevAccounts) => {
-        const newItems = rrr.filter((item) => item.category === "Meal");
-        return newItems;
-      });
-      updateDrinks((prevAccounts) => {
-        const newItems = rrr.filter((item) => item.Category === "Drink");
-        return newItems;
-      });
+    //   setUserAllIngredients(response.data[0].AllIngredientsId);
 
-      //   updateSweet((prevAccounts) => {
-      //     const newItems = rrr.filter(
-      //       (item) => item.Category === "cook_now_container3"
-      //     );
-      //     return  (newItems)
+    //   setUserAllIngredients0(() => {
+    //     const newItems = response.data[0].AllIngredientsId.filter(
+    //       (item) => item.ingredientFlag !== true
+    //     );
+    //     {
+    //       console.log(newItems);
+    //     }
+    //     return newItems;
+    //   });
+    // } catch (error) {
+    //   console.error("Error inserting data:", error);
+    // }
 
-      //   });
-    } catch (error) {
-      console.error("Error inserting data:", error);
-    }
+
+
+    // try {
+    //   const response = await axios.get("http://localhost:5000/api/recipesA");
+    //   console.log(response.data);
+    //   setTable(response.data);
+    //   let rrr = response.data;
+    //   setAllRecipesA(rrr)
+    //   setFilterDataMeals(rrr)
+    //   updateMeals((prevAccounts) => {
+    //     const newItems = rrr.filter((item) => item.category === "Meal");
+    //     return newItems;
+    //   });
+    //   updateDrinks((prevAccounts) => {
+    //     const newItems = rrr.filter((item) => item.Category === "Drink");
+    //     return newItems;
+    //   });
+
+    // } catch (error) {
+    //   console.error("Error inserting data:", error);
+    // }finally {
+    //   setIsLoading(false); // Set the loading state to false after the save operation is completed
+    // }
+
+
+
   };
+
+
+   function abyss(){
+
+  
+    setTable(AllDataRecipesA)
+    setAllRecipesA(AllDataRecipesA)
+    setFilterDataMeals(AllDataRecipesA)
+          updateMeals((prevAccounts) => {
+        const newItems = AllDataRecipesA?.filter((item) => item.category === "Meal");
+        return newItems;
+      });
+   }
+
 
   useEffect(() => {
     allRecipes();
-  }, []);
+    abyss();
+    
+  }, [AllDataRecipesA,AllDataGetK]);
 
   function checkIfAllExist(meal_c, my_list_c) {
+    console.log(meal_c,my_list_c)
     return meal_c.filter((h) => !my_list_c.includes(h.toLowerCase())).length === 0;
   }
 
@@ -310,13 +330,26 @@ const Recipes = () => {
 
 
 
+ {!AllDataRecipesA[0]?._id ? 
+ 
+ <div role="status">
+    <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+    </svg>
+    <span class="sr-only">Loading...</span>
+</div>
+ 
+ 
+ 
+ 
+ : null}
 
 
 
 
 
-
-      <div class="cook_now_container cook_now_box">
+      <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 p-5">
         {FilterDataMeals.map((e, i) => {
           {console.log(e.ItemsName, MyListN)}
           if (checkIfAllExist(e.ItemsName, MyListN)) {

@@ -8,6 +8,7 @@ import mcd from '../../Images/fruits/Lime.png'
 import kfc from '../../Images/fruits/Lime.png'
 import dom from '../../Images/fruits/Lime.png'
 import burger from '../../Images/fruits/Lime.png'
+import AddYourIng from '../../components/landingPage/AddYourIng';
 
 
 const Home = () => {
@@ -258,7 +259,7 @@ const Home = () => {
 </div>
 
 
-
+ <AddYourIng/>
 
     </>
   )

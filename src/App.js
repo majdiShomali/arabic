@@ -17,7 +17,7 @@ import LogIn from "./pages/Login";
 import ShowRecipe from "./pages/user/ShowRecipe";
 import Kitchens from "./pages/user/Kitchens";
 import UserProfile from "./pages/user/UserProfile";
-
+// import PaymentPage from "./components/landingPage/Payment";
 // ----------------------Provider routes----------------- //
 import ProviderHome from "./pages/providerp/ProviderHome";
 import ProviderProfile from "./pages/providerp/ProviderProfile";
@@ -34,7 +34,10 @@ import PendingRecipes from "./components/dashboard/PendingRecipes";
 import Ingredients from  "./pages/dashboard/Ingredients"
 import axios from "axios";
 
+
 export default function App() {
+
+
   const [hideRouter1, setHideRouterUser] = useState(false);
   const [hideRouter2, setHideRouterAdmin] = useState(true);
   const [hideRouter3, setHideRouterProvider] = useState(true);
@@ -45,7 +48,7 @@ export default function App() {
   const fetchProtectedData = async () => {
     try {
       const token = localStorage.getItem("auth");
-      console.log(token);
+  
       if (token) {
         const response = await axios.get("http://localhost:5000/protected", {
           headers: {
@@ -89,13 +92,14 @@ export default function App() {
         <NavListMenu />
         <Routes>
           <Route index element={<Home />} />
+          {/* <Route path="/Payment/:currentPrice" element={<PaymentPage />} /> */}
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
           <Route path="/SignUp/:type" element={<SignUp />} />
           <Route path="LogIn" element={<LogIn />} />
           <Route path="ShowRecipe/:id" element={<ShowRecipe />} />
-          <Route path="Recipes" element={<Recipes />} />
-          <Route path="Kitchen" element={<Kitchen />} />
+          <Route path="Recipes" element={<Recipes userIdApp0 ={userIdApp} />} />
+          <Route path="Kitchen" element={<Kitchen  userIdApp0 ={userIdApp} />} />
           <Route path="UserProfile" element={<UserProfile />} />
           <Route path="/Kitchen/:type_Kitchen" element={<Kitchens />} />
         </Routes>

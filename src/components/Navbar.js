@@ -172,6 +172,7 @@ function NavList() {
             About Us
           </ListItem>
         </Link>
+     
       </Typography>
       <NavListMenu />
       <Typography

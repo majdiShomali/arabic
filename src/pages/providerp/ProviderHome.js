@@ -59,51 +59,59 @@ const ProviderHome = ({userIdApp0}) => {
 
   const fetchProtectedData = async () => {
  
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/Ingredients`
+      );
+      updateSidebarIng([])
+      // setIngredientsApi(response.data)
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+
+
+    try {
+      const response = await axios.get(`http://localhost:5000/api/users/${userIdApp0}`);
+
+      // setMyList(response.data[0].MyList);
+      // setMyListN(response.data[0].MyListn);
+      // setUserDataMyListId(response.data[0].MyListId)
+      setUserAllIngredients(response.data[0].AllIngredientsId)
+      setFilterDataMeals(response.data[0].AllIngredientsId)
+      // setFilterDataVegetables1(() => {
+      //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== false);
+      //   {console.log(newItems);}
+      //   return newItems;
+      // });
+      // setFilterDataVegetables0(() => {
+      //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== true);
+      //   {console.log(newItems);}
+      //   return newItems;
+      // })
+
+ 
+      
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+
+
         try {
           const response = await axios.get(
             `http://localhost:5000/api/providerRecipes/${userIdApp0}`
           );
           // setProviderRecipes(response.data)
           setTable(response.data)
-        } catch (error) {
-          console.error("Error retrieving data:", error);
-        }
 
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/api/Ingredients`
-          );
-          // setIngredientsApi(response.data)
         } catch (error) {
           console.error("Error retrieving data:", error);
         }
 
 
 
-        try {
-          const response = await axios.get(`http://localhost:5000/api/users/${userIdApp0}`);
 
-          // setMyList(response.data[0].MyList);
-          // setMyListN(response.data[0].MyListn);
-          // setUserDataMyListId(response.data[0].MyListId)
-          setUserAllIngredients(response.data[0].AllIngredientsId)
-          setFilterDataMeals(response.data[0].AllIngredientsId)
-          // setFilterDataVegetables1(() => {
-          //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== false);
-          //   {console.log(newItems);}
-          //   return newItems;
-          // });
-          // setFilterDataVegetables0(() => {
-          //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== true);
-          //   {console.log(newItems);}
-          //   return newItems;
-          // })
 
-     
-          
-        } catch (error) {
-          console.error("Error retrieving data:", error);
-        }
+
  
 
 
@@ -117,11 +125,7 @@ const ProviderHome = ({userIdApp0}) => {
  
 
 
-useEffect(()=>{
-  if(localStorage.auth != null){   
-    fetchProtectedData()
-  }
-},[])
+
 
 
 
@@ -590,18 +594,29 @@ console.log(updatedRecipe)
 
 
   const { SidebarIngName, updateSidebarIngName}= useContext(RecipeContext);
+   const { RecipeStatus, updateRecipeStatus } = useContext(RecipeContext);
     // const { RecipeElement, updateRecipeElement } = useContext(RecipeContext);
 
   useEffect(() => {
+    console.log("1111111111111111111111111111111111")
 if(SidebarIngName !== ""){
   console.log(SidebarIngName)
   UpdateBeneficiaryId(SidebarIngName)
-
+  
 }
-
-
-
   },[SidebarIngName])
+
+//   useEffect(() => {
+//     updateSidebarIngName("")
+// },[])
+
+useEffect(()=>{
+  console.log("222222222222222222222222222222")
+
+  if(SidebarIngName === ""){   
+    fetchProtectedData()
+  }
+},[])
 
   const UpdateBeneficiaryId = async (ingredientName) => {
 
@@ -621,7 +636,6 @@ if(SidebarIngName !== ""){
               setMyListNAdmin((prevArray) => [...prevArray, e.ingredientName]);
               setFoodCards((prevArray) => [...prevArray, e]);
               setFoodCardsName((prevArray) => [...prevArray, e.ingredientName]); 
-              console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")   
                
         } else {
              e.ingredientFlag = false;
@@ -645,6 +659,10 @@ if(SidebarIngName !== ""){
     const falseItems = newItems.filter((item) => item.ingredientFlag !== true);
     return [...falseItems, ...trueItems];
   });
+
+  updateRecipeStatus(false)
+
+
   };
 
 

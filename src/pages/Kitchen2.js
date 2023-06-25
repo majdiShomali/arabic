@@ -1,141 +1,500 @@
 import React from "react";
+// import "./kitchen.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
+import AboutUsed from "./aboutPage/AboutUsed";
+import Icon from "@mdi/react";
+import { mdiPlus } from "@mdi/js";
+import { mdiMinus } from "@mdi/js";
+import IngredientsCard from "../components/user/IngredientsCard";
 import SidebarMyList from "../components/user/SidebarMyList";
 import { useContext } from "react";
+import { UserContext } from "../UserContext";
 import { KitContext } from "../KitchenContext";
-import {AllContext} from "../AllDataContext"
-
-
 import axios from "axios";
 
 const Kitchen = ({userIdApp0}) => {
+  let AddPlus = mdiPlus;
+  let removMinus = mdiMinus;
 
-  const { AllDataGet,setAllDataGet} = useContext(AllContext);
-  const { UpdateAll,setUpdateAll} = useContext(AllContext);
+  let vegetables_name = [
+    "potato",
+    "onion",
+    "garlic",
+    "Broccoli",
+    "Cabbage",
+    "Bean",
+    "Arugula",
+    "Carrot",
+    "Cauliflower",
+    "Celery",
+    "Cherry Tomato",
+    "Common Beans",
+    "Cucumbers",
+    "Eggplant",
+    "Ginger",
+    "Lemon",
+    "Lettuce",
+    "Mulukhiyah",
+    "Mushrooms",
+    "Okra",
+    "Parsley",
+    "pea",
+    "radish",
+    "red pepper",
+    "Spinach",
+    "sweet pepper",
+    "tomato",
+  ];
+  let vegetables_img = [];
+  let vegetables_type = [];
+  let fruit_name = [
+    "apple",
+    "Apricot",
+    "Avocado",
+    "Banana",
+    "Blackberries",
+    "Blueberries",
+    "Cherry",
+    "Date Palm",
+    "Grape",
+    "Guava",
+    "Kiwi",
+    "Lime",
+    "Mango",
+    "Melon",
+    "Nectarines",
+    "Olives",
+    "Orange",
+    "Pear",
+    "Pineapple",
+    "Pomegranate",
+    "Pomelo",
+    "Raspberry",
+    "Strawberry",
+    "watermelon",
+  ];
+  let fruit_img = [];
+  let fruit_type = [];
 
+  arraytoimage(
+    "Images/vegetables/",
+    vegetables_name,
+    vegetables_img,
+    vegetables_type,
+    "vegetables"
+  );
+  arraytoimage("Images/fruits/", fruit_name, fruit_img, fruit_type, "fruit");
+
+  function arraytoimage(fruit_name0, item_name, item_img, item_type, type) {
+    for (let i = 0; i < item_name.length; i++) {
+      item_img[i] = fruit_name0 + item_name[i] + ".png";
+    }
+    for (let i = 0; i < item_name.length; i++) {
+      item_type[i] = type;
+    }
+  }
+
+  let vegetables_obj = [];
+
+  arraytoobject(
+    vegetables_name,
+    vegetables_img,
+    vegetables_type,
+    vegetables_obj,
+    "vegetables"
+  );
+
+  let fruit_obj = [];
+  arraytoobject(fruit_name, fruit_img, fruit_type, fruit_obj, "fruit");
+
+  function arraytoobject(item_name, item_img, item_type, items_obj, type) {
+    for (let i = 0; i < item_name.length; i++) {
+      let item_obj = {
+        name: "name",
+        img: "img",
+        type: type,
+        clicked: "Click to add",
+        icon: AddPlus,
+      };
+      item_obj.name = item_name[i];
+      item_obj.img = item_img[i];
+      item_obj.type = item_type[i];
+      items_obj.push(item_obj);
+    }
+  }
+
+  localStorage.setItem("vegetables_obj", JSON.stringify(vegetables_obj));
+  localStorage.setItem("fruit_obj", JSON.stringify(fruit_obj));
+
+  //------------------------------------------------------//
+
+  const [userId, setUserId] = useState();
+  const [userDataMyListId, setUserDataMyListId] = useState();
   const [userAllIngredients, setUserAllIngredients] = useState();
   const [userAllIngredients0, setUserAllIngredients0] = useState();
 
-  const [isLoading, setIsLoading] = useState(true);
+  let localList = [];
+  let localListN = [];
+
+  const [MyList, setMyList] = useState([]);
+  const [MyListN, setMyListN] = useState([]);
+
+  const [vegetables, setVegetables] = useState([...vegetables_obj]);
+  const [fruit, setFruit] = useState([...fruit_obj]);
+
+  const handleShowUser = async (id) => {
 
 
-  const handleShowUser = async () => {
-    setUserAllIngredients(AllDataGet[0]?.AllIngredientsId)
-    setFilterDataVegetables0(AllDataGet[0]?.AllIngredientsId)
-    updateMyListSideBarCon(AllDataGet[0]?.AllIngredientsId)
-    setUserAllIngredients(AllDataGet[0]?.AllIngredientsId)
-    setIsLoading(false);
-    // try {
-    //   const response = await axios.get(`http://localhost:5000/api/users/${userIdApp0}`);
-    //   console.log(response.data[0].AllIngredientsId)
-    //   setUserAllIngredients(response.data[0].AllIngredientsId)
-    //   setFilterDataVegetables0(response.data[0].AllIngredientsId)
-    //   updateMyListSideBarCon(response.data[0].AllIngredientsId)
-    //   // setUserAllIngredients0(() => {
-    //   //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== true);
-    //   //   return newItems;
-    //   // });
-    // } catch (error) {
-    //   console.error("Error retrieving data:", error);
-    // }finally {
-    //   setIsLoading(false);
-    // }
+
+    try {
+      const response = await axios.get(`http://localhost:5000/api/users/${id}`);
+      const newArrayV = [...vegetables_obj];
+      const newArrayF = [...fruit_obj];
+      localList = response.data[0].MyList;
+      localListN = response.data[0].MyListn;
+      setMyList(response.data[0].MyList);
+      setMyListN(response.data[0].MyListn);
+      setUserDataMyListId(response.data[0].MyListId)
+      setUserAllIngredients(response.data[0].AllIngredientsId)
+     
+      setUserAllIngredients0(() => {
+        const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== true);
+        return newItems;
+      });
+      setFilterDataVegetables0(() => {
+        const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== true);
+        return newItems;
+      })
+
+      newArrayV.map((e) => {
+        if (localListN.includes(e.name)) {
+          e.clicked = "Added";
+          e.icon = removMinus;
+        }
+      });
+
+      setVegetables(newArrayV);
+
+      newArrayF.map((e) => {
+        if (localListN.includes(e.name)) {
+          e.clicked = "Added";
+          e.icon = removMinus;
+        }
+      });
+
+      setFruit(newArrayF);
+
+
+
+
+
+
+      
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
   };
 
-
+  const fetchProtectedData = async () => {
+    try {
+      const token = localStorage.getItem("auth");
+      console.log(token);
+      if (token) {
+        const response = await axios.get("http://localhost:5000/protected", {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setUserId(response.data.user.id);
+        handleShowUser(response.data.user.id);
+      }
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem("auth");
+      window.location.href = "http://localhost:3000/Login";
+    } finally {
+    }
+  };
   const { MyListSideBarCon, updateMyListSideBarCon} = useContext(KitContext);
-  const { MyListSideBarConNames, updateMyListSideBarConNames} = useContext(KitContext);
 
   useEffect(() => {
-   
-    handleShowUser()
-  }, [AllDataGet]);
+    fetchProtectedData();
+  }, [MyListSideBarCon]);
 
-  
+  //-----------------------search------------------------//
+  const [searchTermVegetables, setSearchTermVegetables] = useState("");
+  const [FilterDataVegetables, setFilterDataVegetables] = useState([
+    ...vegetables_obj,
+  ]);
+
+  const [searchTermFruit, setSearchTermFruit] = useState("");
+  const [FilterDataFruit, setFilterDataFruit] = useState([...fruit_obj]);
+
+  const filterDataByNameVegetables = (searchTermVegetables) => {
+    const filteredDataVegetables = vegetables.filter((item) =>
+      item.name.toLowerCase().includes(searchTermVegetables.toLowerCase())
+    );
+    setFilterDataVegetables(filteredDataVegetables);
+    setCurrentPageVegetables(1);
+  };
+
+  const filterDataByNameFruit = (searchTermFruit) => {
+    const filteredDataFruit = fruit.filter((item) =>
+      item.name.toLowerCase().includes(searchTermFruit.toLowerCase())
+    );
+    setFilterDataFruit(filteredDataFruit);
+    setCurrentPageFruit(1);
+  };
+  //----------------------------------------------------//
+
+  const [currentPageVegetables, setCurrentPageVegetables] = useState(1);
+  const [currentPageFruit, setCurrentPageFruit] = useState(1);
+
+  let totalItemsVegetables;
+  let totalItemsFruit;
+
+  let totalPagesVegetables;
+  let totalPagesFruit;
+
+  let slicedArrayVegetables;
+  let slicedArrayFruit;
+
+  const itemsPerPage = 6;
+
+  totalItemsVegetables = FilterDataVegetables.length;
+  totalItemsFruit = FilterDataFruit.length;
+
+  totalPagesVegetables = Math.ceil(totalItemsVegetables / itemsPerPage);
+  totalPagesFruit = Math.ceil(totalItemsFruit / itemsPerPage);
+
+  const startIndexVegetables = (currentPageVegetables - 1) * itemsPerPage;
+  const startIndexFruit = (currentPageFruit - 1) * itemsPerPage;
+
+  const endIndexVegetables = startIndexVegetables + itemsPerPage;
+  const endIndexFruit = startIndexFruit + itemsPerPage;
+
+  slicedArrayVegetables = FilterDataVegetables.slice(
+    startIndexVegetables,
+    endIndexVegetables
+  );
+  slicedArrayFruit = FilterDataFruit.slice(startIndexFruit, endIndexFruit);
+
+  const handlePageChangeVegetables = (event, pageNumber) => {
+    setCurrentPageVegetables(pageNumber);
+  };
+  const handlePageChangeFruit = (event, pageNumber) => {
+    setCurrentPageFruit(pageNumber);
+  };
 
   //--------------------------------
 
+  let arr0 = [...MyList];
+  let arr1 = [...MyListN];
 
-  const [SearchType, setSearchType] = useState("");
+  const changeStatusV = async (name, i) => {
+    // let userid = JSON.parse(localStorage.userid);
+    const newArray = [...vegetables];
+    newArray.map((e) => {
+      if (name === e.name) {
+        if (e.clicked === "Click to add") {
+          e.clicked = "Added";
+          e.icon = removMinus;
+          setMyList((prevArray) => [...prevArray, e]);
+          setMyListN((prevArray) => [...prevArray, e.name]);
+          arr0.push(e);
+          arr1.push(e.name);
+        } else {
+          e.clicked = "Click to add";
+          e.icon = AddPlus;
+          removeItem(name);
 
-  function removeItem0(name) {
-    updateMyListSideBarConNames((prevAccounts) => {
+          arr0 = arr0.filter((item) => item.name !== name);
+
+          arr1 = arr1.filter((item) => item !== name);
+        }
+      }
+    });
+    setVegetables(() => {
+      return newArray;
+    });
+
+    try {
+      const updatedUser = {
+        // Update the properties of the user as needed
+        MyList: arr0,
+        MyListn: arr1,
+      };
+
+      await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser);
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+  const [statusList, setStatusList] = useState(false);
+
+  function updateList() {
+    // let userid = JSON.parse(localStorage.userid);
+  }
+
+  const changeStatusF = async (name, i) => {
+    const newArray = [...fruit];
+    newArray.map((e) => {
+      if (name === e.name) {
+        if (e.clicked === "Click to add") {
+          e.clicked = "Added";
+          e.icon = removMinus;
+          setMyList((prevArray) => [...prevArray, e]);
+          setMyListN((prevArray) => [...prevArray, e.name]);
+          arr0.push(e);
+          arr1.push(e.name);
+        } else {
+          e.clicked = "Click to add";
+          e.icon = AddPlus;
+          removeItem(name);
+          arr0 = arr0.filter((item) => item.name !== name);
+
+          arr1 = arr1.filter((item) => item !== name);
+        }
+      }
+    });
+    setFruit(() => {
+      return newArray;
+    });
+
+    // let userid = JSON.parse(localStorage.userid);
+
+    try {
+      const updatedUser = {
+        // Update the properties of the user as needed
+        MyList: arr0,
+        MyListn: arr1,
+      };
+
+      await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser);
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+    axios
+      .put(`http://localhost:4000/contactus00/${userId}`, {
+        userlist: arr0,
+        userlistn: arr1,
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  function changeStatus(name, i) {
+    const newArrayV = [...vegetables_name];
+    const newArrayF = [...fruit_name];
+
+    if (newArrayF.includes(name)) {
+      changeStatusF(name, i);
+    } else if (newArrayV.includes(name)) {
+      changeStatusV(name, i);
+    }
+  }
+
+  function removeItem(name) {
+    setMyList((prevAccounts) => {
+      const newItems = prevAccounts.filter((item) => item.name !== name);
+      return newItems;
+    });
+
+    setMyListN((prevAccounts) => {
       const newItems = prevAccounts.filter((item) => item !== name);
       return newItems;
     });
   }
 
+  const [SearchType, setSearchType] = useState("");
+  const [SearchTerm, setSearchTerm] = useState("");
 
 
-  const { SidebarIngName0, updateSidebarIngName0 } = useContext(KitContext);
-  const { EffectStatus, updateEffectStatus } = useContext(KitContext);
-
-    // const { RecipeElement, updateRecipeElement } = useContext(RecipeContext);
-    // useEffect(() => {
-    //   updateSidebarIngName0("")
-    // },[])
-    
-  useEffect(() => {
-if(SidebarIngName0 !== ""){
-  UpdateBeneficiaryId(SidebarIngName0)
-}
-  },[EffectStatus])
-  
-
-
-
-
-
-  const UpdateBeneficiaryId = async (ingredientName) => {
-    const newArrayAll = [...userAllIngredients];
-    newArrayAll.map((e) => {
+    const UpdateBeneficiaryId = async (cardId ,ingredientFlag) => {
+      let newUsersId = userDataMyListId
+      console.log(newUsersId,"userList")
+      if(userDataMyListId.includes(cardId)){
+        //  setUserAllIngredients() 
+          // const newItems = prevAccounts.filter((item) => item._id !== cardId);
+         newUsersId = newUsersId.filter(item => item !== cardId);
+         console.log(newUsersId,"userListFilterd")
+      }else{
+        newUsersId.push(cardId)
+        console.log(newUsersId,"userListNew")
+      }
       
-      if (ingredientName.toLowerCase() == e.ingredientName.toLowerCase()) {
-
-        console.log(ingredientName,e.ingredientFlag)
-      }
-      if (ingredientName.toLowerCase() == e.ingredientName.toLowerCase()) {
-        if (e.ingredientFlag == false) {
-              e.ingredientFlag = true;           
-           
-              // updateMyListSideBarCon((prevArray) => [...prevArray, e])
-              updateMyListSideBarConNames((prevArray) => [...prevArray, e.ingredientName])
-            
-                
-        } else {
-             e.ingredientFlag = false;
-              removeItem0(ingredientName);      
+      let newItems=[]
+      if(ingredientFlag !== true){
+        newItems= userAllIngredients.map((item) =>{
+        if(item._id === cardId){
+        item.ingredientFlag = true
         }
-      }
-    
-    });
-    setFilterDataVegetables0((prevAccounts) => {
-    const newItems = [...prevAccounts];
-    const trueItems = newItems.filter((item) => item.ingredientFlag === true);
-    const falseItems = newItems.filter((item) => item.ingredientFlag !== true);
-    return [...falseItems, ...trueItems];
-  });
+        return item
+          })
 
-  updateMyListSideBarCon(newArrayAll)
-  updateSidebarIngName0("")
-  // setFilterDataVegetables0(newArrayAll)
-  };
+        } else {
+
+          newItems= userAllIngredients.map((item) =>{
+            if(item._id === cardId){
+            item.ingredientFlag = false
+            }
+            return item
+              })
+
+
+        }
+
+
+        let newItemsNames = newItems
+        .map((item) => {
+          if (item.ingredientFlag === true) {
+            return item.ingredientName;
+          }
+          return null;
+        })
+        .filter((name) => name !== null);
+      
+
+      try {
+        const updatedBeneficiary = {
+            MyListn: newItemsNames,
+          AllIngredientsId:newItems
+        };
+    
+        await axios.put(`http://localhost:5000/api/users/${userId}`, updatedBeneficiary);
+        // allBeneficiarys();
+        fetchProtectedData()
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
+
+
+
+ 
+      
+    };
 
     const [SearchTerm0, setSearchTerm0] = useState("");
     const [SearchType00, setSearchType00] = useState("");
 
   //-----------------------search------------------------//
+  const [searchTermVegetables0, setSearchTermVegetables0] = useState("");
   const [FilterDataVegetables0, setFilterDataVegetables0] = useState([]);
 
 
   const filterDataByNameVegetables0 = (searchTermVegetables0) => {
-    const filteredDataVegetables = userAllIngredients.filter((item) =>
+    const filteredDataVegetables = userAllIngredients0.filter((item) =>
       item.ingredientName.toLowerCase().includes(searchTermVegetables0.toLowerCase())
     );
     setFilterDataVegetables0(filteredDataVegetables);
-    setCurrentPageVegetables(1);
+    // setCurrentPageVegetables(1);
   };
 
 
@@ -143,7 +502,9 @@ if(SidebarIngName0 !== ""){
 
 
   const setSearchType0 = (typeValue) => {
-    const filteredDataUsers = userAllIngredients?.filter(
+
+
+    const filteredDataUsers = userAllIngredients0?.filter(
       (item) =>
         item.ingredientType?.toLowerCase().includes(typeValue.toLowerCase()) 
     );
@@ -153,43 +514,13 @@ if(SidebarIngName0 !== ""){
 };
 
 
-//-----------------------search------------------------//
 
-  const [currentPageVegetables, setCurrentPageVegetables] = useState(1);
-
-  let totalItemsVegetables;
-
-  let totalPagesVegetables;
-
-  let slicedArrayVegetables;
-
-  const itemsPerPage = 6;
-
-  totalItemsVegetables = FilterDataVegetables0?.length;
-
-  totalPagesVegetables = Math.ceil(totalItemsVegetables / itemsPerPage);
-
-  const startIndexVegetables = (currentPageVegetables - 1) * itemsPerPage;
-
-  const endIndexVegetables = startIndexVegetables + itemsPerPage;
-
-  slicedArrayVegetables = FilterDataVegetables0?.slice(
-    startIndexVegetables,
-    endIndexVegetables
-  );
-
-  const handlePageChangeVegetables = (event, pageNumber) => {
-    setCurrentPageVegetables(pageNumber);
-  };
-  
 
   return (
     <>
 
-{AllDataGet[0]?.AllIngredientsId ? 
-  <SidebarMyList userIdApp0={userIdApp0} />
-: null}
 
+<SidebarMyList MyListnnn={MyList} />
 
 <div
   className="bg-cover bg-center h-screen shadow"
@@ -259,7 +590,7 @@ if(SidebarIngName0 !== ""){
               value={SearchTerm0}
               onChange={(e) => {
                 setSearchTerm0(e.target.value);
-               
+                setSearchTermVegetables0(e.target.value);
                 filterDataByNameVegetables0(e.target.value);
 
               }}
@@ -288,28 +619,18 @@ if(SidebarIngName0 !== ""){
       </div>
 
 
-      {!AllDataGet[0]?.AllIngredientsId ?  
-    
-    <div role="status">
-    <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-    </svg>
-    <span class="sr-only">Loading...</span>
-</div>
-    : null
-  }
+
 
 
 
 <div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1">
-              {slicedArrayVegetables?.map((e, i) => {
+              {FilterDataVegetables0?.map((e, i) => {
                 return (
-                 <>
-                  {e.ingredientFlag === false ?<>
+                 
+
                   <div
-                    key={e._id}
-                    onClick={() => UpdateBeneficiaryId(e.ingredientName)}
+                    key={i}
+                    onClick={() => UpdateBeneficiaryId(e._id,e.ingredientFlag)}
                     className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#2bda2b]" : "bg-[#d7e423]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
                   >
                     <svg
@@ -361,23 +682,13 @@ if(SidebarIngName0 !== ""){
                       </div>
                     </div>
                   </div>
-                  </> : null }
-                  </>
                 );
               })}
             </div>
 
 
 
-           <div className="flex justify-center mb-5">
-            {
-              <Pagination
-                count={totalPagesVegetables}
-                page={currentPageVegetables}
-                onChange={handlePageChangeVegetables}
-              />
-            }
-          </div> 
+
 
 
 

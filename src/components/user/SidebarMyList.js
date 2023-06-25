@@ -5,6 +5,10 @@ import { UserContext } from "../../UserContext";
 import { KitContext } from "../../KitchenContext";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import {AllContext} from "../../AllDataContext"
+
+
 import {
   Card,
   Typography,
@@ -39,267 +43,104 @@ import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
 import { mdiMinus } from "@mdi/js";
 
-export default function Example(props) {
+export default function Example({ userIdApp0 }) {
+  const { AllDataGet,setAllDataGet} = useContext(AllContext);
+  const { UpdateAll,setUpdateAll} = useContext(AllContext);
+
+
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { MyListSideBarCon, updateMyListSideBarCon } = useContext(KitContext);
+  const { MyListSideBarConNames, updateMyListSideBarConNames } = useContext(KitContext);
+  const { SidebarIngName0, updateSidebarIngName0 } = useContext(KitContext);
+  const { EffectStatus, updateEffectStatus } = useContext(KitContext);
+
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
-  let AddPlus = mdiPlus;
-  let removMinus = mdiMinus;
+
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
   const [sideStatus, setSideStatus] = useState(false);
 
-  let newArrayV = [];
-  let newArrayF = [];
-  let localList = [];
+  // const { test, updateTest } = useContext(UserContext);
+  const [FilterDataItems, setFilterDataItemss] = useState();
 
-  let localListN = [];
-  let vegetables_obj = [];
-  let fruit_obj = [];
-
-  // const [localList,setLocalList] =useState([])
-  const [MyList, setMyList] = useState([]);
-  const [MyListN, setMyListN] = useState([]);
-  const [vegetables, setVegetables] = useState([...vegetables_obj]);
-  const [fruit, setFruit] = useState([...fruit_obj]);
-  const [useId, setUserId] = useState();
-  const { test, updateTest } = useContext(UserContext);
-  const [FilterDataItems, setFilterDataItemss] = useState([]);
-
-  const [userAllIngredients, setUserAllIngredients] = useState();
   const [userAllIngredients0, setUserAllIngredients0] = useState();
 
-  const [userDataMyListId, setUserDataMyListId] = useState();
-
-  const handleShowUser = async () => {
-    // let userId= JSON.parse(localStorage.userid)
-    // try {
-    //   const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
-    //   console.log(response.data[0]);
-    //   setMyList(response.data[0].MyList)
-    // } catch (error) {
-    //   console.error("Error retrieving data:", error);
-    // }
-  };
-
-  const fetchProtectedData = async () => {
-    try {
-      const token = localStorage.getItem("auth");
-      if (token) {
-        const response = await axios.get("http://localhost:5000/protected", {
-          headers: {
-            Authorization: token,
-          },
-        });
-
-        setUserId(response.data.user.id);
-
-        console.log(response.data.user.id);
-        let userId0 = response.data.user.id;
-
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/api/users/${userId0}`
-          );
-          console.log(response.data[0]);
-          setMyList(response.data[0].MyList);
-          setFilterDataItemss(response.data[0].MyList);
-          setUserDataMyListId(response.data[0].MyListId);
-          setUserAllIngredients(response.data[0].AllIngredientsId);
-
-          setUserAllIngredients0(() => {
-            const newItems = response.data[0].AllIngredientsId.filter(
-              (item) => item.ingredientFlag !== false
-            );
-            return newItems;
-          });
-
-          setFilterDataItemss(() => {
-            const newItems = response.data[0].AllIngredientsId.filter(
-              (item) => item.ingredientFlag !== false
-            );
-            return newItems;
-          });
-          console.log(response.data[0].AllIngredientsId);
-        } catch (error) {
-          console.error("Error retrieving data:", error);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      localStorage.removeItem("auth");
-      window.location.href = "http://localhost:3000/Login";
-    } finally {
-      console.log(false);
-    }
-  };
-
   useEffect(() => {
-    fetchProtectedData();
+    // setFilterDataItemss([...MyListSideBarCon])
+    setFilterDataItemss(() => {
+      const newItems = MyListSideBarCon?.filter(
+        (item) => item.ingredientFlag !== false
+      );
+      return newItems;
+    });
+    setSaveOrRecipe(false);
+  }, [MyListSideBarCon]);
 
-    // handleShowUser();
-
-    //   let userid= JSON.parse(localStorage.userid)
-
-    //   axios.get(`http://localhost:4000/reporters/${userid}`)
-    //   .then((response) => {
-
-    //    let dataUser= response.data[0].userlist
-    //   //  setLocalList(dataUser)
-    //    let dataUserN= response.data[0].userlistn
-    //    const parsedData = dataUser.map(jsonString => JSON.parse(jsonString));
-    //    console.log(dataUserN[0])
-
-    //    vegetables_obj=JSON.parse(localStorage.vegetables_obj)
-    //    fruit_obj=JSON.parse(localStorage.fruit_obj)
-
-    //   const newArrayV =[...vegetables_obj]
-    //   const newArrayF =[...fruit_obj]
-
-    //             localList=parsedData
-    //             localListN=dataUserN
-    //             setMyList(parsedData)
-    //             setMyListN(dataUserN)
-    //           newArrayV.map((e)=>{
-    //             if(localListN.includes(e.name) ){
-    //                    e.clicked='Added'
-    //                    e.icon=removMinus
-    //                    console.log(e.name)
-    //             }
-    //            })
-
-    //            setVegetables(newArrayV)
-
-    //            newArrayF.map((e)=>{
-    //             if(localListN.includes(e.name) ){
-    //                    e.clicked='Added'
-    //                    e.icon=removMinus
-    //             }
-    //            })
-
-    //            setFruit(newArrayF)
-
-    //   console.log(localListN)
-
-    //   })
-    //   .catch((error) => console.log(error.message))
-
-    //   // if(localStorage.MyListN !=[] && localStorage.MyListN !=null && localStorage.MyListN !=undefined ){
-
-    //   //     // setLocalList(JSON.parse(localStorage.MyList))
-    //   //     // vegetables_obj=JSON.parse(localStorage.vegetables_obj)
-    //   //     // fruit_obj=JSON.parse(localStorage.fruit_obj)
-
-    //   //     // let newArrayV =vegetables_obj
-    //   //     // let newArrayF =fruit_obj
-
-    //   //     newArrayV.map((e)=>{
-    //   //      if(localListN.includes(e.name) ){
-    //   //             e.clicked='Added'
-    //   //             e.icon=removMinus
-    //   //      }
-    //   //     })
-
-    //   //     newArrayF.map((e)=>{
-    //   //      if(localListN.includes(e.name) ){
-    //   //             e.clicked='Added'
-    //   //             e.icon=removMinus
-    //   //      }
-    //   //     })
-
-    //   //  }
-  }, [props.MyListnnn]);
-
-  // const [MyListSideBarCon, setMyListSideBarCon] = useState([]);
-
-  const { MyListSideBarCon, updateMyListSideBarCon } = useContext(KitContext);
-  // const { MyListN5, updateMyListN5} = useContext(UserContext);
-
-  function setSideStatus00() {
-    setSideStatus(true);
-    //  let userid= JSON.parse(localStorage.userid)
-
-    //   // updateTest([...MyList])
-    //    axios.put(`http://localhost:4000/contactus00/${userid}`, {
-    //      userlist: MyList,
-    //      userlistn: MyListN,
-
-    //    })
-    //      .then(function (response) {
-    //        console.log(response.data);
-    //        // window.location.reload(false);
-
-    //      })
-    //      .catch(function (error) {
-    //        console.log(error);
-    //      });
-  }
   const [searchItem, setSearchItem] = useState("");
+  const [SaveOrRecipe, setSaveOrRecipe] = useState(true);
 
   const filterDataByNameItems = (searchTerm) => {
-    const filteredDataItems = userAllIngredients0.filter((item) =>
+    const filteredDataItems = MyListSideBarCon.filter((item) =>
       item.ingredientName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilterDataItemss(filteredDataItems);
   };
 
-  const UpdateBeneficiaryId = async (cardId, ingredientFlag) => {
-    let newUsersId = userDataMyListId;
-    console.log(newUsersId, "userList");
-    if (userDataMyListId.includes(cardId)) {
-      //  setUserAllIngredients()
-      // const newItems = prevAccounts.filter((item) => item._id !== cardId);
-      newUsersId = newUsersId.filter((item) => item !== cardId);
-      console.log(newUsersId, "userListFilterd");
-    } else {
-      newUsersId.push(cardId);
-      console.log(newUsersId, "userListNew");
-    }
+  const UpdateBeneficiaryId = async (
+    cardId,
+    ingredientFlag,
+    ingredientName
+  ) => {
+    updateSidebarIngName0(ingredientName);
+    updateEffectStatus(ingredientName)
+    // updateSidebarIngName0("")
+  };
 
-    let newItems = [];
-    if (ingredientFlag !== true) {
-      newItems = userAllIngredients.map((item) => {
-        if (item._id === cardId) {
-          item.ingredientFlag = true;
-        }
-        return item;
-      });
-    } else {
-      newItems = userAllIngredients.map((item) => {
-        if (item._id === cardId) {
-          item.ingredientFlag = false;
-        }
-        return item;
-      });
-    }
+  function setSideStatus00() {
+    setSideStatus(true);
+  }
 
-    let newItemsNames = newItems
 
-      .map((item) => {
-        if (item.ingredientFlag === true) {
-          return item.ingredientName;
-        }
-        return null;
-      })
-      .filter((name) => name !== null);
+  
 
+  const HandleSave = async () => {
+    setIsLoading(true); // Set the loading state to true
+    setSaveOrRecipe(true); // Set SaveOrRecipe to true to render the "Show" button
+
+    const trueItems = MyListSideBarCon.filter((item) => item.ingredientFlag === true);
+    const trueItemsId = trueItems.map((e) => e._id);
+    const trueItemsNames = trueItems.map((e) => e.ingredientName);
+  
     try {
       const updatedBeneficiary = {
-        MyListn: newItemsNames,
-        AllIngredientsId: newItems,
+        MyListId: trueItemsId,
+        MyList: trueItems,
+        MyListn: trueItemsNames,
+        AllIngredientsId: MyListSideBarCon,
       };
-
-      await axios.put(
-        `http://localhost:5000/api/users/${useId}`,
-        updatedBeneficiary
-      );
-      // allBeneficiarys();
-      fetchProtectedData();
+  
+      await axios.put(`http://localhost:5000/api/users/${userIdApp0}`, updatedBeneficiary);
+  
+      setUpdateAll((prevArray) => [...prevArray, {hi:"update"}])
+      // Additional code if needed
     } catch (error) {
       console.error("Error updating user:", error);
+    } finally {
+      setUpdateAll((prevArray) => [...prevArray, {hi:"update"}])
+      setIsLoading(false); // Set the loading state to false after the save operation is completed
+   
     }
+  };
 
-    updateMyListSideBarCon(newUsersId);
+
+
+  const HandleShow = async () => {
+
+    navigate(`/Recipes`);
   };
 
   return (
@@ -310,18 +151,20 @@ export default function Example(props) {
             <Card className="fixed top-20  right-0 z-50 h-[calc(100vh-4rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 overflow-y-auto">
               <div className="mb-2 flex items-center gap-4 p-4">
                 <Button
-                   className="mr-5 border mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
-                   variant="text"
-                              
-                onClick={() => setSideStatus00(true)}>x</Button>
+                  className="mr-5 border mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
+                  variant="text"
+                  onClick={() => setSideStatus00(true)}
+                >
+                  x
+                </Button>
 
                 <Typography variant="h5" color="blue-gray">
-                  My List
+                  Ingredients
                 </Typography>
               </div>
               <div className="p-2">
                 <Input
-                color
+                  color
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                   label="Search"
                   value={searchItem}
@@ -331,12 +174,46 @@ export default function Example(props) {
                   }}
                 />
               </div>
-           <Link className="w-full px-2 " to="/Recipes"><Button 
-              className=" w-full border  border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
-              variant="text"
-           
-           
-           >Show Recipes</Button></Link>
+
+              {isLoading? (
+
+<div role="status">
+<svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+</svg>
+<span class="sr-only">Loading...</span>
+</div>
+
+) : (
+  <>
+    {!isLoading && SaveOrRecipe ? (
+      <Button
+        className="border mb-10 border-solid border-[#b6c02b] border-2 text-[#060606] hover:bg-[#bed634] hover:text-[#ffffff]"
+        variant="text"
+        onClick={HandleShow}
+      >
+        Show Recipe
+      </Button>
+    ) : null}
+
+    {!isLoading && !SaveOrRecipe ? (
+      <>
+        <Button
+          className="border mb-10 border-solid border-[#b6c02b] border-2 text-[#060606] hover:bg-[#bed634] hover:text-[#ffffff]"
+          variant="text"
+          onClick={HandleSave}
+        >
+          Save
+        </Button>
+      </>
+    ) : null}
+  </>
+)}
+             
+                
+             
+
               <List>
                 <hr className="my-2 border-blue-gray-50" />
 
@@ -345,7 +222,11 @@ export default function Example(props) {
                     <ListItem
                       key={e.ingredientName}
                       onClick={() =>
-                        UpdateBeneficiaryId(e._id, e.ingredientFlag)
+                        UpdateBeneficiaryId(
+                          e._id,
+                          e.ingredientFlag,
+                          e.ingredientName
+                        )
                       }
                     >
                       <ListItemPrefix>
@@ -360,9 +241,12 @@ export default function Example(props) {
           ) : (
             <div className="fixed top-20 right-0 z-50">
               <Button
-                 className="mr-5 border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
-                 variant="text"             
-              onClick={() => setSideStatus(false)}>My List</Button>
+                className="mr-5 border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+                variant="text"
+                onClick={() => setSideStatus(false)}
+              >
+                My List
+              </Button>
             </div>
           )}
         </>

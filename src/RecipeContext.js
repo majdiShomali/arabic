@@ -7,7 +7,11 @@ const RecipeProvider = ( {children} ) => {
   const [SidebarIng, setSidebarIng] = useState([]);
   const [SidebarIngName, setSidebarIngName] = useState("");
   const [RecipeElement, setRecipeElement] = useState({});
+  const [RecipeStatus, setRecipeStatus] = useState(true);
 
+  const updateRecipeStatus = (newValue) => {
+    setRecipeStatus(newValue);
+  };
   const updateSidebarIng = (newValue) => {
     setSidebarIng(newValue);
   };
@@ -18,7 +22,7 @@ const RecipeProvider = ( {children} ) => {
     setRecipeElement(newValue);
   };
 
-    // const { RecipeElement, updateRecipeElement } = useContext(RecipeContext);
+    // const { RecipeStatus, updateRecipeStatus } = useContext(RecipeContext);
 
 
 
@@ -26,10 +30,11 @@ const RecipeProvider = ( {children} ) => {
         <>
             <RecipeContext.Provider
                 value={{
-  
+
                     SidebarIng,updateSidebarIng,
                     SidebarIngName,updateSidebarIngName,
                     RecipeElement,updateRecipeElement,
+                    RecipeStatus,updateRecipeStatus
                 }}
             >
                 {children}
