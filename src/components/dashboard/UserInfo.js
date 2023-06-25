@@ -28,9 +28,6 @@ const UsersInfo = () => {
         },
       });
 
-
-
-
       console.log(response.data);
       setPersons(response.data);
       setFilterDataUsers(response.data);

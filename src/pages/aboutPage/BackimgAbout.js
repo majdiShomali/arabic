@@ -15,6 +15,7 @@ const BackimgAbout = () => {
   const fetchAboutUs = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/aboutUs");
+      console.log(response)
       setAbout_title(response.data[0].title);
       setAbout_us(response.data[0].text);
       setAboutUsId(response.data[0]._id);

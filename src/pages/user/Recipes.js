@@ -23,7 +23,7 @@ const Recipes = ({userIdApp0}) => {
   const { SidebarIngName0, updateSidebarIngName0 } = useContext(KitContext);
   const { AllDataRecipesA,setAllDataRecipesA} = useContext(AllContext);
   const { AllDataGetK,setAllDataGetK} = useContext(AllContext);
-
+console.log(AllDataRecipesA)
 // console.log(AllDataRecipesA)
   // const { MyList, updateMyList } = useContext(UserContext);
   // const { MyListN, updateMyListN } = useContext(UserContext);
@@ -44,6 +44,7 @@ const Recipes = ({userIdApp0}) => {
 
   const [table, setTable] = useState([]);
   const [MyListN, updateMyListN] = useState([]);
+  const [MyListId, updateMyListId] = useState([]);
 
   // const [Meals, setMeals] = useState([]);
   // const [Drinks, setDrinks] = useState([]);
@@ -66,8 +67,9 @@ const Recipes = ({userIdApp0}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const allRecipes = async () => {
-
-    updateMyListN(AllDataGetK[0]?.MyListn)
+console.log(AllDataGetK[0].MyListId)
+updateMyListId(AllDataGetK[0].MyListId)   
+updateMyListN(AllDataGetK[0]?.MyListn)
     setUserAllIngredients(AllDataGetK[0]?.AllIngredientsId)
     setUserAllIngredients0(() => {
           const newItems = AllDataGetK[0]?.AllIngredientsId.filter(
@@ -150,11 +152,11 @@ const Recipes = ({userIdApp0}) => {
     
   }, [AllDataRecipesA,AllDataGetK]);
 
-  function checkIfAllExist(meal_c, my_list_c) {
-    console.log(meal_c,my_list_c)
-    return meal_c.filter((h) => !my_list_c.includes(h.toLowerCase())).length === 0;
+  function checkIfAllExist(meal_c, my_list_c,my_id) {
+    console.log(meal_c,MyListId,my_id)
+    return my_id.filter((h) => !MyListId.includes(h.toLowerCase())).length === 0;
   }
-
+  // MyListId
   function ShowVideosMeals(index) {
     let currentVideos0 = Meals[index].Links.map((e) => {
       return e;
@@ -351,8 +353,8 @@ const Recipes = ({userIdApp0}) => {
 
       <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 p-5">
         {FilterDataMeals.map((e, i) => {
-          {console.log(e.ItemsName, MyListN)}
-          if (checkIfAllExist(e.ItemsName, MyListN)) {
+          {console.log(e, MyListN)}
+          if (checkIfAllExist(e.ItemsName, MyListN,e.ItemsId)) {
             return (
               <DyRecipeCardMeal
               key={e.recipeName}

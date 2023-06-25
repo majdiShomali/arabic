@@ -81,7 +81,7 @@ export default function Signup() {
     email: email,
     password:password,
     role: type === 'user' ? 0 : 2,
-    AllIngredientsId:Cards
+    // AllIngredientsId:Cards
   };
 
   try {

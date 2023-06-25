@@ -6,11 +6,15 @@ const RecipeProvider = ( {children} ) => {
   
   const [SidebarIng, setSidebarIng] = useState([]);
   const [SidebarIngName, setSidebarIngName] = useState("");
+  const [SidebarIngId, setSidebarIngId] = useState("");
   const [RecipeElement, setRecipeElement] = useState({});
   const [RecipeStatus, setRecipeStatus] = useState(true);
 
   const updateRecipeStatus = (newValue) => {
     setRecipeStatus(newValue);
+  };
+  const updateSidebarIngId = (newValue) => {
+    setSidebarIngId(newValue);
   };
   const updateSidebarIng = (newValue) => {
     setSidebarIng(newValue);
@@ -34,7 +38,9 @@ const RecipeProvider = ( {children} ) => {
                     SidebarIng,updateSidebarIng,
                     SidebarIngName,updateSidebarIngName,
                     RecipeElement,updateRecipeElement,
-                    RecipeStatus,updateRecipeStatus
+                    RecipeStatus,updateRecipeStatus,
+                    SidebarIngId,updateSidebarIngId
+                    
                 }}
             >
                 {children}

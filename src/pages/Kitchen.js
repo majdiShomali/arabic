@@ -11,21 +11,30 @@ import {AllContext} from "../AllDataContext"
 import axios from "axios";
 
 const Kitchen = ({userIdApp0}) => {
-
+  const { AllIngredientsUser0, setAllIngredientsUser0} = useContext(AllContext);
+  const { LastUpdatedDataUser, setLastUpdatedDataUser} = useContext(AllContext);
   const { AllDataGet,setAllDataGet} = useContext(AllContext);
   const { UpdateAll,setUpdateAll} = useContext(AllContext);
+  console.log(LastUpdatedDataUser)
 
   const [userAllIngredients, setUserAllIngredients] = useState();
-  const [userAllIngredients0, setUserAllIngredients0] = useState();
 
   const [isLoading, setIsLoading] = useState(true);
 
-
+  
   const handleShowUser = async () => {
-    setUserAllIngredients(AllDataGet[0]?.AllIngredientsId)
-    setFilterDataVegetables0(AllDataGet[0]?.AllIngredientsId)
-    updateMyListSideBarCon(AllDataGet[0]?.AllIngredientsId)
-    setUserAllIngredients(AllDataGet[0]?.AllIngredientsId)
+
+console.log(LastUpdatedDataUser)
+    // let NewAllIngredientsUser0 = AllIngredientsUser0?.map((e) => {
+    //   if (AllDataGet[0]?.MyListId.includes(e._id)) {
+    //     e.ingredientFlag  = true;
+    //   }   
+    //   return e;
+    // });
+    setUserAllIngredients(LastUpdatedDataUser)
+    setFilterDataVegetables0(LastUpdatedDataUser)
+    updateMyListSideBarCon(LastUpdatedDataUser)
+    setUserAllIngredients(LastUpdatedDataUser)
     setIsLoading(false);
     // try {
     //   const response = await axios.get(`http://localhost:5000/api/users/${userIdApp0}`);
@@ -49,9 +58,8 @@ const Kitchen = ({userIdApp0}) => {
   const { MyListSideBarConNames, updateMyListSideBarConNames} = useContext(KitContext);
 
   useEffect(() => {
-   
     handleShowUser()
-  }, [AllDataGet]);
+  }, [LastUpdatedDataUser]);
 
   
 
@@ -83,9 +91,9 @@ if(SidebarIngName0 !== ""){
 }
   },[EffectStatus])
   
+  
 
-
-
+  
 
 
   const UpdateBeneficiaryId = async (ingredientName) => {
@@ -186,7 +194,7 @@ if(SidebarIngName0 !== ""){
   return (
     <>
 
-{AllDataGet[0]?.AllIngredientsId ? 
+{LastUpdatedDataUser && AllDataGet  ? 
   <SidebarMyList userIdApp0={userIdApp0} />
 : null}
 
@@ -288,7 +296,7 @@ if(SidebarIngName0 !== ""){
       </div>
 
 
-      {!AllDataGet[0]?.AllIngredientsId ?  
+      {!LastUpdatedDataUser && !AllDataGet ?  
     
     <div role="status">
     <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

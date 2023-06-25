@@ -17,7 +17,8 @@ import LogIn from "./pages/Login";
 import ShowRecipe from "./pages/user/ShowRecipe";
 import Kitchens from "./pages/user/Kitchens";
 import UserProfile from "./pages/user/UserProfile";
-// import PaymentPage from "./components/landingPage/Payment";
+import AddYourIng from "./components/landingPage/AddYourIng";
+import PaymentPage from "./components/landingPage/Payment";
 // ----------------------Provider routes----------------- //
 import ProviderHome from "./pages/providerp/ProviderHome";
 import ProviderProfile from "./pages/providerp/ProviderProfile";
@@ -92,9 +93,10 @@ export default function App() {
         <NavListMenu />
         <Routes>
           <Route index element={<Home />} />
-          {/* <Route path="/Payment/:currentPrice" element={<PaymentPage />} /> */}
+          <Route path="/Payment" element={<PaymentPage />} />
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
+          <Route path="AddYourIng" element={<AddYourIng />} />
           <Route path="/SignUp/:type" element={<SignUp />} />
           <Route path="LogIn" element={<LogIn />} />
           <Route path="ShowRecipe/:id" element={<ShowRecipe />} />

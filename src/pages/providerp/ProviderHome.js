@@ -163,6 +163,7 @@ const ProviderHome = ({userIdApp0}) => {
 
   const [MyListAdmin, setMyListAdmin] = useState([]);
   const [MyListNAdmin, setMyListNAdmin] = useState([]);
+  const [MyListIdAdmin, setMyListIdAdmin] = useState([]);
 
   const [foodCards, setFoodCards] = useState([]);
   const [foodCardsName, setFoodCardsName] = useState([]);
@@ -372,7 +373,8 @@ const ProviderHome = ({userIdApp0}) => {
         links: [link_name001, link_name002, link_name003],
         Items: foodCards,
         ItemsName: foodCardsName,
-        img:img
+        img:img,
+        ItemsId:MyListIdAdmin
       };
 
     // const userData = {
@@ -402,6 +404,7 @@ const ProviderHome = ({userIdApp0}) => {
       setLink3("");
       setMyListAdmin([]);
       setMyListNAdmin([]);
+      setMyListIdAdmin([]);
       setFoodCards([]);
       setFoodCardsName([]);
       // let NewItems = [...items];
@@ -482,6 +485,7 @@ const ProviderHome = ({userIdApp0}) => {
     setMyListAdmin(e.Items);
     //  updateSidebarIng(e.Items)
     setMyListNAdmin(e.ItemsName);
+    setMyListIdAdmin(e.ItemsId);
     setImg(e.img)
 
 
@@ -566,11 +570,12 @@ console.log(updatedRecipe)
   }
 
 
-  function removeItem0(name) {
+  function removeItem0(name,ingredientId) {
     setMyListAdmin((prevAccounts) => {
       const newItems = prevAccounts.filter((item) => item.ingredientName !== name);
       return newItems;
     });
+
 
     updateSidebarIng((prevAccounts) => {
       const newItems = prevAccounts.filter((item) => item.ingredientName !== name);
@@ -585,23 +590,27 @@ console.log(updatedRecipe)
       const newItems = prevAccounts.filter((item) => item !== name);
       return newItems;
     });
-
+    setMyListIdAdmin((prevAccounts) => {
+      const newItems = prevAccounts.filter((item) => item !== ingredientId);
+      return newItems;
+    });
+console.log(MyListIdAdmin)
     setFoodCardsName((prevAccounts) => {
       const newItems = prevAccounts.filter((item) => item !== name);
       return newItems;
     });
   }
 
-
+ 
   const { SidebarIngName, updateSidebarIngName}= useContext(RecipeContext);
+  const { SidebarIngId, updateSidebarIngId}= useContext(RecipeContext);
    const { RecipeStatus, updateRecipeStatus } = useContext(RecipeContext);
     // const { RecipeElement, updateRecipeElement } = useContext(RecipeContext);
 
   useEffect(() => {
-    console.log("1111111111111111111111111111111111")
 if(SidebarIngName !== ""){
   console.log(SidebarIngName)
-  UpdateBeneficiaryId(SidebarIngName)
+  UpdateBeneficiaryId(SidebarIngName,SidebarIngId)
   
 }
   },[SidebarIngName])
@@ -618,9 +627,9 @@ useEffect(()=>{
   }
 },[])
 
-  const UpdateBeneficiaryId = async (ingredientName) => {
+  const UpdateBeneficiaryId = async (ingredientName,ingredientId) => {
 
- 
+console.log(ingredientId)
     const newArrayAll = [...userAllIngredients];
     newArrayAll.map((e) => {
       
@@ -634,12 +643,13 @@ useEffect(()=>{
               setMyListAdmin((prevArray) => [...prevArray, e]);
               updateSidebarIng((prevArray) => [...prevArray, e])
               setMyListNAdmin((prevArray) => [...prevArray, e.ingredientName]);
+              setMyListIdAdmin((prevArray) => [...prevArray, e._id]);
               setFoodCards((prevArray) => [...prevArray, e]);
               setFoodCardsName((prevArray) => [...prevArray, e.ingredientName]); 
-               
+               console.log(MyListIdAdmin)
         } else {
              e.ingredientFlag = false;
-              removeItem0(ingredientName);      
+              removeItem0(ingredientName,ingredientId);      
         }
       }
     
@@ -771,7 +781,7 @@ useEffect(()=>{
                                   
               <div
                     key={e.id}
-                    onClick={() => UpdateBeneficiaryId(e.ingredientName)}
+                    onClick={() => UpdateBeneficiaryId(e.ingredientName,e._id)}
                     className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#2bda2b]" : "bg-[#d7e423]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
                   >
                     <svg

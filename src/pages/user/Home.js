@@ -9,14 +9,12 @@ import kfc from '../../Images/fruits/Lime.png'
 import dom from '../../Images/fruits/Lime.png'
 import burger from '../../Images/fruits/Lime.png'
 import AddYourIng from '../../components/landingPage/AddYourIng';
-
+import SponserSection from '../../components/landingPage/SponserSection';
 
 const Home = () => {
 
   const [selectedKitchenType, setSelectedKitchenType] = useState('');
   const navigate = useNavigate();
-
-
 
   function handleKitchenTypeSelection(KitchenType) {
     setSelectedKitchenType(KitchenType);
@@ -31,10 +29,6 @@ const Home = () => {
     <>
     <Landing/>
     
-
-
-
-
     <div className="bg-white mt-3 shadow-lg">
         <section id="food">
           <br />
@@ -258,8 +252,8 @@ const Home = () => {
   </div>
 </div>
 
-
- <AddYourIng/>
+<SponserSection/>
+ {/* <AddYourIng/> */}
 
     </>
   )

@@ -2,10 +2,17 @@ import React, { useState,useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { UserDataContext } from "../../UserDataContext";
+import { useContext } from "react";
+import {AllContext} from "../../AllDataContext"
 
+function PaymentPage({Name,Image,Type,cardId}) {
+  const { AllDataGet,setAllDataGet} = useContext(AllContext);
 
-function PaymentPage({Name,Image,Type}) {
-console.log(Name,Image,Type)
+//  const { UserAllData, updateUserAllData } = useContext(UserDataContext);
+console.log(AllDataGet)
+// const { Name,Image,Type } = useParams();
+
   const [userEmail ,setUserEmail] = useState()
  
 
@@ -13,13 +20,10 @@ console.log(Name,Image,Type)
   const [expirationdate, setDateCard] = useState("");
   const [cvv, setCvc] = useState("");
   const [cardholder, setcardholder] = useState("");
-  const { currentPrice,ProviderId,PostId,userId } = useParams();
 
-  console.log(currentPrice,ProviderId,PostId,userId)
 
   const [usersId, setUsersId] = useState([]);
   const [currentDonation, setCurrentDonation] = useState([]);
-  const [AllBeneficiarId,setAllBeneficiarId]= useState([])
   const [userData,setUserData]= useState({})
   const [postData,setPostData]= useState({})
   const [userName,setUserName]= useState("")
@@ -35,44 +39,6 @@ console.log(Name,Image,Type)
   },[])
 
 
-
-
-
-const UpdateBeneficiaryId = async (price,currentDonation,usersId,PostId ) => {
-   
-  let newUsersId = usersId
-  newUsersId.push(userId)
-  try {
-    const updatedBeneficiary = {
-      // Update the properties of the user as needed
-      usersId: newUsersId,
-      currentDonation:Number(price)+currentDonation ,
-    };
-
-    await axios.put(`http://localhost:5000/api/beneficiarys/${PostId}`, updatedBeneficiary);
-    // allBeneficiarys();
-  } catch (error) {
-    console.error("Error updating user:", error);
-  }
-};
-
-const UpdateUserId = async (PostId ) => {
-   
-  let newProvidersId = AllBeneficiarId
-  newProvidersId.push(PostId)
-  console.log(newProvidersId)
-  try {
-    const updatedUser = {
-      // Update the properties of the user as needed
-      providersId: newProvidersId,
-    };
-
-    await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser);
-    // allBeneficiarys();
-  } catch (error) {
-    console.error("Error updating user:", error);
-  }
-};
 
   const handlePayment = () => {
 
@@ -99,21 +65,20 @@ const UpdateUserId = async (PostId ) => {
   };
 
   const submitPayment = async () => {
-    console.log("clicked");
-    UpdateBeneficiaryId(currentPrice,currentDonation,usersId,PostId)
-    if(userId != 0 ){
-      UpdateUserId(PostId)   
-     } 
+    // console.log("clicked");
+    // UpdateBeneficiaryId(currentPrice,currentDonation,usersId,PostId)
+    // if(userId != 0 ){
+    //   UpdateUserId(PostId)   
+    //  } 
     const paymentData = {
-      firstName: userName,
-      email: userEmail,
+      Name: AllDataGet[0].firstName,
+      cardholder:cardholder ,
+      email: AllDataGet[0].email,
+      PostId:cardId,
+      userId:AllDataGet[0]._id,
+      price:parseInt(cvv),
       cvv:parseInt(cvv),
-      PostId:PostId,
-      userId:userId == 0 ? "648ec805f2d5b6ccc707e916" : userId,
-      cardholder:cardholder,
-      currentPrice:parseInt(currentPrice),
-      donationCase:postData.donationCase,
-      donationType:postData.donationType,
+
     };
 
     console.log(paymentData)
@@ -129,7 +94,7 @@ const UpdateUserId = async (PostId ) => {
       console.error("Error inserting data:", error);
     }
 
-    showSuccessAlert("thanks for Donation",currentPrice)
+    showSuccessAlert("thanks for Donation","currentPrice")
   };
 
   const showSuccessAlert = (message,currentPrice) => {
@@ -138,7 +103,7 @@ const UpdateUserId = async (PostId ) => {
       icon: "success",
       confirmButtonText: "OK",
     }).then(() => {
-      navigate("/")
+      // navigate("/")
     });
   };
 

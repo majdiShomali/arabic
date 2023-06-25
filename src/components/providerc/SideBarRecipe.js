@@ -74,11 +74,12 @@ const SideBarRecipe = () => {
     };
     const { SidebarIngName, updateSidebarIngName}= useContext(RecipeContext);
     const { RecipeStatus, updateRecipeStatus } = useContext(RecipeContext);
+    const { SidebarIngId, updateSidebarIngId}= useContext(RecipeContext);
 
     const UpdateBeneficiaryId = async (cardId, ingredientFlag,ingredientName) => {
       // updateRecipeStatus(true)
       updateSidebarIngName(ingredientName)
-
+      updateSidebarIngId(cardId)
 
       
     };

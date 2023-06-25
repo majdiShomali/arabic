@@ -55,7 +55,6 @@ export default function Example({ userIdApp0 }) {
   const { MyListSideBarConNames, updateMyListSideBarConNames } = useContext(KitContext);
   const { SidebarIngName0, updateSidebarIngName0 } = useContext(KitContext);
   const { EffectStatus, updateEffectStatus } = useContext(KitContext);
-
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
 
@@ -114,25 +113,23 @@ export default function Example({ userIdApp0 }) {
     const trueItems = MyListSideBarCon.filter((item) => item.ingredientFlag === true);
     const trueItemsId = trueItems.map((e) => e._id);
     const trueItemsNames = trueItems.map((e) => e.ingredientName);
-  
+
+
     try {
       const updatedBeneficiary = {
         MyListId: trueItemsId,
-        MyList: trueItems,
-        MyListn: trueItemsNames,
-        AllIngredientsId: MyListSideBarCon,
+        // MyList: trueItems,
+        // MyListn: trueItemsNames,
       };
-  
       await axios.put(`http://localhost:5000/api/users/${userIdApp0}`, updatedBeneficiary);
   
-      setUpdateAll((prevArray) => [...prevArray, {hi:"update"}])
-      // Additional code if needed
     } catch (error) {
       console.error("Error updating user:", error);
     } finally {
       setUpdateAll((prevArray) => [...prevArray, {hi:"update"}])
       setIsLoading(false); // Set the loading state to false after the save operation is completed
-   
+      setUpdateAll((prevArray) => [...prevArray, {hi:"update"}])
+
     }
   };
 
