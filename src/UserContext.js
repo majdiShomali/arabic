@@ -3,7 +3,14 @@ import { Children, createContext, useState } from "react";
 
 export const UserContext = createContext();
 const UserProvider = ( {children} ) => {
-  
+  const [profileRefresh, setProfileRefresh] = useState();
+
+  const updateProfileRefresh = (newValue) => {
+    setProfileRefresh(newValue);
+  };
+
+
+
   const [test, setTest] = useState([]);
   const [MyListSideBarCon, setMyListSideBarCon] = useState([]);
   const updateMyListSideBarCon = (newValue) => {
@@ -106,7 +113,8 @@ const UserProvider = ( {children} ) => {
                  SignStatus,updateSignStatus,
                  curruntUser,updateSetCurruntUser,
                  test,updateTest,
-                 MyListSideBarCon,updateMyListSideBarCon
+                 MyListSideBarCon,updateMyListSideBarCon,
+                 profileRefresh,updateProfileRefresh
                 }}
             >
                 {children}

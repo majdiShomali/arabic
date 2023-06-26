@@ -33,6 +33,11 @@ import AdminInfo from "./components/dashboard/AdminInfo";
 import EditAboutUs from "./components/dashboard/EditAboutUs";
 import PendingRecipes from "./components/dashboard/PendingRecipes";
 import Ingredients from  "./pages/dashboard/Ingredients"
+import AcceptPayment from "./components/dashboard/AcceptPayment";
+import AcceptIng from "./components/dashboard/AcceptIng";
+
+
+
 import axios from "axios";
 
 
@@ -126,6 +131,8 @@ export default function App() {
             <Route path="EditAboutContact" element={<EditAboutUs />} />
             <Route path="PendingRecipes" element={<PendingRecipes />} />
             <Route path="AcceptTables" element={<Ingredients />} />
+            <Route path="AcceptPayment" element={<AcceptPayment />} />
+            <Route path="AcceptIng" element={<AcceptIng />} />
           </Routes>
         </div>
       </Router>

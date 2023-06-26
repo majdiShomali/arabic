@@ -75,16 +75,41 @@ const ProviderProfile = ({ userIdApp0 }) => {
     setEditPrifileStatus(!EditProfileStatus);
   };
 
+
+  const [productImage, setProductImage] = useState(null);
+
+  const handleProductImageChange = (event) => {
+    setProductImage(event.target.files[0]);
+  };
+
+
   const handleEditPlus = async () => {
     try {
       const updatedRecipe = {
         firstName: name,
         img: img,
       };
+
+      const formData = new FormData()
+      formData.append('firstName',name)
+      formData.append('image',productImage)
+      // formData0.append('providerId',userIdApp0)
+      // formData0.append('category',yourSelectedStateValue)
+      // formData0.append('names',JSON.stringify([name1]))
+      // formData0.append('links',JSON.stringify([link_name001]))
+      // formData0.append('Items',JSON.stringify(foodCards))
+      // formData0.append('ItemsName',JSON.stringify(foodCardsName))
+      // formData0.append('ItemsId',JSON.stringify(MyListIdAdmin))
+      
+
+
+
+
+
       console.log(updatedRecipe);
       await axios.put(
         `http://localhost:5000/api/users/${userIdApp0}`,
-        updatedRecipe
+        formData
       );
       // fetchUsers(); // Refresh the user list after updating a user
       providerAllRecipes();
@@ -131,9 +156,9 @@ const ProviderProfile = ({ userIdApp0 }) => {
                                 </svg>
 
 :
-                <img className="w-full h-full rounded-full" src={userImg} />
+                <img className="w-full h-full rounded-full" src={`http://localhost:5000/${userImg}`} />
 
-
+                
 }
               </div>{" "}
             </div>{" "}
@@ -172,7 +197,7 @@ const ProviderProfile = ({ userIdApp0 }) => {
                     <div>
                       <label className="font-medium">Case Image</label>
 
-                      <input
+                      {/* <input
                         className="shadow mb-4 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                         type="file"
                         placeholder="Table Image"
@@ -181,7 +206,18 @@ const ProviderProfile = ({ userIdApp0 }) => {
                           onChange(e);
                         }}
                         accept="image/*"
-                      />
+                      /> */}
+
+          <input
+            className="file-upload-input mx-auto"
+            type="file"
+            name="image"
+            onChange={handleProductImageChange}
+            accept="image/*"
+            required
+          />
+
+
                     </div>
 
                     <Button
@@ -220,8 +256,9 @@ const ProviderProfile = ({ userIdApp0 }) => {
                         <div>
                           <img
                             className="w-full h-72 "
-                            src={e.img}
+                            src={`http://localhost:5000/${e.img}`}
                             alt="Recipe Title"
+                            
                           />
                         </div>
                         <div className="p-4">

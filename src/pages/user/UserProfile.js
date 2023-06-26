@@ -1,10 +1,12 @@
 import EditProfileBeneficiary from "./UserEditProfile";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 // import * as React from "react";
 import axios from "axios";
 
+import { UserContext } from "../../UserContext";
 
 const UserProfile = () => {
+  const { profileRefresh, updateProfileRefresh } = useContext(UserContext);
 
 
   const [cards, setCards] = useState([]);
@@ -48,7 +50,7 @@ const UserProfile = () => {
     if (localStorage.auth != null) {
       fetchProtectedData();
     }
-  }, []);
+  }, [profileRefresh]);
 
 
 

@@ -116,6 +116,24 @@ function handleLogOut(){
             <a style={{color:'black'}}> Pending Recipes </a>
           </ListItem>
           </Link>
+          
+          <Link to='/AcceptPayment'>
+          <ListItem className="hover:bg-amber-500">
+            <ListItemPrefix>
+            <Icon path={mdiSilverwareForkKnife} size={1} />
+            </ListItemPrefix>
+            <a style={{color:'black'}}> Accept Payment </a>
+          </ListItem>
+          </Link>
+          
+          <Link to='/AcceptIng'>
+          <ListItem className="hover:bg-amber-500">
+            <ListItemPrefix>
+            <Icon path={mdiSilverwareForkKnife} size={1} />
+            </ListItemPrefix>
+            <a style={{color:'black'}}> Accept Ing </a>
+          </ListItem>
+          </Link>
 
           <Link to='/EditAboutContact'>
           <ListItem className="hover:bg-amber-500">

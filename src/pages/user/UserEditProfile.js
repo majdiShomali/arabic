@@ -4,8 +4,9 @@ import { Button } from "@material-tailwind/react";
 import Modal from "@mui/material/Modal";
 import { Input } from "@mui/material";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { useNavigate } from "react-router";
+import { UserContext } from "../../UserContext"
 
 const style = {
   position: "absolute",
@@ -20,6 +21,12 @@ const style = {
 };
 
 function EditProfileBeneficiary() {
+
+  const { profileRefresh, updateProfileRefresh } = useContext(UserContext);
+
+
+
+
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -80,6 +87,7 @@ function EditProfileBeneficiary() {
       })
       .then(function (response) {
         console.log(response);
+        updateProfileRefresh(response)
         // navigate("/ProfilePage")
         // window.location.href = "http://localhost:3000/ProfilePage";
         handleClose()
