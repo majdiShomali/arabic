@@ -23,10 +23,16 @@ import { mdiPlus } from "@mdi/js";
 import { mdiMinus } from "@mdi/js";
 
 import SideBarRecipe from "../../components/providerc/SideBarRecipe";
+
+
+import {AllContext} from "../../AllDataContext"
+
+
 const ProviderHome = ({userIdApp0}) => {
 
+  const {AllIngredientsBase,setAllIngredientsUserBase} =useContext(AllContext);
 
-
+console.log(AllIngredientsBase)
   const [img, setImg] = useState("");
 
   const onChange = (e) => {
@@ -46,6 +52,13 @@ const ProviderHome = ({userIdApp0}) => {
     };
   };
 
+  
+  const [productImage, setProductImage] = useState(null);
+
+  const handleProductImageChange = (event) => {
+    setProductImage(event.target.files[0]);
+  };
+
   // const [userId ,setUserId] = useState()
   // const [providerRecipes ,setProviderRecipes] = useState([])
   // const [ingredientsApi ,setIngredientsApi] = useState([])
@@ -58,42 +71,6 @@ const ProviderHome = ({userIdApp0}) => {
   const [FilterDataMeals, setFilterDataMeals] = useState([]);
 
   const fetchProtectedData = async () => {
- 
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/api/Ingredients`
-      );
-      updateSidebarIng([])
-      // setIngredientsApi(response.data)
-    } catch (error) {
-      console.error("Error retrieving data:", error);
-    }
-
-
-    try {
-      const response = await axios.get(`http://localhost:5000/api/users/${userIdApp0}`);
-
-      // setMyList(response.data[0].MyList);
-      // setMyListN(response.data[0].MyListn);
-      // setUserDataMyListId(response.data[0].MyListId)
-      setUserAllIngredients(response.data[0].AllIngredientsId)
-      setFilterDataMeals(response.data[0].AllIngredientsId)
-      // setFilterDataVegetables1(() => {
-      //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== false);
-      //   {console.log(newItems);}
-      //   return newItems;
-      // });
-      // setFilterDataVegetables0(() => {
-      //   const newItems = response.data[0].AllIngredientsId.filter((item) => item.ingredientFlag !== true);
-      //   {console.log(newItems);}
-      //   return newItems;
-      // })
-
- 
-      
-    } catch (error) {
-      console.error("Error retrieving data:", error);
-    }
 
 
         try {
@@ -106,18 +83,6 @@ const ProviderHome = ({userIdApp0}) => {
         } catch (error) {
           console.error("Error retrieving data:", error);
         }
-
-
-
-
-
-
- 
-
-
-
-
-
 
 
 
@@ -168,130 +133,7 @@ const ProviderHome = ({userIdApp0}) => {
   const [foodCards, setFoodCards] = useState([]);
   const [foodCardsName, setFoodCardsName] = useState([]);
 
-  // let vegetables_name = [
-  //   "potato",
-  //   "onion",
-  //   "garlic",
-  //   "Broccoli",
-  //   "Cabbage",
-  //   "Bean",
-  //   "Arugula",
-  //   "Carrot",
-  //   "Cauliflower",
-  //   "Celery",
-  //   "Cherry Tomato",
-  //   "Common Beans",
-  //   "Cucumbers",
-  //   "Eggplant",
-  //   "Ginger",
-  //   "Lemon",
-  //   "Lettuce",
-  //   "Mulukhiyah",
-  //   "Mushrooms",
-  //   "Okra",
-  //   "Parsley",
-  //   "pea",
-  //   "radish",
-  //   "red pepper",
-  //   "Spinach",
-  //   "sweet pepper",
-  //   "tomato",
-  // ];
-  // let vegetables_img = [];
-  // let vegetables_type = [];
-
-  // let fruit_name = [
-  //   "apple",
-  //   "Apricot",
-  //   "Avocado",
-  //   "Banana",
-  //   "Blackberries",
-  //   "Blueberries",
-  //   "Cherry",
-  //   "Date Palm",
-  //   "Grape",
-  //   "Guava",
-  //   "Kiwi",
-  //   "Lime",
-  //   "Mango",
-  //   "Melon",
-  //   "Nectarines",
-  //   "Olives",
-  //   "Orange",
-  //   "Pear",
-  //   "Pineapple",
-  //   "Pomegranate",
-  //   "Pomelo",
-  //   "Raspberry",
-  //   "Strawberry",
-  //   "watermelon",
-  // ];
-  // let fruit_img = [];
-  // let fruit_type = [];
-
-  // arraytoimage(
-  //   "Images/vegetables/",
-  //   vegetables_name,
-  //   vegetables_img,
-  //   vegetables_type,
-  //   "vegetables"
-  // );
-  // arraytoimage("Images/fruits/", fruit_name, fruit_img, fruit_type, "fruit");
-
-  // function arraytoimage(fruit_name0, item_name, item_img, item_type, type) {
-  //   for (let i = 0; i < item_name.length; i++) {
-  //     item_img[i] = fruit_name0 + item_name[i] + ".png";
-  //   }
-  //   for (let i = 0; i < item_name.length; i++) {
-  //     item_type[i] = type;
-  //   }
-  // }
-
-  // let vegetables_obj = [];
-  // arraytoobject(
-  //   vegetables_name,
-  //   vegetables_img,
-  //   vegetables_type,
-  //   vegetables_obj,
-  //   "vegetables"
-  // );
-
-  // let fruit_obj = [];
-  // arraytoobject(fruit_name, fruit_img, fruit_type, fruit_obj, "fruit");
-
-  // function arraytoobject(item_name, item_img, item_type, items_obj, type) {
-  //   for (let i = 0; i < item_name.length; i++) {
-  //     let item_obj = {
-  //       name: "name",
-  //       img: "img",
-  //       type: type,
-  //       clicked: "Click to add",
-  //       icon: AddPlus,
-  //     };
-  //     item_obj.name = item_name[i];
-  //     item_obj.img = item_img[i];
-  //     item_obj.type = item_type[i];
-  //     items_obj.push(item_obj);
-  //   }
-  // }
-
-  // const newArrayV = [...vegetables_obj];
-  // const newArrayF = [...fruit_obj];
-  // const newArrayAll = newArrayV.concat(newArrayF);
-
-  // const [items, setItems] = useState(newArrayAll);
-
-  //-----------------------search------------------------//
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [FilterData, setFilterData] = useState([...userAllIngredients]);
-
-  // const filterDataByName = (searchTerm) => {
-  //   const filteredData = items.filter((item) =>
-  //     item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  //   setFilterData(filteredData);
-  //   setCurrentPage(1);
-  // };
+  
 
   //----------------------pagination----------------------------//
 
@@ -365,6 +207,20 @@ const ProviderHome = ({userIdApp0}) => {
       link_name003 = link3;
     }
 
+console.log(foodCards)
+    const formData0 = new FormData()
+    formData0.append('recipeName',name)
+    formData0.append('providerId',userIdApp0)
+    formData0.append('category',yourSelectedStateValue)
+    formData0.append('names',JSON.stringify([name1]))
+    formData0.append('links',JSON.stringify([link_name001]))
+    formData0.append('Items',JSON.stringify(foodCards))
+    formData0.append('ItemsName',JSON.stringify(foodCardsName))
+    formData0.append('image',productImage)
+    formData0.append('ItemsId',JSON.stringify(MyListIdAdmin))
+    
+
+
       let tableObj = {
         recipeName: name,
         providerId:userIdApp0,
@@ -373,19 +229,20 @@ const ProviderHome = ({userIdApp0}) => {
         links: [link_name001, link_name002, link_name003],
         Items: foodCards,
         ItemsName: foodCardsName,
-        img:img,
+        // image:img,
         ItemsId:MyListIdAdmin
       };
+     
 
     // const userData = {
     //   recipes: tableObj,
     // };
-  
+  console.log(productImage)
     try {
       // Send the data to the server using an HTTP POST request
       const response = await axios.post(
         "http://localhost:5000/api/recipes",
-        tableObj
+        formData0
       );
       console.log(response.data)  
     } catch (error) {
@@ -620,12 +477,13 @@ if(SidebarIngName !== ""){
 // },[])
 
 useEffect(()=>{
-  console.log("222222222222222222222222222222")
 
-  if(SidebarIngName === ""){   
+  // if(SidebarIngName === ""){   
     fetchProtectedData()
-  }
-},[])
+    setUserAllIngredients(AllIngredientsBase)
+    setFilterDataMeals(AllIngredientsBase)
+  // }
+},[AllIngredientsBase])
 
   const UpdateBeneficiaryId = async (ingredientName,ingredientId) => {
 
@@ -820,7 +678,7 @@ console.log(ingredientId)
                       />
                       <img
                         className="relative w-40 h-32"
-                        src={e.img}
+                        src={`http://localhost:5000/${e.img}`}
                         alt=""
                       />
                     </div>
@@ -1200,7 +1058,7 @@ console.log(ingredientId)
                 <div>
                   <label className="font-medium">Case Image</label>
 
-                  <input
+                  {/* <input
                     className="shadow mb-4 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                     type="file"
                     placeholder="Table Image"
@@ -1209,7 +1067,18 @@ console.log(ingredientId)
                       onChange(e);
                     }}
                     accept="image/*"
-                  />
+                  /> */}
+
+           <input
+            className="file-upload-input mx-auto"
+            type="file"
+            name="image"
+            onChange={handleProductImageChange}
+            accept="image/*"
+            required
+          />
+
+
                 </div>
 
 
@@ -1257,7 +1126,7 @@ console.log(ingredientId)
     <div>
       <img
         className="w-full h-72 "
-        src={e.img}
+        src={`http://localhost:5000/${e.img}`}
         alt="Recipe Title"
       />
     </div>

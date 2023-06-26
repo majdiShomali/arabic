@@ -29,7 +29,7 @@ const navigate = useNavigate()
     <div>
       <img
         className="w-full h-72 "
-        src={img}
+        src={`http://localhost:5000/${img}`}
         alt="Recipe Title"
       />
     </div>

@@ -356,7 +356,7 @@ if(SidebarIngName0 !== ""){
                       />
                       <img
                         className="relative w-40 h-32"
-                        src={e.img}
+                        src={`http://localhost:5000/${e.img}`}
                         alt=""
                       />
                     </div>

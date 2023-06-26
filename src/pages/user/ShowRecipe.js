@@ -10,12 +10,14 @@ const ShowRecipe = () => {
 const [clinks,setClinks]= useState([])
 const [cItems,setItems]= useState([])
 
+
+console.log(id)
   const oneRecipe = async () => {
     try {
         const response = await axios.get(`http://localhost:5000/api/recipe/${id}`);
-        console.log(response.data)
-        setItems(response.data[0].Items)
+        setItems((response.data[0].Items))
         setClinks(response.data[0].links)
+        // setClinks(JSON.parse(response.data[0].links))
     }
 
   catch (error) {
@@ -30,7 +32,7 @@ const [cItems,setItems]= useState([])
 
   },[])
 
-
+console.log(clinks)
      //----------------------pagination----------------------------//
 
      const [currentPage, setCurrentPage] = useState(1);
@@ -61,10 +63,12 @@ const [cItems,setItems]= useState([])
    <div className="">
 
        {slicedArray.map((e,i)=>{
+        {console.log(e);}
         return(
        <div key={e.ingredientName} id={e.ingredientName} className=" " data-target={e.ingredientName}>
        <h4>{e.ingredientName}</h4>
-       <img className=""  src={e.img}/>      
+       
+       <img className=""src={`http://localhost:5000/${e.img}`}/>      
        <div className=" " ><p className="">{e.ingredientFlag}</p></div>   
        </div>
           )

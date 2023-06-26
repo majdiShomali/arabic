@@ -90,11 +90,33 @@ console.log(AllDataGet)
         paymentData
       );
 
+
+
+      try {
+        const updatedBeneficiary = {
+          payment: true,
+        };
+        await axios.put(`http://localhost:5000/api/sponsor/${cardId}`, updatedBeneficiary); 
+        showSuccessAlert("thanks for Donation","currentPrice")
+
+      
+      } catch (error) {
+        console.error("Error updating user:", error);
+      } 
+
+
+
+      
+
     } catch (error) {
       console.error("Error inserting data:", error);
     }
 
-    showSuccessAlert("thanks for Donation","currentPrice")
+
+
+
+
+
   };
 
   const showSuccessAlert = (message,currentPrice) => {
@@ -122,7 +144,7 @@ console.log(AllDataGet)
         <div className="max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
           <div className="flex-1 text-center hidden lg:flex">
             <img
-              src="https://www.sddac.com/content/sdc/das/donate-volunteer/donate-items/_jcr_content/par/image_3.img.jpg/1487363945442.jpg"
+              src="https://images.unsplash.com/photo-1506368249639-73a05d6f6488?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5ncmVkaWVudHN8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
               alt="Donation payment"
               className="rounded-tl-md rounded-bl-md"
             />

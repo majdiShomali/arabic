@@ -133,7 +133,7 @@ const SideBarRecipe = () => {
                       }
                     >
                       <ListItemPrefix>
-                        <img className="w-10" src={e.img} />
+                        <img className="w-10" src={`http://localhost:5000/${e.img}`} />
                       </ListItemPrefix>
                       {e.ingredientName}
                     </ListItem>

@@ -28,7 +28,11 @@ const Ingredients = () => {
       };
     };
   
+    const [productImage, setProductImage] = useState(null);
 
+    const handleProductImageChange = (event) => {
+      setProductImage(event.target.files[0]);
+    };
     const [Name, setName] = useState("");
     const [Type, setType] = useState("vegetables");
     const [Cards, setCards] = useState([]);
@@ -50,6 +54,13 @@ const Ingredients = () => {
 
     const handleCreate = async ()=>{
 
+      const formData = new FormData()
+      formData.append('ingredientName',Name)
+      formData.append('ingredientType',Type)
+      formData.append('image',productImage)
+   
+
+
     const cardData = {
         ingredientName:Name,
         img:img,
@@ -60,7 +71,7 @@ const Ingredients = () => {
         // Send the data to the server using an HTTP POST request
         const response = await axios.post(
           "http://localhost:5000/api/Ingredient",
-          cardData
+          formData
         );
         fetchIng()
       } catch (error) {
@@ -87,7 +98,7 @@ const Ingredients = () => {
                 onChange={(e) => setName(e.target.value)}
                 />
              
-                <input
+                {/* <input
                     className="shadow mb-4 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                     type="file"
                     placeholder="Table Image"
@@ -96,7 +107,17 @@ const Ingredients = () => {
                       onChange(e);
                     }}
                     accept="image/*"
-                  />
+                  /> */}
+
+          <input
+            className="file-upload-input mx-auto"
+            type="file"
+            name="image"
+            onChange={handleProductImageChange}
+            accept="image/*"
+            required
+          />
+
               </div>
               <div>
       <select
@@ -169,7 +190,7 @@ className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg ma
   />
   <img
     className="relative w-40 h-32"
-    src={e.img}
+    src={`http://localhost:5000/${e.img}`}
     alt=""
   />
 </div>

@@ -10,6 +10,11 @@ const AllProvider = ( {children} ) => {
   const [userId, setUserId] = useState("");
   const [LastUpdatedDataUser, setLastUpdatedDataUser] = useState([]);
 
+  const [AllIngredientsUser0,setAllIngredientsUser0] =useState(null)
+  const [AllIngredientsBase,setAllIngredientsUserBase] =useState(null)
+
+
+
   const fetchProtectedData = async () => {
     try {
       const token = localStorage.getItem("auth");
@@ -32,6 +37,7 @@ const AllProvider = ( {children} ) => {
             try {
               const response = await axios.get("http://localhost:5000/api/Ingredients");
                setAllIngredientsUser0(response.data);
+               setAllIngredientsUserBase(response.data)
               let allIng=response.data
 
 
@@ -114,7 +120,6 @@ const AllProvider = ( {children} ) => {
 
   }
 
-  const [AllIngredientsUser0,setAllIngredientsUser0] =useState(null)
 
   const fetchIng = async () => {
 
@@ -143,7 +148,6 @@ const AllProvider = ( {children} ) => {
   }, [UpdateAll]);
   
 
-console.log(AllDataRecipesA)
 
   
 
@@ -161,6 +165,7 @@ console.log(AllDataRecipesA)
                     UpdateAll,setUpdateAll,
                     AllIngredientsUser0,setAllIngredientsUser0,
                     LastUpdatedDataUser,setLastUpdatedDataUser,
+                    AllIngredientsBase,setAllIngredientsUserBase
                 }}
             >
                 {children}
