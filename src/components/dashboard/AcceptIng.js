@@ -2,18 +2,26 @@ import Icon from "@mdi/react";
 import { mdiDelete } from "@mdi/js";
 import { mdiFileEdit } from "@mdi/js";
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
 import { mdiCheckDecagram  } from "@mdi/js";
 import Swal from "sweetalert2";
 import { mdiSilverware } from "@mdi/js";
 import { mdiHandshakeOutline } from "@mdi/js";
 import { mdiAccountOutline } from "@mdi/js";
+import { DashboardPendingContext } from "../../DashboardPendingContext";
 
 const AcceptIng = () => {
+    const { SponsorAContext, setSponsorAContext } = useContext(DashboardPendingContext);
+    const { SponsorPContext, setSponsorPContext } = useContext(DashboardPendingContext);
+
     const [persons, setPersons] = useState([]);
+    const [personsA, setPersonsA] = useState([]);
     const [searchTermUsers, setSearchTermUsers] = useState("");
     const [FilterDataUsers, setFilterDataUsers] = useState([]);
+    
+    const [searchTermUsersA, setSearchTermUsersA] = useState("");
+    const [FilterDataUsersA, setFilterDataUsersA] = useState([]);
     
 
     const allAdmins = async () => {
@@ -26,13 +34,38 @@ const AcceptIng = () => {
           } catch (error) {
             console.error("Error inserting data:", error);
           }
+        try {
+            const response = await axios.get("http://localhost:5000/api/sponsorA");
+            setPersonsA(response.data);
+            
+          console.log(response.data)
+          setFilterDataUsersA(response.data)
+          } catch (error) {
+            console.error("Error inserting data:", error);
+          }
+
+
+
+
 
         };
 
-     
+     console.log(SponsorAContext)
       useEffect(() => {
-        allAdmins();
-      }, []);
+        // allAdmins();
+
+        setPersons(SponsorPContext);
+        
+      setFilterDataUsers(SponsorPContext)
+  
+  
+        setPersonsA(SponsorAContext);
+        
+      setFilterDataUsersA(SponsorAContext)
+    
+     
+
+      }, [SponsorAContext]);
 //-----------------------search------------------------//
 
 const filterDataByNameUsers = (searchTermUsers) => {
@@ -66,6 +99,40 @@ const filterDataByNameUsers = (searchTermUsers) => {
 
   const handlePageChangeUsers = (event, pageNumber) => {
     setCurrentPageUsers(pageNumber);
+  };
+//-----------------------search------------------------//
+
+const filterDataByNameUsersA = (searchTermUsersA) => {
+    const filteredDataUsersA = personsA.filter((item) =>
+      item.Name.toLowerCase().includes(searchTermUsersA.toLowerCase())
+    );
+    setFilterDataUsersA(filteredDataUsersA);
+    console.log(filteredDataUsersA);
+    setCurrentPageUsersA(1);
+  };
+
+
+  const [currentPageUsersA, setCurrentPageUsersA] = useState(1);
+  let totalItemsUsersA;
+
+  let totalPagesUsersA;
+
+  let slicedArrayUsersA;
+
+  const itemsPerPageA = 5;
+
+  totalItemsUsersA = FilterDataUsersA.length;
+
+  totalPagesUsersA = Math.ceil(totalItemsUsersA / itemsPerPageA);
+
+  const startIndexUsersA = (currentPageUsersA - 1) * itemsPerPageA;
+
+  const endIndexUsersA = startIndexUsersA + itemsPerPageA;
+
+  slicedArrayUsersA = FilterDataUsersA.slice(startIndexUsersA, endIndexUsersA);
+
+  const handlePageChangeUsersA = (event, pageNumberA) => {
+    setCurrentPageUsersA(pageNumberA);
   };
 
 
@@ -117,11 +184,15 @@ console.log(e)
 
 try {
       const updatedUser = {
-        flag: true,
         ingredientName:e.ingredientName,
         img:e.img,
+        sold:true
+      };
+      const updatedUser2 = {
+        flag: true,
       };
       await axios.put(`http://localhost:5000/api/Ingredient/${ingId}`, updatedUser);
+      await axios.put(`http://localhost:5000/api/sponsor/${id}`, updatedUser2);
       allAdmins()
     } catch (error) {
       console.error("Error updating user:", error);
@@ -351,6 +422,202 @@ try {
 
        
         </div>
+
+
+
+
+
+        <form>
+          <div className="relative mt-5">
+            <input
+              type="text"
+              id="search"
+              className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search"
+              required=""
+              value={searchTermUsers}
+              onChange={(e) => {
+                setSearchTermUsersA(e.target.value);
+                filterDataByNameUsersA(e.target.value);
+              }}
+            />
+          </div>
+        </form>
+
+        <div className="mt-8 overflow-x-scroll xl:overflow-hidden ">
+          <table role="table" className="w-full">
+            <thead>
+              <tr role="row">
+                <th
+                  colSpan={1}
+                  role="columnheader"
+                  title="Toggle SortBy"
+                  className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
+                  style={{ cursor: "pointer" }}
+                >
+                  <p className="text-xs tracking-wide text-gray-600">NAME</p>
+                </th>
+                <th
+                  colSpan={1}
+                  role="columnheader"
+                  title="Toggle SortBy"
+                  className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
+                  style={{ cursor: "pointer" }}
+                >
+                  <p className="text-xs tracking-wide text-gray-600">location</p>
+                </th>
+                <th
+                  colSpan={1}
+                  role="columnheader"
+                  title="Toggle SortBy"
+                  className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
+                  style={{ cursor: "pointer" }}
+                >
+                  <p className="text-xs tracking-wide text-gray-600">price</p>
+                </th>
+                <th
+                  colSpan={1}
+                  role="columnheader"
+                  title="Toggle SortBy"
+                  className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
+                  style={{ cursor: "pointer" }}
+                >
+                  <p className="text-xs tracking-wide text-gray-600">role</p>
+                </th>
+
+                <th
+                  colSpan={1}
+                  role="columnheader"
+                  title="Toggle SortBy"
+                  className="border-b border-gray-200 pr-10 pb-[10px] text-start dark:!border-navy-700"
+                  style={{ cursor: "pointer" }}
+                >
+                  <p className="text-xs tracking-wide text-gray-600">Approve</p>
+                </th>
+
+                <th
+                  colSpan={1}
+                  role="columnheader"
+                  title="Toggle SortBy"
+                  className="border-b border-gray-200 pr-5 pb-[10px] text-start dark:!border-navy-700"
+                  style={{ cursor: "pointer" }}
+                >
+                  <p className="text-xs tracking-wide text-gray-600">DELETE</p>
+                </th>
+              </tr>
+            </thead>
+
+            {slicedArrayUsersA.map((e) => {
+              return (
+                <tbody role="rowgroup">
+                  <tr role="row">
+                    <td
+                      className="pt-[14px] pb-[18px] sm:text-[14px] flex items-center"
+                      role="cell"
+                    >
+                      <div className="h-[30px] w-[30px] rounded-full">
+                        <img
+                          src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2244&q=80"
+                          className="h-full w-full rounded-full"
+                          alt=""
+                        />
+                      </div>
+
+                      <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
+                        {e.Name}
+                      </p>
+                    </td>
+                    <td
+                      className="pt-[14px] pb-[18px] sm:text-[14px]"
+                      role="cell"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="rounded-full text-xl">
+                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                            {e.location}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      className="pt-[14px] pb-[18px] sm:text-[14px]"
+                      role="cell"
+                    >
+                      <p className="text-sm font-bold text-navy-700 dark:text-white">
+                        {e.price}
+                      </p>
+                    </td>
+                    <td
+                      className="pt-[14px] pb-[18px] sm:text-[14px]"
+                      role="cell"
+                    >
+                      <p className="text-sm font-bold text-navy-700 dark:text-white">
+                        
+                        
+                          <div className=" w-10 flex flex-col justify-center items-center">
+                            {" "}
+                            <Icon path={mdiHandshakeOutline} size={1} />{" "}
+                            <span>user</span>{" "}
+                          </div>
+                         
+
+                        
+                      
+
+                      </p>
+                    </td>
+
+                    <td
+                      className="pt-[14px] pb-[18px] sm:text-[14px]"
+                      role="cell"
+                    >
+                      <button
+                        onClick={() => handleUpdate(e._id,e.IngId,e)}
+                      >
+                       
+                          <Icon color="blue" path={mdiCheckDecagram } size={1} />
+                       
+                      </button>
+                    </td>
+
+                    <td
+                      className="pt-[14px] pb-[18px] sm:text-[14px]"
+                      role="cell"
+                    >
+                      <button
+                        onClick={() => handleDelete(e.userid, e.username)}
+                      >
+                        <Icon color="red" path={mdiDelete} size={1} />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              );
+            })}
+          </table>
+
+          <div className="flex w-full justify-center mt-5">
+            {
+              <Pagination
+                count={totalPagesUsersA}
+                page={currentPageUsersA}
+                onChange={handlePageChangeUsersA}
+              />
+            }
+          </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
 
   
@@ -362,7 +629,7 @@ try {
 
 
 
-
+     
 
 
 

@@ -121,7 +121,7 @@ export default function Example({ userIdApp0 }) {
         // MyList: trueItems,
         // MyListn: trueItemsNames,
       };
-      await axios.put(`http://localhost:5000/api/users/${userIdApp0}`, updatedBeneficiary);
+      await axios.put(`http://localhost:5000/api/userList/${userIdApp0}`, updatedBeneficiary);
   
     } catch (error) {
       console.error("Error updating user:", error);

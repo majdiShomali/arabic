@@ -41,7 +41,7 @@ const ProvidersList = () => {
          
          const filteredDataRestaurants = restaurants.filter(item =>
        
-           item.NAME.toLowerCase().includes(searchTermRestaurants.toLowerCase())
+           item.firstName.toLowerCase().includes(searchTermRestaurants.toLowerCase())
          );
          setFilterDataRestaurants(filteredDataRestaurants);
           setCurrentPageRestaurants(1)
@@ -147,7 +147,7 @@ try {
 
 <form>
  
-  <div className="relative">
+  {/* <div className="relative">
  
     <input
       type="email"
@@ -166,7 +166,7 @@ try {
     >
       add Email
     </button>
-  </div>
+  </div> */}
 </form>
   <div className="relative flex items-center justify-between pt-4">
     <div className="text-xl font-bold text-navy-700 dark:text-white">
@@ -280,8 +280,15 @@ return(
 
 <tbody role="rowgroup">
 <tr role="row">
-          <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
-            <p className="text-sm font-bold text-navy-700 dark:text-white">
+          <td className="pt-[14px] pb-[18px] sm:text-[14px] flex items-center" role="cell">
+          <div className="h-[30px] w-[30px] rounded-full">
+                        <img
+                          src={`http://localhost:5000/${e.img}`}
+                          className="h-full w-full rounded-full"
+                          alt=""
+                        />
+                      </div>
+            <p className="text-sm font-bold text-navy-700 ml-3 dark:text-white">
               {e.firstName} 
             </p>
           </td>

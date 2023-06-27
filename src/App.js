@@ -121,7 +121,7 @@ export default function App() {
       <Router>
         <Sidebar />
         <div style={{ width: "100%" }}>
-          <NavListMenuD />
+          <NavListMenuD userIdApp0 ={userIdApp}  />
           <Routes>
             <Route index element={<MainDashboard />} />
             <Route path="ListUser" element={<UserInfo />} />

@@ -2,15 +2,17 @@ import Icon from "@mdi/react";
 import { mdiDelete } from "@mdi/js";
 import { mdiFileEdit } from "@mdi/js";
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
 import { mdiCheckDecagram  } from "@mdi/js";
 import Swal from "sweetalert2";
 import { mdiSilverware } from "@mdi/js";
 import { mdiHandshakeOutline } from "@mdi/js";
 import { mdiAccountOutline } from "@mdi/js";
-
+import { DashboardPendingContext } from "../../DashboardPendingContext";
 const PendingRecipes = () => {
+    const { PendingRecipesLength, updatePendingRecipesLength } = useContext(DashboardPendingContext);
+   const { PersonsContext, setPersonsContext } = useContext(DashboardPendingContext);
 
     const [persons, setPersons] = useState([]);
     const [personsAp, setPersonsAp] = useState([]);
@@ -23,16 +25,18 @@ const PendingRecipes = () => {
     const [HandleP, setHandleP] = useState();
   
     const allAdmins = async () => {
-        try {
-            const response = await axios.get("http://localhost:5000/api/recipesP");
-            setPersons(response.data);
-          console.log(response.data)
-          setFilterDataUsers(response.data)
-          } catch (error) {
-            console.error("Error inserting data:", error);
-          }
+        // try {
+        //     const response = await axios.get("http://localhost:5000/api/recipesP");
+        //     setPersons(response.data);
+        //   console.log(response.data)
+        //   setFilterDataUsers(response.data)
+        //   updatePendingRecipesLength(response.data.length)
+        //   } catch (error) {
+        //     console.error("Error inserting data:", error);
+        //   }
+        setPersons( PersonsContext)
+        setFilterDataUsers(PersonsContext)
 
-     
           try {
             const response = await axios.get("http://localhost:5000/api/recipesA");
             setPersonsAp(response.data);
@@ -49,12 +53,13 @@ const PendingRecipes = () => {
      
       useEffect(() => {
         allAdmins();
-      }, []);
+      }, [PersonsContext]);
+      console.log(persons)
 //-----------------------search------------------------//
 
 const filterDataByNameUsers = (searchTermUsers) => {
     const filteredDataUsers = persons.filter((item) =>
-      item.Name.toLowerCase().includes(searchTermUsers.toLowerCase())
+      item.recipeName.toLowerCase().includes(searchTermUsers.toLowerCase())
     );
     setFilterDataUsers(filteredDataUsers);
     console.log(filteredDataUsers);
@@ -62,7 +67,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
   };
 const filterDataByNameUsersAp = (searchTermUsers) => {
     const filteredDataUsers = personsAp.filter((item) =>
-      item.Name.toLowerCase().includes(searchTermUsers.toLowerCase())
+      item.recipeName.toLowerCase().includes(searchTermUsers.toLowerCase())
     );
     setFilterDataUsersAp(filteredDataUsers);
     console.log(filteredDataUsers);
@@ -289,7 +294,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                          src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2244&q=80"
+                        src={`http://localhost:5000/${e.img}`}
                           className="h-full w-full rounded-full"
                           alt=""
                         />
@@ -426,7 +431,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">location</p>
+                  <p className="text-xs tracking-wide text-gray-600">type</p>
                 </th>
                 <th
                   colSpan={1}
@@ -479,14 +484,14 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                          src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2244&q=80"
+                        src={`http://localhost:5000/${e.img}`}
                           className="h-full w-full rounded-full"
                           alt=""
                         />
                       </div>
 
                       <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
-                        {e.Name}
+                        {e.recipeName}
                       </p>
                     </td>
                     <td
@@ -496,7 +501,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.location}
+                            {e.category}
                           </p>
                         </div>
                       </div>

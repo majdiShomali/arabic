@@ -9,15 +9,36 @@ const ShowRecipe = () => {
   const { id } = useParams();
 const [clinks,setClinks]= useState([])
 const [cItems,setItems]= useState([])
+const [RecipeIngs,setRecipeIngs]= useState([])
 
 
 console.log(id)
   const oneRecipe = async () => {
+    let x
     try {
         const response = await axios.get(`http://localhost:5000/api/recipe/${id}`);
         setItems((response.data[0].Items))
         setClinks(response.data[0].links)
-        // setClinks(JSON.parse(response.data[0].links))
+        console.log(response.data[0].ItemsId)
+
+         x =response.data[0].ItemsId
+         const requestData = { ItemsId: x };
+         console.log(x)
+        try {
+          const response = await axios.get('http://localhost:5000/api/IngredientMatch', {
+            params: {
+              ItemsId: JSON.stringify(x),
+            },
+          });
+         
+          console.log(response.data)
+          setRecipeIngs(response.data)
+      }
+  
+    catch (error) {
+      console.error("Error inserting data:", error);
+    }
+
     }
 
   catch (error) {
@@ -43,7 +64,7 @@ console.log(clinks)
    
      const itemsPerPage = 4;
    
-     totalItems = cItems.length;
+     totalItems = RecipeIngs.length;
    
      totalPages = Math.ceil(totalItems / itemsPerPage);
    
@@ -51,7 +72,7 @@ console.log(clinks)
    
      const endIndex = startIndex + itemsPerPage;
    
-     slicedArray = cItems.slice(startIndex, endIndex);
+     slicedArray = RecipeIngs.slice(startIndex, endIndex);
    
      const handlePageChange = (event, pageNumber) => {
        setCurrentPage(pageNumber);

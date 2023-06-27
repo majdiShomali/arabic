@@ -11,7 +11,7 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-
+import EditProviderProfile from "./EditProviderProfile";
 const ProviderProfile = ({ userIdApp0 }) => {
   const [user, setUser] = useState([]);
   const [providerRecipes, setProviderRecipes] = useState([]);
@@ -64,7 +64,7 @@ const ProviderProfile = ({ userIdApp0 }) => {
   }, []);
 
   //  updateRecipeElement
-
+console.log(providerRecipes)
   const handleUpdate = (e) => {
     updateRecipeElement(e);
   };
@@ -106,7 +106,6 @@ const ProviderProfile = ({ userIdApp0 }) => {
 
 
 
-      console.log(updatedRecipe);
       await axios.put(
         `http://localhost:5000/api/users/${userIdApp0}`,
         formData
@@ -121,7 +120,64 @@ const ProviderProfile = ({ userIdApp0 }) => {
 
   return (
     <>
-      <div className="p-5 m-5">
+
+
+<div className="container mx-auto my-60">
+        <div>
+          <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto">
+            <div className="flex justify-center">
+              <img src={`http://localhost:5000/${userImg}`} alt="" className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110" />
+            </div>
+            <div className="mt-16">
+              <h1 className="font-bold text-center text-3xl text-gray-900">{user[0]?.firstName}</h1>
+              <p className="text-center text-sm text-gray-400 font-medium">Welcome to arabic recipes</p>
+              <p>
+                <span>
+                </span>
+              </p>
+              <div className="my-5 px-6">
+              <EditProviderProfile  />
+                {/* <a href="#" className="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white">Connect with <span className="font-bold">@pantazisoft</span></a> */}
+              </div>
+              <div className="flex justify-between items-center my-5 px-6">
+                <a href className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3">Facebook</a>
+                <a href className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3">Twitter</a>
+                <a href className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3">Instagram</a>
+                <a href className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3">Email</a>
+              </div>
+              <div className="w-full">
+                <h3 className="font-medium text-gray-900 text-left px-6">Recent activites</h3>
+                <div className="mt-5 w-full grid grid-cols-2 items-center overflow-hidden text-sm">
+                  
+                 { providerRecipes?.map((e,i)=>{
+
+return(
+  <div className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150">
+  <img src={`http://localhost:5000/${e.img}`} alt="" className="rounded-full h-6 shadow-md inline-block mr-2" />
+  {e.recipeName}
+  <span className="text-gray-500 text-xs">24 min ago</span>
+</div>
+
+)
+
+                 })} 
+                  
+             
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>     
+
+
+
+
+
+
+
+      {/* <div className="p-5 m-5">
         <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-2 pb-4 relative">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-amber-500 uppercase">
             My Profile
@@ -195,7 +251,7 @@ const ProviderProfile = ({ userIdApp0 }) => {
                     </div>
 
                     <div>
-                      <label className="font-medium">Case Image</label>
+                      <label className="font-medium">Case Image</label> */}
 
                       {/* <input
                         className="shadow mb-4 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
@@ -208,31 +264,31 @@ const ProviderProfile = ({ userIdApp0 }) => {
                         accept="image/*"
                       /> */}
 
-          <input
+          {/* <input
             className="file-upload-input mx-auto"
             type="file"
             name="image"
             onChange={handleProductImageChange}
             accept="image/*"
             required
-          />
+          /> */}
 
 
-                    </div>
+                    {/* </div> */}
 
-                    <Button
+                    {/* <Button
                       onClick={() => handleEditPlus()}
                       className="mt-6 bg-[#E8CC95] w-full"
                     >
                       Update
                     </Button>
-                  </form>
-                )}
+                  </form> */}
+                {/* )}
               </div>
             </div>
           )}
         </div>
-      </div>
+      </div> */}
 
       <div className="p-5 m-5">
         <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-2 pb-4 relative">

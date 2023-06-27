@@ -37,6 +37,17 @@ function EditProfileBeneficiary() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+
+
+  const [productImage, setProductImage] = useState(null);
+
+  const handleProductImageChange = (event) => {
+    setProductImage(event.target.files[0]);
+  };
+
+
+
+
   const fetchProtectedData = async () => {
     try {
       const token = localStorage.getItem("auth");
@@ -80,11 +91,20 @@ function EditProfileBeneficiary() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(name, email, userId);
+
+
+    const formData = new FormData()
+    formData.append('firstName',name)
+    formData.append('image',productImage)
+
+
+
+
+
     axios
-      .put(`http://localhost:5000/api/users/${userId}`, {
-        firstName: name,
-        email: email,
-      })
+      .put(`http://localhost:5000/api/users/${userId}`,
+      formData
+      )
       .then(function (response) {
         console.log(response);
         updateProfileRefresh(response)
@@ -98,9 +118,9 @@ function EditProfileBeneficiary() {
       });
   };
   return (
-    <div>
+    <div className="w-full">
       <Button
-        className="mb-10 border-solid border-[#7C9070] border-2 text-[#7C9070] hover:bg-[#7C9070] hover:text-[#ffffff]"
+        className=" w-full mb-10 border-solid border-[#7C9070] border-2 text-[#7C9070] hover:bg-[#7C9070] hover:text-[#ffffff]"
         variant="text"
         onClick={handleOpen}
       >
@@ -126,7 +146,17 @@ function EditProfileBeneficiary() {
               Text in a modal
             </Input>{" "}
             <br></br>
-            <Input
+            
+          <input
+            className="file-upload-input mx-auto"
+            type="file"
+            name="image"
+            onChange={handleProductImageChange}
+            accept="image/*"
+            required
+          />
+            <br></br>
+            {/* <Input
               id="email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -136,7 +166,7 @@ function EditProfileBeneficiary() {
               className="m-5"
             >
               Text in a modal
-            </Input>{" "}
+            </Input>{" "} */}
             <br></br>
             <Button
               onClick={handleSubmit}

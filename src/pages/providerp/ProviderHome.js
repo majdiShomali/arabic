@@ -296,8 +296,9 @@ console.log(foodCards)
 
   function UpdateRecipe(e, id) {
 
-    e.ItemsName.map((name)=>{
-      UpdateBeneficiaryId(name)
+    e.ItemsId.map((itemid,i)=>{
+      console.log(e.ItemsName[i],itemid)
+      UpdateBeneficiaryId(e.ItemsName[i],itemid)
     })
 
 
@@ -315,36 +316,36 @@ console.log(foodCards)
       link_name001 = "";
     }
 
-    if (e.links[1] != "") {
-      link_name002 = "https://youtu.be/".concat(
-        e.links[1].replace("https://www.youtube.com/embed/", "")
-      );
-    } else {
-      link_name002 = "";
-    }
+    // if (e.links[1] != "") {
+    //   link_name002 = "https://youtu.be/".concat(
+    //     e.links[1].replace("https://www.youtube.com/embed/", "")
+    //   );
+    // } else {
+    //   link_name002 = "";
+    // }
 
-    if (e.links[2] != "") {
-      link_name003 = "https://youtu.be/".concat(
-        e.links[2].replace("https://www.youtube.com/embed/", "")
-      );
-    } else {
-      link_name003 = "";
-    }
+    // if (e.links[2] != "") {
+    //   link_name003 = "https://youtu.be/".concat(
+    //     e.links[2].replace("https://www.youtube.com/embed/", "")
+    //   );
+    // } else {
+    //   link_name003 = "";
+    // }
 
     setName(e.recipeName);
     setName1(e.names[0]);
-    setName2(e.names[1]);
-    setName3(e.names[2]);
+    // setName2(e.names[1]);
+    // setName3(e.names[2]);
     setLink1(link_name001);
-    setLink2(link_name002);
-    setLink3(link_name003);
+    // setLink2(link_name002);
+    // setLink3(link_name003);
     console.log(e.ItemsName)
     setMyListAdmin(e.Items);
     //  updateSidebarIng(e.Items)
     setMyListNAdmin(e.ItemsName);
     setMyListIdAdmin(e.ItemsId);
     setImg(e.img)
-
+console.log(e.ItemsId)
 
     // setUserAllIngredients((prevAccounts) => {
     //   const newItems = prevAccounts.filter((item) => item.ingredientFlag !== false);
@@ -406,6 +407,21 @@ console.log(foodCards)
 
     try {
 
+
+      const formData0 = new FormData()
+      formData0.append('recipeName',name)
+      formData0.append('providerId',userIdApp0)
+      formData0.append('category',yourSelectedStateValue)
+      formData0.append('names',JSON.stringify([name1]))
+      formData0.append('links',JSON.stringify([link_name001]))
+      formData0.append('Items',JSON.stringify(foodCards))
+      formData0.append('ItemsName',JSON.stringify(foodCardsName))
+      formData0.append('image',productImage)
+      formData0.append('ItemsId',JSON.stringify(MyListIdAdmin))
+      
+
+
+
       const updatedRecipe = {
         recipeName: name,
         category: yourSelectedStateValue,
@@ -417,7 +433,7 @@ console.log(foodCards)
       }
       
 console.log(updatedRecipe)
-      await axios.put(`http://localhost:5000/api/recipes/${ButtonStatusId}`, updatedRecipe);
+      await axios.put(`http://localhost:5000/api/recipesP/${ButtonStatusId}`, formData0);
       // fetchUsers(); // Refresh the user list after updating a user
     } catch (error) {
       console.error("Error updating user:", error);
@@ -491,11 +507,10 @@ console.log(ingredientId)
     const newArrayAll = [...userAllIngredients];
     newArrayAll.map((e) => {
       
-      if (ingredientName.toLowerCase() == e.ingredientName.toLowerCase()) {
+      if (ingredientId.toLowerCase() == e._id.toLowerCase()) {
 
-        console.log(ingredientName,e.ingredientFlag)
       }
-      if (ingredientName.toLowerCase() == e.ingredientName.toLowerCase()) {
+      if (ingredientId.toLowerCase() == e._id.toLowerCase()) {
         if (e.ingredientFlag == false) {
               e.ingredientFlag = true;           
               setMyListAdmin((prevArray) => [...prevArray, e]);

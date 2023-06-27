@@ -6,6 +6,7 @@ import { mdiAccountMultipleOutline } from '@mdi/js';
 import { mdiInbox } from '@mdi/js';
 import { UserContext } from '../../UserContext';
 import './dashboard.css'
+import axios from 'axios'
 import {
   Navbar,
   MobileNav,
@@ -33,6 +34,7 @@ import {
   Bars2Icon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 // profile menu component
 const profileMenuItems = [
   // {
@@ -57,7 +59,8 @@ const profileMenuItems = [
   },
 ];
  
-function ProfileMenu() {
+function ProfileMenu({UserData}) {
+  console.log(UserData)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { SignStatus,updateSignStatus } = useContext(UserContext)
 
@@ -65,10 +68,10 @@ function ProfileMenu() {
     setIsMenuOpen(false)
 
 if(label == "Sign Out"){
-     updateSignStatus("signUp")
-    localStorage.setItem("SignStatus","signUp")
+    //  updateSignStatus("signUp")
+    // localStorage.setItem("SignStatus","signUp")
     localStorage.removeItem("auth");
-    localStorage.removeItem("roles");
+    // localStorage.removeItem("roles");
     window.location.href = 'http://localhost:3000/';
 
   console.log(label)
@@ -92,8 +95,8 @@ if(label == "Sign Out"){
             size="sm"
             alt="candice wu"
             className="border border-blue-500 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-          />
+            src={`http://localhost:5000/${UserData?.img}`}    
+                  />
           <ChevronDownIcon
             strokeWidth={2.5}
             className={`h-3 w-3 transition-transform ${
@@ -266,17 +269,44 @@ function NavList() {
   );
 }
  
-export default function ComplexNavbar() {
+export default function ComplexNavbar({userIdApp0}) {
+  console.log(userIdApp0)
   const [isNavOpen, setIsNavOpen] = React.useState(false);
+  const [UserData, setUserData] = React.useState(null);
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
  
+  const fetchProtectedData = async () => {
+
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/users/${userIdApp0}`
+      );
+ 
+
+      setUserData(response.data[0]);
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+
+
+
+
+  }
+
+useEffect(()=>{
+
+  fetchProtectedData()
+console.log("aaaaaaaaaaaaaaa")
+
+},[])
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
- 
+ console.log(UserData)
   return (
     <Navbar className=" sticky top-0 z-10 mx-auto max-w-screen p-2 bg-white rounded-full lg:pl-6 h-14 DashboardNav">
       <div className="relative mx-auto flex items-center text-blue-gray-900"> 
@@ -287,7 +317,7 @@ export default function ComplexNavbar() {
           as="a"
           className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
         >
-          ma6a3mkom
+          arabic recipes
         </Typography>
         </Link>
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
@@ -302,7 +332,7 @@ export default function ComplexNavbar() {
         >
           <Bars2Icon className="h-6 w-6" />
         </IconButton>
-        <ProfileMenu />
+        <ProfileMenu UserData={UserData} />
       </div>
       <MobileNav open={isNavOpen} className="overflow-scroll">
         <NavList />

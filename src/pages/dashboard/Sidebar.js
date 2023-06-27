@@ -26,8 +26,11 @@ import {
   } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
-
+import { DashboardPendingContext } from '../../DashboardPendingContext';
   export default function Sidebar() {
+    const { PersonsContext, setPersonsContext } = useContext(DashboardPendingContext);
+    const { SponsorPContext, setSponsorPContext } = useContext(DashboardPendingContext);
+
     const { SignStatus,updateSignStatus } = useContext(UserContext)
 
 function handleLogOut(){
@@ -108,12 +111,19 @@ function handleLogOut(){
             <a style={{color:'black'}}> Providers List </a>
           </ListItem>
           </Link>
+
           <Link to='/PendingRecipes'>
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
             <Icon path={mdiSilverwareForkKnife} size={1} />
             </ListItemPrefix>
-            <a style={{color:'black'}}> Pending Recipes </a>
+            <div className='flex justify-between w-full'>
+               <p className='text-black block'>Pending Recipes</p> 
+               
+               <p className='text-black block'>{PersonsContext.length}</p> 
+               </div>
+           
+            
           </ListItem>
           </Link>
           
@@ -131,10 +141,13 @@ function handleLogOut(){
             <ListItemPrefix>
             <Icon path={mdiSilverwareForkKnife} size={1} />
             </ListItemPrefix>
-            <a style={{color:'black'}}> Accept Ing </a>
+            <div className='flex justify-between w-full'>
+               <p className='text-black block'>Accept Ing</p> 
+               
+               <p className='text-black block'>{SponsorPContext.length}</p> 
+               </div>
           </ListItem>
           </Link>
-
           <Link to='/EditAboutContact'>
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
