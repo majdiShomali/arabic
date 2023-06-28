@@ -120,7 +120,7 @@ function handleLogOut(){
             <div className='flex justify-between w-full'>
                <p className='text-black block'>Pending Recipes</p> 
                
-               <p className='text-black block'>{PersonsContext.length}</p> 
+               <p className='text-black block'>{PersonsContext?.length}</p> 
                </div>
            
             
@@ -144,7 +144,7 @@ function handleLogOut(){
             <div className='flex justify-between w-full'>
                <p className='text-black block'>Accept Ing</p> 
                
-               <p className='text-black block'>{SponsorPContext.length}</p> 
+               <p className='text-black block'>{SponsorPContext?.length}</p> 
                </div>
           </ListItem>
           </Link>

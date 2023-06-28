@@ -4,12 +4,12 @@ import { Button } from "@material-tailwind/react";
 import { HashLink } from "react-router-hash-link";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import mcd from '../../Images/fruits/Lime.png'
-import kfc from '../../Images/fruits/Lime.png'
-import dom from '../../Images/fruits/Lime.png'
-import burger from '../../Images/fruits/Lime.png'
-import AddYourIng from '../../components/landingPage/AddYourIng';
+
 import SponserSection from '../../components/landingPage/SponserSection';
+import SponsersCardSample from '../../components/landingPage/SponsersCardSample';
+import { useEffect } from 'react';
+
+import Rating from '../../components/Rating';
 
 const Home = () => {
 
@@ -24,11 +24,10 @@ const Home = () => {
 
 
 
-
   return (
     <>
     <Landing/>
-    
+
     <div className="bg-white mt-3 shadow-lg">
         <section id="food">
           <br />
@@ -202,55 +201,11 @@ const Home = () => {
 
 
 
+  <SponsersCardSample/>
 
 
 
-
-    <div className="p-20">
-  <div className="text-center mb-16">
-    <h3 className="text-3xl sm:text-4xl uppercase leading-normal font-extrabold tracking-tight text-gray-900">
-      Our partners
-    </h3>
-  </div>
-  <div className="sm:grid grid-cols-2 md:grid-cols-4 col-gap-10 mx-auto">
-    <div className="text-center">
-        <img
-          className="mb-3 rounded-xl mx-auto h-32 w-32"
-          src={kfc}
-        />
-
-      <p className="text-gray-500 uppercase text-sm">KFC</p>
- 
-    </div>
-    <div className="text-center">
-        <img
-          className="mb-3 rounded-xl mx-auto h-32 w-32"
-          src={mcd}
-        />
-
-      <p className="text-gray-500 uppercase text-sm">McDonald's</p>
-
-    </div>
-    <div className="text-center">
-        <img
-          className="mb-3 rounded-xl mx-auto h-32 w-32"
-          src={dom}
-        />
-
-      <p className="text-gray-500 uppercase text-sm">Domino's</p>
-    </div>
-    <div className="text-center">
-        <img
-          className="mb-3 rounded-xl mx-auto h-32 w-32"
-          src={burger}
-        />
-      <p className="text-gray-500 uppercase text-sm">Burger King</p>
-  
-    </div>
-    
-
-  </div>
-</div>
+   
 
 <SponserSection/>
  {/* <AddYourIng/> */}

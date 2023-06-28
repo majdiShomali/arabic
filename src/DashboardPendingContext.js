@@ -10,6 +10,7 @@ const DashboardPendingProvider = ( {children} ) => {
   const [PersonsApContext, setPersonsApContext] = useState();
   const [SponsorAContext, setSponsorAContext] = useState();
   const [SponsorPContext, setSponsorPContext] = useState();
+  const [AcceptIngRefresh, setAcceptIngRefresh ] = useState();
 
     // const { SponsorAContext, setSponsorAContext } = useContext(DashboardPendingContext);
     // const { SponsorPContext, setSponsorPContext } = useContext(DashboardPendingContext);
@@ -69,7 +70,7 @@ const DashboardPendingProvider = ( {children} ) => {
      
       useEffect(() => {
         allAdmins0();
-      }, []);
+      }, [AcceptIngRefresh]);
   useEffect(() => {
     allAdmins();
   }, []);
@@ -90,7 +91,8 @@ console.log(PersonsContext)
                     PersonsContext,setPersonsContext,
                     PersonsApContext,setPersonsApContext,
                     SponsorAContext,setSponsorAContext,
-                    SponsorPContext,setSponsorPContext
+                    SponsorPContext,setSponsorPContext,
+                    AcceptIngRefresh,setAcceptIngRefresh
                 }}
             >
                 {children}

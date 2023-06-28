@@ -14,6 +14,7 @@ import { DashboardPendingContext } from "../../DashboardPendingContext";
 const AcceptIng = () => {
     const { SponsorAContext, setSponsorAContext } = useContext(DashboardPendingContext);
     const { SponsorPContext, setSponsorPContext } = useContext(DashboardPendingContext);
+    const {  AcceptIngRefresh, setAcceptIngRefresh } = useContext(DashboardPendingContext);
 
     const [persons, setPersons] = useState([]);
     const [personsA, setPersonsA] = useState([]);
@@ -87,7 +88,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
 
   const itemsPerPage = 5;
 
-  totalItemsUsers = FilterDataUsers.length;
+  totalItemsUsers = FilterDataUsers?.length;
 
   totalPagesUsers = Math.ceil(totalItemsUsers / itemsPerPage);
 
@@ -95,7 +96,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
 
   const endIndexUsers = startIndexUsers + itemsPerPage;
 
-  slicedArrayUsers = FilterDataUsers.slice(startIndexUsers, endIndexUsers);
+  slicedArrayUsers = FilterDataUsers?.slice(startIndexUsers, endIndexUsers);
 
   const handlePageChangeUsers = (event, pageNumber) => {
     setCurrentPageUsers(pageNumber);
@@ -121,7 +122,7 @@ const filterDataByNameUsersA = (searchTermUsersA) => {
 
   const itemsPerPageA = 5;
 
-  totalItemsUsersA = FilterDataUsersA.length;
+  totalItemsUsersA = FilterDataUsersA?.length;
 
   totalPagesUsersA = Math.ceil(totalItemsUsersA / itemsPerPageA);
 
@@ -129,7 +130,7 @@ const filterDataByNameUsersA = (searchTermUsersA) => {
 
   const endIndexUsersA = startIndexUsersA + itemsPerPageA;
 
-  slicedArrayUsersA = FilterDataUsersA.slice(startIndexUsersA, endIndexUsersA);
+  slicedArrayUsersA = FilterDataUsersA?.slice(startIndexUsersA, endIndexUsersA);
 
   const handlePageChangeUsersA = (event, pageNumberA) => {
     setCurrentPageUsersA(pageNumberA);
@@ -191,9 +192,10 @@ try {
       const updatedUser2 = {
         flag: true,
       };
-      await axios.put(`http://localhost:5000/api/Ingredient/${ingId}`, updatedUser);
+    const aIngredient=   await axios.put(`http://localhost:5000/api/Ingredient/${ingId}`, updatedUser);
       await axios.put(`http://localhost:5000/api/sponsor/${id}`, updatedUser2);
       allAdmins()
+      setAcceptIngRefresh(aIngredient)
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -278,7 +280,7 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">location</p>
+                  <p className="text-xs tracking-wide text-gray-600">type</p>
                 </th>
                 <th
                   colSpan={1}
@@ -287,7 +289,7 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">price</p>
+                  <p className="text-xs tracking-wide text-gray-600">Company email</p>
                 </th>
                 <th
                   colSpan={1}
@@ -296,7 +298,7 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">role</p>
+                  <p className="text-xs tracking-wide text-gray-600">Company name</p>
                 </th>
 
                 <th
@@ -321,7 +323,7 @@ try {
               </tr>
             </thead>
 
-            {slicedArrayUsers.map((e) => {
+            {slicedArrayUsers?.map((e) => {
               return (
                 <tbody role="rowgroup">
                   <tr role="row">
@@ -331,14 +333,14 @@ try {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                          src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2244&q=80"
-                          className="h-full w-full rounded-full"
+                       src={`http://localhost:5000/${e.img}`} 
+                         className="h-full w-full rounded-full"
                           alt=""
                         />
                       </div>
 
                       <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
-                        {e.Name}
+                        {e.ingredientName}
                       </p>
                     </td>
                     <td
@@ -348,7 +350,7 @@ try {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.location}
+                            {e.ingredientType}
                           </p>
                         </div>
                       </div>
@@ -358,10 +360,11 @@ try {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.price}
+                        {e.CompanyEmail}
                       </p>
                     </td>
-                    <td
+                   
+                    <td 
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
                     >
@@ -370,8 +373,9 @@ try {
                         
                           <div className=" w-10 flex flex-col justify-center items-center">
                             {" "}
-                            <Icon path={mdiHandshakeOutline} size={1} />{" "}
-                            <span>user</span>{" "}
+                            <p className="text-sm font-bold text-navy-700 dark:text-white">
+                               {e.CompanyName}
+                              </p>
                           </div>
                          
 
@@ -464,7 +468,7 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">location</p>
+                  <p className="text-xs tracking-wide text-gray-600">type</p>
                 </th>
                 <th
                   colSpan={1}
@@ -473,7 +477,7 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">price</p>
+                  <p className="text-xs tracking-wide text-gray-600">company email</p>
                 </th>
                 <th
                   colSpan={1}
@@ -482,7 +486,7 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">role</p>
+                  <p className="text-xs tracking-wide text-gray-600">company name</p>
                 </th>
 
                 <th
@@ -507,7 +511,7 @@ try {
               </tr>
             </thead>
 
-            {slicedArrayUsersA.map((e) => {
+            {slicedArrayUsersA?.map((e) => {
               return (
                 <tbody role="rowgroup">
                   <tr role="row">
@@ -517,14 +521,14 @@ try {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                          src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2244&q=80"
+                        src={`http://localhost:5000/${e.img}`}
                           className="h-full w-full rounded-full"
                           alt=""
                         />
                       </div>
 
                       <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
-                        {e.Name}
+                        {e.ingredientName}
                       </p>
                     </td>
                     <td
@@ -534,7 +538,7 @@ try {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.location}
+                            {e.ingredientType}
                           </p>
                         </div>
                       </div>
@@ -544,7 +548,7 @@ try {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.price}
+                        {e.CompanyEmail}
                       </p>
                     </td>
                     <td
@@ -556,8 +560,9 @@ try {
                         
                           <div className=" w-10 flex flex-col justify-center items-center">
                             {" "}
-                            <Icon path={mdiHandshakeOutline} size={1} />{" "}
-                            <span>user</span>{" "}
+                            <p className="text-sm font-bold text-navy-700 dark:text-white">
+                               {e.CompanyName}
+                              </p>
                           </div>
                          
 

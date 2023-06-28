@@ -94,7 +94,7 @@ const Ingredients = () => {
    
     let slicedArrayMeals;
   
-    const itemsPerPage = 6;
+    const itemsPerPage = 5;
   
     totalItemsMeals = FilterDataMeals?.length;
   
@@ -325,7 +325,7 @@ const Ingredients = () => {
 
 
 
-<div className='grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1'>
+<div className='w-full grid gap-3 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1'>
 
 {slicedArrayMeals.map((e)=>{
 return(

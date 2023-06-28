@@ -3,8 +3,24 @@ import { useState ,useEffect } from 'react';
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 import { useNavigate } from 'react-router-dom';
+import TotalRating from '../TotalRating';
+import {
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+  ListItemSuffix,
+  Chip,
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+  Alert,
+  Input,
+  Button,
+} from "@material-tailwind/react";
 
-function DyRecipeCardMeal({ card , Name ,index ,SAMeals,cardId,img} ) {
+function DyRecipeCardMeal({ card , Name ,index ,SAMeals,cardId,img,rate} ) {
 const navigate = useNavigate()
   const { currentLinks, updateCurrentLinks } = useContext(UserContext);
   const { currentItems, updateCurrentItems } = useContext(UserContext);
@@ -25,10 +41,12 @@ const navigate = useNavigate()
          }
 
   return (
-    <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-25">
+    <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-60">
+
+
     <div>
       <img
-        className="w-full h-72 "
+        className="w-full h-40 "
         src={`http://localhost:5000/${img}`}
         alt="Recipe Title"
       />
@@ -53,6 +71,8 @@ const navigate = useNavigate()
           </svg>
           <span className="ml-1 lg:text-xl">30m</span>
         </div>
+
+
         <div className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,16 +101,26 @@ const navigate = useNavigate()
           <span className="ml-1 lg:text-xl">1-2</span>
         </div>
       </div>
-      <p className="mb-2 text-gray-800">
+      <p className="mb-2 mt-2 text-gray-800 text-sm">
         A recipe that's quick and easy to make and super tasty!
       </p>
-      <button className="text-white bg-[#E8CC95] p-2 rounded-md w-full uppercase"
+
+      {/* <button className="text-white bg-[#E8CC95] p-2 rounded-md w-full uppercase"
      onClick={()=>ShowVideosMeals(index,SAMeals)}>Show recipe
-     {/* <Link className=" text-gray-800" to="/ShowRecipe">Show recipe</Link> */}
-      </button>
+      </button> */}
+
+
+              <Button
+                className=" w-full mt-2 border  border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+                variant="text"
+                onClick={()=>ShowVideosMeals(index,SAMeals)}
+              >
+                Show recipe
+              </Button>
+
     </div>
-    <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-gray-800 rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
-      <span>Medium</span>
+    <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#7b6f5b] text-gray-800 rounded-full pt-1 pb-1 pl-1 pr-1 text-xs uppercase">
+    <TotalRating rating={rate} />
     </div>
   </div>
   );

@@ -205,7 +205,7 @@ const filterDataByNameUsers = (searchTermMeals) => {
             />
           </legend> */}
 
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 p-5">
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 place-items-center">
             {slicedArrayMeals?.map((e, i) => {
               return (
                 <>
@@ -217,6 +217,7 @@ const filterDataByNameUsers = (searchTermMeals) => {
                     SAMeals={slicedArrayMeals}
                     cardId={e._id}
                     img={e.img}
+                    rate={e.rate}
                   />
                 </>
               );

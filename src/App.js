@@ -104,7 +104,7 @@ export default function App() {
           <Route path="AddYourIng" element={<AddYourIng />} />
           <Route path="/SignUp/:type" element={<SignUp />} />
           <Route path="LogIn" element={<LogIn />} />
-          <Route path="ShowRecipe/:id" element={<ShowRecipe />} />
+          <Route path="ShowRecipe/:id" element={<ShowRecipe userIdApp0 ={userIdApp} />} />
           <Route path="Recipes" element={<Recipes userIdApp0 ={userIdApp} />} />
           <Route path="Kitchen" element={<Kitchen  userIdApp0 ={userIdApp} />} />
           <Route path="UserProfile" element={<UserProfile />} />
