@@ -218,6 +218,7 @@ const filterDataByNameUsers = (searchTermMeals) => {
                     cardId={e._id}
                     img={e.img}
                     rate={e.rate}
+                    rating={e.rating}
                   />
                 </>
               );

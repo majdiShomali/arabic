@@ -1,14 +1,13 @@
+import React, { useState } from 'react';
 
 const TotalRating = ({ rating }) => {
-
 
   const starCount = 5; // Total number of stars
 
   const filledStars = Math.floor(rating); // Number of filled stars
-  const hasHalfStar = rating - filledStars >= 0.5; // Check if there's a half-star
 
   // Calculate the number of empty stars
-  const emptyStars = starCount - filledStars - (hasHalfStar ? 1 : 0);
+  const emptyStars = starCount - filledStars 
 
   return (
     <div className="flex items-center">
@@ -27,20 +26,7 @@ const TotalRating = ({ rating }) => {
         </svg>
       ))}
 
-      {/* Render half star if applicable */}
-      {hasHalfStar && (
-        <svg
-          aria-hidden="true"
-          className="w-5 h-5 text-yellow-400"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>Half star</title>
-          {/* Add the path for the half-star icon */}
-          {/* You can customize this path to match your desired half-star icon */}
-        </svg>
-      )}
+     
 
       {/* Render empty stars */}
       {Array(emptyStars).fill().map((_, index) => (

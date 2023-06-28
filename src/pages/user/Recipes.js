@@ -356,15 +356,28 @@ updateMyListN(AllDataGetK[0]?.MyListn)
           {console.log(e, MyListN)}
           if (checkIfAllExist(e.ItemsName, MyListN,e.ItemsId)) {
             return (
+              // <DyRecipeCardMeal
+              // key={e.recipeName}
+              //   Name={e.recipeName}
+              //   card={card}
+              //   index={i}
+              //   SAMeals={slicedArrayMeals}
+              //   img={e.img}
+              //   cardId={e._id}
+              // />
+
               <DyRecipeCardMeal
-              key={e.recipeName}
-                Name={e.recipeName}
-                card={card}
-                index={i}
-                SAMeals={slicedArrayMeals}
-                img={e.img}
-                cardId={e._id}
-              />
+              key={e._id}
+              Name={e.Name}
+              card={card}
+              index={i}
+              SAMeals={slicedArrayMeals}
+              cardId={e._id}
+              img={e.img}
+              rate={e.rate}
+              rating={e.rating} />
+
+
             );
           }
         })}

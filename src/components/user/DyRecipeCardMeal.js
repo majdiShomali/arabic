@@ -19,11 +19,27 @@ import {
   Input,
   Button,
 } from "@material-tailwind/react";
-
-function DyRecipeCardMeal({ card , Name ,index ,SAMeals,cardId,img,rate} ) {
+import { AllContext } from '../../AllDataContext';
+function DyRecipeCardMeal({ card , Name ,index ,SAMeals,cardId,img,rate,rating} ) {
 const navigate = useNavigate()
   const { currentLinks, updateCurrentLinks } = useContext(UserContext);
   const { currentItems, updateCurrentItems } = useContext(UserContext);
+  const { AllDataRecipesA, setAllDataRecipesA } = useContext(AllContext);
+const [tRate,setTrate]=useState(0)
+
+  useEffect(()=>{
+
+  // const  xx= rate?.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
+  // const aaa = rate.length === 0 ? 1 :rate?.length
+    setTrate(parseInt(rating))
+  //   console.log(AllDataRecipesA)
+  },[AllDataRecipesA])
+
+  console.log(tRate)
+
+
+
+
 
   function ShowVideosMeals(index,slicedArrayMeals){
     navigate(`/ShowRecipe/${cardId}`);
@@ -120,7 +136,7 @@ const navigate = useNavigate()
 
     </div>
     <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#7b6f5b] text-gray-800 rounded-full pt-1 pb-1 pl-1 pr-1 text-xs uppercase">
-    <TotalRating rating={rate} />
+    <TotalRating rating={tRate} />
     </div>
   </div>
   );

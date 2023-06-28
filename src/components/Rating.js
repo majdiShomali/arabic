@@ -1,25 +1,42 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useEffect } from "react";
 import axios from "axios";
+import {AllContext} from "../AllDataContext"
+
 const Rating = ({ RecipeId, userIdApp0, Recipe }) => {
   const starCount = 5; // Total number of stars
   const [filledStars, setFilledStars] = useState(0);
+  const [RatingStatus, setRatingStatus] = useState(false);
+  const { AllDataGet,setAllDataGet} = useContext(AllContext);
+
+
+console.log(Recipe?.UsersIdRate?.includes(userIdApp0))
+useEffect(()=>{
+  if(Recipe?.UsersIdRate?.includes(userIdApp0)){
+    setRatingStatus(true)
+  }
+},[filledStars,Recipe])
+
+console.log(RatingStatus)
+
+
 
   const handleStarClick = async (starIndex) => {
     setFilledStars(starIndex + 1);
-    console.log(RecipeId);
-    console.log(userIdApp0);
-    console.log("Recipe");
-    console.log(Recipe);
-    console.log("Recipe");
 
    let ids = Recipe.UsersIdRate
     let newrate =Recipe.rate
     ids.push(userIdApp0)
     newrate.push(starIndex + 1)
+
+
+    const  sum= Recipe.rate?.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
+    const  avg = Recipe.rate.length === 0 ? 1 :Recipe.rate?.length
+
     try {
       const updatedRecipe = {
         UsersIdRate:ids,
         rate:newrate,
+        rating:sum/avg
       };
 
     const NupdatedRecipe=   await axios.put(`http://localhost:5000/api/recipes/${RecipeId}`, updatedRecipe);
@@ -30,8 +47,10 @@ const Rating = ({ RecipeId, userIdApp0, Recipe }) => {
   };
 
   return (
-    <div className="flex items-center">
-      {/* Render stars */}
+    <>
+    {RatingStatus === false ? 
+      
+      <div className="flex items-center">
       {Array(starCount)
         .fill()
         .map((_, index) => (
@@ -55,6 +74,13 @@ const Rating = ({ RecipeId, userIdApp0, Recipe }) => {
           </svg>
         ))}
     </div>
+  
+      :
+    
+    
+    <p className="text-white">thanks for rating</p>
+  }
+    </>
   );
 };
 
