@@ -1,20 +1,121 @@
 import React, { useEffect, useState ,useContext} from "react";
 import { Link } from "react-router-dom";
 import Logo1 from "../Images/vegetables/Broccoli.png";
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import imageSign from "../Images/Signin0.png"
 import { UserContext } from '../UserContext';
+
+import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google';
+
+
 export default function LogIn() {
-
-
-
-
-
     const [email, setemail] = useState("");
     const [emailp, setemailp] = useState("");
     const [password, setpassword] = useState("");
     const [passwordp, setpasswordp] = useState("");
+
+    const [user0, setUser0] = useState([]);
+    const [errorG, setErrorG] = useState("");
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setUser0(codeResponse),
+        onError: (error) => console.log("Login Failed:", error),
+      });
+
+const loginG = async (email00,img)=>{
+console.log(email,password)
+    try {
+
+        const userData = {
+            email: email00,
+            password:"123456",
+            img:img
+          };
+            // Send the data to the server using an HTTP POST request
+            const response = await axios.post(
+              "http://localhost:5000/api/usersLogin",
+              userData
+            );
+            console.log("Data inserted:", response.data);
+            if(response.data.error != 'incorrect password'){
+             console.log("success")
+             console.log(response.data.token);
+               localStorage.setItem("auth",(response.data.token))
+               window.location.href = 'http://localhost:3000/';
+            }else{
+              console.log("failed")
+            }
+            
+          } catch (error) {
+
+
+
+}
+
+}
+
+    useEffect( () => {
+        if (user0.length !== 0) {
+            console.log(user0)
+            let token =user0.access_token
+        //     localStorage.setItem("auth",token)
+        //   window.location.href = 'http://localhost:3000/';
+
+          axios
+            .get(
+              `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user0.access_token}`
+              ,
+              {
+                headers: {
+                    Authorization: `Bearer ${user0.access_token}`,
+                  Accept: "application/json",
+                },
+              }
+            )
+            .then((res) => {
+              setProfile(res.data);0
+              setErrorG("");
+              setemail(res.data.email)
+              setpassword("123456")
+              console.log(res.data)
+              let eeee=res.data.email
+              loginG(eeee,res.data.picture)
+              const user0Data = {
+                firstName:res.data.name,
+                email: res.data.email,
+                password:"123456",
+                role: 0 ,
+              }
+              axios
+          .post("http://localhost:5000/api/users",user0Data)
+          .then((response) => {
+            console.log(response);
+
+
+          
+
+
+  
+
+
+
+
+
+
+
+
+          })
+          .catch((err) => console.log(err.message));
+          console.log(err);
+                  //   localStorage.setItem("auth",token)
+        //   window.location.href = 'http://localhost:3000/';
+
+      })
+            .catch((err) => console.log(err.message));
+        }
+      }, [user0]);
+
+
+  
  
     /* google login  -start */
     const [ user, setUser ] = useState([]);
@@ -115,9 +216,11 @@ export default function LogIn() {
                 </h1>
                 <div className="w-full flex-1 mt-8">
                     <div className="flex flex-col items-center ">
-                        <button id="google-sign-in" 
-                            className="w-full bg-[#F7E1AE] max-w-xs font-bold hover:bg-[#A4D0A4]  shadow-sm rounded-lg py-3 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
-                            // onClick={() => login()} 
+
+
+                    <button id="google-sign-in" 
+                            className="w-full bg-[#219D80] max-w-xs font-bold hover:bg-[#219D80] hover:text-white  shadow-sm rounded-lg py-3 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+                            onClick={() => login()} 
                             >
 
                             <div className="bg-white p-2 rounded-full">
@@ -137,8 +240,8 @@ export default function LogIn() {
                                 </svg>
                             </div>
                             <span className="ml-4">
-                           
-                  
+
+
                                 Sign-In with Google
                             </span>
                         </button>

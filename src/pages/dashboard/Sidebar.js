@@ -6,7 +6,11 @@ import { mdiInformationOutline,mdiShieldCrownOutline  } from '@mdi/js';
 import { UserContext } from '../../UserContext';
 import React,{useState,useEffect,useContext} from "react";
 import { mdiTableFurniture } from '@mdi/js';
-
+import { mdiCash } from '@mdi/js';
+import { mdiFoodTurkey } from '@mdi/js';
+import { mdiChefHat } from '@mdi/js';
+import { mdiFoodApple } from '@mdi/js';
+import axios from "axios";
 import {
     Card,
     Typography,
@@ -27,11 +31,19 @@ import {
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { DashboardPendingContext } from '../../DashboardPendingContext';
+import { AllContext } from '../../AllDataContext';
   export default function Sidebar() {
+
+  
+
     const { PersonsContext, setPersonsContext } = useContext(DashboardPendingContext);
     const { SponsorPContext, setSponsorPContext } = useContext(DashboardPendingContext);
+    const { PendingMLength, setPendingMLength } = useContext(DashboardPendingContext);
+    console.log(PendingMLength)
 
     const { SignStatus,updateSignStatus } = useContext(UserContext)
+
+
 
 function handleLogOut(){
 
@@ -84,6 +96,14 @@ function handleLogOut(){
           </ListItem>
           </Link>
 
+          <Link to='/AcceptTables'>
+          <ListItem className="hover:bg-amber-500">
+            <ListItemPrefix>
+            <Icon path={mdiFoodApple} size={1} />
+            </ListItemPrefix>
+            <a style={{color:'black'}}> add Ingredients </a>
+          </ListItem>
+          </Link>
 
           <Link to='/ListAdmin'>
            <ListItem className="hover:bg-amber-500">
@@ -106,7 +126,8 @@ function handleLogOut(){
           <Link to='/ListProviders'>
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
-            <Icon path={mdiSilverwareForkKnife} size={1} />
+            <Icon path={mdiChefHat} size={1} />
+
             </ListItemPrefix>
             <a style={{color:'black'}}> Providers List </a>
           </ListItem>
@@ -115,7 +136,8 @@ function handleLogOut(){
           <Link to='/PendingRecipes'>
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
-            <Icon path={mdiSilverwareForkKnife} size={1} />
+            <Icon path={mdiFoodTurkey} size={1} />
+
             </ListItemPrefix>
             <div className='flex justify-between w-full'>
                <p className='text-black block'>Pending Recipes</p> 
@@ -127,15 +149,7 @@ function handleLogOut(){
           </ListItem>
           </Link>
           
-          <Link to='/AcceptPayment'>
-          <ListItem className="hover:bg-amber-500">
-            <ListItemPrefix>
-            <Icon path={mdiSilverwareForkKnife} size={1} />
-            </ListItemPrefix>
-            <a style={{color:'black'}}> Accept Payment </a>
-          </ListItem>
-          </Link>
-          
+     
           <Link to='/AcceptIng'>
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
@@ -148,6 +162,18 @@ function handleLogOut(){
                </div>
           </ListItem>
           </Link>
+
+
+          <Link to='/AcceptPayment'>
+          <ListItem className="hover:bg-amber-500">
+            <ListItemPrefix>
+            <Icon path={mdiCash} size={1} />
+            </ListItemPrefix>
+            <a style={{color:'black'}}> Payments </a>
+          </ListItem>
+          </Link>
+          
+
           <Link to='/EditAboutContact'>
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
@@ -156,22 +182,21 @@ function handleLogOut(){
             <a style={{color:'black'}}> Edit About </a>
           </ListItem>
           </Link>
-
-          <Link to='/AcceptTables'>
-          <ListItem className="hover:bg-amber-500">
-            <ListItemPrefix>
-            <Icon path={mdiTableFurniture} size={1} />
-            </ListItemPrefix>
-            <a style={{color:'black'}}> add Ingredients </a>
-          </ListItem>
-          </Link>
+          {/* PendingMessageLength */}
 
          <Link to='/Chat'>
          <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
               <InboxIcon className="h-5 w-5" />
             </ListItemPrefix>
-            <a style={{color:'black'}}> Inbox </a>
+
+            <div className='flex justify-between w-full'>
+               <p className='text-black block'>Inbox</p> 
+               
+               <p className='text-black block'>{PendingMLength?.length}</p> 
+               </div>
+
+
             {/* <ListItemSuffix>
               <Chip value="14" size="sm" variant="white" color="blue-gray" className="rounded-full" />
             </ListItemSuffix> */}

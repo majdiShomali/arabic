@@ -1,30 +1,84 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-
+import { AllContext } from "../AllDataContext";
+import { DashboardPendingContext } from "../DashboardPendingContext";
 const ContactUs = () => {
-  
+  const { AllDataGet,setAllDataGet} = useContext(AllContext);
+  const { PendingMLength, setPendingMLength } = useContext(DashboardPendingContext);
+
+ const [userId ,setUserId] = useState()
+ const [userMessages ,setUserMessages] = useState([])
+
+  const fetchProtectedData = async () => {
+    try {
+      const token = localStorage.getItem("auth");
+      if (token) {
+        const response = await axios.get("http://localhost:5000/protected", {
+          headers: {
+            Authorization: token,
+          },
+        });
+    
+        setUserId(response.data.user.id)
+        setUserMessages(response.data.user.message)
+    
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      console.log(false);
+    }
+  };
+
+
+
+
+
+
+
+  useEffect(() => {
+    
+    if (localStorage.auth != null) {
+      // fetchProtectedData()
+      setUserId(AllDataGet[0]?._id)
+      setUserMessages(AllDataGet[0]?.message)
+    }
+  }, [AllDataGet]);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
+  const [message0, setMessage] = useState([]);
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
 
     // To passed as the data to be sent.
-    const contactMessage = {
-      name,
-      email,
-      phone,
-      message,
-    };
+  
+let message = userMessages 
+message.push(message0)
+console.log(message)
+    try {
+      const contactMessage = {
+        message,
+      };
 
+          const updatedUserData = {       
+            messageRead:false       
+          }
+          
+    const response =  await axios.put(`http://localhost:5000/api/usersContactUs/${userId}`, contactMessage);
+    await axios.put(`http://localhost:5000/api/userList/${userId}`,updatedUserData)
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+    Swal.fire("Success", "Message sent successfully!", "success");
     // try {
     //   const response = await axios.post(
-    //     "http://localhost:5000/contacts",
+    //     "http://localhost:5000/usersContactUs",
     //     contactMessage
     //   );
 
@@ -63,7 +117,7 @@ const ContactUs = () => {
             <nav className="text-white mb-8">
               <ol className="list-none p-0 inline-flex">
                 <li className="flex items-center">
-                  <Link to="/" className="text-amber-500">
+                  <Link to="/" style={{color:"#219D80"}}>
                     Home
                   </Link>
                   <svg
@@ -143,7 +197,7 @@ const ContactUs = () => {
                         Phone Number
                       </h4>
                       <p className="text-body-color text-base">
-                        (+962)780577727
+                        (+962)799855850
                       </p>
                     </div>
                   </div>
@@ -163,7 +217,7 @@ const ContactUs = () => {
                         Email Address
                       </h4>
                       <p className="text-body-color text-base">
-                        info@Ma6a3mkom.com
+                        info@GiveLife.com
                       </p>
                     </div>
                   </div>
@@ -172,6 +226,7 @@ const ContactUs = () => {
               <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
                 <div className="relative rounded-lg bg-white p-8 shadow-lg sm:p-12">
                   <form method="post" onSubmit={handleSubmit}>
+                   { localStorage.auth == null ? <>
                     <div className="mb-6">
                       <input
                         type="text"
@@ -199,12 +254,14 @@ const ContactUs = () => {
                         onChange={(event) => setPhone(event.target.value)} required
                       />
                     </div>
+                    </> :null
+                    }
                     <div className="mb-6">
                       <textarea
                         rows={6}
                         placeholder="Your Message"
                         className="text-body-color border-[f0f0f0] focus:border-primary w-full resize-none rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
-                        value={message}
+                        value={message0}
                         onChange={(event) => setMessage(event.target.value)} required
                       />
                     </div>
@@ -212,6 +269,7 @@ const ContactUs = () => {
                       <button
                         type="submit"
                         className="bg-amber-500 border-primary w-full rounded border p-3 text-white transition hover:bg-opacity-90"
+                        style={{backgroundColor:"#219D80"}}
                       >
                         Send Message
                       </button>

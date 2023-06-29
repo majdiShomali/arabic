@@ -13,6 +13,7 @@ import { DashboardPendingContext } from "../../DashboardPendingContext";
 const PendingRecipes = () => {
     const { PendingRecipesLength, updatePendingRecipesLength } = useContext(DashboardPendingContext);
    const { PersonsContext, setPersonsContext } = useContext(DashboardPendingContext);
+    const { AcceptRecipeRefresh, setAcceptRecipeRefresh } = useContext(DashboardPendingContext);
 
     const [persons, setPersons] = useState([]);
     const [personsAp, setPersonsAp] = useState([]);
@@ -136,6 +137,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
           .put("http://localhost:5000/recipesA/" + id)
           .then((response) => {
             allAdmins()
+            setAcceptRecipeRefresh(response.data)
           })
           .catch((error) => console.log(error.message));
 
@@ -150,8 +152,10 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
         // Update the properties of the user as needed
         flag: true,
       };
-      await axios.put(`http://localhost:5000/api/recipes/${userId}`, updatedUser);
+     const response=  await axios.put(`http://localhost:5000/api/recipes/${userId}`, updatedUser);
       allAdmins()
+      setAcceptRecipeRefresh(response.data)
+
     } catch (error) {
       console.error("Error updating user:", error);
     }

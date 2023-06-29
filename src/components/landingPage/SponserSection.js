@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from '@material-tailwind/react'
 function SponserSection() {
     return (
         <div>
@@ -35,11 +36,18 @@ function SponserSection() {
 
                                 <Link
                                     to="/AddYourIng"
-                                    class="mt-8 inline-block rounded border  bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-black focus:outline-none  "
-                                    style={{ backgroundColor: "#219D80" }}
+                                  
                                 >
+                                   
+
+                                    <Button className="border mb-10 border-solid border-amber-600 border-2 text-amber-600 hover:bg-amber-600 hover:text-[#ffffff]" variant="text">
+                                 
                                     Add your Ingredient
+                                 
+                                  </Button>
                                 </Link>
+
+                             
                             </div>
                         </div>
                     </div>

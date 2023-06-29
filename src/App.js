@@ -35,7 +35,7 @@ import PendingRecipes from "./components/dashboard/PendingRecipes";
 import Ingredients from  "./pages/dashboard/Ingredients"
 import AcceptPayment from "./components/dashboard/AcceptPayment";
 import AcceptIng from "./components/dashboard/AcceptIng";
-
+import LiveChat from "./pages/dashboard/Chat"
 
 
 import axios from "axios";
@@ -98,7 +98,7 @@ export default function App() {
         <NavListMenu />
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/Payment" element={<PaymentPage />} />
+          <Route path="/Payment/:cardId/:price" element={<PaymentPage />} />
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
           <Route path="AddYourIng" element={<AddYourIng />} />
@@ -133,6 +133,7 @@ export default function App() {
             <Route path="AcceptTables" element={<Ingredients />} />
             <Route path="AcceptPayment" element={<AcceptPayment />} />
             <Route path="AcceptIng" element={<AcceptIng />} />
+            <Route path="Chat" element={<LiveChat />} />
           </Routes>
         </div>
       </Router>

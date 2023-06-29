@@ -48,7 +48,7 @@ const [sponsersCards,setSponsersCards] =useState([])
     <div className="p-20">
     <div className="text-center mb-16">
       <h3 className="text-3xl sm:text-4xl uppercase leading-normal font-extrabold tracking-tight text-gray-900">
-        Our partners
+      special ingredients
       </h3>
     </div>
     <div className="sm:grid grid-cols-2 md:grid-cols-4 col-gap-10 mx-auto">

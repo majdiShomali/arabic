@@ -6,8 +6,9 @@ import { UserDataContext } from "../../UserDataContext";
 import { useContext } from "react";
 import {AllContext} from "../../AllDataContext"
 
-function PaymentPage({Name,Image,Type,cardId}) {
+function PaymentPage() {
   const { AllDataGet,setAllDataGet} = useContext(AllContext);
+  const { cardId,price } = useParams();
 
 //  const { UserAllData, updateUserAllData } = useContext(UserDataContext);
 console.log(AllDataGet)

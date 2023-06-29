@@ -13,8 +13,11 @@ const AllProvider = ( {children} ) => {
   const [AllIngredientsUser0,setAllIngredientsUser0] =useState(null)
   const [AllIngredientsBase,setAllIngredientsUserBase] =useState(null)
 
+  const [ChatRefresh0, setChatRefresh ] = useState();
 
-
+  const updateChatRefresh = (newValue) => {
+    setChatRefresh(newValue);
+  };
   const fetchProtectedData = async () => {
     try {
       const token = localStorage.getItem("auth");
@@ -136,7 +139,7 @@ const AllProvider = ( {children} ) => {
     if (localStorage.auth != null) {
       fetchProtectedData();
     }
-  }, []);
+  }, [ChatRefresh0]);
   
 
   useEffect(() => {
@@ -145,7 +148,7 @@ const AllProvider = ( {children} ) => {
       fetchRecipesA();
       fetchIng()
     }
-  }, [UpdateAll]);
+  }, [UpdateAll,ChatRefresh0]);
   
 
 
@@ -165,7 +168,9 @@ const AllProvider = ( {children} ) => {
                     UpdateAll,setUpdateAll,
                     AllIngredientsUser0,setAllIngredientsUser0,
                     LastUpdatedDataUser,setLastUpdatedDataUser,
-                    AllIngredientsBase,setAllIngredientsUserBase
+                    AllIngredientsBase,setAllIngredientsUserBase,
+                    ChatRefresh0,updateChatRefresh
+
                 }}
             >
                 {children}

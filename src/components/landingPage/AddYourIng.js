@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PaymentPage from "./Payment";
 import Pagination from "@mui/material/Pagination";
-
+import SubPlan from "../SubPlan"
 import {
   Card,
   Input,
@@ -16,6 +16,7 @@ import axios from "axios";
 import { useContext } from "react";
 import {AllContext} from "../../AllDataContext"
 import DyRecipeCardMeal from "../user/DyRecipeCardMeal";
+import SponcerCardStart from "./SponcerCardStart";
 function AddYourIng() {
   const [img, setImg] = useState("");
   const [img0, setImg0] = useState("");
@@ -52,7 +53,7 @@ function AddYourIng() {
   const [Name, setName] = useState("");
   const [Type, setType] = useState("vegetables");
   const [Cards, setCards] = useState([]);
-  const [OpenPayment, setOpenPayment] = useState(false);
+  const [OpenPayment, setOpenPayment] = useState("add");
 
   useEffect(() => {
    
@@ -86,7 +87,7 @@ formData.append('IngId',Ing.IngredientId)
         "http://localhost:5000/api/sponsor",
         formData
       );
-      setOpenPayment(true)
+      setOpenPayment("agree")
         console.log(response.data)
         setCardId(response.data._id)
         setImg0(response.data.img)
@@ -204,6 +205,8 @@ setIng({
   return (
     <>
 
+{OpenPayment ==="add" ?
+<>
 <div className="flex justify-center mt-5 mb-5">
         <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
           <div className="relative">
@@ -365,16 +368,7 @@ setIng({
               
             />
 
-            {/* <input
-              className="shadow mb-4 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
-              type="file"
-              placeholder="Table Image"
-              name="guest_num"
-              onChange={(e) => {
-                onChange(e);
-              }}
-              accept="image/*"
-            /> */}
+
 
            <input
             className="file-upload-input mx-auto"
@@ -403,69 +397,30 @@ setIng({
         </form>
       </Card>
       </div>
-      { cardId !== null ?
-                <>
-                <div className="grid grid-cols-4">
+      </>
+       : null}
+
+      {OpenPayment ==="agree" ?
       
-<div
-key={cardId}
-// onClick={() => changeStatusF(e.name, i)}
-className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
->
-<svg
-  className="absolute bottom-0 left-0 mb-8"
-  viewBox="0 0 375 283"
-  fill="none"
-  style={{ transform: "scale(1.5)", opacity: "0.1" }}
->
-  <rect
-    x="159.52"
-    y={175}
-    width={152}
-    height={152}
-    rx={8}
-    transform="rotate(-45 159.52 175)"
-    fill="white"
-  />
-  <rect
-    y="107.48"
-    width={152}
-    height={152}
-    rx={8}
-    transform="rotate(-45 0 107.48)"
-    fill="white"
-  />
-</svg>
-<div className="relative pt-10 px-10 flex items-center justify-center">
-  <div
-    className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-    style={{
-      background: "radial-gradient(black, transparent 60%)",
-      transform:
-        "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
-      opacity: "0.2",
-    }}
-  />
-  <img
-    className="relative w-40 h-32"
-    src={`http://localhost:5000/${img0}`}
-    alt=""
-  />
-</div>
-<div className=" text-white px-6 pb-6 mt-6">
-  <span className="block opacity-75 -mb-1">{Type}</span>
-  <div className="flex justify-between">
-    <span className="block font-semibold ">{Name}</span>
+      
+      <>
+      <SubPlan
+         cardId={cardId}
+         img0={img0}
+         Type={Type}
+         Name={Name} 
+      
+      
+      />
 
-  </div>
-</div>
-</div>
-                  </div>
-                </>
-                : <></>
-              }
+    </>
+      
+      :null }
+           
+               
+              
 
-{OpenPayment ? 
+{OpenPayment ==="pay" ? 
 
 <PaymentPage
       

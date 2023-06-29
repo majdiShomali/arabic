@@ -19,6 +19,10 @@ const Slider = () => {
     setSelectedype(SignUpType);
     navigate(`/SignUp/${SignUpType}`);
   }
+  function handleKitchen() {
+  
+    navigate(`/Kitchen`);
+  }
 
   return (
     <>
@@ -83,7 +87,20 @@ const Slider = () => {
                     Add recipes
                   </Button>
                 </>
-              ) : null}
+              ) : 
+              
+              
+              <Button
+              className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+              variant="text"
+              onClick={() => handleKitchen()}
+            >
+              Kitchen
+            </Button>
+              
+              
+              
+              }
             </div>
           </div>
         </div>
