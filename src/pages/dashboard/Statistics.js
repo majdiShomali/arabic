@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect,useState } from 'react';
+import { useEffect,useState,useContext } from 'react';
 import axios from 'axios';
 import Icon from '@mdi/react';
 import { mdiAccountMultipleOutline ,
@@ -9,8 +9,12 @@ import { mdiAccountMultipleOutline ,
   mdiNotebookEditOutline ,
 } from '@mdi/js';
 
+import { AllContext } from "../../AllDataContext";
+
+
 const Statistics = () => {
 
+  const {AllIngredientsBase,setAllIngredientsUserBase} =useContext(AllContext)
 
   const [users ,setUsers] = useState([])
   const [restaurant ,setRestaurant] = useState([])
@@ -20,6 +24,79 @@ const Statistics = () => {
   const [pendingTables ,setPendingTables] = useState([])
   
   
+
+
+  const [persons, setPersons] = useState([]);
+  const [allRecipe, setAllRecipe] = useState([]);
+
+
+  const allUsers = async () => {
+    const token = localStorage.getItem("auth");
+    try {
+      // Send the data to the server using an HTTP POST request
+      const response = await axios.get("http://localhost:5000/api/users", {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      console.log(response.data);
+      setPersons(response.data);
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
+  };
+
+
+  const allRecipes = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/recipes");
+        setAllRecipe(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.error("Error inserting data:", error);
+      }
+    };
+
+
+    const [TEarning, setTEarning] = useState(0);
+    const [searchTermUsers, setSearchTermUsers] = useState("");
+    const [FilterDataUsers, setFilterDataUsers] = useState([]);
+  
+    const allPayments = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/api/paymentAdmin");
+
+            let Earning = 0;
+            Earning = response.data.reduce((total, item) => {
+              return total + parseInt(item.price);
+            }, Earning);
+
+            setTEarning(Earning);
+          } catch (error) {
+            console.error("Error inserting data:", error);
+          }
+
+        };
+
+     
+      useEffect(() => {
+        allPayments();
+      }, []);
+
+
+  useEffect(() => {
+    allRecipes();
+  }, []);
+
+
+
+
+  useEffect(() => {
+    allUsers();
+  }, []);
+
+
    useEffect(()=>{
   
   
@@ -80,93 +157,93 @@ const Statistics = () => {
 
   return (
     <div className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6 p-10">
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-black bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px]">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px]">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700 ">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-amber-500" path={mdiCashRegister} size={1} />
+            <Icon className="text-[#E8AA42]" path={mdiCashRegister} size={1} />
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
-          <p className="font-dm text-sm font-medium text-white">Earnings</p>
-          <h4 className="text-xl font-bold text-amber-500 dark:text-white">
-            {/* $ {payment*5} */}
+          <p className="font-dm text-sm font-medium text-white">Total Earning </p>
+          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+            {TEarning} <span className="text-[#219D80]">$</span>
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-black bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-amber-500" path={mdiAccountMultipleOutline} size={1} />
+            <Icon className="text-[#E8AA42]" path={mdiAccountMultipleOutline} size={1} />
 
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
           <p className="font-dm text-sm font-medium text-white">
-            Total Users
+            Total Users 
           </p>
-          <h4 className="text-xl font-bold text-amber-500 dark:text-white">
-            {/* {users.length} */}
+          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+            {persons?.length} 
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-black bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-amber-500" path={mdiSilverwareForkKnife} size={1} />
+            <Icon className="text-[#E8AA42]" path={mdiSilverwareForkKnife} size={1} />
             
 
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
-          <p className="font-dm text-sm font-medium text-white">Total Restaurants</p>
-          <h4 className="text-xl font-bold text-amber-500 dark:text-white">
-            {/* {restaurant.length} */}
+          <p className="font-dm text-sm font-medium text-white">Total Recipes</p>
+          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+             {allRecipe?.length} 
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-black bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-amber-500" path={mdiTableFurniture} size={1} />
+            <Icon className="text-[#E8AA42]" path={mdiTableFurniture} size={1} />
 
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
-          <p className="font-dm text-sm font-medium text-white">Total tables</p>
-          <h4 className="text-xl font-bold text-amber-500 dark:text-white">
-            {/* {restaurantTables.length} */}
+          <p className="font-dm text-sm font-medium text-white">Ingredients</p>
+          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+             {AllIngredientsBase?.length}
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-black bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-amber-500" path={mdiNotebookEditOutline} size={1} />
+            <Icon className="text-[#E8AA42]" path={mdiNotebookEditOutline} size={1} />
 
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
           <p className="font-dm text-sm font-medium text-white">Total orders</p>
-          <h4 className="text-xl font-bold text-amber-500 dark:text-white">
+          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
             {/* {ordersData.length} */}
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-black bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-amber-500" path={mdiAccountMultipleOutline} size={1} />
+            <Icon className="text-[#E8AA42]" path={mdiAccountMultipleOutline} size={1} />
 
             </span>
           </div>
@@ -175,7 +252,7 @@ const Statistics = () => {
           <p className="font-dm text-sm font-medium text-white">
             Pending Tables
           </p>
-          <h4 className="text-xl font-bold text-amber-500 dark:text-white">
+          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
             {/* {pendingTables.length} */}
           </h4>
         </div>

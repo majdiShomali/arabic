@@ -171,7 +171,7 @@ if(SidebarIngName0 !== ""){
 
   let slicedArrayVegetables;
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 10;
 
   totalItemsVegetables = FilterDataVegetables0?.length;
 
@@ -203,14 +203,14 @@ if(SidebarIngName0 !== ""){
   className="bg-cover bg-center h-screen shadow"
   style={{
     backgroundImage:
-      'url("https://zipinventory.com/assets/images/collections/10-restaurant-service-models-1607720498-5934-800-e549f94cb.webp")',
+      'url("https://media.istockphoto.com/id/1215829069/photo/modern-kitchen.jpg?s=612x612&w=0&k=20&c=aotjrvzyHbrl_yu-z-dscZ8gw39LPAlWSB2aILsBAoY=")',
     height: "400px",
     marginBottom: "50px",
   }}
 >
   <div className="flex items-center justify-center h-full bg-black bg-opacity-10">
     <div className="text-center">
-      <h1 className="text-4xl font-bold text-white mb-4">Restaurants</h1>
+      <h1 className="text-4xl font-bold text-white mb-4">kitchen</h1>
 
       <nav className="text-white mb-8">
         <ol className="list-none p-0 inline-flex">
@@ -233,7 +233,7 @@ if(SidebarIngName0 !== ""){
               />
             </svg>
           </li>
-          <li>Restaurants</li>
+          <li>kitchen</li>
         </ol>
       </nav>
     </div>
@@ -310,7 +310,7 @@ if(SidebarIngName0 !== ""){
 
 
 
-<div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1">
+<div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 place-items-center mb-1">
               {slicedArrayVegetables?.map((e, i) => {
                 return (
                  <>
@@ -318,7 +318,7 @@ if(SidebarIngName0 !== ""){
                   <div
                     key={e._id}
                     onClick={() => UpdateBeneficiaryId(e.ingredientName)}
-                    className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#2bda2b]" : "bg-[#d7e423]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
+                    className={` mb-3 flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#219D80]" : "bg-[#E8AA42]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
                   >
                     <svg
                       className="absolute bottom-0 left-0 mb-8"

@@ -175,6 +175,7 @@ console.log(AllIngredientsBase)
   const [table, setTable] = useState([]);
 
   const [yourSelectedStateValue, setOption] = useState("Meal");
+  const [yourSelectedNationValue, setNation] = useState("jordanian");
 
   const [ButtonStatus, setButtonStatus] = useState("create");
   const [ButtonStatusId, setButtonStatusId] = useState();
@@ -218,6 +219,7 @@ console.log(foodCards)
     formData0.append('ItemsName',JSON.stringify(foodCardsName))
     formData0.append('image',productImage)
     formData0.append('ItemsId',JSON.stringify(MyListIdAdmin))
+    formData0.append('nation',JSON.stringify(yourSelectedNationValue))
     
 
 
@@ -1106,6 +1108,17 @@ console.log(ingredientId)
         <option value="Meal">Meals</option>
         <option value="Drink">Drinks</option>
         <option value="Sweet">Sweets</option>
+      </select>
+    </div>
+    <div>
+      <select
+        value={yourSelectedNationValue}
+        onChange={(e) => setNation(e.target.value)}
+        className="w-full border p-2 rounded"
+      >
+        <option value="jordanian">jordanian</option>
+        <option value="egyptian ">egyptian </option>
+
       </select>
     </div>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import Swal from "sweetalert2";
+import {UserDataContext} from "../UserDataContext"
 
 import {
   Avatar,
@@ -84,14 +85,19 @@ const navListMenuItems = [
     path: "./Recipes",
   },
 ];
-
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const { closeNav, updateNav } = useContext(UserDataContext);
 
   const renderItems = navListMenuItems.map(
     ({ icon, title, description, color, path }, key) => (
-      <Link to={path} key={key}>
+      <Link to={path} key={key}
+      onClick={()=>{updateNav(!closeNav)
+     
+      }}
+
+      >
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className={`rounded-lg p-5 ${colors[color]}`}>
             {React.createElement(icon, {
@@ -126,6 +132,8 @@ function NavListMenu() {
 }
 
 function NavList() {
+  const { closeNav, updateNav } = useContext(UserDataContext);
+
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
       <Typography
@@ -135,7 +143,10 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <Link to="/">
+        <Link to="/"
+                  onClick={()=>updateNav(false)}
+
+        >
           <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
             <HomeIcon className="h-[18px] w-[18px] text-amber-600 " />
             Home
@@ -166,7 +177,12 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <Link to="/About">
+        <Link to="/About"
+          onClick={()=>updateNav(false)}
+        
+          
+        
+        >
           <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
             <CubeTransparentIcon className="h-[18px] w-[18px] text-amber-600" />
             About Us
@@ -182,7 +198,10 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <Link to="/ContactUs">
+          <Link to="/ContactUs"
+        onClick={()=>updateNav(false)}
+        
+        >
           <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
             <UserCircleIcon className="h-[18px] w-[18px] text-amber-600" />
             Contact Us
@@ -338,6 +357,16 @@ export default function Example() {
       </Menu>
     );
   }
+  const { closeNav, updateNav } = useContext(UserDataContext);
+
+  useEffect(() => {
+
+  
+    setOpenNav(closeNav)
+  
+  },[closeNav])
+0  
+
 
   return (
     <Navbar
@@ -375,7 +404,9 @@ export default function Example() {
           variant="text"
           color="blue-gray"
           className="lg:hidden"
-          onClick={() => setOpenNav(!openNav)}
+          onClick={() => {setOpenNav(!openNav)
+            updateNav(!openNav)
+          }}
         >
           {openNav ? (
             <XMarkIcon className="h-6 w-6" strokeWidth={2} />
@@ -390,13 +421,18 @@ export default function Example() {
           { localStorage.auth == null ?
          
           <Button  variant="outlined" size="sm" color="blue-gray" fullWidth>
-             <Link to="/Login" >
+             <Link to="/Login"
+               onClick={()=>updateNav(false)}
+
+             >
             Sign In
             </Link>
           </Button>
           : 
                
-               <Button  variant="outlined" size="sm" color="blue-gray" fullWidth>
+               <Button
+               onClick={()=>updateNav(false)}
+               variant="outlined" size="sm" color="blue-gray" fullWidth>
                 <Link to="/UserProfile" fullWidth >
                  Profile
                  </Link>  

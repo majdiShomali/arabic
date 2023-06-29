@@ -1,6 +1,6 @@
 import React, { useEffect, useState ,useContext} from "react";
 import { Link } from "react-router-dom";
-import Logo1 from "../Images/vegetables/Broccoli.png";
+import Logo1 from "../Images/vegetables/Lemon.png";
 import axios from 'axios';
 import imageSign from "../Images/Signin0.png"
 import { UserContext } from '../UserContext';
@@ -283,7 +283,7 @@ console.log(email,password)
                         </button>
                         <p className="mt-6 text-xs text-gray-600 text-center">
                             No Account?
-                            <Link to="/Signup" className="border-b border-gray-500 border-dotted">
+                            <Link to="/Signup/user" className="border-b border-gray-500 border-dotted">
                                 Create one
                             </Link>
                            
@@ -294,7 +294,7 @@ console.log(email,password)
             </div>
         </div>
         <div className="flex-1 bg-indigo-100 text-center hidden lg:flex imageSign bg-cover bg-center bg-no-repeat ">
-        <img src={imageSign}/>
+        <img src="https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/chef-cooking.jpg?quality=82&strip=1"/>
         </div>
     </div>
 </div>

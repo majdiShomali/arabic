@@ -262,7 +262,7 @@ setIng({
                   <div
                     key={e._id}
                     onClick={() => handelIngredient(e._id,e.ingredientName,e.ingredientType)}
-                    className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#2bda2b]" : "bg-[#d7e423]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
+                    className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#219D80]" : "bg-[#E8AA42]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
                   >
                     <svg
                       className="absolute bottom-0 left-0 mb-8"
@@ -382,14 +382,14 @@ setIng({
 
           </div>
           <div>
-            <select
+            {/* <select
               value={Type}
               onChange={(e) => setType(e.target.value)}
               className="w-full border p-2 rounded"
             >
               <option value="vegetables">Vegetables</option>
               <option value="fruits">Fruits</option>
-            </select>
+            </select> */}
           </div>
           <Button  className="mt-6" fullWidth onClick={handleCreate}>
             Create

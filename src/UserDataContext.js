@@ -4,10 +4,13 @@ import axios from "axios";
 
 export const UserDataContext = createContext();
 const UserDataProvider = ( {children} ) => {
-  
+  const [closeNav, setCloseNav] = useState();
+
   const [UserAllData, setUserAllData] = useState({});
 
-
+  const updateNav = (newValue) => {
+    setCloseNav(newValue);
+  };
   const fetchProtectedData = async () => {
     try {
       const token = localStorage.getItem("auth");
@@ -60,7 +63,7 @@ const UserDataProvider = ( {children} ) => {
         <>
             <UserDataContext.Provider
                 value={{
-                    UserAllData,setUserAllData
+                    UserAllData,setUserAllData,closeNav,updateNav
                 }}
             >
                 {children}

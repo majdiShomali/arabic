@@ -70,11 +70,11 @@ const Home = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold text-white uppercase lg:text-4xl">
-                      Arabian Food
+                    Egyptian Food
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
-                      // onClick={() => handleFoodTypeSelection("arabian")}
+                      onClick={() => handleKitchenTypeSelection("Egyptian")}
                     >
                       View More
                     </button>
@@ -98,7 +98,7 @@ const Home = () => {
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
-                      // onClick={() => handleFoodTypeSelection("mexican")}
+                      // onClick={() => handleKitchenTypeSelection("mexican")}
                     >
                       View More
                     </button>
@@ -122,7 +122,7 @@ const Home = () => {
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
-                      // onClick={() => handleFoodTypeSelection("italian")}
+                      // onClick={() => handleKitchenTypeSelection("italian")}
                     >
                       View More
                     </button>
@@ -146,7 +146,7 @@ const Home = () => {
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
-                      // onClick={() => handleFoodTypeSelection("indian")}
+                      // onClick={() => handleKitchenTypeSelection("indian")}
                     >
                       View More
                     </button>
@@ -170,7 +170,7 @@ const Home = () => {
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
-                      // onClick={() => handleFoodTypeSelection("american")}
+                      // onClick={() => handleKitchenTypeSelection("american")}
                     >
                       View More
                     </button>
@@ -182,11 +182,13 @@ const Home = () => {
         </section>
         <div className="flex justify-center">
 
-          <HashLink smooth={true} to="ServicePageAll#">
-            <Button className="border mb-10 border-solid border-amber-600 border-2 text-amber-600 hover:bg-amber-600 hover:text-[#ffffff]" variant="text">
-              Show All Restaurants
+          {/* <HashLink smooth={true} to="ServicePageAll#"> */}
+            <Button
+            onClick={() => handleKitchenTypeSelection("all")}
+            className="border mb-10 border-solid border-amber-600 border-2 text-amber-600 hover:bg-amber-600 hover:text-[#ffffff]" variant="text">
+              Show All Recipes
             </Button>
-          </HashLink>
+          {/* </HashLink> */}
 
         </div>
       </div>

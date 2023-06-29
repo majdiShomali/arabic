@@ -1,137 +1,125 @@
-import React from 'react'
+import React from "react";
 import {
-    Card,
-    Input,
-    Checkbox,
-    Button,
-    Typography,
-  } from "@material-tailwind/react";
-   import { useState,useEffect } from 'react';
-   import axios from "axios"
-   import Pagination from "@mui/material/Pagination";
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Pagination from "@mui/material/Pagination";
 
 const Ingredients = () => {
-    const [img, setImg] = useState("");
-    const [updateStatus , setUpdateStatus] = useState(false)
-    const onChange = (e) => {
-      const files = e.target.files;
-      const file = files[0];
-      getBase64(file);
-      console.log(img);
+  const [img, setImg] = useState("");
+  const [updateStatus, setUpdateStatus] = useState(false);
+  const onChange = (e) => {
+    const files = e.target.files;
+    const file = files[0];
+    getBase64(file);
+    console.log(img);
+  };
+  const onLoad = (fileString) => {
+    setImg(fileString);
+  };
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      onLoad(reader.result);
     };
-    const onLoad = (fileString) => {
-      setImg(fileString);
-    };
-    const getBase64 = (file) => {
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        onLoad(reader.result);
-      };
-    };
-  
-    const [productImage, setProductImage] = useState(null);
-    const [FilterDataMeals, setFilterDataMeals] = useState([]);
+  };
 
-    const handleProductImageChange = (event) => {
-      setProductImage(event.target.files[0]);
-    };
-    const [Name, setName] = useState("");
-    const [Type, setType] = useState("vegetables");
-    const [Cards, setCards] = useState([]);
-    const [CardId, setCardId] = useState("");
+  const [productImage, setProductImage] = useState(null);
+  const [FilterDataMeals, setFilterDataMeals] = useState([]);
 
-    useEffect(()=>{
-        fetchIng()
-    },[])
+  const handleProductImageChange = (event) => {
+    setProductImage(event.target.files[0]);
+  };
+  const [Name, setName] = useState("");
+  const [Type, setType] = useState("vegetables");
+  const [Cards, setCards] = useState([]);
+  const [CardId, setCardId] = useState("");
 
+  useEffect(() => {
+    fetchIng();
+  }, []);
 
-    const fetchIng = async () => {
-        try {
-          const response = await axios.get("http://localhost:5000/api/Ingredients");
-          setCards(response.data);
-          setFilterDataMeals(response.data)
-          console.log(response.data)
-        } catch (error) {
-          console.error("Error retrieving data:", error);
-        }
-      };
+  const fetchIng = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/Ingredients");
+      setCards(response.data);
+      setFilterDataMeals(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+  };
 
-    const handleCreate = async ()=>{
-
-      const formData = new FormData()
-      formData.append('ingredientName',Name)
-      formData.append('ingredientType',Type)
-      formData.append('image',productImage)
-   
-
+  const handleCreate = async () => {
+    const formData = new FormData();
+    formData.append("ingredientName", Name);
+    formData.append("ingredientType", Type);
+    formData.append("image", productImage);
+    formData.append("TrueName", Name);
 
     const cardData = {
-        ingredientName:Name,
-        img:img,
-        ingredientType:Type
-
-    }
-    try {
-        // Send the data to the server using an HTTP POST request
-        const response = await axios.post(
-          "http://localhost:5000/api/Ingredient",
-          formData
-        );
-        fetchIng()
-      } catch (error) {
-        console.error("Error inserting data:", error);
-      }
-
-    }
-
-
-    const [currentPageMeals, setCurrentPageMeals] = useState(1);
-  
-    let totalItemsMeals;
-   
-    let totalPagesMeals;
-   
-    let slicedArrayMeals;
-  
-    const itemsPerPage = 5;
-  
-    totalItemsMeals = FilterDataMeals?.length;
-  
-    totalPagesMeals = Math.ceil(totalItemsMeals / itemsPerPage);
-  
-    const startIndexMeals = (currentPageMeals - 1) * itemsPerPage;
-  
-    const endIndexMeals = startIndexMeals + itemsPerPage;
-   
-    slicedArrayMeals = FilterDataMeals?.slice(startIndexMeals, endIndexMeals);
-    console.log(FilterDataMeals);
-    const handlePageChangeMeals = (event, pageNumber) => {
-      setCurrentPageMeals(pageNumber);
+      ingredientName: Name,
+      img: img,
+      ingredientType: Type,
+      TrueName: Name,
     };
-
-
-
-
-    const [yourSelectedStateValueType, setOptionType] = useState("");
-    const [yourSelectedStateValueAddress, setOptionAddress] = useState("");
-    //-----------------------search------------------------//
-    const [searchTermUsers, setSearchTermUsers] = useState("");
-  
-  
-    const handleFilterChange = (typeValue, addressValue) => {
-  
-  
-      const filteredDataUsers = Cards?.filter(
-        (item) =>
-          item.ingredientType?.toLowerCase().includes(typeValue.toLowerCase()) &&
-          item.ingredientType?.toLowerCase().includes(addressValue.toLowerCase())
+    try {
+      // Send the data to the server using an HTTP POST request
+      const response = await axios.post(
+        "http://localhost:5000/api/Ingredient",
+        formData
       );
-      setFilterDataMeals(filteredDataUsers);
-      setCurrentPageMeals(1);
+      fetchIng();
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
   };
-  
-  
+
+  const [currentPageMeals, setCurrentPageMeals] = useState(1);
+
+  let totalItemsMeals;
+
+  let totalPagesMeals;
+
+  let slicedArrayMeals;
+
+  const itemsPerPage = 12;
+
+  totalItemsMeals = FilterDataMeals?.length;
+
+  totalPagesMeals = Math.ceil(totalItemsMeals / itemsPerPage);
+
+  const startIndexMeals = (currentPageMeals - 1) * itemsPerPage;
+
+  const endIndexMeals = startIndexMeals + itemsPerPage;
+
+  slicedArrayMeals = FilterDataMeals?.slice(startIndexMeals, endIndexMeals);
+  console.log(FilterDataMeals);
+  const handlePageChangeMeals = (event, pageNumber) => {
+    setCurrentPageMeals(pageNumber);
+  };
+
+  const [yourSelectedStateValueType, setOptionType] = useState("");
+  const [yourSelectedStateValueAddress, setOptionAddress] = useState("");
+  //-----------------------search------------------------//
+  const [searchTermUsers, setSearchTermUsers] = useState("");
+
+  const handleFilterChange = (typeValue, addressValue) => {
+    const filteredDataUsers = Cards?.filter(
+      (item) =>
+        item.ingredientType?.toLowerCase().includes(typeValue.toLowerCase()) &&
+        item.ingredientType?.toLowerCase().includes(addressValue.toLowerCase())
+    );
+    setFilterDataMeals(filteredDataUsers);
+    setCurrentPageMeals(1);
+  };
+
   const filterDataByNameUsers = (searchTermMeals) => {
     const filteredDataMeals = Cards.filter((item) =>
       item.ingredientName.toLowerCase().includes(searchTermMeals.toLowerCase())
@@ -140,13 +128,13 @@ const Ingredients = () => {
     setCurrentPageMeals(1);
   };
 
- function handleUpdate(ingId,Ingredient){
-  console.log(ingId,Ingredient)
-  setUpdateStatus(true)
-  setCardId(ingId)
- setName(Ingredient.ingredientName)
- setType(Ingredient.ingredientType)
-  
+  function handleUpdate(ingId, Ingredient) {
+    console.log(ingId, Ingredient);
+    setUpdateStatus(true);
+    setCardId(ingId);
+    setName(Ingredient.ingredientName);
+    setType(Ingredient.ingredientType);
+
     // "sold": false,
     // "_id": "64991964be58b493e15c9fa0",
     // "ingredientName": "garlic",
@@ -154,49 +142,57 @@ const Ingredients = () => {
     // "ingredientFlag": false,
     // "ingredientType": "vegetables",
     // "__v": 0
-
-
-
-
- }
- const handleUpdateNow = async()=>{
-  setUpdateStatus(false)
-
-
- 
-
-  try {
-    const formData = new FormData()
-    formData.append('ingredientName',Name)
-    formData.append('ingredientType',Type)
-    formData.append('image',productImage)
-  console.log(CardId)
-    await axios.put(`http://localhost:5000/api/IngredientAdmin/${CardId}`, formData);
-    fetchIng()
-  } catch (error) {
-    console.error("Error updating user:", error);
   }
+  const handleUpdateNow = async () => {
+    setUpdateStatus(false);
+
+    try {
+      const formData = new FormData();
+      formData.append("ingredientName", Name);
+      formData.append("ingredientType", Type);
+      formData.append("image", productImage);
+      console.log(CardId);
+      await axios.put(
+        `http://localhost:5000/api/IngredientAdmin/${CardId}`,
+        formData
+      );
+      fetchIng();
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
 
 
- }
+  const handleDeleteIngredient = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/Ingredient/${CardId}`);
+      fetchIng();; 
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
+
+
+
 
   return (
-    
-<>
-       <div className='w-full flex justify-center mt-3'>
-          <Card color="transparent" shadow={false}>
-    
-            <Typography color="gray" className="mt-1 font-normal">
-              Enter your Ingredient .
-            </Typography>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
-              <div className="mb-4 flex flex-col gap-6">
-                <Input size="lg" label="Name"
+    <>
+      <div className="w-full flex justify-center mt-3">
+        <Card color="transparent" shadow={false}>
+          <Typography color="gray" className="mt-1 font-normal">
+            Enter your Ingredient .
+          </Typography>
+          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+            <div className="mb-4 flex flex-col gap-6">
+              <Input
+                size="lg"
+                label="Name"
                 value={Name}
                 onChange={(e) => setName(e.target.value)}
-                />
-             
-                {/* <input
+              />
+
+              {/* <input
                     className="shadow mb-4 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                     type="file"
                     placeholder="Table Image"
@@ -207,53 +203,59 @@ const Ingredients = () => {
                     accept="image/*"
                   /> */}
 
-          <input
-            className="file-upload-input mx-auto"
-            type="file"
-            name="image"
-            onChange={handleProductImageChange}
-            accept="image/*"
-            required
-          />
+              <input
+                className="file-upload-input w-full"
+                type="file"
+                name="image"
+                onChange={handleProductImageChange}
+                accept="image/*"
+                required
+              />
+            </div>
+            <div>
+              <select
+                value={Type}
+                onChange={(e) => setType(e.target.value)}
+                className="w-full border p-2 rounded mb-2"
+              >
+                <option value="vegetables">Vegetables</option>
+                <option value="fruits">Fruits</option>
+              </select>
+            </div>
 
-              </div>
-              <div>
-      <select
-        value={Type}
-        onChange={(e) => setType(e.target.value)}
-        className="w-full border p-2 rounded"
-      >
-        <option value="vegetables">Vegetables</option>
-        <option value="fruits">Fruits</option>
-      </select>
-    </div>
+   
 
-    { updateStatus === false ?
-        <Button className="mt-6" fullWidth
-        onClick={handleCreate}
-        >
-          Create
-        </Button>
-    
-    :   
-    <Button className="mt-6" fullWidth
-    onClick={handleUpdateNow}
-    >
-      Update
-    </Button>
-    
-    
-    }
-          
-        
-            </form>
-          </Card>
+            {updateStatus === false ? (
+                            <Button
+                            className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+                            variant="text"
+                            fullWidth onClick={handleCreate}
+                          >
+                            Create
+                          </Button>
+            ) : (
+              <>
+              <Button
+              className="border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+              variant="text"
+              fullWidth onClick={handleUpdateNow}
+            >
+              Update
+            </Button>
+              <Button
+                  className="mr-5 border mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
+                  variant="text"
+              fullWidth onClick={handleDeleteIngredient}
+            >
+              Delete
+            </Button>
+            </>
+            )}
+          </form>
+        </Card>
+      </div>
 
-
-          </div>
-
-
-          <div className="flex justify-center mt-5 mb-5">
+      <div className="flex justify-center mt-5 mb-5">
         <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
           <div className="relative">
             <div className="absolute flex items-center ml-2 h-full">
@@ -293,12 +295,12 @@ const Ingredients = () => {
                   );
                 }}
               >
-                 <option value="">All Type</option>
+                <option value="">All Type</option>
                 <option value="vegetables">vegetables</option>
                 <option value="fruit">fruit</option>
               </select>
 
-              <select
+              {/* <select
                 className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-[#E8AA42] focus:bg-white focus:ring-0 text-sm appearance"
                 value={yourSelectedStateValueAddress}
                 onChange={(e) => {
@@ -312,77 +314,74 @@ const Ingredients = () => {
                 <option value="">all donation Case</option>
                 <option value="Stray Animals">Stray Animals</option>
                 <option value="injured animals">injured animals</option>
-              </select>
+              </select> */}
             </div>
-
-
           </div>
         </div>
       </div>
 
+      <div className="w-full grid gap-2 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 place-items-center mb-1">
+        {slicedArrayMeals.map((e) => {
+          return (
+            <>
+              <div
+                key={e.ingredientName}
+                onClick={() => handleUpdate(e._id, e)}
+                className={` flex-shrink-0 m-1 relative overflow-hidden ${
+                  e.ingredientType == "vegetables"
+                    ? "bg-[#219D80]"
+                    : "bg-[#E8AA42]"
+                }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
+              >
+                <svg
+                  className="absolute bottom-0 left-0 mb-8"
+                  viewBox="0 0 375 283"
+                  fill="none"
+                  style={{ transform: "scale(1.5)", opacity: "0.1" }}
+                >
+                  <rect
+                    x="159.52"
+                    y={175}
+                    width={152}
+                    height={152}
+                    rx={8}
+                    transform="rotate(-45 159.52 175)"
+                    fill="white"
+                  />
+                  <rect
+                    y="107.48"
+                    width={152}
+                    height={152}
+                    rx={8}
+                    transform="rotate(-45 0 107.48)"
+                    fill="white"
+                  />
+                </svg>
+                <div className="relative pt-10 px-10 flex items-center justify-center">
+                  <div
+                    className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                    style={{
+                      background: "radial-gradient(black, transparent 60%)",
+                      transform: "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
+                      opacity: "0.2",
+                    }}
+                  />
+                  <img
+                    className="relative w-40 h-32"
+                    src={`http://localhost:5000/${e.img}`}
+                    alt=""
+                  />
+                </div>
+                <div className=" text-white px-6 pb-6 mt-6">
+                  <span className="block opacity-75 -mb-1">
+                    {e.ingredientType}
+                  </span>
+                  <div className="flex justify-between">
+                    <span className="block font-semibold ">
+                      {e.ingredientName}
+                    </span>
 
-
-
-
-
-<div className='w-full grid gap-3 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1'>
-
-{slicedArrayMeals.map((e)=>{
-return(
-<>
-
-
-<div
-key={e.ingredientName}
-onClick={() => handleUpdate(e._id , e)}
-className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#2bda2b]" : "bg-[#d7e423]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
->
-<svg
-  className="absolute bottom-0 left-0 mb-8"
-  viewBox="0 0 375 283"
-  fill="none"
-  style={{ transform: "scale(1.5)", opacity: "0.1" }}
->
-  <rect
-    x="159.52"
-    y={175}
-    width={152}
-    height={152}
-    rx={8}
-    transform="rotate(-45 159.52 175)"
-    fill="white"
-  />
-  <rect
-    y="107.48"
-    width={152}
-    height={152}
-    rx={8}
-    transform="rotate(-45 0 107.48)"
-    fill="white"
-  />
-</svg>
-<div className="relative pt-10 px-10 flex items-center justify-center">
-  <div
-    className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-    style={{
-      background: "radial-gradient(black, transparent 60%)",
-      transform:
-        "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
-      opacity: "0.2",
-    }}
-  />
-  <img
-    className="relative w-40 h-32"
-    src={`http://localhost:5000/${e.img}`}
-    alt=""
-  />
-</div>
-<div className=" text-white px-6 pb-6 mt-6">
-  {/* <span className="block opacity-75 -mb-1">{e.type}</span> */}
-  <div className="flex justify-between">
-    <span className="block font-semibold ">{e.ingredientName}</span>
-
-    {/* <Icon
+                    {/* <Icon
       style={{
         backgroundColor:
           e.icon === mdiPlus ? "green" : "red",
@@ -392,38 +391,24 @@ className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="ve
       path={e.icon}
       size={1}
     /> */}
-  </div>
-</div>
-</div>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+        })}
+      </div>
+      <div className="PaginationCards">
+        {
+          <Pagination
+            count={totalPagesMeals}
+            page={currentPageMeals}
+            onChange={handlePageChangeMeals}
+          />
+        }
+      </div>
+    </>
+  );
+};
 
-
-
-</>
-
-)
-
-
-})}
-
-
-</div>
-<div className="PaginationCards">
-          {
-            <Pagination
-              count={totalPagesMeals}
-              page={currentPageMeals}
-              onChange={handlePageChangeMeals}
-            />
-          }
-        </div>
-</>
-
-
-
-
-
-      
-  )
-}
-
-export default Ingredients
+export default Ingredients;

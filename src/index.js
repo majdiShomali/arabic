@@ -14,8 +14,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <GoogleOAuthProvider clientId="333455483546-th3a57g0225dll5rmadtsoaqctamb1u5.apps.googleusercontent.com">
     <React.StrictMode>
-    {/* <UserDataProvider> */}
     <DashboardPendingProvider>
+    <UserDataProvider>
       <RecipeProvider>
       <UserProvider>
       <KitProvider>
@@ -27,7 +27,7 @@ root.render(
       </KitProvider>
       </UserProvider>
       </RecipeProvider>
-      {/* </UserDataProvider> */}
+      </UserDataProvider>
       </DashboardPendingProvider>
     </React.StrictMode>
   </GoogleOAuthProvider>

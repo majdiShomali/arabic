@@ -2,6 +2,7 @@ import React, { useState,useEffect,useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
 import { AllContext } from "../AllDataContext";
 import { DashboardPendingContext } from "../DashboardPendingContext";
 const ContactUs = () => {
@@ -106,7 +107,7 @@ console.log(message)
         className="bg-cover bg-center h-screen"
         style={{
           backgroundImage:
-            'url("https://media.istockphoto.com/id/1416335096/photo/businessman-hand-holding-smart-phone-with-icon-mobile-phone-mail-telephone-and-address.jpg?b=1&s=170667a&w=0&k=20&c=O39_wq7HB2oZHV3pyeZDxFAq0Xb_zNvLKrAIEWDVveY=")',
+            'url("https://www.iai.co.il/drupal/sites/default/files/2022-02/Contact%20us.jpg")',
           height: "400px",
         }}
       >
@@ -266,13 +267,15 @@ console.log(message)
                       />
                     </div>
                     <div>
-                      <button
-                        type="submit"
-                        className="bg-amber-500 border-primary w-full rounded border p-3 text-white transition hover:bg-opacity-90"
-                        style={{backgroundColor:"#219D80"}}
-                      >
-                        Send Message
-                      </button>
+   
+
+                      <Button
+                    className="border w-full mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+                    variant="text"
+                    type="submit"
+                  >
+                    Send Message
+                  </Button>
                     </div>
                   </form>
 

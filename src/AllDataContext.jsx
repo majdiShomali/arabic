@@ -12,6 +12,7 @@ const AllProvider = ( {children} ) => {
 
   const [AllIngredientsUser0,setAllIngredientsUser0] =useState(null)
   const [AllIngredientsBase,setAllIngredientsUserBase] =useState(null)
+  // const {AllIngredientsBase,setAllIngredientsUserBase} =useState(null)
 
   const [ChatRefresh0, setChatRefresh ] = useState();
 

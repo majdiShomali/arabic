@@ -39,7 +39,7 @@ const BackimgAbout = () => {
         className="bg-cover bg-center h-screen "
         style={{
           backgroundImage:
-            `url(${hero})`,
+            `url("https://www.arkansasheritage.com/images/default-source/hero-search/food-hero-image-3000x1993.jpg?sfvrsn=9d73f22a_2")`,
           height: "400px",
         }}
       >
@@ -106,7 +106,7 @@ const BackimgAbout = () => {
                 />
                 <div className="space-y-2">
                   <h5 className="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">
-                    Several restaurants
+                    add ingredient
                   </h5>
                   <p className="text-sm text-gray-600">
                     You can find different restaurants, whether near or far, to
@@ -126,7 +126,7 @@ const BackimgAbout = () => {
                 />
                 <div className="space-y-2">
                   <h5 className="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">
-                    Find restaurants near you
+                    Find recipes by ingredients
                   </h5>
                   <p className="text-sm text-gray-600">
                     Ease of knowing the restaurants near you and the
@@ -146,7 +146,7 @@ const BackimgAbout = () => {
                 />
                 <div className="space-y-2">
                   <h5 className="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">
-                    Online Booking
+                    make recipe
                   </h5>
                   <p className="text-sm text-gray-600">
                     Book a table at your favorite restaurant anytime you want

@@ -12,7 +12,7 @@ const Kitchens = () => {
   return(
   <>
   
-  <Cards />
+  <Cards nation={type_Kitchen}/>
   </>
   
   );

@@ -12,7 +12,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import DyRecipeCardMeal from "../user/DyRecipeCardMeal";
 import DyRecipeCardDrink from "../user/DyRecipeDrinkCard";
-const Cards = () => {
+const Cards = ({nation}) => {
+  console.log(nation)
   let localTable = [];
 
   //-----------------------search------------------------//
@@ -21,6 +22,7 @@ const Cards = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [table, setTable] = useState([]);
+  const [NewTable, setNewTable] = useState([]);
 
   const allRecipes = async () => {
     try {
@@ -28,7 +30,7 @@ const Cards = () => {
       console.log(response.data);
       setTable(response.data);
 
-      setFilterDataMeals(response.data);
+      // setFilterDataMeals(response.data);
 
     } catch (error) {
       console.error("Error inserting data:", error);
@@ -36,12 +38,26 @@ const Cards = () => {
       setIsLoading(false); // Set the loading state to false after the save operation is completed
     }
   };
-
   useEffect(() => {
     allRecipes();
 
   }, []);
+  useEffect(() => {
 
+ if(nation !=="all"){
+
+  const filteredDataUsers = table?.filter(
+    (item) =>
+      item.nation?.toLowerCase().includes(nation.toLowerCase())
+  );
+  setNewTable(filteredDataUsers);
+  setFilterDataMeals(filteredDataUsers)
+ }else{
+  setFilterDataMeals(table)
+  setNewTable(table)
+ }
+    
+  }, [table]);
 
 
   const [currentPageMeals, setCurrentPageMeals] = useState(1);
@@ -77,18 +93,18 @@ const Cards = () => {
   const handleFilterChange = (typeValue, addressValue) => {
 
 
-    const filteredDataUsers = table?.filter(
+    const filteredDataUsers = NewTable?.filter(
       (item) =>
         item.category?.toLowerCase().includes(typeValue.toLowerCase()) &&
-        item.category?.toLowerCase().includes(addressValue.toLowerCase())
+        item.nation?.toLowerCase().includes(addressValue.toLowerCase())
     );
     setFilterDataMeals(filteredDataUsers);
-  
+  console.log(filteredDataUsers)
 };
 
 
 const filterDataByNameUsers = (searchTermMeals) => {
-  const filteredDataMeals = table.filter((item) =>
+  const filteredDataMeals = NewTable.filter((item) =>
     item.recipeName.toLowerCase().includes(searchTermMeals.toLowerCase())
   );
   setFilterDataMeals(filteredDataMeals);
@@ -144,8 +160,9 @@ const filterDataByNameUsers = (searchTermMeals) => {
                 <option value="Drink">Drinks</option>
                 <option value="Sweet">Sweets</option>
               </select>
-
-              <select
+   {nation === "all" ? 
+   
+   <select
                 className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-[#E8AA42] focus:bg-white focus:ring-0 text-sm appearance"
                 value={yourSelectedStateValueAddress}
                 onChange={(e) => {
@@ -156,10 +173,17 @@ const filterDataByNameUsers = (searchTermMeals) => {
                   );
                 }}
               >
-                <option value="">all donation Case</option>
-                <option value="Stray Animals">Stray Animals</option>
-                <option value="injured animals">injured animals</option>
+                <option value="">all nations</option>
+                <option value="jordanian">jordanian</option>
+                <option value="egyptian ">egyptian </option>
               </select>
+   
+   
+   :
+   null
+   
+   }
+              
             </div>
 
 
@@ -211,7 +235,7 @@ const filterDataByNameUsers = (searchTermMeals) => {
                 <>
                   <DyRecipeCardMeal
                     key={e._id}
-                    Name={e.Name}
+                    Name={e.recipeName}
                     card={card}
                     index={i}
                     SAMeals={slicedArrayMeals}
