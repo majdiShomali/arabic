@@ -9,10 +9,12 @@ const AllProvider = ( {children} ) => {
   const [AllDataRecipesA, setAllDataRecipesA] = useState([]);
   const [userId, setUserId] = useState("");
   const [LastUpdatedDataUser, setLastUpdatedDataUser] = useState([]);
-
+  const [TableContext, setTableContext] = useState([]);
   const [AllIngredientsUser0,setAllIngredientsUser0] =useState(null)
   const [AllIngredientsBase,setAllIngredientsUserBase] =useState(null)
   // const {AllIngredientsBase,setAllIngredientsUserBase} =useState(null)
+  // const {TableContext,setTableContext} =useContext(AllContext)
+  // const {ChatRefresh0,updateChatRefresh} =useContext(AllContext)
 
   const [ChatRefresh0, setChatRefresh ] = useState();
 
@@ -64,7 +66,16 @@ const AllProvider = ( {children} ) => {
 
 
 
-
+            try {
+              const response = await axios.get(
+                `http://localhost:5000/api/providerRecipes/${id}`
+              );
+              // setProviderRecipes(response.data)
+              setTableContext(response.data)
+        
+            } catch (error) {
+              console.error("Error retrieving data:", error);
+            }
 
 
 
@@ -136,11 +147,21 @@ const AllProvider = ( {children} ) => {
     // }
   };
 
+
+
+
+
+
+
+
+
   useEffect(() => {
     if (localStorage.auth != null) {
       fetchProtectedData();
     }
   }, [ChatRefresh0]);
+  
+
   
 
   useEffect(() => {
@@ -154,7 +175,7 @@ const AllProvider = ( {children} ) => {
 
 
   
-
+console.log(TableContext)
 
 
 
@@ -170,7 +191,8 @@ const AllProvider = ( {children} ) => {
                     AllIngredientsUser0,setAllIngredientsUser0,
                     LastUpdatedDataUser,setLastUpdatedDataUser,
                     AllIngredientsBase,setAllIngredientsUserBase,
-                    ChatRefresh0,updateChatRefresh
+                    ChatRefresh0,updateChatRefresh,
+                    TableContext,setTableContext
 
                 }}
             >

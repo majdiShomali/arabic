@@ -68,30 +68,31 @@ const AdminInfo = () => {
     setCurrentPageUsers(pageNumber);
   };
 
-  const handleDelete = (id, name) => {
-    Swal.fire({
-      title: `Do you want to remove ${name}?  `,
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonText: "OK",
-      cancelButtonText: "Cancel",
-      icon: "warning",
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire(` ${name} has been removed `, "", "success");
+  // const handleDelete = (id, name) => {
+  //   Swal.fire({
+  //     title: `Do you want to remove ${name}?  `,
+  //     showConfirmButton: true,
+  //     showCancelButton: true,
+  //     confirmButtonText: "OK",
+  //     cancelButtonText: "Cancel",
+  //     icon: "warning",
+  //   }).then((result) => {
+  //     /* Read more about isConfirmed, isDenied below */
+  //     if (result.isConfirmed) {
+  //       Swal.fire(` ${name} has been removed `, "", "success");
 
-        axios
-          .put("http://localhost:5000/recordss/" + id)
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => console.log(error.message));
+  //       axios
+  //         .put("http://localhost:5000/recordss/" + id)
+          
+  //         .then((response) => {
+  //           console.log(response.data);
+  //           allAdmins();
+  //         })
+  //         .catch((error) => console.log(error.message));
 
-        // window.location.reload();
-      } else Swal.fire(" Cancelled", "", "error");
-    });
-  };
+  //     } else Swal.fire(" Cancelled", "", "error");
+  //   });
+  // };
 
   const UpdateRole = async (userId, roleN) => {
     try {
@@ -101,6 +102,7 @@ const AdminInfo = () => {
       };
 
       await axios.put(`http://localhost:5000/api/userList/${userId}`, updatedUser);
+      allAdmins();
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -149,7 +151,7 @@ const AdminInfo = () => {
       <div className="bg-[#ffffff] mr-5 ml-5 p-10 rounded-2xl min-h-[calc(100vh)]   ">
         <div className="relative flex items-center justify-between pt-4">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Users Table
+            Admins Table
           </div>
         </div>
 
@@ -220,7 +222,7 @@ const AdminInfo = () => {
                 >
                   <p className="text-xs tracking-wide text-gray-600">EDIT</p>
                 </th>
-
+{/* 
                 <th
                   colSpan={1}
                   role="columnheader"
@@ -229,16 +231,16 @@ const AdminInfo = () => {
                   style={{ cursor: "pointer" }}
                 >
                   <p className="text-xs tracking-wide text-gray-600">DELETE</p>
-                </th>
+                </th> */}
               </tr>
             </thead>
 
             {slicedArrayUsers.map((e) => {
               return (
                 <tbody role="rowgroup">
-                  <tr role="row">
+                  <tr className="" role="row" key={e.firstName}>
                     <td
-                      className="pt-[14px] pb-[18px] sm:text-[14px] flex items-center"
+                      className="pt-[20px] pb-[18px] text-lg flex items-center"
                       role="cell"
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
@@ -318,7 +320,7 @@ const AdminInfo = () => {
                        
                       </button>
                     </td>
-
+{/* 
                     <td
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
@@ -328,7 +330,7 @@ const AdminInfo = () => {
                       >
                         <Icon color="red" path={mdiDelete} size={1} />
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 </tbody>
               );

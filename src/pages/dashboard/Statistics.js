@@ -69,7 +69,7 @@ const Statistics = () => {
 
             let Earning = 0;
             Earning = response.data.reduce((total, item) => {
-              return total + parseInt(item.price);
+              return total + parseInt(item.pricePayed);
             }, Earning);
 
             setTEarning(Earning);
@@ -157,26 +157,28 @@ const Statistics = () => {
 
   return (
     <div className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6 p-10">
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px]">
+     
+     
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#E8AA42] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px]">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700 ">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-[#E8AA42]" path={mdiCashRegister} size={1} />
+            <Icon className="text-[#219D80]" path={mdiCashRegister} size={1} />
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
           <p className="font-dm text-sm font-medium text-white">Total Earning </p>
-          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+          <h4 className="text-xl font-bold text-[#219D80] dark:text-white">
             {TEarning} <span className="text-[#219D80]">$</span>
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#E8AA42] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-[#E8AA42]" path={mdiAccountMultipleOutline} size={1} />
+            <Icon className="text-[#219D80]" path={mdiAccountMultipleOutline} size={1} />
 
             </span>
           </div>
@@ -185,16 +187,16 @@ const Statistics = () => {
           <p className="font-dm text-sm font-medium text-white">
             Total Users 
           </p>
-          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+          <h4 className="text-xl font-bold text-[#219D80] dark:text-white">
             {persons?.length} 
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#E8AA42] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-[#E8AA42]" path={mdiSilverwareForkKnife} size={1} />
+            <Icon className="text-[#219D80]" path={mdiSilverwareForkKnife} size={1} />
             
 
             </span>
@@ -202,48 +204,48 @@ const Statistics = () => {
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
           <p className="font-dm text-sm font-medium text-white">Total Recipes</p>
-          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+          <h4 className="text-xl font-bold text-[#219D80] dark:text-white">
              {allRecipe?.length} 
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#E8AA42] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-[#E8AA42]" path={mdiTableFurniture} size={1} />
+            <Icon className="text-[#219D80]" path={mdiTableFurniture} size={1} />
 
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
           <p className="font-dm text-sm font-medium text-white">Ingredients</p>
-          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+          <h4 className="text-xl font-bold text-[#219D80] dark:text-white">
              {AllIngredientsBase?.length}
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#E8AA42] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-[#E8AA42]" path={mdiNotebookEditOutline} size={1} />
+            <Icon className="text-[#219D80]" path={mdiNotebookEditOutline} size={1} />
 
             </span>
           </div>
         </div>
         <div className="h-50 ml-4 flex w-auto flex-col justify-center">
           <p className="font-dm text-sm font-medium text-white">Total orders</p>
-          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+          <h4 className="text-xl font-bold text-[#219D80] dark:text-white">
             {/* {ordersData.length} */}
           </h4>
         </div>
       </div>
-      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#219D80] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
+      <div className="!z-5 relative flex flex-col rounded-[20px] bg-[#E8AA42] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none !flex-row flex-grow items-center rounded-[20px] ">
         <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
           <div className="rounded-full bg-[#f4f7fe] p-3 dark:bg-navy-700">
             <span className="flex items-center text-brand-500 dark:text-white">
-            <Icon className="text-[#E8AA42]" path={mdiAccountMultipleOutline} size={1} />
+            <Icon className="text-[#219D80]" path={mdiAccountMultipleOutline} size={1} />
 
             </span>
           </div>
@@ -252,7 +254,7 @@ const Statistics = () => {
           <p className="font-dm text-sm font-medium text-white">
             Pending Tables
           </p>
-          <h4 className="text-xl font-bold text-[#E8AA42] dark:text-white">
+          <h4 className="text-xl font-bold text-[#219D80] dark:text-white">
             {/* {pendingTables.length} */}
           </h4>
         </div>

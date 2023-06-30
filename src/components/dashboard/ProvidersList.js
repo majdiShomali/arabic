@@ -73,7 +73,7 @@ const ProvidersList = () => {
 
        
 
-       const handleDelete = (id,name,userid) => {
+       const handleDelete = (id,name) => {
 
 
 
@@ -85,18 +85,18 @@ const ProvidersList = () => {
           cancelButtonText: "Cancel",
           icon: 'warning'
       }
-      ).then((result) => {
+      ).then( async(result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
     
               Swal.fire(` ${name} has been removed `, '', 'success');
-           
-              // axios.put('http://localhost:5000/restaurants/'+userid)
-              // .then((response) => {
-              //     console.log(response.data);
-              // })
-              // .catch((error) => console.log(error.message))
-              // window.location.reload();
+              try {
+             const response = await axios.delete(`http://localhost:5000/api/provider/${id}`);
+               console.log(response.data)
+                allProviders();
+              } catch (error) {
+                console.error("Error deleting user:", error);
+              }
           } else
               Swal.fire(' Cancelled', '', 'error')
     
@@ -106,30 +106,58 @@ const ProvidersList = () => {
     }
 
 
+    const UpdateRole = async (userId, roleN) => {
+      try {
+        const updatedUser = {
+          // Update the properties of the user as needed
+          role: roleN,
+        };
+  
+        await axios.put(`http://localhost:5000/api/userList/${userId}`, updatedUser);
+        allProviders();
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
+    };
 
+    const handleUpdate = (userid, typeid, name) => {
+      let role = typeid == 0 ? "user" : "privider";
+      let role2 = typeid == 2 ? "user" : "privider";
+      let text1 = "";
+      let text2 = "";
+      if (role == "user") {
+        text1 = `Do you want to switch ${name} to admin `;
+        text2 = ` ${name} is now an admin `;
+      } else {
+        text1 = `Do you want to switch ${name} to user `;
+        text2 = ` ${name} is now a user `;
+      }
+      Swal.fire({
+        title: text1,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
+        icon: "warning",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          let roleN;
+          if (typeid == 0) {
+            roleN = 2;
+          } else {
+            roleN = 0;
+          }
+  
+          UpdateRole(userid, roleN);
+  
+          Swal.fire(text2, "", "success");
+  
+          // window.location.reload();
+        } else Swal.fire(" Cancelled", "", "error");
+      });
+    };
 
-const addrestaurants = async () => {
-
-
-const userData = {
-  firstName:"provider",
-  email: email,
-  password:"LUNA@IO10m",
-  role:2 
-};
-
-try {
-  // Send the data to the server using an HTTP POST request
-  const response = await axios.post(
-    "http://localhost:5000/api/users",
-    userData
-  );
-} catch (error) {
-  console.error("Error inserting data:", error);
-}
-
-
-}
 
 
 
@@ -170,7 +198,7 @@ try {
 </form>
   <div className="relative flex items-center justify-between pt-4">
     <div className="text-xl font-bold text-navy-700 dark:text-white">
-    Restaurants Table
+    Providers Table
     </div>
  
   </div>
@@ -233,7 +261,7 @@ try {
             className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
             style={{ cursor: "pointer" }}
           >
-            <p className="text-xs tracking-wide text-gray-600">LOCATION</p>
+            <p className="text-xs tracking-wide text-gray-600">Edit</p>
           </th>
 
           {/* <th
@@ -306,24 +334,23 @@ return(
           </td>
           <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
             <p className="text-sm font-bold text-navy-700 dark:text-white">
-              {e.number}
+              {e.phone}
             </p>
           </td>
-          <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
-          <p className="text-sm font-bold text-navy-700 dark:text-white">
-              {e.address}
-            </p>
-          </td>
+  
 
-          {/* <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
-                     <button>
+          <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
+                     <button
+                      onClick={() => handleUpdate(e._id, e.role, e.firstName)}
+                     
+                     >
                      <Icon color="blue" path={mdiFileEdit} size={1} />
                     </button>
-          </td> */}
+          </td>
 
 
           <td className="pt-[14px] pb-[18px] sm:text-[14px]" role="cell">
-                     <button onClick={() => handleDelete(e.restaurant_id,e.restaurant_name,e.user_id)}>
+                     <button onClick={() => handleDelete(e._id,e.firstName)}>
                       <Icon color="red" path={mdiDelete} size={1} />
                     </button>
           </td>

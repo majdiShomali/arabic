@@ -6,7 +6,10 @@ import { UserDataContext } from "../../UserDataContext";
 import { useContext } from "react";
 import {AllContext} from "../../AllDataContext"
 
-function PaymentPage() {
+function PaymentPage({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName,image,ingredientType,IngId,TrueName}) {
+
+  console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName,image,ingredientType,IngId,TrueName})
+  
   const { AllDataGet,setAllDataGet} = useContext(AllContext);
   const { cardId,price } = useParams();
 
@@ -31,15 +34,6 @@ console.log(AllDataGet)
  
 
   const navigate = useNavigate();
-
-
-
-  useEffect(()=>{
-
-   
-  },[])
-
-
 
   const handlePayment = () => {
 
@@ -71,39 +65,57 @@ console.log(AllDataGet)
     // if(userId != 0 ){
     //   UpdateUserId(PostId)   
     //  } 
-    const paymentData = {
-      Name: AllDataGet[0].firstName,
-      cardholder:cardholder ,
-      email: AllDataGet[0].email,
-      PostId:cardId,
-      userId:AllDataGet[0]._id,
-      price:parseInt(cvv),
-      cvv:parseInt(cvv),
 
-    };
+const formData = new FormData()
+formData.append('CompanyName',CompanyName)
+formData.append('CompanyEmail',CompanyEmail)
+formData.append('userId',userId)
+formData.append('ingredientName',ingredientName)
+formData.append('image',image)
+formData.append('ingredientType',ingredientType)
+formData.append('IngId',IngId)
+formData.append('TrueName',TrueName)
+formData.append('cardholder',cardholder)
+formData.append('pricePlan',pricePlan)
+formData.append('pricePayed',parseInt(pricePayed))
+formData.append('cvv',parseInt(cvv))
 
-    console.log(paymentData)
+
+console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName,image,ingredientType,IngId,TrueName,cvv,cardholder,})
+
+
+    // const paymentData = {
+      // Name: AllDataGet[0].firstName,
+      // cardholder:cardholder ,
+      // email: AllDataGet[0].email,
+      // PostId:cardId,
+      // userId:AllDataGet[0]._id,
+      // price:parseInt(cvv),
+      // cvv:parseInt(cvv),
+    // };
+
+
 
     try {
       // Send the data to the server using an HTTP POST request
       const response = await axios.post(
         "http://localhost:5000/api/payment",
-        paymentData
+        formData
       );
 
+        showSuccessAlert("thanks for pay",pricePayed)
 
 
-      try {
-        const updatedBeneficiary = {
-          payment: true,
-        };
-        await axios.put(`http://localhost:5000/api/sponsor/${cardId}`, updatedBeneficiary); 
-        showSuccessAlert("thanks for Donation","currentPrice")
+      // try {
+      //   const updatedBeneficiary = {
+      //     payment: true,
+      //   };
+      //   await axios.put(`http://localhost:5000/api/sponsor/${cardId}`, updatedBeneficiary); 
 
       
-      } catch (error) {
-        console.error("Error updating user:", error);
-      } 
+      // } catch (error) {
+      //   console.error("Error updating user:", error);
+      // } 
 
 
 
@@ -111,6 +123,8 @@ console.log(AllDataGet)
 
     } catch (error) {
       console.error("Error inserting data:", error);
+
+      showAlert("error")
     }
 
 
@@ -122,11 +136,11 @@ console.log(AllDataGet)
 
   const showSuccessAlert = (message,currentPrice) => {
     Swal.fire({
-      title: `Thank you for Donating ${currentPrice}$`,
+      title: `Thank you for pay ${currentPrice}$`,
       icon: "success",
       confirmButtonText: "OK",
     }).then(() => {
-      // navigate("/")
+      navigate("/")
     });
   };
 
@@ -310,7 +324,7 @@ console.log(AllDataGet)
                         onClick={handlePayment}
                         type="submit"
                       >
-                        Donate Now
+                        pay Now
                       </button>
                     </div>
                   </div>

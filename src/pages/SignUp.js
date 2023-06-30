@@ -80,6 +80,7 @@ export default function Signup() {
     firstName: name,
     email: email,
     password:password,
+    phone:phone,
     role: type === 'user' ? 0 : 2,
     // AllIngredientsId:Cards
   };

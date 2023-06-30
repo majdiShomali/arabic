@@ -15,7 +15,6 @@ const Kitchen = ({userIdApp0}) => {
   const { LastUpdatedDataUser, setLastUpdatedDataUser} = useContext(AllContext);
   const { AllDataGet,setAllDataGet} = useContext(AllContext);
   const { UpdateAll,setUpdateAll} = useContext(AllContext);
-  console.log(LastUpdatedDataUser)
 
   const [userAllIngredients, setUserAllIngredients] = useState();
 
@@ -355,7 +354,7 @@ if(SidebarIngName0 !== ""){
                         }}
                       />
                       <img
-                        className="relative w-40 h-32"
+                        className="relative w-40 h-32 hover:scale-110"
                         src={`http://localhost:5000/${e.img}`}
                         alt=""
                       />

@@ -2,40 +2,45 @@ import Icon from "@mdi/react";
 import { mdiDelete } from "@mdi/js";
 import { mdiFileEdit } from "@mdi/js";
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
 import { mdiCheckDecagram  } from "@mdi/js";
 import Swal from "sweetalert2";
 import { mdiSilverware } from "@mdi/js";
 import { mdiHandshakeOutline } from "@mdi/js";
 import { mdiAccountOutline } from "@mdi/js";
+import { DashboardPendingContext } from "../../DashboardPendingContext";
 
 const AcceptPayment = () => {
     const [persons, setPersons] = useState([]);
     const [searchTermUsers, setSearchTermUsers] = useState("");
     const [FilterDataUsers, setFilterDataUsers] = useState([]);
-  
-    const allAdmins = async () => {
-        try {
-            const response = await axios.get("http://localhost:5000/api/paymentAdmin");
-            setPersons(response.data);
-          console.log(response.data)
-          setFilterDataUsers(response.data)
-          } catch (error) {
-            console.error("Error inserting data:", error);
-          }
+    const { allPaymentsP, setAllPaymentsP } = useContext(DashboardPendingContext);
 
-        };
+    // const allAdmins = async () => {
+    //     try {
+    //         const response = await axios.get("http://localhost:5000/api/paymentAdmin");
+    //         setPersons(response.data);
+    //       console.log(response.data)
+    //       setFilterDataUsers(response.data)
+    //       } catch (error) {
+    //         console.error("Error inserting data:", error);
+    //       }
+
+    //     };
 
      
       useEffect(() => {
-        allAdmins();
-      }, []);
+           // allAdmins();
+       setPersons(allPaymentsP);
+       setFilterDataUsers(allPaymentsP)
+
+      }, [allPaymentsP]);
 //-----------------------search------------------------//
 
 const filterDataByNameUsers = (searchTermUsers) => {
     const filteredDataUsers = persons.filter((item) =>
-      item.Name.toLowerCase().includes(searchTermUsers.toLowerCase())
+      item.TrueName.toLowerCase().includes(searchTermUsers.toLowerCase())
     );
     setFilterDataUsers(filteredDataUsers);
     console.log(filteredDataUsers);
@@ -242,14 +247,14 @@ const filterDataByNameUsers = (searchTermUsers) => {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                          src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2244&q=80"
+                           src={`http://localhost:5000/${e.image}`} 
                           className="h-full w-full rounded-full"
                           alt=""
                         />
                       </div>
 
                       <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
-                        {e.Name}
+                        {e.ingredientName}
                       </p>
                     </td>
                     <td
@@ -259,7 +264,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.location}
+                            {e.CompanyName}
                           </p>
                         </div>
                       </div>
@@ -269,7 +274,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.price}
+                        {e.pricePlan}
                       </p>
                     </td>
                     <td

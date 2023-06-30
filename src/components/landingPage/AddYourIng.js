@@ -10,13 +10,15 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef  } from "react";
 import axios from "axios";
 // import { UserDataContext } from "../../UserDataContext";
 import { useContext } from "react";
 import {AllContext} from "../../AllDataContext"
 import DyRecipeCardMeal from "../user/DyRecipeCardMeal";
 import SponcerCardStart from "./SponcerCardStart";
+import { animateScroll as scroll, scroller } from 'react-scroll';
+
 function AddYourIng() {
   const [img, setImg] = useState("");
   const [img0, setImg0] = useState("");
@@ -62,41 +64,42 @@ function AddYourIng() {
 
   const navigate = useNavigate();
 
-  const handleCreate = async () => {
 
-const formData = new FormData()
-formData.append('CompanyName',AllDataGet[0].firstName)
-formData.append('CompanyEmail',AllDataGet[0].email)
-formData.append('userId',AllDataGet[0]._id)
-formData.append('ingredientName',Name)
-formData.append('image',productImage)
-formData.append('ingredientType',Type)
-formData.append('IngId',Ing.IngredientId)
 
-    const sponserData = {
-      CompanyName:AllDataGet[0].firstName ,
-      CompanyEmail:AllDataGet[0].email,
-      userId:AllDataGet[0]._id,
-      ingredientName: Name,
-      img: productImage,
-      ingredientType: Type,
-    };
+  const shouldRenderComponent = true; // Replace with your condition
+  const componentRef = useRef(null);
+  const componentRef2 = useRef(null);
+  const componentReff = useRef(null);
+  const [isCreateButtonClicked, setIsCreateButtonClicked] = useState(false);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/sponsor",
-        formData
-      );
-      setOpenPayment("agree")
-        console.log(response.data)
-        setCardId(response.data._id)
-        setImg0(response.data.img)
-    } catch (error) {
-      console.error("Error inserting data:", error);
+  useEffect(() => {
+    if (isCreateButtonClicked && componentRef.current) {
+      componentRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+  }, [isCreateButtonClicked]);
+  const [isPayButtonClicked, setIsPayButtonClicked] = useState(false);
+
+  useEffect(() => {
+    if (isPayButtonClicked && componentRef2.current) {
+      componentRef2.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isPayButtonClicked]);
+
+  const scrollToSectionForm = (sectionId) => {
+    scroller.scrollTo(sectionId, {
+      duration: 800, // Scroll duration in milliseconds
+      delay: 0, // Delay before scrolling starts in milliseconds
+      smooth: 'easeInOutQuart', // Scrolling animation easing
+    });
+  };
+
+ const handleCreate2 = async() => {
+  setIsPayButtonClicked(true);
+ }
 
 
-
+  const handleCreate = async () => {
+    setIsCreateButtonClicked(true);
   };
 
 
@@ -127,7 +130,7 @@ const { LastUpdatedDataUser, setLastUpdatedDataUser} = useContext(AllContext);
 
   useEffect(() => {
     handleShowUser()
-  }, []);
+  }, [AllIngredientsBase]);
 
 
 
@@ -160,7 +163,7 @@ let totalPagesVegetables;
 
 let slicedArrayVegetables;
 
-const itemsPerPage = 6;
+const itemsPerPage = 5;
 
 totalItemsVegetables = FilterDataVegetables0?.length;
 
@@ -197,15 +200,17 @@ const handelIngredient = (IngredientId,IngredientName,IngredientType)=>{
 setIng({
   IngredientId:IngredientId,
   IngredientName:IngredientName,
-  IngredientType:IngredientType
+  IngredientType:IngredientType,
+  TrueName:IngredientName
 
 })
+scrollToSectionForm('Sform');
 }
 
   return (
     <>
 
-{OpenPayment ==="add" ?
+ {/* {OpenPayment ==="add" ?  */}
 <>
 <div className="flex justify-center mt-5 mb-5">
         <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
@@ -254,7 +259,7 @@ setIng({
       </div>
    {/* ----------------------------------------*/}
 
-   <div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1">
+   <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 place-items-center mb-1">
               {slicedArrayVegetables?.map((e, i) => {
                 return (
                  <>
@@ -338,7 +343,7 @@ setIng({
 
 
 
-    <div className="w-full flex justify-center">
+    <div id="Sform"   className="w-full flex  justify-center items-center">
 
       <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray">
@@ -391,37 +396,59 @@ setIng({
               <option value="fruits">Fruits</option>
             </select> */}
           </div>
-          <Button  className="mt-6" fullWidth onClick={handleCreate}>
-            Create
-          </Button>
+          <a href="#subplan"></a>
+                     <Button
+                    className="w-full border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+                    variant="text"
+                    onClick={handleCreate}
+                  >
+                    Create
+                  </Button>
+
+
         </form>
       </Card>
+{/* 
+   <div className="ml-5">
+      <SponcerCardStart       
+         cardId={Ing?.IngredientId}
+         img0={productImage}
+         Type={Type}
+         Name={Name}  
+         />
+
+</div> */}
       </div>
       </>
-       : null}
+       {/* : null } */}
 
-      {OpenPayment ==="agree" ?
+      {isCreateButtonClicked   ?
       
       
       <>
-      <SubPlan
-         cardId={cardId}
-         img0={img0}
-         Type={Type}
-         Name={Name} 
-      
-      
-      />
 
+
+      <section ref={componentRef} >
+      <SubPlan
+         CompanyName={AllDataGet[0].firstName}
+         CompanyEmail={AllDataGet[0].email}
+         userId={AllDataGet[0]._id}
+         ingredientName={Name}
+         image={productImage}
+         ingredientType={Type}
+         IngId={Ing.IngredientId}
+         TrueName={Ing.TrueName}
+      />
+    </section>
     </>
       
-      :null }
+      :null } 
            
                
               
 
-{OpenPayment ==="pay" ? 
-
+ {/* {isPayButtonClicked  ? 
+ <section ref={componentRef2} >
 <PaymentPage
       
 Name ={Name}
@@ -429,10 +456,11 @@ Image={img}
 Type={Type}
 cardId={cardId}
 />
-:
+</section>
+ :
 null
 
-}
+}  */}
 
 
 

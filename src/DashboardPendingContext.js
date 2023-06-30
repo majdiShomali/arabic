@@ -72,7 +72,7 @@ const DashboardPendingProvider = ( {children} ) => {
 
     const allAdmins0 = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/sponsorP");
+            const response = await axios.get("http://localhost:5000/api/paymentAdminP");
             setSponsorPContext(response.data);
             // updatePendingMLength(response.data)
           console.log(response.data)
@@ -80,7 +80,7 @@ const DashboardPendingProvider = ( {children} ) => {
             console.error("Error inserting data:", error);
           }
         try {
-            const response = await axios.get("http://localhost:5000/api/sponsorA");
+            const response = await axios.get("http://localhost:5000/api/paymentAdminA");
             setSponsorAContext(response.data);      
           console.log(response.data)
           } catch (error) {
@@ -92,6 +92,34 @@ const DashboardPendingProvider = ( {children} ) => {
 
 
         };
+
+        const [allPaymentsP, setAllPaymentsP] = useState([]);
+        const [allPaymentsA, setAllPaymentsA] = useState([]);
+   
+        const FallPaymentsP = async () => {
+            try {
+                const response = await axios.get("http://localhost:5000/api/paymentAdminP");
+                setAllPaymentsP(response.data);      
+              } catch (error) {
+                console.error("Error inserting data:", error);
+              }   
+            };
+        const FallPaymentsA = async () => {
+            try {
+                const response = await axios.get("http://localhost:5000/api/paymentAdminA");
+                setAllPaymentsA(response.data);      
+              } catch (error) {
+                console.error("Error inserting data:", error);
+              }   
+            };
+    
+         
+          useEffect(() => {
+            FallPaymentsA();
+            FallPaymentsP();
+          }, []);
+
+
 
      
       useEffect(() => {
@@ -113,6 +141,7 @@ console.log(PersonsContext)
    
     // const { PendingMessageLength, updatePendingMessageLength } = useContext(DashboardPendingContext);
     // const { PendingMLength, updatePendingMLength } = useContext(DashboardPendingContext);
+    // const { allPaymentsA, setAllPaymentsA } = useContext(DashboardPendingContext);
 
 
 
@@ -128,7 +157,9 @@ console.log(PersonsContext)
                     AcceptIngRefresh,setAcceptIngRefresh,
                     AcceptRecipeRefresh,setAcceptRecipeRefresh,
                     PendingMLength,setPendingMLength,
-                    ChatingRefresh,setChatingRefresh
+                    ChatingRefresh,setChatingRefresh,
+                    allPaymentsP,setAllPaymentsP,
+                    allPaymentsA,setAllPaymentsA
                    
 
                 }}

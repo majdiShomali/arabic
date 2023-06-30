@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState,useEffect,useRef } from "react";
 import SponcerCardStart from "./landingPage/SponcerCardStart";
 import PaymentPage from "./landingPage/Payment";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate  } from 'react-router-dom';
+import { animateScroll as scroll, scroller } from 'react-scroll';
+import {
+  Button,
+} from "@material-tailwind/react";
 const pricingData = [
 
   {
@@ -104,24 +107,62 @@ const Arrow = ({ strokColor }) => {
     </svg>
   );
 };
-const PricingReact = ({cardId,img0,Type,Name}) => {
+const PricingReact = ({CompanyName,CompanyEmail,userId,ingredientName,image,ingredientType,IngId,TrueName}) => {
+
+console.log(CompanyName,CompanyEmail,userId,ingredientName,image,ingredientType,IngId,TrueName)
+
+
+
+const componentRef2 = useRef(null);
+const [isPayButtonClicked, setIsPayButtonClicked] = useState(false);
+const [pricePayed, setPricePayed] = useState();
+const [pricePlan, setPricePlan] = useState();
+
+useEffect(() => {
+  if (isPayButtonClicked && componentRef2.current) {
+    componentRef2.current.scrollIntoView({ behavior: 'smooth' });
+  }
+}, [isPayButtonClicked]);
+
+
+const handleCreate2 = async() => {
+  let pricec = 100
+  let pricePlanc = "oneYear"
+  if(monthPrice){
+      pricec =10
+      pricePlanc = "oneMonth"
+  }
+  setPricePayed(pricec)
+  setPricePlan(pricePlanc)
+
+
+setIsPayButtonClicked(true);
+}
+
+
+
+
+
+
+
+const [imageDataUrl, setImageDataUrl] = useState('');
+
+useEffect(() => {
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    setImageDataUrl(e.target.result);
+  };
+
+  reader.readAsDataURL(image);
+}, []);
+
+
   const [monthPrice, setMonthPrice] = useState(true);
   const [OpenPayment, setOpenPayment] = useState(false);
-  
+
   const navigate = useNavigate();
-  const handlePay = () => {
-   let price = 100
-if(monthPrice){
-    price =10
-}
-// http://localhost:3000/Payment/cardId/img0/Type/Name/price
-      navigate(`/Payment/${cardId}/${price}`);
-    
-  
 
-
-    
-  }
 
 
 
@@ -130,12 +171,12 @@ if(monthPrice){
 
     
     
-    <container className="flex flex-col justify-center items-center py-3 bg-gray-300 min-h-screen font-sans">
+    <container className="flex flex-col justify-center items-center py-3 bg-[#f5f0f051] min-h-screen font-sans">
       {/* heading section  */}
       <div className="flex flex-col w-auto px-6 text-center text-2xl sm:text-3xl md:text-4xl">
         <span className="font-medium">Powerful features for</span>
         <span
-          className="font-medium pt-4 text-transparent bg-clip-text bg-[#365CCE]"
+          className="font-medium pt-4 text-transparent bg-clip-text bg-[#219D80]"
         >
           powerful creators.
         </span>
@@ -157,7 +198,7 @@ if(monthPrice){
                 className="sr-only peer"
               />
               <div
-                className="w-9 h-5 flex-1 align-middle bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-[#365CCE]"
+                className="w-9 h-5 flex-1 align-middle bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-[#E8AA42] rounded-full peer dark:bg-[#E8AA42] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-[#219D80]"
               ></div>
             </label>
           </div>
@@ -165,26 +206,26 @@ if(monthPrice){
         </div>
       </div>
       <div className="w-[300px] sm:w-[350px] md:w-[590px] flex justify-end pt-2 md:pt-0">
-        <Arrow strokColor={`#365CCE`} />
+        <Arrow strokColor={`#219D80`} />
         <span
-          className="text-sm md:text-lg text-[#365CCE] font-medium pr-2 pt-2"
+          className="text-sm md:text-lg text-[#E8AA42] font-medium pr-2 pt-2"
         >
           Save 25%
         </span>
       </div>
       {/* pricing section   */}
-      <div className="flex flex-col lg:flex-row gap-6 h-full px-5 align-middle justify-center">
+      <div className="flex flex-col lg:flex-row gap-6 h-full px-5 items-center justify-center">
       <SponcerCardStart       
-         cardId={cardId}
-         img0={img0}
-         Type={Type}
-         Name={Name}  
+         cardId={IngId}
+         img0={image}
+         Type={ingredientType}
+         Name={ingredientName}  
          />
         {pricingData.map((data, index) => (
           <div
             className={`flex flex-col h-full max-w-[378px] py-6 px-5 sm:px-10 lg:w-auto xl:w-[378px] rounded-xl ${
               data?.isSelected
-                ? `bg-[#365CCE] text-white`
+                ? `bg-[#219D80] text-white`
                 : "bg-white text-black"
             }`}
             key={index}
@@ -202,16 +243,25 @@ if(monthPrice){
                   /&nbsp;&nbsp;{monthPrice ? "Month" : "Year"}
                 </span>
               </div>
-              <button onClick={()=>handlePay()}
-                className={`w-full border-[1px] rounded py-2.5 text-[#365CCE] ${
+              {/* <button onClick={()=>handleCreate2()}
+                className={`w-full border-[1px] rounded py-2.5 text-[#E8AA42] ${
                   data?.isSelected
                     ? "bg-white"
-                    : "bg-transparent border-[#365CCE]"
+                    : "bg-transparent border-[#E8AA42]"
                 }`}
               >
                 Get Started Now
-              </button>
-              <div className="mt-10 space-y-3">
+              </button> */}
+
+
+              <Button
+                    className="w-full border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+                    variant="text"
+                    onClick={()=>handleCreate2()}
+                  >
+                    order Now
+                  </Button>
+              {/* <div className="mt-10 space-y-3">
                 {data?.getIn?.map((description, index) => (
                   <div className="flex items-center gap-4 max-w-xs" key={index}>
                     <div className="w-8 h-8">
@@ -226,7 +276,7 @@ if(monthPrice){
                     </span>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         ))}
@@ -234,10 +284,26 @@ if(monthPrice){
     </container>
     
     
-    
-    
-   
+  {isPayButtonClicked  ? 
+ <section ref={componentRef2} >
+<PaymentPage
+      
+      CompanyName={CompanyName}
+      CompanyEmail={CompanyEmail}
+      userId={userId}
+      ingredientName={ingredientName}
+      image={image}
+      ingredientType={ingredientType}
+      IngId={IngId}
+      TrueName={TrueName}
+      pricePayed={pricePayed}
+      pricePlan={pricePlan}
+/>
+</section>
+ :
+null
 
+} 
 
     </>
   );

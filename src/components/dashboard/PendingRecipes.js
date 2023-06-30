@@ -13,7 +13,9 @@ import { DashboardPendingContext } from "../../DashboardPendingContext";
 const PendingRecipes = () => {
     const { PendingRecipesLength, updatePendingRecipesLength } = useContext(DashboardPendingContext);
    const { PersonsContext, setPersonsContext } = useContext(DashboardPendingContext);
+   const { PersonsApContext, setPersonsApContext } = useContext(DashboardPendingContext);
     const { AcceptRecipeRefresh, setAcceptRecipeRefresh } = useContext(DashboardPendingContext);
+    
 
     const [persons, setPersons] = useState([]);
     const [personsAp, setPersonsAp] = useState([]);
@@ -26,26 +28,20 @@ const PendingRecipes = () => {
     const [HandleP, setHandleP] = useState();
   
     const allAdmins = async () => {
-        // try {
-        //     const response = await axios.get("http://localhost:5000/api/recipesP");
-        //     setPersons(response.data);
-        //   console.log(response.data)
-        //   setFilterDataUsers(response.data)
-        //   updatePendingRecipesLength(response.data.length)
-        //   } catch (error) {
-        //     console.error("Error inserting data:", error);
-        //   }
         setPersons( PersonsContext)
         setFilterDataUsers(PersonsContext)
 
-          try {
-            const response = await axios.get("http://localhost:5000/api/recipesA");
-            setPersonsAp(response.data);
-          console.log(response.data)
-          setFilterDataUsersAp(response.data)
-          } catch (error) {
-            console.error("Error inserting data:", error);
-          }
+        
+        setPersonsAp(PersonsApContext);
+        setFilterDataUsersAp(PersonsApContext)
+          // try {
+          //   const response = await axios.get("http://localhost:5000/api/recipesA");
+          //   setPersonsAp(response.data);
+          // console.log(response.data)
+          // setFilterDataUsersAp(response.data)
+          // } catch (error) {
+          //   console.error("Error inserting data:", error);
+          // }
 
 
 
@@ -54,7 +50,7 @@ const PendingRecipes = () => {
      
       useEffect(() => {
         allAdmins();
-      }, [PersonsContext]);
+      }, [PersonsContext,PersonsApContext]);
       console.log(persons)
 //-----------------------search------------------------//
 
@@ -106,7 +102,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
 
   const itemsPerPageAp = 5;
 
-  totalItemsUsersAp = FilterDataUsersAp.length;
+  totalItemsUsersAp = FilterDataUsersAp?.length;
 
   totalPagesUsersAp = Math.ceil(totalItemsUsersAp / itemsPerPageAp);
 
@@ -114,7 +110,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
 
   const endIndexUsersAp = startIndexUsersAp + itemsPerPageAp;
 
-  slicedArrayUsersAp = FilterDataUsersAp.slice(startIndexUsersAp, endIndexUsersAp);
+  slicedArrayUsersAp = FilterDataUsersAp?.slice(startIndexUsersAp, endIndexUsersAp);
 
   const handlePageChangeUsersAp = (event, pageNumber) => {
     setCurrentPageUsersAp(pageNumber);
@@ -146,10 +142,9 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
     });
   };
 
-  const UpdateRole = async (userId, roleN) => {
+  const UpdateRole = async (userId) => {
     try {
       const updatedUser = {
-        // Update the properties of the user as needed
         flag: true,
       };
      const response=  await axios.put(`http://localhost:5000/api/recipes/${userId}`, updatedUser);
@@ -161,18 +156,8 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
     }
   };
 
-  const handleUpdate = (userid, typeid, name) => {
-    let role = typeid == 0 ? "user" : "admin";
-    let role2 = typeid == 1 ? "user" : "admin";
-    let text1 = "";
-    let text2 = "";
-    if (role == "user") {
-      text1 = `Do you want to accept ${name} Post `;
-      text2 = ` ${name} is now an admin `;
-    } else {
-      text1 = `Do you want to accept ${name}' Post `;
-      text2 = ` ${name} is now a user `;
-    }
+  const handleUpdate = (RecipeId,  name) => {
+     let text1 = `Do you want to accept ${name} Recipe? `;
     Swal.fire({
       title: text1,
       showConfirmButton: true,
@@ -183,16 +168,10 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        let roleN;
-        if (typeid == 0) {
-          roleN = 1;
-        } else {
-          roleN = 0;
-        }
 
-        UpdateRole(userid, roleN);
+        UpdateRole(RecipeId);
 
-        Swal.fire(text2, "", "success");
+        Swal.fire("recipe has been accepted", "", "success");
 
         // window.location.reload();
       } else Swal.fire(" Cancelled", "", "error");
@@ -288,7 +267,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
               </tr>
             </thead>
 
-            {slicedArrayUsers.map((e) => {
+            {slicedArrayUsers?.map((e) => {
               return (
                 <tbody role="rowgroup">
                   <tr role="row">
@@ -305,7 +284,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       </div>
 
                       <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
-                        {e.Name}
+                        {e.recipeName}
                       </p>
                     </td>
                     <td
@@ -315,7 +294,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.location}
+                            {e.category}
                           </p>
                         </div>
                       </div>
@@ -325,7 +304,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.price}
+                        {e.nation}
                       </p>
                     </td>
                     <td
@@ -353,7 +332,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       role="cell"
                     >
                       <button
-                        onClick={() => handleUpdate(e._id, e.role, e.Name)}
+                        onClick={() => handleUpdate(e._id, e.recipeName)}
                       >
                        
                           <Icon color="blue" path={mdiCheckDecagram } size={1} />
@@ -366,7 +345,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       role="cell"
                     >
                       <button
-                        onClick={() => handleDelete(e.userid, e.username)}
+                        onClick={() => handleDelete(e.userid, e.recipeName)}
                       >
                         <Icon color="red" path={mdiDelete} size={1} />
                       </button>
@@ -478,7 +457,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
               </tr>
             </thead>
 
-            {slicedArrayUsersAp.map((e) => {
+            {slicedArrayUsersAp?.map((e) => {
               return (
                 <tbody role="rowgroup">
                   <tr role="row">
@@ -515,7 +494,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.price}
+                        {e.nation}
                       </p>
                     </td>
                     <td
@@ -543,7 +522,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       role="cell"
                     >
                       <button
-                        onClick={() => handleUpdate(e._id, e.role, e.Name)}
+                        onClick={() => handleUpdate(e._id, e.recipeName)}
                       >
                        
                           <Icon color="blue" path={mdiCheckDecagram } size={1} />
@@ -556,7 +535,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                       role="cell"
                     >
                       <button
-                        onClick={() => handleDelete(e.userid, e.username)}
+                        onClick={() => handleDelete(e.userid, e.recipeName)}
                       >
                         <Icon color="red" path={mdiDelete} size={1} />
                       </button>

@@ -367,7 +367,7 @@ const Ingredients = () => {
                     }}
                   />
                   <img
-                    className="relative w-40 h-32"
+                    className="relative w-40 h-32 hover:scale-110"
                     src={`http://localhost:5000/${e.img}`}
                     alt=""
                   />

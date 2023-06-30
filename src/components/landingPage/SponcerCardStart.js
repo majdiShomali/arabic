@@ -1,11 +1,29 @@
 import React from 'react'
-
+import { useState,useEffect } from 'react';
 const SponcerCardStart = ({cardId,img0,Type,Name}) => {
+
+
+  const [imageDataUrl, setImageDataUrl] = useState('');
+
+  useEffect(() => {
+    const reader = new FileReader();
+  
+    reader.onload = (e) => {
+      setImageDataUrl(e.target.result);
+    };
+  
+    reader.readAsDataURL(img0);
+  }, [img0]);
+
+
+
+
+
   return (
     <div
 key={cardId}
 // onClick={() => changeStatusF(e.name, i)}
-className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
+className="flex-shrink-0 m-1 relative overflow-hidden bg-[#E8AA42] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
 >
 <svg
   className="absolute bottom-0 left-0 mb-8"
@@ -43,7 +61,7 @@ className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg ma
   />
   <img
     className="relative w-40 h-32"
-    src={`http://localhost:5000/${img0}`}
+    src={imageDataUrl}
     alt=""
   />
 </div>

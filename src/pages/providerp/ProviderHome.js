@@ -31,6 +31,8 @@ import {AllContext} from "../../AllDataContext"
 const ProviderHome = ({userIdApp0}) => {
 
   const {AllIngredientsBase,setAllIngredientsUserBase} =useContext(AllContext);
+  const {TableContext,setTableContext} =useContext(AllContext)
+   const {ChatRefresh0,updateChatRefresh} =useContext(AllContext)
 
 console.log(AllIngredientsBase)
   const [img, setImg] = useState("");
@@ -143,7 +145,7 @@ console.log(AllIngredientsBase)
   let totalPages;
   let slicedArray;
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 10;
 
   totalItems = FilterDataMeals?.length;
 
@@ -219,7 +221,7 @@ console.log(foodCards)
     formData0.append('ItemsName',JSON.stringify(foodCardsName))
     formData0.append('image',productImage)
     formData0.append('ItemsId',JSON.stringify(MyListIdAdmin))
-    formData0.append('nation',JSON.stringify(yourSelectedNationValue))
+    formData0.append('nation',yourSelectedNationValue)
     
 
 
@@ -246,6 +248,7 @@ console.log(foodCards)
         "http://localhost:5000/api/recipes",
         formData0
       );
+      updateChatRefresh(response.data)
       console.log(response.data)  
     } catch (error) {
       console.error("Error inserting data:", error);
@@ -286,9 +289,10 @@ console.log(foodCards)
 
   const DeleteRecipe = async (Id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/recipes/${Id}`);
+   const response =   await axios.delete(`http://localhost:5000/api/recipes/${Id}`);
       // fetchUsers(); // Refresh the user list after deleting a user
       // allRecipes()
+      updateChatRefresh(response.data)
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -435,7 +439,8 @@ console.log(e.ItemsId)
       }
       
 console.log(updatedRecipe)
-      await axios.put(`http://localhost:5000/api/recipesP/${ButtonStatusId}`, formData0);
+   const response =   await axios.put(`http://localhost:5000/api/recipesP/${ButtonStatusId}`, formData0);
+      updateChatRefresh(response.data)
       // fetchUsers(); // Refresh the user list after updating a user
     } catch (error) {
       console.error("Error updating user:", error);
@@ -497,12 +502,13 @@ if(SidebarIngName !== ""){
 useEffect(()=>{
 
   // if(SidebarIngName === ""){   
-    fetchProtectedData()
+    setTable(TableContext)
+    // fetchProtectedData()
     setUserAllIngredients(AllIngredientsBase)
     setFilterDataMeals(AllIngredientsBase)
   // }
-},[AllIngredientsBase])
-
+},[AllIngredientsBase,TableContext])
+console.log(TableContext)
   const UpdateBeneficiaryId = async (ingredientName,ingredientId) => {
 
 console.log(ingredientId)
@@ -623,7 +629,7 @@ console.log(ingredientId)
                 <option value="fruit">fruit</option>
               </select>
 
-              <select
+              {/* <select
                 className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-[#E8AA42] focus:bg-white focus:ring-0 text-sm appearance"
                 value={yourSelectedStateValueAddress}
                 onChange={(e) => {
@@ -637,7 +643,7 @@ console.log(ingredientId)
                 <option value="">all donation Case</option>
                 <option value="Stray Animals">Stray Animals</option>
                 <option value="injured animals">injured animals</option>
-              </select>
+              </select> */}
             </div>
 
 
@@ -648,16 +654,16 @@ console.log(ingredientId)
 
 
 <SideBarRecipe/>
-<div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1">
+<div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 place-items-center mb-1">
               {slicedArray?.map((e, i) => {
                 return (
                  <>
             {e.ingredientFlag === false ?<>
                                   
               <div
-                    key={e.id}
+                    key={e._id}
                     onClick={() => UpdateBeneficiaryId(e.ingredientName,e._id)}
-                    className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#2bda2b]" : "bg-[#d7e423]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
+                    className={` mb-4 flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#219D80]" : "bg-[#E8AA42]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-105 hover:cursor-pointer`}
                   >
                     <svg
                       className="absolute bottom-0 left-0 mb-8"
@@ -694,7 +700,7 @@ console.log(ingredientId)
                         }}
                       />
                       <img
-                        className="relative w-40 h-32"
+                        className="relative w-40 h-32 hover:scale-125 "
                         src={`http://localhost:5000/${e.img}`}
                         alt=""
                       />
@@ -727,299 +733,6 @@ console.log(ingredientId)
       </div> 
 
 
-
-
-    {/* <SidebarMyList/> */}
-
-
-
-    {/* <div className="flex">
-        {MyListAdmin?.map((e, i) => {
-          return (
-            <div
-            key={e.ingredientName}
-            onClick={() => UpdateBeneficiaryId(e.ingredientName)}
-            className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
-          >
-            <svg
-              className="absolute bottom-0 left-0 mb-8"
-              viewBox="0 0 375 283"
-              fill="none"
-              style={{ transform: "scale(1.5)", opacity: "0.1" }}
-            >
-              <rect
-                x="159.52"
-                y={175}
-                width={152}
-                height={152}
-                rx={8}
-                transform="rotate(-45 159.52 175)"
-                fill="white"
-              />
-              <rect
-                y="107.48"
-                width={152}
-                height={152}
-                rx={8}
-                transform="rotate(-45 0 107.48)"
-                fill="white"
-              />
-            </svg>
-            <div className="relative pt-10 px-10 flex items-center justify-center">
-              <div
-                className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-                style={{
-                  background: "radial-gradient(black, transparent 60%)",
-                  transform:
-                    "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
-                  opacity: "0.2",
-                }}
-              />
-              <img
-                className="relative w-40 h-32"
-                src={e.img}
-                alt=""
-              />
-            </div>
-            <div className=" text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">{e.ingredientType}</span>
-              <div className="flex justify-between">
-                <span className="block font-semibold ">{e.ingredientName}</span>
-              </div>
-            </div>
-          </div>
-
-
-
-
-            
-          );
-        })}
-      </div> */}
-
-
-
-
-
-
-
-    
-      {/* <div className="flex">
-        {MyListAdmin?.map((e, i) => {
-          return (
-            <div
-            key={e.name}
-            onClick={() => changeStatus(e.name, i)}
-            className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
-          >
-            <svg
-              className="absolute bottom-0 left-0 mb-8"
-              viewBox="0 0 375 283"
-              fill="none"
-              style={{ transform: "scale(1.5)", opacity: "0.1" }}
-            >
-              <rect
-                x="159.52"
-                y={175}
-                width={152}
-                height={152}
-                rx={8}
-                transform="rotate(-45 159.52 175)"
-                fill="white"
-              />
-              <rect
-                y="107.48"
-                width={152}
-                height={152}
-                rx={8}
-                transform="rotate(-45 0 107.48)"
-                fill="white"
-              />
-            </svg>
-            <div className="relative pt-10 px-10 flex items-center justify-center">
-              <div
-                className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-                style={{
-                  background: "radial-gradient(black, transparent 60%)",
-                  transform:
-                    "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
-                  opacity: "0.2",
-                }}
-              />
-              <img
-                className="relative w-40 h-32"
-                src={require(`../../${e.img}`)}
-                alt=""
-              />
-            </div>
-            <div className=" text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">{e.type}</span>
-              <div className="flex justify-between">
-                <span className="block font-semibold ">{e.name}</span>
-
-                <Icon
-                  style={{
-                    backgroundColor:
-                      e.icon === mdiPlus ? "green" : "red",
-                  }}
-                  color="white"
-                  className="iconAddOrRemove absolute top-1 right-1 rounded-lg"
-                  path={e.icon}
-                  size={1}
-                />
-              </div>
-            </div>
-          </div>
-
-
-
-
-            
-          );
-        })}
-      </div> */}
-
-
-
-      {/* <div className="flex justify-center mt-5 mb-5">
-        <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
-          <div className="relative">
-            <div className="absolute flex items-center ml-2 h-full">
-              <svg
-                className="w-4 h-4 fill-current text-primary-gray-dark"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M15.8898 15.0493L11.8588 11.0182C11.7869 10.9463 11.6932 10.9088 11.5932 10.9088H11.2713C12.3431 9.74952 12.9994 8.20272 12.9994 6.49968C12.9994 2.90923 10.0901 0 6.49968 0C2.90923 0 0 2.90923 0 6.49968C0 10.0901 2.90923 12.9994 6.49968 12.9994C8.20272 12.9994 9.74952 12.3431 10.9088 11.2744V11.5932C10.9088 11.6932 10.9495 11.7869 11.0182 11.8588L15.0493 15.8898C15.1961 16.0367 15.4336 16.0367 15.5805 15.8898L15.8898 15.5805C16.0367 15.4336 16.0367 15.1961 15.8898 15.0493ZM6.49968 11.9994C3.45921 11.9994 0.999951 9.54016 0.999951 6.49968C0.999951 3.45921 3.45921 0.999951 6.49968 0.999951C9.54016 0.999951 11.9994 3.45921 11.9994 6.49968C11.9994 9.54016 9.54016 11.9994 6.49968 11.9994Z" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              placeholder="Search by listing, location, bedroom number..."
-              className="px-8 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                filterDataByName(e.target.value);
-              }}
-            />
-          </div>
-
-
-        </div>
-      </div> */}
-
-
-
-
-{/* 
-      <fieldset className="">
-        <legend>
-          All ingredients:
-
-        </legend>
-
-        <div className="flex">
-          {slicedArray.map((e, i) => {
-            return (
-              <div
-                onClick={() => changeStatus(e.name, i)}
-                id={e.name}
-                className="ingredient_class vegetables"
-                data-target={e.name}
-              >
-                <h4>{e.name}</h4>
-                <Icon className="iconAddOrRemove" path={e.icon} size={1} />
-                <img className="vegetablesimg" src={require(`../../${e.img}`)} />
-                <div className="pContainerCard vegetablespd">
-                  <p className="vegetablesp">{e.clicked}</p>
-                </div>
-              </div>
-
-
-              <div
-              key={e.name}
-              onClick={() => changeStatus(e.name, i)}
-              className="flex-shrink-0 m-1 relative overflow-hidden bg-[#ccb653] rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer"
-            >
-              <svg
-                className="absolute bottom-0 left-0 mb-8"
-                viewBox="0 0 375 283"
-                fill="none"
-                style={{ transform: "scale(1.5)", opacity: "0.1" }}
-              >
-                <rect
-                  x="159.52"
-                  y={175}
-                  width={152}
-                  height={152}
-                  rx={8}
-                  transform="rotate(-45 159.52 175)"
-                  fill="white"
-                />
-                <rect
-                  y="107.48"
-                  width={152}
-                  height={152}
-                  rx={8}
-                  transform="rotate(-45 0 107.48)"
-                  fill="white"
-                />
-              </svg>
-              <div className="relative pt-10 px-10 flex items-center justify-center">
-                <div
-                  className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-                  style={{
-                    background: "radial-gradient(black, transparent 60%)",
-                    transform:
-                      "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
-                    opacity: "0.2",
-                  }}
-                />
-                <img
-                  className="relative w-40 h-32"
-                  src={require(`../../${e.img}`)}
-                  alt=""
-                />
-              </div>
-              <div className=" text-white px-6 pb-6 mt-6">
-                <span className="block opacity-75 -mb-1">{e.type}</span>
-                <div className="flex justify-between">
-                  <span className="block font-semibold ">{e.name}</span>
-
-                  <Icon
-                    style={{
-                      backgroundColor:
-                        e.icon === mdiPlus ? "green" : "red",
-                    }}
-                    color="white"
-                    className="iconAddOrRemove absolute top-1 right-1 rounded-lg"
-                    path={e.icon}
-                    size={1}
-                  />
-                </div>
-              </div>
-            </div>
-
-
-
-
-
-            );
-          })}
-        </div>
-      </fieldset> */}
-
-      {/* <div className="w-full flex justify-center">
-        {
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handlePageChange}
-          />
-        }
-      </div> */}
 
       <div className=" mb-4 mt-4">
         <Card color="transparent" shadow={false}>
@@ -1099,7 +812,7 @@ console.log(ingredientId)
                 </div>
 
 
-    <div>
+    <div className="mb-2">
       <select
         value={yourSelectedStateValue}
         onChange={(e) => setOption(e.target.value)}
@@ -1110,7 +823,7 @@ console.log(ingredientId)
         <option value="Sweet">Sweets</option>
       </select>
     </div>
-    <div>
+    <div className="mb-2">
       <select
         value={yourSelectedNationValue}
         onChange={(e) => setNation(e.target.value)}
@@ -1123,19 +836,27 @@ console.log(ingredientId)
     </div>
 
     {ButtonStatus === "create" ? (
-      <Button
-        onClick={() => CreateNew()}
-        className="mt-6 bg-[#E8CC95] w-full"
-      >
-        Create
-      </Button>
+
+
+<Button
+className="w-full border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+variant="text"
+onClick={() => CreateNew()}
+>
+Create
+</Button>
+
+
+
     ) : (
-      <Button
-        onClick={() => UpdateNow()}
-        className="mt-6 bg-[#E8CC95] w-full"
-      >
-        Update
-      </Button>
+
+<Button
+className="w-full border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+variant="text"
+onClick={() => UpdateNow()}
+>
+Update
+</Button>
     )}
   </form>
 </div>

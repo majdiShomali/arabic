@@ -1,9 +1,4 @@
 import React from 'react'
-import mcd from '../../Images/fruits/Lime.png'
-import kfc from '../../Images/fruits/Lime.png'
-import dom from '../../Images/fruits/Lime.png'
-import burger from '../../Images/fruits/Lime.png'
-
 import { useState,useEffect } from 'react'
 import axios from 'axios'
 const SponsersCardSample = () => {

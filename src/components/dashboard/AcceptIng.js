@@ -2,9 +2,9 @@ import Icon from "@mdi/react";
 import { mdiDelete } from "@mdi/js";
 import { mdiFileEdit } from "@mdi/js";
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { mdiCheckDecagram  } from "@mdi/js";
+import { mdiCheckDecagram } from "@mdi/js";
 import Swal from "sweetalert2";
 import { mdiSilverware } from "@mdi/js";
 import { mdiHandshakeOutline } from "@mdi/js";
@@ -12,72 +12,73 @@ import { mdiAccountOutline } from "@mdi/js";
 import { DashboardPendingContext } from "../../DashboardPendingContext";
 
 const AcceptIng = () => {
-    const { SponsorAContext, setSponsorAContext } = useContext(DashboardPendingContext);
-    const { SponsorPContext, setSponsorPContext } = useContext(DashboardPendingContext);
-    const {  AcceptIngRefresh, setAcceptIngRefresh } = useContext(DashboardPendingContext);
+  const { SponsorAContext, setSponsorAContext } = useContext(
+    DashboardPendingContext
+  );
+  const { SponsorPContext, setSponsorPContext } = useContext(
+    DashboardPendingContext
+  );
+  const { AcceptIngRefresh, setAcceptIngRefresh } = useContext(
+    DashboardPendingContext
+  );
+  const { allPaymentsP, setAllPaymentsP } = useContext(DashboardPendingContext);
+  const { allPaymentsA, setAllPaymentsA } = useContext(DashboardPendingContext);
 
-    const [persons, setPersons] = useState([]);
-    const [personsA, setPersonsA] = useState([]);
-    const [searchTermUsers, setSearchTermUsers] = useState("");
-    const [FilterDataUsers, setFilterDataUsers] = useState([]);
-    
-    const [searchTermUsersA, setSearchTermUsersA] = useState("");
-    const [FilterDataUsersA, setFilterDataUsersA] = useState([]);
-    
+  const [persons, setPersons] = useState([]);
+  const [personsA, setPersonsA] = useState([]);
+  const [searchTermUsers, setSearchTermUsers] = useState("");
+  const [FilterDataUsers, setFilterDataUsers] = useState([]);
 
-    const allAdmins = async () => {
-        try {
-            const response = await axios.get("http://localhost:5000/api/sponsorP");
-            setPersons(response.data);
-            
-          console.log(response.data)
-          setFilterDataUsers(response.data)
-          } catch (error) {
-            console.error("Error inserting data:", error);
-          }
-        try {
-            const response = await axios.get("http://localhost:5000/api/sponsorA");
-            setPersonsA(response.data);
-            
-          console.log(response.data)
-          setFilterDataUsersA(response.data)
-          } catch (error) {
-            console.error("Error inserting data:", error);
-          }
+  const [searchTermUsersA, setSearchTermUsersA] = useState("");
+  const [FilterDataUsersA, setFilterDataUsersA] = useState([]);
 
+  const allAdmins = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/paymentAdminP"
+      );
+      setPersons(response.data);
 
+      console.log(response.data);
+      setFilterDataUsers(response.data);
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/paymentAdminA"
+      );
+      setPersonsA(response.data);
 
+      console.log(response.data);
+      setFilterDataUsersA(response.data);
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
+  };
 
+  console.log(SponsorAContext);
+  useEffect(() => {
+    // allAdmins();
 
-        };
+    setPersons(allPaymentsP);
 
-     console.log(SponsorAContext)
-      useEffect(() => {
-        // allAdmins();
+    setFilterDataUsers(allPaymentsP);
 
-        setPersons(SponsorPContext);
-        
-      setFilterDataUsers(SponsorPContext)
-  
-  
-        setPersonsA(SponsorAContext);
-        
-      setFilterDataUsersA(SponsorAContext)
-    
-     
+    setPersonsA(allPaymentsA);
 
-      }, [SponsorAContext]);
-//-----------------------search------------------------//
+    setFilterDataUsersA(allPaymentsA);
+  }, [allPaymentsP, allPaymentsA]);
+  //-----------------------search------------------------//
 
-const filterDataByNameUsers = (searchTermUsers) => {
+  const filterDataByNameUsers = (searchTermUsers) => {
     const filteredDataUsers = persons.filter((item) =>
-      item.Name.toLowerCase().includes(searchTermUsers.toLowerCase())
+      item.TrueName.toLowerCase().includes(searchTermUsers.toLowerCase())
     );
     setFilterDataUsers(filteredDataUsers);
     console.log(filteredDataUsers);
     setCurrentPageUsers(1);
   };
-
 
   const [currentPageUsers, setCurrentPageUsers] = useState(1);
   let totalItemsUsers;
@@ -101,17 +102,16 @@ const filterDataByNameUsers = (searchTermUsers) => {
   const handlePageChangeUsers = (event, pageNumber) => {
     setCurrentPageUsers(pageNumber);
   };
-//-----------------------search------------------------//
+  //-----------------------search------------------------//
 
-const filterDataByNameUsersA = (searchTermUsersA) => {
+  const filterDataByNameUsersA = (searchTermUsersA) => {
     const filteredDataUsersA = personsA.filter((item) =>
-      item.Name.toLowerCase().includes(searchTermUsersA.toLowerCase())
+      item.TrueName.toLowerCase().includes(searchTermUsersA.toLowerCase())
     );
     setFilterDataUsersA(filteredDataUsersA);
     console.log(filteredDataUsersA);
     setCurrentPageUsersA(1);
   };
-
 
   const [currentPageUsersA, setCurrentPageUsersA] = useState(1);
   let totalItemsUsersA;
@@ -136,7 +136,6 @@ const filterDataByNameUsersA = (searchTermUsersA) => {
     setCurrentPageUsersA(pageNumberA);
   };
 
-
   const handleDelete = (id, name) => {
     Swal.fire({
       title: `Do you want to remove ${name}?  `,
@@ -153,7 +152,7 @@ const filterDataByNameUsersA = (searchTermUsersA) => {
         axios
           .put("http://localhost:5000/recipesA/" + id)
           .then((response) => {
-            allAdmins()
+            allAdmins();
           })
           .catch((error) => console.log(error.message));
 
@@ -161,58 +160,50 @@ const filterDataByNameUsersA = (searchTermUsersA) => {
       } else Swal.fire(" Cancelled", "", "error");
     });
   };
-  
 
-  const UpdateRole = async (id, ingId,e) => {
+  const UpdateRole = async (id, ingId, e) => {
+    console.log(e);
 
-console.log(e)
-    
-// {
-//     "_id": "649940c07739d2e8fdb571e8",
-//     "CompanyName": "majdi222",
-//     "CompanyEmail": "majdishomali444@gmail.com",
-//     "ingredientName": "apple",
-//     "ingredientType": "vegetables",
-//     "img": "public\\images\\image_1687765184148.png",
-//     "userId": "649919dabe58b493e15c9fb5",
-//     "flag": false,
-//     "payment": true,
-//     "IngId": "64991992be58b493e15c9fa6",
-//     "__v": 0
-// }
+    // {
+    //     "_id": "649940c07739d2e8fdb571e8",
+    //     "CompanyName": "majdi222",
+    //     "CompanyEmail": "majdishomali444@gmail.com",
+    //     "ingredientName": "apple",
+    //     "ingredientType": "vegetables",
+    //     "img": "public\\images\\image_1687765184148.png",
+    //     "userId": "649919dabe58b493e15c9fb5",
+    //     "flag": false,
+    //     "payment": true,
+    //     "IngId": "64991992be58b493e15c9fa6",
+    //     "__v": 0
+    // }
 
-
-
-try {
+    try {
       const updatedUser = {
-        ingredientName:e.ingredientName,
-        img:e.img,
-        sold:true
+        ingredientName: e.ingredientName,
+        img: e.image,
+        sold: true,
       };
       const updatedUser2 = {
         flag: true,
       };
-    const aIngredient=   await axios.put(`http://localhost:5000/api/Ingredient/${ingId}`, updatedUser);
-      await axios.put(`http://localhost:5000/api/sponsor/${id}`, updatedUser2);
-      allAdmins()
-      setAcceptIngRefresh(aIngredient)
+      const aIngredient = await axios.put(
+        `http://localhost:5000/api/Ingredient/${ingId}`,
+        updatedUser
+      );
+      await axios.put(`http://localhost:5000/api/payment/${id}`, updatedUser2);
+      allAdmins();
+      setAcceptIngRefresh(aIngredient);
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
 
-  const handleUpdate = (id, ingId,e) => {
-    let role =  "admin";
-    let role2 =  "admin";
-    let text1 = "";
-    let text2 = "";
-    if (role == "user") {
-      text1 = `Do you want to accept ${"name"} Post `;
-      text2 = ` ${"name"} is now an admin `;
-    } else {
-      text1 = `Do you want to accept ${"name"}' Post `;
-      text2 = ` ${"name"} is now a user `;
-    }
+  const handleUpdate = (id, ingId, e) => {
+
+    const  text1 = `Do you want to accept ${e.CompanyName} ingredient `;
+
+  
     Swal.fire({
       title: text1,
       showConfirmButton: true,
@@ -223,11 +214,9 @@ try {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-     
+        UpdateRole(id, ingId, e);
 
-        UpdateRole(id, ingId,e);
-
-        Swal.fire(text2, "", "success");
+        Swal.fire("ingredient has been accepted", "", "success");
 
         // window.location.reload();
       } else Swal.fire(" Cancelled", "", "error");
@@ -239,7 +228,7 @@ try {
       <div className="bg-[#ffffff] mr-5 ml-5 p-10 rounded-2xl min-h-[calc(50vh)]   ">
         <div className="relative flex items-center justify-between pt-4">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-          Pending Recipes
+            Pending Recipes
           </div>
         </div>
 
@@ -271,7 +260,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">NAME</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    Ingredient Name
+                  </p>
                 </th>
                 <th
                   colSpan={1}
@@ -280,7 +271,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">type</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    New Name
+                  </p>
                 </th>
                 <th
                   colSpan={1}
@@ -289,7 +282,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">Company email</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    Company Name
+                  </p>
                 </th>
                 <th
                   colSpan={1}
@@ -298,7 +293,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">Company name</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    price Plan
+                  </p>
                 </th>
 
                 <th
@@ -333,14 +330,14 @@ try {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                       src={`http://localhost:5000/${e.img}`} 
-                         className="h-full w-full rounded-full"
+                          src={`http://localhost:5000/${e.image}`}
+                          className="h-full w-full rounded-full"
                           alt=""
                         />
                       </div>
 
                       <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
-                        {e.ingredientName}
+                        {e.TrueName}
                       </p>
                     </td>
                     <td
@@ -350,7 +347,7 @@ try {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.ingredientType}
+                            {e.ingredientName}
                           </p>
                         </div>
                       </div>
@@ -360,28 +357,7 @@ try {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.CompanyEmail}
-                      </p>
-                    </td>
-                   
-                    <td 
-                      className="pt-[14px] pb-[18px] sm:text-[14px]"
-                      role="cell"
-                    >
-                      <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        
-                        
-                          <div className=" w-10 flex flex-col justify-center items-center">
-                            {" "}
-                            <p className="text-sm font-bold text-navy-700 dark:text-white">
-                               {e.CompanyName}
-                              </p>
-                          </div>
-                         
-
-                        
-                      
-
+                        {e.CompanyName}
                       </p>
                     </td>
 
@@ -389,12 +365,22 @@ try {
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
                     >
-                      <button
-                        onClick={() => handleUpdate(e._id,e.IngId,e)}
-                      >
-                       
-                          <Icon color="blue" path={mdiCheckDecagram } size={1} />
-                       
+                      <p className="text-sm font-bold text-navy-700 dark:text-white">
+                        <div className=" w-10 flex flex-col justify-center items-center">
+                          {" "}
+                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                            {e.pricePlan}
+                          </p>
+                        </div>
+                      </p>
+                    </td>
+
+                    <td
+                      className="pt-[14px] pb-[18px] sm:text-[14px]"
+                      role="cell"
+                    >
+                      <button onClick={() => handleUpdate(e._id, e.IngId, e)}>
+                        <Icon color="blue" path={mdiCheckDecagram} size={1} />
                       </button>
                     </td>
 
@@ -423,13 +409,7 @@ try {
               />
             }
           </div>
-
-       
         </div>
-
-
-
-
 
         <form>
           <div className="relative mt-5">
@@ -439,7 +419,7 @@ try {
               className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search"
               required=""
-              value={searchTermUsers}
+              value={searchTermUsersA}
               onChange={(e) => {
                 setSearchTermUsersA(e.target.value);
                 filterDataByNameUsersA(e.target.value);
@@ -459,7 +439,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">NAME</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    Ingredient Name
+                  </p>
                 </th>
                 <th
                   colSpan={1}
@@ -468,7 +450,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">type</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    New Name
+                  </p>
                 </th>
                 <th
                   colSpan={1}
@@ -477,7 +461,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">company email</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    Company Name
+                  </p>
                 </th>
                 <th
                   colSpan={1}
@@ -486,7 +472,9 @@ try {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">company name</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    price Plan
+                  </p>
                 </th>
 
                 <th
@@ -521,14 +509,14 @@ try {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                        src={`http://localhost:5000/${e.img}`}
+                          src={`http://localhost:5000/${e.image}`}
                           className="h-full w-full rounded-full"
                           alt=""
                         />
                       </div>
 
                       <p className="text-sm font-bold text-navy-700 dark:text-white ml-3">
-                        {e.ingredientName}
+                        {e.TrueName}
                       </p>
                     </td>
                     <td
@@ -538,7 +526,7 @@ try {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.ingredientType}
+                            {e.ingredientName}
                           </p>
                         </div>
                       </div>
@@ -548,27 +536,21 @@ try {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.CompanyEmail}
+                        {e.CompanyName}
                       </p>
                     </td>
+
                     <td
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        
-                        
-                          <div className=" w-10 flex flex-col justify-center items-center">
-                            {" "}
-                            <p className="text-sm font-bold text-navy-700 dark:text-white">
-                               {e.CompanyName}
-                              </p>
-                          </div>
-                         
-
-                        
-                      
-
+                        <div className=" w-10 flex flex-col justify-center items-center">
+                          {" "}
+                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                            {e.pricePlan}
+                          </p>
+                        </div>
                       </p>
                     </td>
 
@@ -576,12 +558,8 @@ try {
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
                     >
-                      <button
-                        onClick={() => handleUpdate(e._id,e.IngId,e)}
-                      >
-                       
-                          <Icon color="blue" path={mdiCheckDecagram } size={1} />
-                       
+                      <button onClick={() => handleUpdate(e._id, e.IngId, e)}>
+                        <Icon color="blue" path={mdiCheckDecagram} size={1} />
                       </button>
                     </td>
 
@@ -610,50 +588,10 @@ try {
               />
             }
           </div>
-          </div>
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
-
-  
-
-
-
-
-
-
-
-
-     
-
-
-
-        
-    
-
-
-
-     
-
-     
-
-
-
-
-
-
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default AcceptIng
+export default AcceptIng;

@@ -74,7 +74,8 @@ const UsersInfo = () => {
     setCurrentPageUsers(pageNumber);
   };
 
-  const handleDelete = (id, name) => {
+  const handleDelete =(id, name) => {
+
     Swal.fire({
       title: `Do you want to remove ${name}?  `,
       showConfirmButton: true,
@@ -82,17 +83,20 @@ const UsersInfo = () => {
       confirmButtonText: "OK",
       cancelButtonText: "Cancel",
       icon: "warning",
-    }).then((result) => {
+    }).then( async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Swal.fire(` ${name} has been removed `, "", "success");
 
-        axios
-          .put("http://localhost:5000/recordss/" + id)
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => console.log(error.message));
+
+        
+          try {
+            await axios.delete(`http://localhost:5000/api/users/${id}`);
+            allUsers();
+          } catch (error) {
+            console.error("Error deleting user:", error);
+          }
+        
 
         // window.location.reload();
       } else Swal.fire(" Cancelled", "", "error");
@@ -107,6 +111,7 @@ const UsersInfo = () => {
       };
 
       await axios.put(`http://localhost:5000/api/userList/${userId}`, updatedUser);
+      allUsers();
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -244,7 +249,7 @@ const UsersInfo = () => {
                 <tbody role="rowgroup">
                   <tr role="row">
                     <td
-                      className="pt-[14px] pb-[18px] sm:text-[14px] flex items-center"
+                      className="pt-[21px] pb-[18px] sm:text-[14px] flex items-center"
                       role="cell"
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
@@ -330,7 +335,7 @@ const UsersInfo = () => {
                       role="cell"
                     >
                       <button
-                        onClick={() => handleDelete(e.userid, e.username)}
+                        onClick={() => handleDelete(e._id, e.firstName)}
                       >
                         <Icon color="red" path={mdiDelete} size={1} />
                       </button>
