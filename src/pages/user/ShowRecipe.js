@@ -7,6 +7,25 @@ import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import DyRecipeCardMeal from '../../components/user/DyRecipeCardMeal';
 import Rating from '../../components/Rating';
+import ShowRecipeGa from './ShowRecipeGa';
+
+
+import {
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+  ListItemSuffix,
+  Chip,
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+  Alert,
+  Input,
+  Button,
+} from "@material-tailwind/react";
+
 const ShowRecipe = ({userIdApp0}) => {
   console.log(userIdApp0)
   const { id } = useParams();
@@ -83,6 +102,8 @@ console.log(Recipe)
      };
   return (
    <>
+
+   
   <div className='mt-10  '>
     <div >
    <div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 justify-center mb-1">
@@ -174,10 +195,8 @@ className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="ve
     </div> 
 
  {/* ;;;;; */}
-
+<div className=' w-full flex lg:flex-row md:flex-col sm:flex-col justify-center items-center '>
  <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-60">
-
-
 <div>
   <img
     className="w-full h-40 "
@@ -249,23 +268,96 @@ className={` flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="ve
 <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#7b6f5b] text-gray-800 rounded-full pt-1 pb-1 pl-1 pr-1 text-xs uppercase">
 <Rating RecipeId={Recipe._id} userIdApp0={userIdApp0} Recipe={Recipe} />
 </div>
+
+
+
+
 </div>
 
 
-
-
-
- {/* ;;;;; */}
-    </div>
-   <div class="cook_now_videos">
-        <div class="video-list">
+<div className="">
+        <div className="">
               {clinks?.map((e)=>{
-          return(<iframe src={e} className='w-96 h-60' title="YouTube video player" allowFullScreen ></iframe>)
+          return(<iframe key={e} src={e} className='w-96 h-60' title="YouTube video player" allowFullScreen ></iframe>)
                })}
         </div>
    </div>
+
+   </div>
+ {/* ;;;;; */}
+    </div>
+ 
    
    </div>
+
+
+   <div className="flex h-screen antialiased text-gray-800">
+        <div className="flex flex-row  h-full w-full overflow-x-hidden">
+
+            
+          <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 display:none">
+            <div className="flex flex-col mt-8">
+              <div className="flex flex-row items-center justify-between text-xs">
+                <span className="font-bold">Active Conversations</span>
+                <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
+                  {/* {reporters.length} */}
+                </span>
+              </div>
+              <div className="flex flex-col space-y-1 mt-4 -mx-2 h-auto overflow-y-auto">
+                {
+                  // console.log(RecipeIngs[0].ingredientName)
+
+                  RecipeIngs?.map((e) => {
+                    return (
+                      <>
+                        <ListItem key={e?.ingredientName}>
+                          <ListItemPrefix>
+                            <img
+                              className="w-10"
+                            //   src={`http://localhost:5000/${e?.img}`}
+                            />
+                          </ListItemPrefix>
+                          {e?.ingredientName}
+                        </ListItem>
+                      </>
+                    );
+                  })
+                }
+              </div>
+            </div>
+          </div>
+
+
+
+          <div className="flex flex-col flex-auto h-full p-6">
+            <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
+              <div className="flex flex-col h-full overflow-x-auto mb-4">
+                <div className="flex flex-col h-full">
+                  <div className="">
+                    <div className="">
+                      <iframe
+                        // src={Recipe?.links[0]}
+                        className="w-96 h-60"
+                        title="YouTube video player"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+   {/* <ShowRecipeGa Recipe={Recipe} RecipeIngs={RecipeIngs}/> */}
    </>
   )
 }

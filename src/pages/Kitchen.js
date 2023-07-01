@@ -6,11 +6,14 @@ import SidebarMyList from "../components/user/SidebarMyList";
 import { useContext } from "react";
 import { KitContext } from "../KitchenContext";
 import {AllContext} from "../AllDataContext"
+import Swal from "sweetalert2";
 
 
 import axios from "axios";
 
 const Kitchen = ({userIdApp0}) => {
+
+
   const { AllIngredientsUser0, setAllIngredientsUser0} = useContext(AllContext);
   const { LastUpdatedDataUser, setLastUpdatedDataUser} = useContext(AllContext);
   const { AllDataGet,setAllDataGet} = useContext(AllContext);
@@ -90,12 +93,31 @@ if(SidebarIngName0 !== ""){
 }
   },[EffectStatus])
   
-  
 
-  
 
+  const showSuccessAlert = (ingredientName,message) => {
+    Swal.fire({
+      title: ` ${ingredientName} ${message} `,
+      icon: "success",
+      showConfirmButton: false,
+      showCancelButton: false,
+      timer: 700, // Automatically close after 3000 milliseconds (3 seconds)
+    }).then(() => {
+      // Code to execute after the Swal dialog is closed
+    });
+  };
+  const showAlert = (message) => {
+    Swal.fire({
+      title: "Error",
+      text: message,
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+  };
 
   const UpdateBeneficiaryId = async (ingredientName) => {
+
+
     const newArrayAll = [...userAllIngredients];
     newArrayAll.map((e) => {
       
@@ -106,14 +128,17 @@ if(SidebarIngName0 !== ""){
       if (ingredientName.toLowerCase() == e.ingredientName.toLowerCase()) {
         if (e.ingredientFlag == false) {
               e.ingredientFlag = true;           
-           
+              showSuccessAlert(ingredientName,"added to your list")
+
               // updateMyListSideBarCon((prevArray) => [...prevArray, e])
               updateMyListSideBarConNames((prevArray) => [...prevArray, e.ingredientName])
             
                 
         } else {
              e.ingredientFlag = false;
-              removeItem0(ingredientName);      
+              removeItem0(ingredientName);  
+              showSuccessAlert(ingredientName,"removed from your list")
+    
         }
       }
     
@@ -192,7 +217,6 @@ if(SidebarIngName0 !== ""){
 
   return (
     <>
-
 {LastUpdatedDataUser && AllDataGet  ? 
   <SidebarMyList userIdApp0={userIdApp0} />
 : null}

@@ -347,7 +347,7 @@ scrollToSectionForm('Sform');
 
       <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray">
-          Add Your Ingredient
+          Replace with Your Ingredient
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
           Enter your Ingredient .

@@ -3,6 +3,7 @@ import BackimgAbout from './BackimgAbout'
 import AboutUsed from './AboutUsed'
 import Testimonials from './Testimonials'
 import TeamMember from './TeamMember'
+import { AboutNum } from './AboutNum'
 const About = () => {
   return (
     <>
@@ -18,8 +19,9 @@ const About = () => {
     
     <BackimgAbout/>
     {/* <AboutUsed/> */}
-    <Testimonials/>
+    {/* <Testimonials/> */}
     {/* <TeamMember/>  */}
+    <AboutNum/>
     </>
   )
 }

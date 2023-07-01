@@ -10,14 +10,64 @@ import { mdiSilverware } from "@mdi/js";
 import { mdiHandshakeOutline } from "@mdi/js";
 import { mdiAccountOutline } from "@mdi/js";
 import { DashboardPendingContext } from "../../DashboardPendingContext";
-
+import { AllContext } from "../../AllDataContext";
 const AcceptPayment = () => {
     const [persons, setPersons] = useState([]);
     const [searchTermUsers, setSearchTermUsers] = useState("");
     const [FilterDataUsers, setFilterDataUsers] = useState([]);
     const { allPaymentsP, setAllPaymentsP } = useContext(DashboardPendingContext);
+    const {AllIngredientsBase,setAllIngredientsUserBase} =useContext(AllContext)
+//----------------------------------------
 
-    // const allAdmins = async () => {
+
+function getDurationInMilliseconds(duration) {
+  const durations = {
+    oneMinute:   60 * 1000,
+    oneDay: 24 * 60 * 60 * 1000,
+    oneWeek: 7 * 24 * 60 * 60 * 1000,
+    oneMonth: 30 * 24 * 60 * 60 * 1000,
+    oneYear: 30 * 24 * 60 * 60 * 12 * 1000,
+    // Add more durations as needed
+  };
+
+  return durations[duration] || 0;
+}
+const [expiredIng, setExpiredIng] = useState([]);
+
+useEffect(() => {
+  if (AllIngredientsBase && AllIngredientsBase.length > 0) {
+    const expiredIngredients = AllIngredientsBase.filter((ingredient) => {
+      const createdAt = new Date(ingredient.updatedAt);
+      const duration = ingredient.duration;
+  
+      // Filter out if duration is empty string or undefined
+      if (duration === "" || typeof duration === "undefined") {
+        return false;
+      }
+  
+      // Convert the duration to milliseconds
+      const durationMs = getDurationInMilliseconds(duration);
+  
+      // Calculate the expiration date
+      const expirationDate = new Date(createdAt.getTime() + durationMs);
+  
+      // Get the current date and time
+      const currentDate = new Date();
+  
+      // Check if the current date is greater than the expiration date
+      return currentDate > expirationDate;
+    });
+
+    console.log("Expired Ingredients:", expiredIngredients);
+    setExpiredIng(expiredIngredients)
+ 
+  }
+}, [AllIngredientsBase]);
+
+
+
+
+// const allAdmins = async () => {
     //     try {
     //         const response = await axios.get("http://localhost:5000/api/paymentAdmin");
     //         setPersons(response.data);
@@ -237,7 +287,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
               </tr>
             </thead>
 
-            {slicedArrayUsers.map((e) => {
+            {expiredIng.map((e) => {
               return (
                 <tbody role="rowgroup">
                   <tr role="row">
@@ -247,7 +297,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                           src={`http://localhost:5000/${e.image}`} 
+                           src={`http://localhost:5000/${e.img}`} 
                           className="h-full w-full rounded-full"
                           alt=""
                         />
@@ -264,7 +314,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       <div className="flex items-center gap-2">
                         <div className="rounded-full text-xl">
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
-                            {e.CompanyName}
+                            {e.TrueName}
                           </p>
                         </div>
                       </div>
@@ -274,7 +324,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        {e.pricePlan}
+                        {e.updatedAt}
                       </p>
                     </td>
                     <td
