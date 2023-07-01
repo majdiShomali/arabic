@@ -12,7 +12,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import DyRecipeCardMeal from "../user/DyRecipeCardMeal";
 import DyRecipeCardDrink from "../user/DyRecipeDrinkCard";
-const Cards = ({nation}) => {
+const Cards = ({nation }) => {
   console.log(nation)
   let localTable = [];
 
@@ -228,7 +228,6 @@ const filterDataByNameUsers = (searchTermMeals) => {
               }}
             />
           </legend> */}
-
           <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 place-items-center">
             {slicedArrayMeals?.map((e, i) => {
               return (
@@ -243,6 +242,7 @@ const filterDataByNameUsers = (searchTermMeals) => {
                     img={e.img}
                     rate={e.rate}
                     rating={e.rating}
+                    Recipe={e}
                   />
                 </>
               );

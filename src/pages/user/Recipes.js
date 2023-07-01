@@ -67,8 +67,8 @@ console.log(AllDataRecipesA)
   const [isLoading, setIsLoading] = useState(true);
 
   const allRecipes = async () => {
-console.log(AllDataGetK[0].MyListId)
-updateMyListId(AllDataGetK[0].MyListId)   
+console.log(AllDataGetK[0]?.MyListId)
+updateMyListId(AllDataGetK[0]?.MyListId)   
 updateMyListN(AllDataGetK[0]?.MyListn)
     setUserAllIngredients(AllDataGetK[0]?.AllIngredientsId)
     setUserAllIngredients0(() => {
@@ -375,8 +375,11 @@ updateMyListN(AllDataGetK[0]?.MyListn)
               cardId={e._id}
               img={e.img}
               rate={e.rate}
-              rating={e.rating} />
-
+              rating={e.rating}
+              Recipe={e}
+              
+              />
+         
 
             );
           }

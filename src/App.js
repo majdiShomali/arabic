@@ -108,7 +108,7 @@ export default function App() {
           <Route path="Recipes" element={<Recipes userIdApp0 ={userIdApp} />} />
           <Route path="Kitchen" element={<Kitchen  userIdApp0 ={userIdApp} />} />
           <Route path="UserProfile" element={<UserProfile />} />
-          <Route path="/Kitchen/:type_Kitchen" element={<Kitchens />} />
+          <Route path="/Kitchen/:type_Kitchen" element={<Kitchens userIdApp0 ={userIdApp} />} />
         </Routes>
         <Footer />
       </Router>

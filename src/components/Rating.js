@@ -1,20 +1,22 @@
 import React, { useState,useContext,useEffect } from "react";
 import axios from "axios";
 import {AllContext} from "../AllDataContext"
+import TotalRating from "./TotalRating";
 
-const Rating = ({ RecipeId, userIdApp0, Recipe }) => {
+const Rating = ({ RecipeId, Recipe ,UserIdA,rating }) => {
+
+  console.log(RecipeId,Recipe)
   const starCount = 5; // Total number of stars
   const [filledStars, setFilledStars] = useState(0);
   const [RatingStatus, setRatingStatus] = useState(false);
   const { AllDataGet,setAllDataGet} = useContext(AllContext);
+  const {UserAllData, setUserAllData} = useContext(AllContext);
 
-
-console.log(Recipe?.UsersIdRate?.includes(userIdApp0))
 useEffect(()=>{
-  if(Recipe?.UsersIdRate?.includes(userIdApp0)){
+  if(Recipe?.UsersIdRate?.includes(UserIdA)){
     setRatingStatus(true)
   }
-},[filledStars,Recipe])
+},[filledStars,Recipe,UserAllData])
 
 console.log(RatingStatus)
 
@@ -23,9 +25,9 @@ console.log(RatingStatus)
   const handleStarClick = async (starIndex) => {
     setFilledStars(starIndex + 1);
 
-   let ids = Recipe.UsersIdRate
-    let newrate =Recipe.rate
-    ids.push(userIdApp0)
+   let ids = Recipe?.UsersIdRate
+    let newrate =Recipe?.rate
+    ids.push(UserIdA)
     newrate.push(starIndex + 1)
 
 
@@ -76,9 +78,9 @@ console.log(RatingStatus)
     </div>
   
       :
+     <TotalRating rating={rating}/>
     
-    
-    <p className="text-white">thanks for rating</p>
+    // <p className="text-white">thanks for rating</p>
   }
     </>
   );

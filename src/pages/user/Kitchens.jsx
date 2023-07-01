@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Cards from "../../components/landingPage/Cards";
 
-const Kitchens = () => {
+const Kitchens = ({userIdApp0}) => {
   const [Kitchen, setKitchen] = useState([]);
   const { type_Kitchen } = useParams();
 
@@ -12,7 +12,7 @@ const Kitchens = () => {
   return(
   <>
   
-  <Cards nation={type_Kitchen}/>
+  <Cards nation={type_Kitchen} userIdApp0={userIdApp0}/>
   </>
   
   );

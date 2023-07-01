@@ -7,6 +7,7 @@ const UserDataProvider = ( {children} ) => {
   const [closeNav, setCloseNav] = useState();
 
   const [UserAllData, setUserAllData] = useState({});
+  const [UserIdFinal, setUserIdFinal] = useState("");
 
   const updateNav = (newValue) => {
     setCloseNav(newValue);
@@ -22,12 +23,14 @@ const UserDataProvider = ( {children} ) => {
           },
         });
         let id = response.data.user.id
-
+        console.log(id)
+        setUserIdFinal(id)
         try {
             const response = await axios.get(
               `http://localhost:5000/api/users/${id}`
             ); 
             setUserAllData(response.data[0]);
+            console.log(response.data[0])
           } catch (error) {
             console.error("Error retrieving data:", error);
           }
