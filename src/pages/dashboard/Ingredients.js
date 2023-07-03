@@ -33,6 +33,8 @@ const Ingredients = () => {
   const [productImage, setProductImage] = useState(null);
   const [FilterDataMeals, setFilterDataMeals] = useState([]);
 
+  const [IngredientSelected, setIngredientSelected] = useState();
+console.log(IngredientSelected)
   const handleProductImageChange = (event) => {
     setProductImage(event.target.files[0]);
   };
@@ -134,6 +136,13 @@ const Ingredients = () => {
     setCardId(ingId);
     setName(Ingredient.ingredientName);
     setType(Ingredient.ingredientType);
+    setIngredientSelected(Ingredient)
+    // console.log(IngredientSelected.TrueName == IngredientSelected.ingredientName)
+    console.log("Ingredient.TrueName == Ingredient.ingredientName")
+    console.log(Ingredient.TrueName )
+    console.log(Ingredient.TrueName == Ingredient.ingredientName)
+    console.log( Ingredient.ingredientName)
+    console.log("Ingredient.TrueName == Ingredient.ingredientName")
 
     // "sold": false,
     // "_id": "64991964be58b493e15c9fa0",
@@ -155,6 +164,26 @@ const Ingredients = () => {
       await axios.put(
         `http://localhost:5000/api/IngredientAdmin/${CardId}`,
         formData
+      );
+      fetchIng();
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+  const handleResetNow = async () => {
+    setUpdateStatus(false);
+
+    try {
+      console.log(IngredientSelected.TrueName);
+      console.log(IngredientSelected.TrueImg);
+      await axios.put(
+        `http://localhost:5000/api/IngredientAdminReset/${CardId}`,
+        {
+          ingredientName:IngredientSelected.TrueName,
+          image:IngredientSelected.TrueImg
+
+        }
       );
       fetchIng();
     } catch (error) {
@@ -235,6 +264,7 @@ const Ingredients = () => {
                           </Button>
             ) : (
               <>
+
               <Button
               className="border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
               variant="text"
@@ -242,6 +272,19 @@ const Ingredients = () => {
             >
               Update
             </Button>
+
+
+{IngredientSelected.TrueName !== IngredientSelected.ingredientName ? 
+              <Button
+              className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+              variant="text"
+              fullWidth
+                onClick={handleResetNow}
+            >
+              reset
+            </Button>
+: null }
+
               <Button
                   className="mr-5 border mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
                   variant="text"

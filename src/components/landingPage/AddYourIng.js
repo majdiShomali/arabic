@@ -99,7 +99,13 @@ function AddYourIng() {
 
 
   const handleCreate = async () => {
-    setIsCreateButtonClicked(true);
+if(productImage != null  && Ing?.IngredientType && Ing?.IngredientName != undefined) {
+      setIsCreateButtonClicked(true);
+
+
+}
+      console.log(productImage,Ing?.IngredientName,Ing?.IngredientType)
+
   };
 
 
@@ -119,7 +125,6 @@ const { LastUpdatedDataUser, setLastUpdatedDataUser} = useContext(AllContext);
   const [SearchType00, setSearchType00] = useState("");
   
   const handleShowUser = async () => {
-
 
 
     setFilterDataVegetables0(AllIngredientsBase)
@@ -359,18 +364,19 @@ scrollToSectionForm('Sform');
               label="Name"
               value={Name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
                   <Input
               size="lg"
               label="Name"
               value={Ing?.IngredientName}
-              
+              required
             />
                   <Input
               size="lg"
               label="Name"
               value={Ing?.IngredientType}
-              
+              required
             />
 
 

@@ -10,6 +10,7 @@ import { mdiSilverware } from "@mdi/js";
 import { mdiHandshakeOutline } from "@mdi/js";
 import { mdiAccountOutline } from "@mdi/js";
 import { DashboardPendingContext } from "../../DashboardPendingContext";
+import moment from 'moment';
 
 const AcceptIng = () => {
   const { SponsorAContext, setSponsorAContext } = useContext(
@@ -485,7 +486,7 @@ const AcceptIng = () => {
                   className="border-b border-gray-200 pr-10 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">Approve</p>
+                  <p className="text-xs tracking-wide text-gray-600">Created Date</p>
                 </th>
 
                 <th
@@ -495,7 +496,7 @@ const AcceptIng = () => {
                   className="border-b border-gray-200 pr-5 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">DELETE</p>
+                  <p className="text-xs tracking-wide text-gray-600">Updated Date</p>
                 </th>
               </tr>
             </thead>
@@ -508,7 +509,7 @@ const AcceptIng = () => {
                       className="pt-[14px] pb-[18px] sm:text-[14px] flex items-center"
                       role="cell"
                     >
-                      <div className="h-[30px] w-[30px] rounded-full">
+                      <div className="h-[25px] w-[25px] rounded-full">
                         <img
                           src={`http://localhost:5000/${e.image}`}
                           className="h-full w-full rounded-full"
@@ -559,20 +560,19 @@ const AcceptIng = () => {
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
                     >
-                      <button onClick={() => handleUpdate(e._id, e.IngId, e)}>
-                        <Icon color="blue" path={mdiCheckDecagram} size={1} />
-                      </button>
+                     
+                      { moment(e.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                      
                     </td>
 
                     <td
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
                     >
-                      <button
-                        onClick={() => handleDelete(e.userid, e.username)}
-                      >
-                        <Icon color="red" path={mdiDelete} size={1} />
-                      </button>
+                      
+                       
+                        { moment(e.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}
+                      
                     </td>
                   </tr>
                 </tbody>

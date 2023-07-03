@@ -152,6 +152,8 @@ console.log(email,password)
           userData
         );
         console.log("Data inserted:", response.data);
+        setpasswordp("incorrect password")
+
         if(response.data.error != 'incorrect password'){
         //   setStatus("success");
          console.log("success")
@@ -260,6 +262,7 @@ console.log(email,password)
                         <input
                             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                             type="email" placeholder="Email"
+                            required
                             value={email}
                             onChange={(e) => setemail(e.target.value)}  />
                             <p className="text-red-500">{emailp}</p>
@@ -267,6 +270,7 @@ console.log(email,password)
                             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                             type="password" placeholder="Password" 
                             value={password}
+                            required
                             onChange={(e) => setpassword(e.target.value)}/>
                             <p className="text-red-500">{passwordp}</p>
                         <button type='submit'

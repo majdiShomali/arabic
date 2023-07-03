@@ -147,31 +147,33 @@ const filterDataByNameUsers = (searchTermUsers) => {
     });
   };
 
-  const UpdateRole = async (userId, roleN) => {
-    try {
-      const updatedUser = {
-        // Update the properties of the user as needed
-        flag: true,
-      };
-      await axios.put(`http://localhost:5000/api/recipes/${userId}`, updatedUser);
-      allAdmins()
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
+  const UpdateRole = async (IngredientSelected_id, IngredientSelected) => {
+  
+      // setUpdateStatus(false);
+  
+   console.log(IngredientSelected.TrueName);
+        console.log(IngredientSelected.TrueImg);
+
+      try {
+        await axios.put(
+          `http://localhost:5000/api/IngredientAdminReset/${IngredientSelected_id}`,
+          {
+            ingredientName:IngredientSelected.TrueName,
+            image:IngredientSelected.TrueImg,
+             sold:false,
+             duration:"",
+          }
+        );
+        // fetchIng();
+      } catch (error) {
+        console.error("Error updating user:", error);
+      }
+  
   };
 
-  const handleUpdate = (userid, typeid, name) => {
-    let role = typeid == 0 ? "user" : "admin";
-    let role2 = typeid == 1 ? "user" : "admin";
-    let text1 = "";
-    let text2 = "";
-    if (role == "user") {
-      text1 = `Do you want to accept ${name} Post `;
-      text2 = ` ${name} is now an admin `;
-    } else {
-      text1 = `Do you want to accept ${name}' Post `;
-      text2 = ` ${name} is now a user `;
-    }
+  const handleUpdate = (IngredientSelected_id, IngredientSelected) => {
+    let text1 = "aaaaaaaaaaaaa";
+
     Swal.fire({
       title: text1,
       showConfirmButton: true,
@@ -182,16 +184,10 @@ const filterDataByNameUsers = (searchTermUsers) => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        let roleN;
-        if (typeid == 0) {
-          roleN = 1;
-        } else {
-          roleN = 0;
-        }
+   
+        UpdateRole(IngredientSelected_id, IngredientSelected);
 
-        UpdateRole(userid, roleN);
-
-        Swal.fire(text2, "", "success");
+        Swal.fire("hello", "", "success");
 
         // window.location.reload();
       } else Swal.fire(" Cancelled", "", "error");
@@ -352,7 +348,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       role="cell"
                     >
                       <button
-                        onClick={() => handleUpdate(e._id, e.role, e.Name)}
+                        onClick={() => handleUpdate(e._id, e)}
                       >
                        
                           <Icon color="blue" path={mdiCheckDecagram } size={1} />

@@ -192,6 +192,7 @@ console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName
                           type="text"
                           id="email"
                           name="email"
+                          required
                           className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                           placeholder="your.email@gmail.com"
                         />
@@ -220,6 +221,7 @@ console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName
                       </label>
                       <div className="relative">
                         <input
+                        required
                           type="text"
                           id="card-holder"
                           name="card-holder"
@@ -254,6 +256,7 @@ console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName
                       <div className="flex">
                         <div className="relative w-7/12 flex-shrink-0">
                           <input
+                          required
                             type="text"
                             id="card-no"
                             name="card-no"
@@ -277,6 +280,7 @@ console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName
                           </div>
                         </div>
                         <input
+                        required
                           type="text"
                           name="credit-expiry"
                           className="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
@@ -285,6 +289,7 @@ console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName
                           onChange={(e) => setDateCard(e.target.value)}
                         />
                         <input
+                        required
                           type="text"
                           name="credit-cvc"
                           className="w-1/6 flex-shrink-0 rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
