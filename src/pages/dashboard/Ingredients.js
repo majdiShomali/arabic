@@ -249,6 +249,7 @@ console.log(IngredientSelected)
               >
                 <option value="vegetables">Vegetables</option>
                 <option value="fruits">Fruits</option>
+                <option value="seasoning">seasoning</option>
               </select>
             </div>
 
@@ -373,7 +374,8 @@ console.log(IngredientSelected)
                 className={` flex-shrink-0 m-1 relative overflow-hidden ${
                   e.ingredientType == "vegetables"
                     ? "bg-[#219D80]"
-                    : "bg-[#E8AA42]"
+                    :e.ingredientType == "fruits" ? "bg-[#E8AA42]"
+                    : "bg-[#847d73]" 
                 }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
               >
                 <svg

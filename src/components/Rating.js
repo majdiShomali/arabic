@@ -2,6 +2,7 @@ import React, { useState,useContext,useEffect } from "react";
 import axios from "axios";
 import {AllContext} from "../AllDataContext"
 import TotalRating from "./TotalRating";
+import Swal from "sweetalert2";
 
 const Rating = ({ RecipeId, Recipe ,UserIdA,rating }) => {
 
@@ -20,7 +21,14 @@ useEffect(()=>{
 
 console.log(RatingStatus)
 
-
+const showSuccessAlert = (message) => {
+  Swal.fire({
+    title: `Thank you for rate `,
+    icon: "success",
+    confirmButtonText: "OK",
+  }).then(() => {
+  });
+};
 
   const handleStarClick = async (starIndex) => {
     setFilledStars(starIndex + 1);
@@ -42,7 +50,7 @@ console.log(RatingStatus)
       };
 
     const NupdatedRecipe=   await axios.put(`http://localhost:5000/api/recipes/${RecipeId}`, updatedRecipe);
-
+    showSuccessAlert(newrate)
     } catch (error) {
       console.error("Error updating user:", error);
     }
