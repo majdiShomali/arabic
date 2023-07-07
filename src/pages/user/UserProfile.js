@@ -4,7 +4,7 @@ import { useState, useEffect,useContext } from "react";
 import axios from "axios";
 
 import { UserContext } from "../../UserContext";
-
+import DyRecipeCardMeal from "../../components/user/DyRecipeCardMeal";
 const UserProfile = () => {
   const { profileRefresh, updateProfileRefresh } = useContext(UserContext);
 
@@ -12,6 +12,7 @@ const UserProfile = () => {
   const [cards, setCards] = useState([]);
   const [userId, setUserId] = useState();
   const [userData, setUserData] = useState({});
+  const [userFavData, setUserFavData] = useState([]);
 
   const fetchProtectedData = async () => {
     try {
@@ -36,6 +37,17 @@ const UserProfile = () => {
         } catch (error) {
           console.error("Error retrieving data:", error);
         }
+
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/api/favoriteRecipes/${id}`
+          );
+          console.log(response.data);
+
+          setUserFavData(response.data);
+        } catch (error) {
+          console.error("Error retrieving data:", error);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -53,7 +65,7 @@ const UserProfile = () => {
   }, [profileRefresh]);
 
 
-console.log(userData)
+console.log(userFavData)
 
 
 
@@ -70,10 +82,10 @@ console.log(userData)
         <div>
           <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto">
             <div className="flex justify-center">
-              <img src={`http://localhost:5000/${userData.img}`} alt="" className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110" />
+              <img src={`http://localhost:5000/${userData?.img}`} alt="" className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-md border-4 border-white transition duration-200 transform hover:scale-110" />
             </div>
             <div className="mt-16">
-              <h1 className="font-bold text-center text-3xl text-gray-900">{userData.firstName}</h1>
+              <h1 className="font-bold text-center text-3xl text-gray-900">{userData?.firstName}</h1>
               <p className="text-center text-sm text-gray-400 font-medium">Welcome to arabic recipes</p>
               <p>
                 <span>
@@ -93,7 +105,7 @@ console.log(userData)
                 <h3 className="font-medium text-gray-900 text-left px-6">Recent activites</h3>
                 <div className="mt-5 w-full grid grid-cols-2 items-center overflow-hidden text-sm">
                   
-                 { userData.MyListId?.map((e)=>{
+                 { userData?.MyListId?.map((e)=>{
 
 return(
   <div className="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150">
@@ -115,6 +127,34 @@ return(
         </div>
       </div>
     
+
+
+
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 place-items-center">
+            {userFavData?.map((e, i) => {
+              return (
+                <>
+                  <DyRecipeCardMeal
+                    key={e._id}
+                    Name={e.recipeName}
+                    card={e}
+                    index={i}
+                    SAMeals={userFavData}
+                    cardId={e._id}
+                    img={e.img}
+                    rate={e.rate}
+                    rating={e.rating}
+                    Recipe={e}
+                  />
+                </>
+              );
+            })}
+          </div>
+
+
+
+
+
     {/* <div>
   <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css" />
   <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" />

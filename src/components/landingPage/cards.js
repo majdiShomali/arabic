@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
+import { AllContext } from "../../AllDataContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import DyRecipeCardMeal from "../user/DyRecipeCardMeal";
@@ -15,6 +16,7 @@ import DyRecipeCardDrink from "../user/DyRecipeDrinkCard";
 const Cards = ({nation }) => {
   console.log(nation)
   let localTable = [];
+  const {favRefresh,updateFavRefresh} =useContext(AllContext)
 
   //-----------------------search------------------------//
   const [searchTermMeals, setSearchTermMeals] = useState("");
@@ -41,7 +43,7 @@ const Cards = ({nation }) => {
   useEffect(() => {
     allRecipes();
 
-  }, []);
+  }, [favRefresh]);
   useEffect(() => {
 
  if(nation !=="all"){
@@ -57,7 +59,7 @@ const Cards = ({nation }) => {
   setNewTable(table)
  }
     
-  }, [table]);
+  }, [table,favRefresh]);
 
 
   const [currentPageMeals, setCurrentPageMeals] = useState(1);

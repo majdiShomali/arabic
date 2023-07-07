@@ -3,7 +3,7 @@ import axios from "axios";
 import {AllContext} from "../AllDataContext"
 import TotalRating from "./TotalRating";
 import Swal from "sweetalert2";
-
+import {RecipeContext} from "../RecipeContext";
 const Rating = ({ RecipeId, Recipe ,UserIdA,rating }) => {
 
   console.log(RecipeId,Recipe)
@@ -12,6 +12,8 @@ const Rating = ({ RecipeId, Recipe ,UserIdA,rating }) => {
   const [RatingStatus, setRatingStatus] = useState(false);
   const { AllDataGet,setAllDataGet} = useContext(AllContext);
   const {UserAllData, setUserAllData} = useContext(AllContext);
+    const { RecipeRatedRefresh, setRecipeRatedRefresh } = useContext(RecipeContext);
+    const {favRefresh,updateFavRefresh} =useContext(AllContext)
 
 useEffect(()=>{
   if(Recipe?.UsersIdRate?.includes(UserIdA)){
@@ -19,7 +21,6 @@ useEffect(()=>{
   }
 },[filledStars,Recipe,UserAllData])
 
-console.log(RatingStatus)
 
 const showSuccessAlert = (message) => {
   Swal.fire({
@@ -51,6 +52,9 @@ const showSuccessAlert = (message) => {
 
     const NupdatedRecipe=   await axios.put(`http://localhost:5000/api/recipes/${RecipeId}`, updatedRecipe);
     showSuccessAlert(newrate)
+    setRatingStatus(true)
+    setRecipeRatedRefresh(NupdatedRecipe)
+    updateFavRefresh(NupdatedRecipe)
     } catch (error) {
       console.error("Error updating user:", error);
     }

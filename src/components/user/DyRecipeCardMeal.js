@@ -3,9 +3,14 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 import { useNavigate } from "react-router-dom";
+import {RecipeContext} from "../../RecipeContext";
+import { mdiHeartOutline, mdiHeart } from "@mdi/js";
 import TotalRating from "../TotalRating";
 import Rating from "../../components/Rating";
 import axios from "axios"
+import Icon from "@mdi/react";
+import Swal from "sweetalert2";
+
 import {
   Card,
   Typography,
@@ -40,6 +45,8 @@ function DyRecipeCardMeal({
   const { AllDataRecipesA, setAllDataRecipesA } = useContext(AllContext);
   const {UserAllData, setUserAllData} = useContext(AllContext);
   const {UserIdFinal, setUserIdFinal} = useContext(AllContext);
+  const { RecipeRatedRefresh, setRecipeRatedRefresh } = useContext(RecipeContext);
+  const {favRefresh,updateFavRefresh} =useContext(AllContext)
 
   const [tRate, setTrate] = useState(0);
   const [UserIdA, setUserIdA] = useState(0);
@@ -82,7 +89,7 @@ function DyRecipeCardMeal({
     // const aaa = rate.length === 0 ? 1 :rate?.length
     setTrate(parseInt(rating));
     //   console.log(AllDataRecipesA)
-  }, [AllDataRecipesA]);
+  }, [AllDataRecipesA,RecipeRatedRefresh]);
 
 
 
@@ -100,9 +107,65 @@ function DyRecipeCardMeal({
     //  updateCurrentItems(currentItems)
     //  updateCurrentLinks(currentVideos0)
   }
+  const showSuccessAlert = (message) => {
+    Swal.fire({
+      title: message,
+      icon: "success",
+      confirmButtonText: "OK",
+    }).then(() => {});
+  };
+const [heartType , setHeartType]=useState(true)
+
+  const handleFAv = async (card) => {
+    let UsersIdFavorite = [...(card.UsersIdFavorite || [])];
+
+    const indexToRemove = UsersIdFavorite.indexOf(UserIdA);
+    if (indexToRemove !== -1) {
+      UsersIdFavorite.splice(indexToRemove, 1);
+      showSuccessAlert("removed from favorites")
+      setHeartType(true)
+    } else {
+      UsersIdFavorite.push(UserIdA);
+      showSuccessAlert("added to favorites")
+      setHeartType(false)
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/updateRecipeFav/${card._id}`,
+        { UsersIdFavorite }
+      );
+      updateFavRefresh(response)
+      // dispatch(fetchgamesS());
+    } catch (error) {}
+  };
+
+
 
   return (
     <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-60">
+                  {(Recipe.UsersIdFavorite.indexOf(UserIdA) === -1)  ? (
+                <Icon
+                  onClick={() => handleFAv(Recipe)}
+                  className="absolute right-2 top-2 hover:scale-110 "
+                  title="click to add"
+                  color="red"
+                  path={mdiHeartOutline}
+                  size={1.5}
+                />
+              ) : (
+                <Icon
+                  onClick={() => handleFAv(Recipe)}
+                  className="absolute right-2 top-2  hover:scale-110"
+                  title="click to remove"
+                  color="red"
+                  path={mdiHeart}
+                  size={1.5}
+                />
+              )}
+     
+     
+     
       <div>
         <img
           className="w-full h-40 "
@@ -111,7 +174,17 @@ function DyRecipeCardMeal({
         />
       </div>
       <div className="p-4">
-        <h2 className="text-2xl text-[#E8CC95]">{Name}</h2>
+        <div className="flex justify-between items-center">
+        <h2 className="text-1xl text-[#E8CC95] h-10">{Name}</h2>
+        <div className=" bg-[#7b6f5b60] text-gray-800 rounded-full">
+      
+      {Recipe?.UsersIdRate?.includes(UserIdA) ?
+        <TotalRating rating={tRate} />
+        : 
+        <Rating RecipeId={cardId} UserIdA={UserIdA} Recipe={Recipe} rating={tRate} />
+      }
+      </div>
+      </div>
         <div className="flex justify-between mt-2 mb-2 text-[#158467]">
           <div className="flex items-center">
             <svg
@@ -176,16 +249,7 @@ function DyRecipeCardMeal({
         </Button>
       </div>
       {console.log(Recipe)}
-      <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#7b6f5b] text-gray-800 rounded-full pt-1 pb-1 pl-1 pr-1 text-xs uppercase">
-      
-      
-      {console.log(UserIdA)}
-      {Recipe?.UsersIdRate?.includes(UserIdA) ?
-        <TotalRating rating={tRate} />
-        : 
-        <Rating RecipeId={cardId} UserIdA={UserIdA} Recipe={Recipe} rating={tRate} />
-      }
-      </div>
+
     </div>
   );
 }

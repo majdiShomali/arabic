@@ -34,6 +34,18 @@ const allRecipes = (req, res) => {
     });
 };
 
+const favoriteRecipes = (req, res) => { 
+  const userId = req.params.id;
+  Recipes.find({ UsersIdFavorite: { $in: [userId] } })
+    .then((data) => {
+      res.json(data);
+
+    })
+    .catch((error) => {
+      errorHandler(error, req, res);
+    });
+};
+
 const allRecipesA = async  (req, res) => { 
   Recipes.find({flag:true})
     .then((data) => {   
@@ -100,6 +112,15 @@ const updateRecipeProvider = async (req, res) => {
   res.json(updatedRecipe);
 };
 
+const updateRecipeFav = async (req, res) => {
+  const cardId = req.params.id;
+  const { UsersIdFavorite } = req.body;
+  console.log(cardId,UsersIdFavorite)
+  const game = await Recipes.findByIdAndUpdate(cardId, { UsersIdFavorite: UsersIdFavorite }, { new: true });
+  
+  res.json(game);
+};
+
 module.exports = {
   newRecipes,
   allRecipes,
@@ -109,5 +130,7 @@ module.exports = {
   updateRecipeAdmin,
   updateRecipeProvider,
   oneRecipe,
-  providerRecipes
+  providerRecipes,
+  updateRecipeFav,
+  favoriteRecipes
   }; 

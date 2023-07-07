@@ -12,14 +12,18 @@ const AllProvider = ( {children} ) => {
   const [TableContext, setTableContext] = useState([]);
   const [AllIngredientsUser0,setAllIngredientsUser0] =useState(null)
   const [AllIngredientsBase,setAllIngredientsUserBase] =useState(null)
+  const [favRefresh,setFavRefresh] =useState(null)
   // const {AllIngredientsBase,setAllIngredientsUserBase} =useState(null)
   // const {TableContext,setTableContext} =useContext(AllContext)
-  // const {ChatRefresh0,updateChatRefresh} =useContext(AllContext)
+  // const {favRefresh,setFavRefresh} =useContext(AllContext)
 
   const [ChatRefresh0, setChatRefresh ] = useState();
 
   const updateChatRefresh = (newValue) => {
     setChatRefresh(newValue);
+  };
+  const updateFavRefresh = (newValue) => {
+    setFavRefresh(newValue);
   };
   const fetchProtectedData = async () => {
     try {
@@ -165,7 +169,7 @@ const AllProvider = ( {children} ) => {
   
 
   useEffect(() => {
-    if (localStorage.auth != null) {
+    if (localStorage.auth != null) { 
         fetchUser();
       fetchRecipesA();
       fetchIng()
@@ -174,11 +178,10 @@ const AllProvider = ( {children} ) => {
   
 
 
-  
-console.log(TableContext)
 
 
 
+  // const {favRefresh,setFavRefresh} =useContext(AllContext)
 
   return (
         <>
@@ -192,7 +195,8 @@ console.log(TableContext)
                     LastUpdatedDataUser,setLastUpdatedDataUser,
                     AllIngredientsBase,setAllIngredientsUserBase,
                     ChatRefresh0,updateChatRefresh,
-                    TableContext,setTableContext
+                    TableContext,setTableContext,
+                    favRefresh,updateFavRefresh
 
                 }}
             >

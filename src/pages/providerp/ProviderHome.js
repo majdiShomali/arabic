@@ -178,7 +178,6 @@ console.log(AllIngredientsBase)
 
   const [yourSelectedStateValue, setOption] = useState("Meal");
   const [yourSelectedNationValue, setNation] = useState("jordanian");
-
   const [ButtonStatus, setButtonStatus] = useState("create");
   const [ButtonStatusId, setButtonStatusId] = useState();
 
@@ -267,6 +266,7 @@ console.log(foodCards)
       setMyListAdmin([]);
       setMyListNAdmin([]);
       setMyListIdAdmin([]);
+      updateSidebarIng([])
       setFoodCards([]);
       setFoodCardsName([]);
       // let NewItems = [...items];
@@ -345,13 +345,11 @@ console.log(foodCards)
     setLink1(link_name001);
     // setLink2(link_name002);
     // setLink3(link_name003);
-    console.log(e.ItemsName)
     setMyListAdmin(e.Items);
     //  updateSidebarIng(e.Items)
     setMyListNAdmin(e.ItemsName);
     setMyListIdAdmin(e.ItemsId);
     setImg(e.img)
-console.log(e.ItemsId)
 
     // setUserAllIngredients((prevAccounts) => {
     //   const newItems = prevAccounts.filter((item) => item.ingredientFlag !== false);
@@ -441,6 +439,31 @@ console.log(e.ItemsId)
 console.log(updatedRecipe)
    const response =   await axios.put(`http://localhost:5000/api/recipesP/${ButtonStatusId}`, formData0);
       updateChatRefresh(response.data)
+
+
+
+      setName("");
+      setName1("");
+      setName2("");
+      setName3("");
+      setLink1("");
+      setLink2("");
+      setLink3("");
+      setMyListAdmin([]);
+      setMyListNAdmin([]);
+      setMyListIdAdmin([]);
+      updateSidebarIng([])
+      setFoodCards([]);
+      setFoodCardsName([]);
+      setButtonStatus("create")
+
+
+
+
+
+
+
+
       // fetchUsers(); // Refresh the user list after updating a user
     } catch (error) {
       console.error("Error updating user:", error);

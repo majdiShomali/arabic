@@ -31,8 +31,8 @@ const resetIngredientAdmin = async (req, res) => {
 const updatedIngredientData ={
   ingredientName:ingredientName,
   img:image,
-  sold:sold,
-  duration:duration,
+  sold:false,
+  duration:"",
 }
 console.log(updatedIngredientData)
   const Ingredient = await Ingredients.findByIdAndUpdate(IngredientId, updatedIngredientData, { new: true });
