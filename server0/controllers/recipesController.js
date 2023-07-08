@@ -33,6 +33,23 @@ const allRecipes = (req, res) => {
       errorHandler(error, req, res);
     });
 };
+const userComment = (req, res) => { 
+  const userId = req.params.id;
+  Recipes.find({ 'comments.userId': userId })
+    .then((data) => {  
+      res.json(data);
+    })
+    .catch((error) => {
+      errorHandler(error, req, res);
+    });
+};
+
+const updateRecipeComment = async (req, res) => {
+  const cardId = req.params.id;
+  const  updatedRecipe  = req.body;
+  const recipenewcomment = await Recipes.findByIdAndUpdate(cardId,updatedRecipe  , { new: true });
+  res.json(recipenewcomment);
+};
 
 const favoriteRecipes = (req, res) => { 
   const userId = req.params.id;
@@ -132,5 +149,7 @@ module.exports = {
   oneRecipe,
   providerRecipes,
   updateRecipeFav,
-  favoriteRecipes
+  favoriteRecipes,
+  userComment,
+  updateRecipeComment
   }; 

@@ -68,6 +68,10 @@ const recipeSchema = new Schema(
       type: Array,
       required: false,
     },
+    comments: {
+      type: Array,
+      required: false,
+    },
   },
   { timestamps: true }
 );
