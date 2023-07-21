@@ -5,7 +5,7 @@ const protected =require("../middleware/Protected")
 
 const upload = require("../middleware/handleImage")
 
-router.get("/api/users",protected , userController.allUsers);
+router.get("/api/users" , userController.allUsers);
 router.get("/api/Providers", userController.allProviders);
 router.get("/api/Admins", userController.allAdmins);
 router.get("/protected", userController.protected);
@@ -17,7 +17,8 @@ router.put("/api/userList/:id",upload.single("image"), userController.updateUser
 router.delete("/api/users/:id", userController.deleteUser);
 router.delete("/api/provider/:id", userController.deleteProvider);
 router.put("/api/usersContactUs/:id", userController.newUserContactUs);
-router.get("/api/usersMessages",protected , userController.usersMessages);
+router.get("/api/usersMessages" , userController.usersMessages);
 
+router.get("/api/userData" ,protected, userController.userData);
 
 module.exports = router;

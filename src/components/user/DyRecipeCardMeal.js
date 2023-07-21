@@ -27,6 +27,14 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { AllContext } from "../../AllDataContext";
+
+//---------------------redux-----------------//
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRecipes } from '../../actions/GetRecipes';
+import { fetchFavRecipes } from '../../actions/GetFavRecipes';
+import { fetchUserNew } from '../../actions/UserActions';
+
+
 function DyRecipeCardMeal({
   card,
   Name,
@@ -38,7 +46,23 @@ function DyRecipeCardMeal({
   rating,
   Recipe,
 }) {
-   console.log(Recipe)
+
+const { loading, data, error } = useSelector((state) => state.fetchRecipes);
+const { loading: favLoading, data: favData, error: favError } = useSelector((state) => state.fetchFavRecipes);
+const { loading: userLoadingNew, data: userDataNew, error: userErrorNew } = useSelector((state) => state.userNew);
+
+const dispatch = useDispatch();
+useEffect(() => {
+  if(localStorage.auth != null){ 
+    const token = localStorage.getItem("auth");
+    dispatch(fetchUserNew(token));
+}
+}, [dispatch]);
+
+useEffect(() => {
+  setUserIdA(userDataNew[0]?._id)
+}, [userDataNew]);
+
   const navigate = useNavigate();
   const { currentLinks, updateCurrentLinks } = useContext(UserContext);
   const { currentItems, updateCurrentItems } = useContext(UserContext);
@@ -73,11 +97,11 @@ function DyRecipeCardMeal({
     } 
   };
 
-  useEffect(() => {
-    if (localStorage.auth != null) {
-      fetchProtectedData();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.auth != null) {
+  //     fetchProtectedData();
+  //   }
+  // }, []);
 
 
 
@@ -135,7 +159,10 @@ const [heartType , setHeartType]=useState(true)
         `http://localhost:5000/api/updateRecipeFav/${card._id}`,
         { UsersIdFavorite }
       );
-      updateFavRefresh(response)
+      dispatch(fetchFavRecipes(UserIdA));
+      dispatch(fetchRecipes());
+
+      // updateFavRefresh(response)
       // dispatch(fetchgamesS());
     } catch (error) {}
   };
@@ -144,7 +171,9 @@ const [heartType , setHeartType]=useState(true)
 
   return (
     <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-60">
-                  {(Recipe.UsersIdFavorite.indexOf(UserIdA) === -1)  ? (
+             {(localStorage.auth !== undefined) ?
+              <>
+             {(Recipe.UsersIdFavorite.indexOf(UserIdA) === -1 )  ? (
                 <Icon
                   onClick={() => handleFAv(Recipe)}
                   className="absolute right-2 top-2 hover:scale-110 "
@@ -163,8 +192,9 @@ const [heartType , setHeartType]=useState(true)
                   size={1.5}
                 />
               )}
-     
-     
+              </>
+                 :null
+            } 
      
       <div>
         <img

@@ -227,7 +227,7 @@ export default function Example({ userIdApp0 }) {
                       }
                     >
                       <ListItemPrefix>
-                        <img className="w-10" src={`http://localhost:5000/${e.img}`} />
+                        <img className="w-10 h-10 rounded-full" src={`http://localhost:5000/${e.img}`} />
                       </ListItemPrefix>
                       {e.ingredientName}
                     </ListItem>

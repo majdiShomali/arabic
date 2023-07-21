@@ -11,7 +11,9 @@ ingredient or cuisine type, and rate and review recipes.
 - react
 - node js
 - mongodb
+
 ## links 📎
 
 - [figma](https://www.figma.com/file/31t8JmFudLWZiZ77hZTBpr/masterpiece?node-id=0-1&t=xbwZIqVyhWQ0iXjE-0)
+- [trello](https://trello.com/b/wZvB6qB8/progress)
 

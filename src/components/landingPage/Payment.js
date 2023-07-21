@@ -136,7 +136,7 @@ console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName
 
   const showSuccessAlert = (message,currentPrice) => {
     Swal.fire({
-      title: `Thank you for pay ${currentPrice}$`,
+      title: `Thank you for pay ${currentPrice}$ , please wait admin to accept`,
       icon: "success",
       confirmButtonText: "OK",
     }).then(() => {

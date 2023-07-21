@@ -6,6 +6,11 @@ const Recipes = require("../models/recipes");
 
 const SECRETKEY = process.env.SECRETKEY;
 
+const userData =  async (req, res) => {
+  const id = req.user.id;
+  const user = await User.find({ _id: id });
+  res.json(user);
+};
 
 const allUsers = (req, res) => {
   User.find({ role: 0 })
@@ -178,5 +183,6 @@ module.exports = {
   updateUserList,
   usersMessages,
   newUserContactUs,
-  deleteProvider
+  deleteProvider,
+  userData
 }; 

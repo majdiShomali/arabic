@@ -5,79 +5,62 @@ import axios from "axios";
 
 import { UserContext } from "../../UserContext";
 import DyRecipeCardMeal from "../../components/user/DyRecipeCardMeal";
+
+
+//---------------------redux-----------------//
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRecipes } from '../../actions/GetRecipes';
+import { fetchFavRecipes } from '../../actions/GetFavRecipes';
+import { fetchUserNew } from '../../actions/UserActions';
+
+
 const UserProfile = () => {
-  const { profileRefresh, updateProfileRefresh } = useContext(UserContext);
+// -----------------------------------//
+
+const { loading, data, error } = useSelector((state) => state.fetchRecipes);
+const { loading: favLoading, data: favData, error: favError } = useSelector((state) => state.fetchFavRecipes);
+const { loading: userLoadingNew, data: userDataNew, error: userErrorNew } = useSelector((state) => state.userNew);
 
 
-  const [cards, setCards] = useState([]);
-  const [userId, setUserId] = useState();
-  const [userData, setUserData] = useState({});
-  const [userFavData, setUserFavData] = useState([]);
 
-  const fetchProtectedData = async () => {
-    try {
-      const token = localStorage.getItem("auth");
-      if (token) {
-        const response = await axios.get("http://localhost:5000/protected", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        setUserId(response.data.user.id);
-        console.log(response.data.user.id);
-        let id = response.data.user.id;
+const [cards, setCards] = useState([]);
+const [userData, setUserData] = useState({});
+const [userFavData, setUserFavData] = useState([]);
 
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/api/users/${id}`
-          );
-          console.log(response.data);
 
-          setUserData(response.data[0]);
-        } catch (error) {
-          console.error("Error retrieving data:", error);
-        }
+const dispatch = useDispatch();
+const [userId, setUserId] = useState();
 
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/api/favoriteRecipes/${id}`
-          );
-          console.log(response.data);
-
-          setUserFavData(response.data);
-        } catch (error) {
-          console.error("Error retrieving data:", error);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      localStorage.removeItem("auth");
-      window.location.href = "http://localhost:3000/Login";
-    } finally {
-      console.log(false);
-    }
-  };
 
   useEffect(() => {
-    if (localStorage.auth != null) {
-      fetchProtectedData();
-    }
-  }, [profileRefresh]);
+    if(localStorage.auth != null){ 
+      const token = localStorage.getItem("auth");
+      dispatch(fetchUserNew(token));
+  }
+  }, [dispatch]);
 
+  useEffect(() => {
+    setUserId(userDataNew[0]?._id)
+    dispatch(fetchFavRecipes(userDataNew[0]?._id));
+    setUserData(userDataNew[0])
+  }, [userDataNew]);
+
+
+  
+// useEffect(() => {
+//     dispatch(fetchFavRecipes(userId));
+// }, [dispatch,userId]);
+
+useEffect(() => {
+setUserFavData(favData);
+}, [dispatch,favData,userDataNew]);
 
 console.log(userFavData)
-
-
+// -----------------------------------//
 
 
   return (
     <>
-
-
-
-
-
-
    <div className="container mx-auto my-60">
         <div>
           <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-4/6 xl:w-3/6 mx-auto">
@@ -139,7 +122,7 @@ return(
                     Name={e.recipeName}
                     card={e}
                     index={i}
-                    SAMeals={userFavData}
+                    SAMeals={favData}
                     cardId={e._id}
                     img={e.img}
                     rate={e.rate}

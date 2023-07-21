@@ -9,6 +9,8 @@ import DyRecipeCardMeal from "../../components/user/DyRecipeCardMeal";
 import Rating from "../../components/Rating";
 import ShowRecipeGa from "./ShowRecipeGa";
 import { AllContext } from "../../AllDataContext";
+import Icon from "@mdi/react";
+import { mdiDelete } from "@mdi/js";
 import {
   Card,
   Typography,
@@ -24,27 +26,29 @@ import {
   Input,
   Button,
 } from "@material-tailwind/react";
+import { locale } from "moment/moment";
 
 const ShowRecipe = ({ userIdApp0 }) => {
   const { AllDataGet, setAllDataGet } = useContext(AllContext);
-  console.log(AllDataGet[0]?.img);
-  console.log(userIdApp0);
   const { id } = useParams();
   const [clinks, setClinks] = useState([]);
   const [cItems, setItems] = useState([]);
   const [RecipeIngs, setRecipeIngs] = useState([]);
   const [Recipe, setRecipe] = useState([]);
   const [RecipeRating, setRecipeRating] = useState(0);
+  const [Loading, setLoading] = useState(true);
 
   const oneRecipe = async () => {
     let x;
     try {
+      // Set loading state to true before making the request
+      setLoading(true);
+
       const response = await axios.get(
         `http://localhost:5000/api/recipe/${id}`
       );
       setItems(response.data[0].Items);
       setClinks(response.data[0].links);
-      console.log(response.data[0].ItemsId);
       setRecipe(response.data[0]);
       x = response.data[0].ItemsId;
       const requestData = { ItemsId: x };
@@ -58,21 +62,24 @@ const ShowRecipe = ({ userIdApp0 }) => {
             },
           }
         );
-
-        console.log(response.data);
         setRecipeIngs(response.data);
       } catch (error) {
         console.error("Error inserting data:", error);
+      } finally {
+        // Set loading state to false when the request is completed
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error inserting data:", error);
+    } finally {
+      // Set loading state to false regardless of success or error
+      setLoading(false);
     }
   };
   useEffect(() => {
     oneRecipe();
   }, []);
 
-  console.log(Recipe.comments);
   //----------------------pagination----------------------------//
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -113,6 +120,7 @@ const ShowRecipe = ({ userIdApp0 }) => {
     try {
       let currentComment = {
         userId: userIdApp0,
+        firstName: AllDataGet[0]?.firstName,
         comment: comment,
         img: AllDataGet[0]?.img,
         time: formattedDateTime,
@@ -129,7 +137,7 @@ const ShowRecipe = ({ userIdApp0 }) => {
       );
       console.log(response);
       // getComments()
-      oneRecipe()
+      oneRecipe();
     } catch (error) {}
   };
 
@@ -138,7 +146,6 @@ const ShowRecipe = ({ userIdApp0 }) => {
       const response = await axios.get(
         `http://localhost:5000/api/comment/${userIdApp0}`
       );
-      console.log(response.data);
     } catch (error) {}
   };
 
@@ -197,29 +204,110 @@ const ShowRecipe = ({ userIdApp0 }) => {
                     })}
                   </div>
                   <div>
-                    <input
-                      type="text"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    />
-                    <button onClick={handleAddComment}>Add comment</button>
-                    <div>
-                      {Recipe?.comments?.map((comment) => {
-                        return (
-                          <>
-                            {" "}
+                    <Card className="w-96 bg-white rounded-lg border p-2 my-4 mx-6">
+                      <h3 className="font-bold">comments</h3>
+                      <div>
+                        <div className="flex flex-col">
+                          {Recipe?.comments?.map((comment, index) => {
+                            return (
+                            <>
+
+                            {Loading === true ? 
+                             <Card
+                             key={index}
+                             className=" rounded-md p-3 ml-3 my-3 relative"
+                           >
+                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+
+                            </Card>
+                            :
 
 
-                            <div className="flex">
-                             <img className="w-5 h-5 rounded-full" src={`http://localhost:5000/${comment?.img}`}/>
-                            <p>{comment.comment}</p>
+                            <>
+                            <Card
+                              key={index}
+                              className=" rounded-md p-3 ml-3 my-3 relative"
+                            >
+                              {comment.userId == userIdApp0 ? (
+                                <Icon
+                                  className="absolute top-1 right-1 hover:scale-105"
+                                  color="red"
+                                  path={mdiDelete}
+                                  size={1}
+                                  title="Delete"
+                                />
+                              ) : null}
 
-                            </div>
-                            
+                              <div className="flex gap-3 items-center">
+                                <img
+                                  src={`http://localhost:5000/${comment?.img}`}
+                                  className="object-cover w-8 h-8 rounded-full 
+                                    border-2 border-emerald-400  shadow-emerald-400"
+                                />
+                                <h3 className="font-bold">
+                                  {comment.firstName}
+                                </h3>
+                                <p className="text-gray-600 text-sm">
+                                  {comment.time}
+                                </p>
+                              </div>
+                              <p className="text-gray-600 mt-2">
+                                {comment.comment}
+                              </p>
+                            </Card>
                           </>
-                        );
-                      })}
-                    </div>
+
+
+                            }
+
+
+
+                           
+
+
+
+
+
+                              </>
+                            );
+                          })}
+                        </div>
+
+                        {localStorage.auth !== undefined ? (
+                          <>
+                            <div className="w-full px-3 my-2">
+                              <textarea
+                                className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                                name="body"
+                                placeholder="Type Your Comment"
+                                required=""
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                              />
+                            </div>
+                            <div className="w-full flex justify-end px-3">
+                              <input
+                                type="submit"
+                                className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+                                defaultValue="Post Comment"
+                                onClick={handleAddComment}
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <div className="flex justify-center">
+                            <Link to="/LogIn">
+                              <Button
+                                className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+                                variant="text"
+                              >
+                                LogIn to Add comment
+                              </Button>
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </Card>
                   </div>
                 </div>
               </div>

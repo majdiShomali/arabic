@@ -62,7 +62,7 @@ const showSuccessAlert = (message) => {
 
   return (
     <>
-    {RatingStatus === false ? 
+    {RatingStatus === false && localStorage.auth !== undefined ? 
       
       <div className="flex items-center">
       {Array(starCount)

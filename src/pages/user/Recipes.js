@@ -17,7 +17,6 @@ import Pagination from "@mui/material/Pagination";
 import { KitContext } from "../../KitchenContext";
 import {AllContext } from "../../AllDataContext";
 import DyRecipeCardMeal from "../../components/user/DyRecipeCardMeal";
-import DyRecipeCardDrink from "../../components/user/DyRecipeDrinkCard";
 import axios from "axios";
 const Recipes = ({userIdApp0}) => {
   const { SidebarIngName0, updateSidebarIngName0 } = useContext(KitContext);
