@@ -1,13 +1,10 @@
 import React from "react";
 import Slider from "./Slider";
-import "./landing.css";
-import Cards from "./Cards";
-
+import HeroTwo from "./HeroTwo"
 const Landing = () => {
   return (
     <>
-      <Slider />
-      {/* <Cards/>  */}
+      <HeroTwo />
     </>
   );
 };

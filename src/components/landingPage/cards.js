@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import card from "./landing-img/card.jpg";
-import star from "./landing-img/star.png";
-import fire from "./landing-img/fire.png";
 import "./cards.css";
 // import PaginationNav1Presentation from '../navigation'
 import { useState, useEffect } from "react";
@@ -215,7 +212,7 @@ const Cards = ({ nation }) => {
               <DyRecipeCardMeal
               key={e._id}
               Name={e.recipeName}
-              card={card}
+              card={e.img}
               index={i}
               SAMeals={slicedArrayMeals}
               cardId={e._id}
