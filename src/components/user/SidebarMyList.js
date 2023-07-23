@@ -184,9 +184,11 @@ export default function Example({ userIdApp0 }) {
 
 ) : (
   <>
+  <div className="flex justify-center">
+
     {!isLoading && SaveOrRecipe ? (
       <Button
-        className="border mb-10 border-solid border-[#b6c02b] border-2 text-[#060606] hover:bg-[#bed634] hover:text-[#ffffff]"
+        className="w-64 border mb-10 border-solid border-[#b6c02b] border-2 text-[#060606] hover:bg-[#bed634] hover:text-[#ffffff]"
         variant="text"
         onClick={HandleShow}
       >
@@ -197,7 +199,7 @@ export default function Example({ userIdApp0 }) {
     {!isLoading && !SaveOrRecipe ? (
       <>
         <Button
-          className="border mb-10 border-solid border-[#b6c02b] border-2 text-[#060606] hover:bg-[#bed634] hover:text-[#ffffff]"
+          className=" w-64 border mb-10 border-solid border-[#b6c02b] border-2 text-[#060606] hover:bg-[#bed634] hover:text-[#ffffff]"
           variant="text"
           onClick={HandleSave}
         >
@@ -205,6 +207,8 @@ export default function Example({ userIdApp0 }) {
         </Button>
       </>
     ) : null}
+
+</div>
   </>
 )}
              

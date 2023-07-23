@@ -32,7 +32,7 @@ const Home = () => {
         <section id="food">
           <br />
           <h2 className=" text-4xl mb-8 tracking-tight font-extrabold text-black  text-center capitalize">
-            Which food do you prefer?
+            اي المطابخ التي تفضلها؟
           </h2>
           <div className="flex flex-wrap mb-10 mx-20">
             <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
@@ -46,13 +46,13 @@ const Home = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold text-white uppercase lg:text-4xl">
-                    Jordanian Food
+                    المطبخ الاردني
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
                       onClick={() => handleKitchenTypeSelection("Jordanian")}
                     >
-                      View More
+                      اعرض الوصفات
                     </button>
                   </div>
                 </div>
@@ -70,13 +70,13 @@ const Home = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold text-white uppercase lg:text-4xl">
-                    Egyptian Food
+                    المطبخ المصري
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
                       onClick={() => handleKitchenTypeSelection("Egyptian")}
                     >
-                      View More
+                      اعرض الوصفات
                     </button>
                   </div>
                 </div>
@@ -94,13 +94,13 @@ const Home = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold text-white uppercase lg:text-4xl">
-                      Mexican Food
+                      المطبخ السوري
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
                       // onClick={() => handleKitchenTypeSelection("mexican")}
                     >
-                      View More
+                      اعرض الوصفات
                     </button>
                   </div>
                 </div>
@@ -118,13 +118,14 @@ const Home = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold text-white uppercase lg:text-4xl">
-                      Italian Food
+                   المطبخ العراقي              
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
                       // onClick={() => handleKitchenTypeSelection("italian")}
                     >
-                      View More
+                     اعرض الوصفات
+
                     </button>
                   </div>
                 </div>
@@ -142,13 +143,14 @@ const Home = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold text-white uppercase lg:text-4xl">
-                      Indian Food
+                      المطبخ المغربي
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
                       // onClick={() => handleKitchenTypeSelection("indian")}
                     >
-                      View More
+                       اعرض الوصفات
+
                     </button>
                   </div>
                 </div>
@@ -166,13 +168,14 @@ const Home = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <h2 className="text-2xl font-semibold text-white uppercase lg:text-4xl">
-                      American Food
+                      المطبخ الفلسطيني
                     </h2>
                     <button
                       className="text-sm button-shop font-medium mt-4 text-white px-5 py-2.5 rounded-lg"
                       // onClick={() => handleKitchenTypeSelection("american")}
                     >
-                      View More
+                     اعرض الوصفات
+
                     </button>
                   </div>
                 </div>
@@ -186,7 +189,7 @@ const Home = () => {
             <Button
             onClick={() => handleKitchenTypeSelection("all")}
             className="border mb-10 border-solid border-amber-600 border-2 text-amber-600 hover:bg-amber-600 hover:text-[#ffffff]" variant="text">
-              Show All Recipes
+              اضهر جميع الوصفات
             </Button>
           {/* </HashLink> */}
 

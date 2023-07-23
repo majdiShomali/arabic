@@ -16,8 +16,8 @@ function SponserSection() {
               <div class="relative h-64 sm:h-80 lg:h-full">
                 <img
                   alt="House"
-                  src="https://freedesignfile.com/upload/2014/06/Food-ingredients-icons-vector-graphics.jpg"
-                  class="absolute inset-0 h-full w-full object-cover"
+                  src="https://content.almalnews.com/wp-content/uploads/2020/12/%D8%A7%D9%84%D8%B3%D9%84%D8%B9-%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%D8%A9-1024x768.jpg"
+                  class="absolute inset-0 h-full w-full object-cover rounded"
                 />
               </div>
             </div>
@@ -27,24 +27,11 @@ function SponserSection() {
 
               <div class="p-8 sm:p-16 lg:p-24">
                 <h2 class="text-2xl font-bold sm:text-3xl">
-                  Ingredient Insights: Unveiling Our Formulas{" "}
+                  رؤى حول المكونات: الكشف عن مكوناتنا{" "}
                 </h2>
 
-                <p class="mt-4 text-gray-600">
-                  Welcome to Ingredient Insights, your gateway to discovering
-                  the secrets behind our exceptional products. We believe in
-                  transparency and want to empower our valued customers with the
-                  knowledge of what goes into each and every item we offer. Our
-                  website serves as a comprehensive resource where you can
-                  explore the precise ingredients that make up our carefully
-                  crafted formulations. From the finest organic extracts to
-                  cutting-edge scientific compounds, we provide detailed
-                  information about every component used in our products. Dive
-                  into our world of ingredients, gain a deeper understanding of
-                  their benefits, and make informed choices for your well-being.
-                  With Ingredient Insights, we bring you a new level of trust,
-                  authenticity, and peace of mind in your pursuit of quality and
-                  healthy living{" "}
+                <p class="my-4 text-gray-600">
+                مرحبًا بكم في Ingredient Insights ، بوابتك لاكتشاف الأسرار الكامنة وراء منتجاتنا الاستثنائية. نحن نؤمن بالشفافية ونريد تمكين عملائنا الكرام بمعرفة ما يدخل في كل عنصر نقدمه. يعمل موقعنا كمورد شامل حيث يمكنك استكشاف المكونات الدقيقة التي تشكل تركيباتنا المعدة بعناية. من أفضل المستخلصات العضوية إلى أحدث المركبات العلمية ، نقدم معلومات مفصلة حول كل مكون مستخدم في منتجاتنا. انغمس في عالمنا من المكونات ، واكتسب فهمًا أعمق لفوائدها ، واتخذ خيارات مستنيرة لرفاهيتك. مع Ingredient Insights ، نقدم لك مستوى جديدًا من الثقة والأصالة وراحة البال في سعيك لتحقيق الجودة والحياة الصحية
                 </p>
 {localStorage.auth != null ? 
 
@@ -53,7 +40,7 @@ function SponserSection() {
   className="border mb-10 border-solid border-amber-600 border-2 text-amber-600 hover:bg-amber-600 hover:text-[#ffffff]"
   variant="text"
 >
-  Add your Ingredient
+  اضف مكونك 
 </Button>
 </Link>
 
@@ -64,7 +51,7 @@ function SponserSection() {
   className="border mb-10 border-solid border-amber-600 border-2 text-amber-600 hover:bg-amber-600 hover:text-[#ffffff]"
   variant="text"
 >
-  logIn to Add  Ingredients
+  سجل الدخول لاضافة مكون
 </Button>
 </Link>
 

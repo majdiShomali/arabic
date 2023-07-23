@@ -204,9 +204,8 @@ const [heartType , setHeartType]=useState(true)
         />
       </div>
       <div className="p-4">
-        <div className="flex justify-between items-center">
-        <h2 className="text-1xl text-[#E8CC95] h-10">{Name}</h2>
-        <div className=" bg-[#7b6f5b60] text-gray-800 rounded-full">
+        <div className="flex justify-between items-center mt-1 mb-2 h-10">
+        <div className="  text-gray-800 rounded-full flex items-center">
       
       {Recipe?.UsersIdRate?.includes(UserIdA) ?
         <TotalRating rating={tRate} />
@@ -214,12 +213,15 @@ const [heartType , setHeartType]=useState(true)
         <Rating RecipeId={cardId} UserIdA={UserIdA} Recipe={Recipe} rating={tRate} />
       }
       </div>
+      <div className="flex items-center">
+      <h2 className="text-1xl text-end text-[#E8CC95]  text-center text-center">{Name}</h2>
+      </div>
       </div>
         <div className="flex justify-between mt-2 mb-2 text-[#158467]">
           <div className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-4 w-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -231,13 +233,13 @@ const [heartType , setHeartType]=useState(true)
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span className="ml-1 lg:text-xl">30m</span>
+            <span className="ml-1 lg:text-md">30m</span>
           </div>
 
           <div className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-4 w-4"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -248,22 +250,22 @@ const [heartType , setHeartType]=useState(true)
                 clipRule="evenodd"
               />
             </svg>
-            <span className="ml-1 lg:text-xl">10</span>
+            <span className="ml-1 lg:text-md">10</span>
           </div>
           <div className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-4 w-4"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
               <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
             </svg>
-            <span className="ml-1 lg:text-xl">1-2</span>
+            <span className="ml-1 lg:text-md">1-2</span>
           </div>
         </div>
-        <p className="mb-2 mt-2 text-gray-800 text-sm">
-          A recipe that's quick and easy to make and super tasty!
+        <p className="mb-2 mt-2 text-gray-800 text-sm h-10">
+        وصفة سريعة وسهلة التحضير ولذيذة للغاية!
         </p>
 
         {/* <button className="text-white bg-[#E8CC95] p-2 rounded-md w-full uppercase"
@@ -275,7 +277,7 @@ const [heartType , setHeartType]=useState(true)
           variant="text"
           onClick={() => ShowVideosMeals(index, SAMeals)}
         >
-          Show recipe
+          اعرض الوصفة
         </Button>
       </div>
       {console.log(Recipe)}

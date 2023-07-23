@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import Swal from "sweetalert2";
 import {UserDataContext} from "../UserDataContext"
@@ -68,7 +68,7 @@ const navListMenuItems = [
     icon: RocketLaunchIcon,
     title: "User Profile",
     description: "Checkout your profile",
-    path: "./UserProfile",
+    path: "./Profile",
   },
   {
     color: "teal",
@@ -179,12 +179,9 @@ function NavList() {
       >
         <Link to="/About"
           onClick={()=>updateNav(false)}
-        
-          
-        
         >
           <ListItem className="flex items-center gap-2 py-2 pr-4 text-black hover:bg-gray-600 hover:text-white focus:bg-amber-600">
-            <CubeTransparentIcon className="h-[18px] w-[18px] text-amber-600" />
+            <CubeTransparentIcon className="h-[18px] w-[18px] text-amber-600 hover:text-[#ffff] " />
             About Us
           </ListItem>
         </Link>
@@ -275,10 +272,10 @@ export default function Example() {
     const { SignStatus, updateSignStatus } = useContext(UserContext);
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const navigate =useNavigate()
 
     const closeMenu = (label) => {
       setIsMenuOpen(false);
-
       if (label == "Sign Out") {
         // updateSignStatus("signUp");
         // localStorage.setItem("SignStatus", "signUp");
@@ -290,7 +287,9 @@ export default function Example() {
 
         console.log(label);
       } else if (label == "Profile") {
-        window.location.href = "http://localhost:3000/UserProfile";
+        navigate("/Profile")
+        // window.location.href = "http://localhost:3000/Profile";
+        
       }
     };
 
@@ -433,7 +432,7 @@ export default function Example() {
                <Button
                onClick={()=>updateNav(false)}
                variant="outlined" size="sm" color="blue-gray" fullWidth>
-                <Link to="/UserProfile" fullWidth >
+                <Link to="/Profile" fullWidth >
                  Profile
                  </Link>  
                </Button>

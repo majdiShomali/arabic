@@ -46,7 +46,7 @@ const fetchAboutUs = async () => {
 
       };
 
-      await axios.put(`http://localhost:5000/api/aboutUs/${''}`, updatedAboutUs);
+      await axios.put(`http://localhost:5000/api/aboutUs/${'64981b83bbd0a1c161ff020e'}`, updatedAboutUs);
       fetchAboutUs(); // Refresh the user list after updating a user
     } catch (error) {
       console.error("Error updating user:", error);

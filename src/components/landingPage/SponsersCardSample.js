@@ -8,7 +8,6 @@ const SponsersCardSample = () => {
       const SoldItems = await axios.get(
         "http://localhost:5000/api/IngredientSold"
       );
-      console.log(SoldItems.data);
       setSponsersCards(SoldItems.data);
     } catch {}
   };
@@ -36,8 +35,9 @@ const SponsersCardSample = () => {
                       // onClick={() => handelIngredient(e._id,e.ingredientName,e.ingredientType)}
                       className={` flex-shrink-0 m-1 relative overflow-hidden ${
                         e.ingredientType == "vegetables"
-                          ? "bg-[#2bda2b]"
-                          : "bg-[#d7e423]"
+                          ? "bg-[#219D80]"
+                          :e.ingredientType == "fruits" ? "bg-[#E8AA42]"
+                          : "bg-[#847d73]" 
                       }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
                     >
                       <svg

@@ -195,7 +195,7 @@ if(SidebarIngName0 !== ""){
 
   let slicedArrayVegetables;
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
 
   totalItemsVegetables = FilterDataVegetables0?.length;
 
@@ -272,7 +272,7 @@ if(SidebarIngName0 !== ""){
 
 <div className="flex justify-center mt-5 mb-5">
         <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
-          <div className="relative">
+          <div className="relative flex">
             <div className="absolute flex items-center ml-2 h-full">
               <svg
                 className="w-4 h-4 fill-current text-primary-gray-dark"
@@ -295,13 +295,8 @@ if(SidebarIngName0 !== ""){
 
               }}
             />
-          </div>
-          <div className="flex items-center justify-between mt-4">
-            <p className="font-medium">Filters</p>
-          </div>
-          <div className="flex justify-between">
-            <div className="grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 ">
-              <select
+
+               <select
                 className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-yellow-500 border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance-none mr-5"
                 value={SearchType00}
                 onChange={(e) => {setSearchType00(e.target.value)
@@ -313,8 +308,10 @@ if(SidebarIngName0 !== ""){
                 <option value="vegetables">vegetables</option>
                 <option value="fruit">fruit</option>
               </select>
-            </div>
+
           </div>
+       
+      
         </div>
       </div>
 
@@ -333,7 +330,7 @@ if(SidebarIngName0 !== ""){
 
 
 
-<div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 place-items-center mb-1">
+<div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 place-items-center mb-1 gap-3">
               {slicedArrayVegetables?.map((e, i) => {
                 return (
                  <>
@@ -341,8 +338,13 @@ if(SidebarIngName0 !== ""){
                   <div
                     key={e._id}
                     onClick={() => UpdateBeneficiaryId(e.ingredientName)}
-                    className={` mb-3 flex-shrink-0 m-1 relative overflow-hidden ${ e.ingredientType=="vegetables" ?  "bg-[#219D80]" : "bg-[#E8AA42]" }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
-                  >
+                    className={` flex-shrink-0 m-1 relative overflow-hidden ${
+                      e.ingredientType == "vegetables"
+                        ? "bg-[#219D80]"
+                        :e.ingredientType == "fruits" ? "bg-[#E8AA42]"
+                        : "bg-[#847d73]" 
+                    }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
+                 >
                     <svg
                       className="absolute bottom-0 left-0 mb-8"
                       viewBox="0 0 375 283"

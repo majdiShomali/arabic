@@ -19,6 +19,9 @@ import Kitchens from "./pages/user/Kitchens";
 import UserProfile from "./pages/user/UserProfile";
 import AddYourIng from "./components/landingPage/AddYourIng";
 import PaymentPage from "./components/landingPage/Payment";
+import Profile from "./pages/user/Profile";
+
+
 // ----------------------Provider routes----------------- //
 import ProviderHome from "./pages/providerp/ProviderHome";
 import ProviderProfile from "./pages/providerp/ProviderProfile";
@@ -108,6 +111,7 @@ export default function App() {
           <Route path="Recipes" element={<Recipes userIdApp0 ={userIdApp} />} />
           <Route path="Kitchen" element={<Kitchen  userIdApp0 ={userIdApp} />} />
           <Route path="UserProfile" element={<UserProfile />} />
+          <Route path="Profile" element={<Profile />} />
           <Route path="/Kitchen/:type_Kitchen" element={<Kitchens userIdApp0 ={userIdApp} />} />
         </Routes>
         <Footer />
