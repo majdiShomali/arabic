@@ -134,8 +134,8 @@ const Cards = ({ nation }) => {
   return (
     <>
       <div className="flex justify-center mt-5 mb-5">
-        <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
-          <div className="relative">
+        <div className="w-full md:w-full mx-8 shadow shadow-gray-500 p-5 rounded-lg bg-white  transform transition duration-300 ">
+          <div className="relative flex ">
             <div className="absolute flex items-center ml-2 h-full">
               <svg
                 className="w-4 h-4 fill-current text-primary-gray-dark"
@@ -156,14 +156,9 @@ const Cards = ({ nation }) => {
                 filterDataByNameUsers(e.target.value);
               }}
             />
-          </div>
-          <div className="flex items-center justify-between mt-4">
-            <p className="font-medium">Filters</p>
-          </div>
-          <div className="flex justify-between">
-            <div className="grid grid-cols-1  md:grid-cols-3 sm:grid-cols-1  gap-4 mt-4 ">
+
               <select
-                className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance mr-5"
+                className="px-4 py-3 ml-2 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance mr-5"
                 value={yourSelectedStateValueType}
                 onChange={(e) => {
                   setOptionType(e.target.value);
@@ -195,15 +190,23 @@ const Cards = ({ nation }) => {
                   <option value="egyptian ">egyptian </option>
                 </select>
               ) : null}
-            </div>
+
+
+              
+           
+
+
+
           </div>
+       
+       
         </div>
       </div>
 
  
       <div className="mt-10">
    
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 place-items-center">
+        <div className="flex flex-wrap items-center justify-center">
         {isLoading === false ? 
         <>
           {slicedArrayMeals?.map((e, i) => {

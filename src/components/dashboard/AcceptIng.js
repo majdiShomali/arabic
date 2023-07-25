@@ -165,19 +165,7 @@ const AcceptIng = () => {
   const UpdateRole = async (id, ingId, e) => {
     console.log(e);
 
-    // {
-    //     "_id": "649940c07739d2e8fdb571e8",
-    //     "CompanyName": "majdi222",
-    //     "CompanyEmail": "majdishomali444@gmail.com",
-    //     "ingredientName": "apple",
-    //     "ingredientType": "vegetables",
-    //     "img": "public\\images\\image_1687765184148.png",
-    //     "userId": "649919dabe58b493e15c9fb5",
-    //     "flag": false,
-    //     "payment": true,
-    //     "IngId": "64991992be58b493e15c9fa6",
-    //     "__v": 0
-    // }
+
 
     try {
       const updatedUser = {

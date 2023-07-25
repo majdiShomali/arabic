@@ -137,20 +137,8 @@ console.log(IngredientSelected)
     setName(Ingredient.ingredientName);
     setType(Ingredient.ingredientType);
     setIngredientSelected(Ingredient)
-    // console.log(IngredientSelected.TrueName == IngredientSelected.ingredientName)
-    console.log("Ingredient.TrueName == Ingredient.ingredientName")
-    console.log(Ingredient.TrueName )
-    console.log(Ingredient.TrueName == Ingredient.ingredientName)
-    console.log( Ingredient.ingredientName)
-    console.log("Ingredient.TrueName == Ingredient.ingredientName")
 
-    // "sold": false,
-    // "_id": "64991964be58b493e15c9fa0",
-    // "ingredientName": "garlic",
-    // "img": "public\\images\\image_1687755108330.png",
-    // "ingredientFlag": false,
-    // "ingredientType": "vegetables",
-    // "__v": 0
+   
   }
   const handleUpdateNow = async () => {
     setUpdateStatus(false);

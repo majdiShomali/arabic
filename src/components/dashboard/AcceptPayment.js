@@ -60,12 +60,30 @@ useEffect(() => {
 
     console.log("Expired Ingredients:", expiredIngredients);
     setExpiredIng(expiredIngredients)
- 
+ handleResetNow(expiredIngredients[0]._id,expiredIngredients[0])
   }
 }, [AllIngredientsBase]);
 
 
+const handleResetNow = async (CardId,IngredientSelected) => {
+  // setUpdateStatus(false);
 
+  try {
+    // console.log(IngredientSelected.TrueName);
+    // console.log(IngredientSelected.TrueImg);
+    await axios.put(
+      `http://localhost:5000/api/IngredientAdminReset/${CardId}`,
+      {
+        ingredientName:IngredientSelected.TrueName,
+        image:IngredientSelected.TrueImg
+
+      }
+    );
+    // fetchIng();
+  } catch (error) {
+    console.error("Error updating user:", error);
+  }
+};
 
 // const allAdmins = async () => {
     //     try {

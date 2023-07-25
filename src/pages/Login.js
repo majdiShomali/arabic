@@ -259,20 +259,24 @@ console.log(email,password)
                     </div>
                       <form onSubmit={handleSubmit}>
                     <div className="mx-auto max-w-xs">
-                        <input
+      
+                           <input
                             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                             type="email" placeholder="Email"
                             required
                             value={email}
                             onChange={(e) => setemail(e.target.value)}  />
                             <p className="text-red-500">{emailp}</p>
-                        <input
+
+                           <input
                             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                             type="password" placeholder="Password" 
                             value={password}
                             required
                             onChange={(e) => setpassword(e.target.value)}/>
+                            
                             <p className="text-red-500">{passwordp}</p>
+
                         <button type='submit'
                             className="mt-5 bg-[#F7E1AE] tracking-wide font-semibold text-gray-800 w-full py-4 rounded-lg hover:bg-[#A4D0A4] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                             <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2"

@@ -277,19 +277,11 @@ export default function Example() {
     const closeMenu = (label) => {
       setIsMenuOpen(false);
       if (label == "Sign Out") {
-        // updateSignStatus("signUp");
-        // localStorage.setItem("SignStatus", "signUp");
         localStorage.removeItem("auth");
-        // localStorage.removeItem("roles");
-        // localStorage.removeItem("userid");
-        // localStorage.removeItem("curruntUser");
         window.location.href = "http://localhost:3000/";
-
         console.log(label);
       } else if (label == "Profile") {
-        navigate("/Profile")
-        // window.location.href = "http://localhost:3000/Profile";
-        
+        navigate("/Profile")        
       }
     };
 

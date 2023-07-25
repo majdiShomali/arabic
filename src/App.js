@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavListMenu from "./components/Navbar";
 import Home from "./pages/user/Home";
 import Contact from "./pages/Contact";
-import Footer from "./components/footer";
+import Footer from "./components/FooterU";
 import Kitchen from "./pages/Kitchen";
 import About from "./pages/aboutPage/About";
 import Recipes from "./pages/user/Recipes";

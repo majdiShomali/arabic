@@ -170,7 +170,7 @@ const [heartType , setHeartType]=useState(true)
 
 
   return (
-    <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-60">
+    <div className="bg-white rounded-md overflow-hidden relative shadow-md m-1 w-60 mx-5 my-2">
              {(localStorage.auth !== undefined) ?
               <>
              {(Recipe.UsersIdFavorite.indexOf(UserIdA) === -1 )  ? (
