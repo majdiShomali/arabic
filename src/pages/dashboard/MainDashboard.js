@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Statistics from '../../pages/dashboard/Statistics';
 
 
@@ -7,6 +7,7 @@ const MainDashboard = () => {
 
   return (
   
+<div className="h-[100vh] overflow-y-auto">
 
 <div className='bg-[#f5f8fe] pt-10 pb-10'>
 
@@ -55,7 +56,7 @@ const MainDashboard = () => {
 
 
 </div>
-
+</div>
   );
 }
 

@@ -127,7 +127,7 @@ const SideBarRecipe = () => {
                 {FilterDataItems?.map((e) => {
                   return (
                     <ListItem
-                      key={e.ingredientName}
+                      key={e._id}
                       onClick={() =>
                         UpdateBeneficiaryId(e._id, e.ingredientFlag,e.ingredientName)
                       }

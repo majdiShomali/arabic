@@ -60,7 +60,9 @@ useEffect(() => {
 
     console.log("Expired Ingredients:", expiredIngredients);
     setExpiredIng(expiredIngredients)
- handleResetNow(expiredIngredients[0]._id,expiredIngredients[0])
+    if(expiredIngredients[0] !== []){
+      handleResetNow(expiredIngredients[0]?._id,expiredIngredients[0])
+    }
   }
 }, [AllIngredientsBase]);
 
@@ -85,17 +87,7 @@ const handleResetNow = async (CardId,IngredientSelected) => {
   }
 };
 
-// const allAdmins = async () => {
-    //     try {
-    //         const response = await axios.get("http://localhost:5000/api/paymentAdmin");
-    //         setPersons(response.data);
-    //       console.log(response.data)
-    //       setFilterDataUsers(response.data)
-    //       } catch (error) {
-    //         console.error("Error inserting data:", error);
-    //       }
 
-    //     };
 
      
       useEffect(() => {
@@ -301,7 +293,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
               </tr>
             </thead>
 
-            {expiredIng.map((e) => {
+            {expiredIng?.map((e) => {
               return (
                 <tbody role="rowgroup">
                   <tr role="row">

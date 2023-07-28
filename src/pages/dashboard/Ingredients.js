@@ -34,7 +34,7 @@ const Ingredients = () => {
   const [FilterDataMeals, setFilterDataMeals] = useState([]);
 
   const [IngredientSelected, setIngredientSelected] = useState();
-console.log(IngredientSelected)
+  console.log(IngredientSelected);
   const handleProductImageChange = (event) => {
     setProductImage(event.target.files[0]);
   };
@@ -102,7 +102,6 @@ console.log(IngredientSelected)
   const endIndexMeals = startIndexMeals + itemsPerPage;
 
   slicedArrayMeals = FilterDataMeals?.slice(startIndexMeals, endIndexMeals);
-  console.log(FilterDataMeals);
   const handlePageChangeMeals = (event, pageNumber) => {
     setCurrentPageMeals(pageNumber);
   };
@@ -136,9 +135,7 @@ console.log(IngredientSelected)
     setCardId(ingId);
     setName(Ingredient.ingredientName);
     setType(Ingredient.ingredientType);
-    setIngredientSelected(Ingredient)
-
-   
+    setIngredientSelected(Ingredient);
   }
   const handleUpdateNow = async () => {
     setUpdateStatus(false);
@@ -168,9 +165,8 @@ console.log(IngredientSelected)
       await axios.put(
         `http://localhost:5000/api/IngredientAdminReset/${CardId}`,
         {
-          ingredientName:IngredientSelected.TrueName,
-          image:IngredientSelected.TrueImg
-
+          ingredientName: IngredientSelected.TrueName,
+          image: IngredientSelected.TrueImg,
         }
       );
       fetchIng();
@@ -179,23 +175,19 @@ console.log(IngredientSelected)
     }
   };
 
-
   const handleDeleteIngredient = async () => {
     try {
       await axios.delete(`http://localhost:5000/api/Ingredient/${CardId}`);
-      fetchIng();; 
+      fetchIng();
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   };
 
-
-
-
-
   return (
     <>
-      <div className="w-full flex justify-center mt-3">
+    <div className="h-[100vh] overflow-y-auto">
+      <div className="w-full flex justify-center mt-3 ">
         <Card color="transparent" shadow={false}>
           <Typography color="gray" className="mt-1 font-normal">
             Enter your Ingredient .
@@ -241,47 +233,47 @@ console.log(IngredientSelected)
               </select>
             </div>
 
-   
-
             {updateStatus === false ? (
-                            <Button
-                            className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
-                            variant="text"
-                            fullWidth onClick={handleCreate}
-                          >
-                            Create
-                          </Button>
+              <Button
+                className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+                variant="text"
+                fullWidth
+                onClick={handleCreate}
+              >
+                Create
+              </Button>
             ) : (
               <>
+                <Button
+                  className="border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+                  variant="text"
+                  fullWidth
+                  onClick={handleUpdateNow}
+                >
+                  Update
+                </Button>
 
-              <Button
-              className="border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
-              variant="text"
-              fullWidth onClick={handleUpdateNow}
-            >
-              Update
-            </Button>
+                {IngredientSelected.TrueName !==
+                IngredientSelected.ingredientName ? (
+                  <Button
+                    className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+                    variant="text"
+                    fullWidth
+                    onClick={handleResetNow}
+                  >
+                    reset
+                  </Button>
+                ) : null}
 
-
-{IngredientSelected.TrueName !== IngredientSelected.ingredientName ? 
-              <Button
-              className="border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
-              variant="text"
-              fullWidth
-                onClick={handleResetNow}
-            >
-              reset
-            </Button>
-: null }
-
-              <Button
+                <Button
                   className="mr-5 border mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
                   variant="text"
-              fullWidth onClick={handleDeleteIngredient}
-            >
-              Delete
-            </Button>
-            </>
+                  fullWidth
+                  onClick={handleDeleteIngredient}
+                >
+                  Delete
+                </Button>
+              </>
             )}
           </form>
         </Card>
@@ -289,7 +281,7 @@ console.log(IngredientSelected)
 
       <div className="flex justify-center mt-5 mb-5">
         <div className="w-full md:w-full mx-8 shadow shadow-black p-5 rounded-lg bg-white border-solid border-1 border-[#0e0d0d] transform transition duration-300 ">
-          <div className="relative">
+          <div className="relative flex">
             <div className="absolute flex items-center ml-2 h-full">
               <svg
                 className="w-4 h-4 fill-current text-primary-gray-dark"
@@ -310,44 +302,21 @@ console.log(IngredientSelected)
                 filterDataByNameUsers(e.target.value);
               }}
             />
-          </div>
-          <div className="flex items-center justify-between mt-4">
-            <p className="font-medium">Filters</p>
-          </div>
-          <div className="flex justify-between">
-            <div className="grid grid-cols-1  md:grid-cols-3 sm:grid-cols-1  gap-4 mt-4 ">
-              <select
-                className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance mr-5"
-                value={yourSelectedStateValueType}
-                onChange={(e) => {
-                  setOptionType(e.target.value);
-                  handleFilterChange(
-                    e.target.value,
-                    yourSelectedStateValueAddress
-                  );
-                }}
-              >
-                <option value="">All Type</option>
-                <option value="vegetables">vegetables</option>
-                <option value="fruit">fruit</option>
-              </select>
-
-              {/* <select
-                className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-[#E8AA42] focus:bg-white focus:ring-0 text-sm appearance"
-                value={yourSelectedStateValueAddress}
-                onChange={(e) => {
-                  setOptionAddress(e.target.value);
-                  handleFilterChange(
-                    yourSelectedStateValueType,
-                    e.target.value
-                  );
-                }}
-              >
-                <option value="">all donation Case</option>
-                <option value="Stray Animals">Stray Animals</option>
-                <option value="injured animals">injured animals</option>
-              </select> */}
-            </div>
+            <select
+              className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance mr-5"
+              value={yourSelectedStateValueType}
+              onChange={(e) => {
+                setOptionType(e.target.value);
+                handleFilterChange(
+                  e.target.value,
+                  yourSelectedStateValueAddress
+                );
+              }}
+            >
+              <option value="">All Type</option>
+              <option value="vegetables">vegetables</option>
+              <option value="fruit">fruit</option>
+            </select>
           </div>
         </div>
       </div>
@@ -357,13 +326,14 @@ console.log(IngredientSelected)
           return (
             <>
               <div
-                key={e.ingredientName}
+                key={e._id}
                 onClick={() => handleUpdate(e._id, e)}
                 className={` flex-shrink-0 m-1 relative overflow-hidden ${
                   e.ingredientType == "vegetables"
                     ? "bg-[#219D80]"
-                    :e.ingredientType == "fruits" ? "bg-[#E8AA42]"
-                    : "bg-[#847d73]" 
+                    : e.ingredientType == "fruits"
+                    ? "bg-[#E8AA42]"
+                    : "bg-[#847d73]"
                 }  rounded-lg max-w-xs shadow-lg w-48 h-60 hover:scale-110 hover:cursor-pointer`}
               >
                 <svg
@@ -439,6 +409,7 @@ console.log(IngredientSelected)
             onChange={handlePageChangeMeals}
           />
         }
+      </div>
       </div>
     </>
   );

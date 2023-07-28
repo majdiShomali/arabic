@@ -16,12 +16,12 @@ const Statistics = () => {
 
   const {AllIngredientsBase,setAllIngredientsUserBase} =useContext(AllContext)
 
-  const [users ,setUsers] = useState([])
-  const [restaurant ,setRestaurant] = useState([])
-  const [payment ,setPayment] = useState()
-  const [ordersData ,setOrdersData] = useState([])
-  const [restaurantTables ,setRestaurantTables] = useState([])
-  const [pendingTables ,setPendingTables] = useState([])
+  // const [users ,setUsers] = useState([])
+  // const [restaurant ,setRestaurant] = useState([])
+  // const [payment ,setPayment] = useState()
+  // const [ordersData ,setOrdersData] = useState([])
+  // const [restaurantTables ,setRestaurantTables] = useState([])
+  // const [pendingTables ,setPendingTables] = useState([])
   
   
 

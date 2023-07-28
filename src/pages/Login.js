@@ -89,20 +89,6 @@ console.log(email,password)
           .post("http://localhost:5000/api/users",user0Data)
           .then((response) => {
             console.log(response);
-
-
-          
-
-
-  
-
-
-
-
-
-
-
-
           })
           .catch((err) => console.log(err.message));
           console.log(err);
@@ -152,37 +138,19 @@ console.log(email,password)
           userData
         );
         console.log("Data inserted:", response.data);
-        setpasswordp("incorrect password")
 
         if(response.data.error != 'incorrect password'){
-        //   setStatus("success");
+  
          console.log("success")
          console.log(response.data.token);
 
-        // let x =[]
-        //      if (response.data.user0.role==0){
-        //      x= [false ,true,true ]
-        //    }else if(response.data.user0.role==1){
-        //       x= [true ,false,true ]
-        //    }else if(response.data.user0.role==2){
-        //       x= [true ,true,false]
-        //    }
-
-        //    updateRouts(x)
-        //    updateSetCurruntUser(response.data.user0)
-
-
-        //    localStorage.setItem("curruntUser",JSON.stringify(response.data.user0))
-
-        //    localStorage.setItem("userid",JSON.stringify(response.data.user0._id))
            localStorage.setItem("auth",(response.data.token))
 
-        //    updateSignStatus("SignOut")
-        //    localStorage.setItem("SignStatus","SignOut")
-        //    localStorage.setItem("roles",JSON.stringify(x))
+           setpasswordp("")
            window.location.href = 'http://localhost:3000/';
+           setpasswordp("")
         }else{
-        //   setStatus("failed");
+          setpasswordp("incorrect password")
           console.log("failed")
         }
         

@@ -27,8 +27,19 @@ import SideBarRecipe from "../../components/providerc/SideBarRecipe";
 
 import {AllContext} from "../../AllDataContext"
 
+//---------------------redux-----------------//
+import { useDispatch, useSelector } from 'react-redux';
+import { addRecipes } from '../../actions/AddRecipe';
+import { fetchRecipesP } from "../../actions/PendingRecipes";
+ 
+
 
 const ProviderHome = ({userIdApp0}) => {
+  const dispatch = useDispatch();
+
+
+
+ 
 
   const {AllIngredientsBase,setAllIngredientsUserBase} =useContext(AllContext);
   const {TableContext,setTableContext} =useContext(AllContext)
@@ -240,18 +251,20 @@ console.log(foodCards)
     // const userData = {
     //   recipes: tableObj,
     // };
-  console.log(productImage)
-    try {
-      // Send the data to the server using an HTTP POST request
-      const response = await axios.post(
-        "http://localhost:5000/api/recipes",
-        formData0
-      );
-      updateChatRefresh(response.data)
-      console.log(response.data)  
-    } catch (error) {
-      console.error("Error inserting data:", error);
-    }
+  dispatch(addRecipes(formData0)).then(() => {
+    dispatch(fetchRecipesP());
+  });
+    // try {
+    //   // Send the data to the server using an HTTP POST request
+    //   const response = await axios.post(
+    //     "http://localhost:5000/api/recipes",
+    //     formData0
+    //   );
+    //   updateChatRefresh(response.data)
+    //   console.log(response.data)  
+    // } catch (error) {
+    //   console.error("Error inserting data:", error);
+    // }
 
 
 
@@ -889,7 +902,7 @@ Update
 
 
 
-      <div class="grid grid-cols-4 justify-items-center items-center">
+      <div class="flex flex-wrap justify-center items-center">
     {table?.map((e, i) => {     
         return (
 
