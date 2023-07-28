@@ -52,7 +52,26 @@ const newIngredient =  async (req, res) => {
           TrueName:ingredientName,
           img:image,
           TrueImg:image,
-          ingredientType:ingredientType
+          ingredientType:ingredientType,
+          flag:true,
+         }
+        
+        );
+      const addIngredient = await Ingredient.save();
+      console.log(addIngredient)
+      res.json(addIngredient);
+  };
+const ReqnewIngredient =  async (req, res) => {
+  const image =req.file.path
+    const { ingredientName,ingredientType } = req.body;
+      const Ingredient = new Ingredients(
+        { 
+          ingredientName: ingredientName,
+          TrueName:ingredientName,
+          img:image,
+          TrueImg:image,
+          ingredientType:ingredientType,
+          flag:false,
          }
         
         );
@@ -122,4 +141,5 @@ const ItemsId = JSON.parse(req.query.ItemsId)
     updateIngredientAdmin,
     resetIngredientAdmin,
     AllSoldIngredient,
+    ReqnewIngredient,
     }; 

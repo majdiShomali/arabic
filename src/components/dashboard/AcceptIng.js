@@ -172,7 +172,8 @@ const AcceptIng = () => {
         ingredientName: e.ingredientName,
         img: e.image,
         sold: true,
-        duration:e.pricePlan
+        duration:e.pricePlan,
+        flag:true
       };
       const updatedUser2 = {
         flag: true,

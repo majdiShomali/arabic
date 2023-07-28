@@ -26,6 +26,8 @@ import Profile from "./pages/user/Profile";
 import ProviderHome from "./pages/providerp/ProviderHome";
 import ProviderProfile from "./pages/providerp/ProviderProfile";
 import NavbarProvider from "./components/providerc/NavbarProvider"
+import ReqIngredient from "./pages/providerp/ReqIngredient";
+import ProviderNewProfile from "./pages/providerp/ProviderNewProfile";
 // -----------------------Dashboard routes----------------//
 import Sidebar from "./pages/dashboard/Sidebar";
 import NavListMenuD from "./pages/dashboard/NavDashboard";
@@ -154,9 +156,8 @@ console.log(userIdApp)
           <Route index element={<ProviderHome userIdApp0 ={userIdApp} />} />
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
-          <Route path="ProviderProfile"  element={<ProviderProfile userIdApp0 ={userIdApp} />} />
-          {/* <Route path="SignUp" element={<SignUp />} />
-          <Route path="LogIn" element={<LogIn />} /> */}
+          <Route path="ReqIngredient" element={<ReqIngredient />} />
+          <Route path="ProviderProfile"  element={<ProviderNewProfile userIdApp0 ={userIdApp} />} />
         </Routes>
         <Footer />
       </Router>

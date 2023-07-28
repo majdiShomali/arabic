@@ -32,6 +32,10 @@ const ingredientSchema = new Schema({
         type : String,
         required : true,
     },
+    flag: {
+        type : Boolean,
+        required : true,
+    },
     sold: {
         type : Boolean,
         required : false,

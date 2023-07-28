@@ -190,7 +190,7 @@ const navigate=useNavigate()
             <ListItemPrefix>
               <Icon path={mdiCash} size={1} />
             </ListItemPrefix>
-            <a style={{ color: "black" }}> Payments </a>
+            <a style={{ color: "black" }}> expired Ingredients </a>
           </ListItem>
        
 

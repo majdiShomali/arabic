@@ -1,104 +1,90 @@
 import Icon from "@mdi/react";
 import { mdiDelete } from "@mdi/js";
-import { mdiFileEdit } from "@mdi/js";
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { mdiCheckDecagram  } from "@mdi/js";
+import { mdiCheckDecagram } from "@mdi/js";
 import Swal from "sweetalert2";
-import { mdiSilverware } from "@mdi/js";
 import { mdiHandshakeOutline } from "@mdi/js";
-import { mdiAccountOutline } from "@mdi/js";
 import { DashboardPendingContext } from "../../DashboardPendingContext";
 import { AllContext } from "../../AllDataContext";
 const AcceptPayment = () => {
-    const [persons, setPersons] = useState([]);
-    const [searchTermUsers, setSearchTermUsers] = useState("");
-    const [FilterDataUsers, setFilterDataUsers] = useState([]);
-    const { allPaymentsP, setAllPaymentsP } = useContext(DashboardPendingContext);
-    const {AllIngredientsBase,setAllIngredientsUserBase} =useContext(AllContext)
-//----------------------------------------
+  const [persons, setPersons] = useState([]);
+  const [searchTermUsers, setSearchTermUsers] = useState("");
+  const [FilterDataUsers, setFilterDataUsers] = useState([]);
+  const { allPaymentsP, setAllPaymentsP } = useContext(DashboardPendingContext);
+  const { AllIngredientsBase, setAllIngredientsUserBase } =
+    useContext(AllContext);
+  //----------------------------------------
 
+  function getDurationInMilliseconds(duration) {
+    const durations = {
+      oneMinute: 60 * 1000,
+      oneDay: 24 * 60 * 60 * 1000,
+      oneWeek: 7 * 24 * 60 * 60 * 1000,
+      oneMonth: 30 * 24 * 60 * 60 * 1000,
+      oneYear: 30 * 24 * 60 * 60 * 12 * 1000,
+      // Add more durations as needed
+    };
 
-function getDurationInMilliseconds(duration) {
-  const durations = {
-    oneMinute:   60 * 1000,
-    oneDay: 24 * 60 * 60 * 1000,
-    oneWeek: 7 * 24 * 60 * 60 * 1000,
-    oneMonth: 30 * 24 * 60 * 60 * 1000,
-    oneYear: 30 * 24 * 60 * 60 * 12 * 1000,
-    // Add more durations as needed
+    return durations[duration] || 0;
+  }
+  const [expiredIng, setExpiredIng] = useState([]);
+
+  useEffect(() => {
+    if (AllIngredientsBase && AllIngredientsBase.length > 0) {
+      const expiredIngredients = AllIngredientsBase.filter((ingredient) => {
+        const createdAt = new Date(ingredient.updatedAt);
+        const duration = ingredient.duration;
+
+        // Filter out if duration is empty string or undefined
+        if (duration === "" || typeof duration === "undefined") {
+          return false;
+        }
+
+        // Convert the duration to milliseconds
+        const durationMs = getDurationInMilliseconds(duration);
+
+        // Calculate the expiration date
+        const expirationDate = new Date(createdAt.getTime() + durationMs);
+        
+        // Get the current date and time
+        const currentDate = new Date();
+        console.log(expirationDate)
+        console.log(currentDate)
+        // Check if the current date is greater than the expiration date
+        return currentDate > expirationDate;
+      });
+
+      console.log("Expired Ingredients:", expiredIngredients);
+      setExpiredIng(expiredIngredients);
+      if (expiredIngredients.length > 0) {
+        // handleResetNow(expiredIngredients[0]?._id, expiredIngredients[0]);
+      }
+    }
+  }, [AllIngredientsBase]);
+
+  const handleResetNow = async (CardId, IngredientSelected) => {
+    try {
+      await axios.put(
+        `http://localhost:5000/api/IngredientAdminReset/${CardId}`,
+        {
+          ingredientName: IngredientSelected.TrueName,
+          image: IngredientSelected.TrueImg,
+        }
+      );
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
 
-  return durations[duration] || 0;
-}
-const [expiredIng, setExpiredIng] = useState([]);
+  useEffect(() => {
+    setPersons(allPaymentsP);
+    setFilterDataUsers(allPaymentsP);
+  }, [allPaymentsP]);
+  //-----------------------search------------------------//
 
-useEffect(() => {
-  if (AllIngredientsBase && AllIngredientsBase.length > 0) {
-    const expiredIngredients = AllIngredientsBase.filter((ingredient) => {
-      const createdAt = new Date(ingredient.updatedAt);
-      const duration = ingredient.duration;
-  
-      // Filter out if duration is empty string or undefined
-      if (duration === "" || typeof duration === "undefined") {
-        return false;
-      }
-  
-      // Convert the duration to milliseconds
-      const durationMs = getDurationInMilliseconds(duration);
-  
-      // Calculate the expiration date
-      const expirationDate = new Date(createdAt.getTime() + durationMs);
-  
-      // Get the current date and time
-      const currentDate = new Date();
-  
-      // Check if the current date is greater than the expiration date
-      return currentDate > expirationDate;
-    });
-
-    console.log("Expired Ingredients:", expiredIngredients);
-    setExpiredIng(expiredIngredients)
-    if(expiredIngredients[0] !== []){
-      handleResetNow(expiredIngredients[0]?._id,expiredIngredients[0])
-    }
-  }
-}, [AllIngredientsBase]);
-
-
-const handleResetNow = async (CardId,IngredientSelected) => {
-  // setUpdateStatus(false);
-
-  try {
-    // console.log(IngredientSelected.TrueName);
-    // console.log(IngredientSelected.TrueImg);
-    await axios.put(
-      `http://localhost:5000/api/IngredientAdminReset/${CardId}`,
-      {
-        ingredientName:IngredientSelected.TrueName,
-        image:IngredientSelected.TrueImg
-
-      }
-    );
-    // fetchIng();
-  } catch (error) {
-    console.error("Error updating user:", error);
-  }
-};
-
-
-
-     
-      useEffect(() => {
-           // allAdmins();
-       setPersons(allPaymentsP);
-       setFilterDataUsers(allPaymentsP)
-
-      }, [allPaymentsP]);
-//-----------------------search------------------------//
-
-const filterDataByNameUsers = (searchTermUsers) => {
+  const filterDataByNameUsers = (searchTermUsers) => {
     const filteredDataUsers = persons.filter((item) =>
       item.TrueName.toLowerCase().includes(searchTermUsers.toLowerCase())
     );
@@ -106,7 +92,6 @@ const filterDataByNameUsers = (searchTermUsers) => {
     console.log(filteredDataUsers);
     setCurrentPageUsers(1);
   };
-
 
   const [currentPageUsers, setCurrentPageUsers] = useState(1);
   let totalItemsUsers;
@@ -131,10 +116,9 @@ const filterDataByNameUsers = (searchTermUsers) => {
     setCurrentPageUsers(pageNumber);
   };
 
-
-  const handleDelete = (id, name) => {
+  const handleDelete = (CardId, IngredientSelected) => {
     Swal.fire({
-      title: `Do you want to remove ${name}?  `,
+      title: `Do you want to remove ${IngredientSelected.TrueName}?  `,
       showConfirmButton: true,
       showCancelButton: true,
       confirmButtonText: "OK",
@@ -144,64 +128,15 @@ const filterDataByNameUsers = (searchTermUsers) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Swal.fire(` ${name} has been removed `, "", "success");
-
-        axios
-          .put("http://localhost:5000/recipesA/" + id)
-          .then((response) => {
-            allAdmins()
-          })
-          .catch((error) => console.log(error.message));
-
-        // window.location.reload();
+        handleResetNow(CardId, IngredientSelected)
       } else Swal.fire(" Cancelled", "", "error");
     });
   };
 
-  const UpdateRole = async (IngredientSelected_id, IngredientSelected) => {
-  
-      // setUpdateStatus(false);
-  
-   console.log(IngredientSelected.TrueName);
-        console.log(IngredientSelected.TrueImg);
 
-      try {
-        await axios.put(
-          `http://localhost:5000/api/IngredientAdminReset/${IngredientSelected_id}`,
-          {
-            ingredientName:IngredientSelected.TrueName,
-            image:IngredientSelected.TrueImg,
-             sold:false,
-             duration:"",
-          }
-        );
-        // fetchIng();
-      } catch (error) {
-        console.error("Error updating user:", error);
-      }
-  
-  };
 
   const handleUpdate = (IngredientSelected_id, IngredientSelected) => {
-    let text1 = "aaaaaaaaaaaaa";
-
-    Swal.fire({
-      title: text1,
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonText: "OK",
-      cancelButtonText: "Cancel",
-      icon: "warning",
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-   
-        UpdateRole(IngredientSelected_id, IngredientSelected);
-
-        Swal.fire("hello", "", "success");
-
-        // window.location.reload();
-      } else Swal.fire(" Cancelled", "", "error");
-    });
+ 
   };
 
   return (
@@ -209,7 +144,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
       <div className="bg-[#ffffff] mr-5 ml-5 p-10 rounded-2xl min-h-[calc(50vh)]   ">
         <div className="relative flex items-center justify-between pt-4">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-          Pending Recipes
+            Pending Recipes
           </div>
         </div>
 
@@ -250,7 +185,9 @@ const filterDataByNameUsers = (searchTermUsers) => {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">location</p>
+                  <p className="text-xs tracking-wide text-gray-600">
+                    location
+                  </p>
                 </th>
                 <th
                   colSpan={1}
@@ -303,7 +240,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                     >
                       <div className="h-[30px] w-[30px] rounded-full">
                         <img
-                           src={`http://localhost:5000/${e.img}`} 
+                          src={`http://localhost:5000/${e.img}`}
                           className="h-full w-full rounded-full"
                           alt=""
                         />
@@ -338,18 +275,11 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       role="cell"
                     >
                       <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        
-                        
-                          <div className=" w-10 flex flex-col justify-center items-center">
-                            {" "}
-                            <Icon path={mdiHandshakeOutline} size={1} />{" "}
-                            <span>user</span>{" "}
-                          </div>
-                         
-
-                        
-                      
-
+                        <div className=" w-10 flex flex-col justify-center items-center">
+                          {" "}
+                          <Icon path={mdiHandshakeOutline} size={1} />{" "}
+                          <span>user</span>{" "}
+                        </div>
                       </p>
                     </td>
 
@@ -357,12 +287,8 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
                       role="cell"
                     >
-                      <button
-                        onClick={() => handleUpdate(e._id, e)}
-                      >
-                       
-                          <Icon color="blue" path={mdiCheckDecagram } size={1} />
-                       
+                      <button onClick={() => handleUpdate(e._id, e)}>
+                        <Icon color="blue" path={mdiCheckDecagram} size={1} />
                       </button>
                     </td>
 
@@ -371,7 +297,7 @@ const filterDataByNameUsers = (searchTermUsers) => {
                       role="cell"
                     >
                       <button
-                        onClick={() => handleDelete(e.userid, e.username)}
+                        onClick={() => handleDelete(e._id, e)}
                       >
                         <Icon color="red" path={mdiDelete} size={1} />
                       </button>
@@ -391,40 +317,10 @@ const filterDataByNameUsers = (searchTermUsers) => {
               />
             }
           </div>
-
-       
         </div>
-        </div>
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-
-
-     
-
-     
-
-
-
-
-
-
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default AcceptPayment
+export default AcceptPayment;
