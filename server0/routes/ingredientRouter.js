@@ -15,5 +15,4 @@ router.put("/api/IngredientAdminReset/:id", ingredientsController.resetIngredien
 router.delete("/api/Ingredient/:id", ingredientsController.deleteIngredient);
 
 
-
 module.exports = router;

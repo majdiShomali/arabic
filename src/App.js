@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // ----------------------user --------------------------/
 import NavListMenu from "./components/Navbar";
+import StickyNavbar from "./components/StickyNavbar";
 import Home from "./pages/user/Home";
 import Contact from "./pages/Contact";
 import Footer from "./components/FooterU";
@@ -42,7 +43,7 @@ import AcceptPayment from "./components/dashboard/AcceptPayment";
 import AcceptIng from "./components/dashboard/AcceptIng";
 import LiveChat from "./pages/dashboard/Chat"
 
-
+import NoPage404 from "./pages/NoPage404";
 import axios from "axios";
 
 
@@ -100,7 +101,8 @@ export default function App() {
   const AppRouter1 = () => {
     return (
       <Router>
-        <NavListMenu />
+        {/* <NavListMenu /> */}
+        <StickyNavbar/>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/Payment/:cardId/:price" element={<PaymentPage />} />
@@ -115,6 +117,7 @@ export default function App() {
           <Route path="UserProfile" element={<UserProfile />} />
           <Route path="Profile" element={<Profile />} />
           <Route path="/Kitchen/:type_Kitchen" element={<Kitchens userIdApp0 ={userIdApp} />} />
+          <Route path="/*" element={<NoPage404/>} />
         </Routes>
         <Footer />
       </Router>

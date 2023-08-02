@@ -4,6 +4,7 @@ const PORT = process.env.PORT;
 const mongoose = require("mongoose");
 const userRouts = require('./routes/userRouter');
 const recipesRouts = require('./routes/recipesRouter');
+const GoogleLogInRouts = require('./routes/GoogleLogInRouter');
 const sponsorRouts = require('./routes/sponsorRouter');
 const ingredientRouts = require('./routes/ingredientRouter');
 const notFoundHandler = require('./middleware/404');
@@ -12,6 +13,7 @@ const errorHandler = require('./middleware/500')
 const Protected = require('./middleware/Protected')
 const aboutUsRouts = require('./routes/aboutUsRouter');
 const paymentRouts = require('./routes/paymentRouter');
+const blogRouts = require('./routes/blogRouter');
 
 const app = express();
 app.use(cors());
@@ -27,17 +29,14 @@ app.get("/", (req, res) => {
 });
 
 
-// const authController = require('./controllers/authController');
-// app.use('/api/auth', authController);
-
-
-
 app.use(userRouts);
+app.use(GoogleLogInRouts);
 app.use(sponsorRouts);
 app.use(recipesRouts);
 app.use(aboutUsRouts);
 app.use(ingredientRouts);
 app.use(paymentRouts);
+app.use(blogRouts);
 app.use('*',notFoundHandler);
 app.use(errorHandler);
 app.use(Protected)

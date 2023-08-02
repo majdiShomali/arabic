@@ -14,10 +14,10 @@ export default function LogIn() {
     const [password, setpassword] = useState("");
     const [passwordp, setpasswordp] = useState("");
 
-    const [user0, setUser0] = useState([]);
+    const [userGoogle, setUserGoogle] = useState([]);
     const [errorG, setErrorG] = useState("");
     const login = useGoogleLogin({
-        onSuccess: (codeResponse) => setUser0(codeResponse),
+        onSuccess: (codeResponse) => setUserGoogle(codeResponse),
         onError: (error) => console.log("Login Failed:", error),
       });
 
@@ -53,52 +53,40 @@ console.log(email,password)
 
 }
 
-    useEffect( () => {
-        if (user0.length !== 0) {
-            console.log(user0)
-            let token =user0.access_token
-        //     localStorage.setItem("auth",token)
-        //   window.location.href = 'http://localhost:3000/';
-
-          axios
-            .get(
-              `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user0.access_token}`
-              ,
-              {
-                headers: {
-                    Authorization: `Bearer ${user0.access_token}`,
-                  Accept: "application/json",
-                },
-              }
-            )
-            .then((res) => {
-              setProfile(res.data);0
-              setErrorG("");
-              setemail(res.data.email)
-              setpassword("123456")
-              console.log(res.data)
-              let eeee=res.data.email
-              loginG(eeee,res.data.picture)
-              const user0Data = {
-                firstName:res.data.name,
-                email: res.data.email,
-                password:"123456",
-                role: 0 ,
-              }
-              axios
-          .post("http://localhost:5000/api/users",user0Data)
+useEffect(() => {
+  if (userGoogle.length !== 0) {
+    axios
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userGoogle.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userGoogle.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        axios
+          .post("http://localhost:5000/api/newUserGoogle", res.data)
           .then((response) => {
-            console.log(response);
+            if (response.data.error !== "incorrect password" && response.data.error === undefined) {
+
+              localStorage.setItem("auth", response.data.token);
+              window.location.href = "http://localhost:3000/";
+              setpasswordp(response.data.error === "incorrect password" ? "incorrect password": "");
+              setemailp(response.data.error === "incorrect password" ? " ": response.data.error );
+            }else{
+              setpasswordp(response.data.error === "incorrect password" ? "incorrect password": "");
+              setemailp(response.data.error === "incorrect password" ? " ": response.data.error );
+
+            }
+           
           })
           .catch((err) => console.log(err.message));
-          console.log(err);
-                  //   localStorage.setItem("auth",token)
-        //   window.location.href = 'http://localhost:3000/';
-
       })
-            .catch((err) => console.log(err.message));
-        }
-      }, [user0]);
+      .catch((err) => console.log(err.message));
+  }
+}, [userGoogle]);
 
 
   
@@ -116,15 +104,7 @@ console.log(email,password)
    
     const handleSubmit = async (event) => {
        
-
- 
-
-
-
-
        event.preventDefault();
-
-
 
        const userData = {
         email: email,
@@ -137,27 +117,18 @@ console.log(email,password)
           "http://localhost:5000/api/usersLogin",
           userData
         );
-        console.log("Data inserted:", response.data);
-
-        if(response.data.error != 'incorrect password'){
-  
-         console.log("success")
-         console.log(response.data.token);
-
-           localStorage.setItem("auth",(response.data.token))
-
-           setpasswordp("")
-           window.location.href = 'http://localhost:3000/';
-           setpasswordp("")
-        }else{
-          setpasswordp("incorrect password")
-          console.log("failed")
+        if (response.data.error !== "incorrect password" && response.data.error === undefined) {
+          localStorage.setItem("auth", response.data.token);
+          window.location.href = "http://localhost:3000/";
+          setpasswordp("");
+          setemailp("");
+        } else {
+          setpasswordp(response.data.error === "incorrect password" ? "incorrect password": "");
+          setemailp(response.data.error === "incorrect password" ? " ": response.data.error );
         }
-        
       } catch (error) {
         console.error("Error inserting data:", error);
-        // setStatus("error");
-        console.log("error")
+        console.log(error.message);
       }
 
 

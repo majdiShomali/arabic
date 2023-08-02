@@ -11,6 +11,9 @@ import { useEffect } from 'react';
 
 import Rating from '../../components/Rating';
 
+import BlogSection from '../../components/user/BlogSection';
+
+
 const Home = () => {
 
   const [selectedKitchenType, setSelectedKitchenType] = useState('');
@@ -214,6 +217,10 @@ const Home = () => {
 
 <SponserSection/>
  {/* <AddYourIng/> */}
+
+
+<BlogSection/>
+
 
     </>
   )

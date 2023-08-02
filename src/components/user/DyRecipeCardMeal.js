@@ -280,7 +280,7 @@ const [heartType , setHeartType]=useState(true)
           اعرض الوصفة
         </Button>
       </div>
-      {console.log(Recipe)}
+      
 
     </div>
   );

@@ -27,7 +27,9 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { locale } from "moment/moment";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserNew } from '../../actions/UserActions';
+import AddBlog from "../../components/user/AddBlog";
 const ShowRecipe = ({ userIdApp0 }) => {
   const { AllDataGet, setAllDataGet } = useContext(AllContext);
   const { id } = useParams();
@@ -37,6 +39,23 @@ const ShowRecipe = ({ userIdApp0 }) => {
   const [Recipe, setRecipe] = useState([]);
   const [RecipeRating, setRecipeRating] = useState(0);
   const [Loading, setLoading] = useState(true);
+
+  const { loading: userLoadingNew, data: userDataNew, error: userErrorNew } = useSelector((state) => state.userNew);
+  const dispatch = useDispatch();
+  const [userData, setUserData] = useState({});
+
+
+  useEffect(() => {
+    if(localStorage.auth != null){ 
+      const token = localStorage.getItem("auth");
+      dispatch(fetchUserNew(token));
+  }
+  }, [dispatch]);
+
+  useEffect(() => {
+    setUserData(userDataNew[0])
+  }, [userDataNew]);
+
 
   const oneRecipe = async () => {
     let x;
@@ -52,7 +71,6 @@ const ShowRecipe = ({ userIdApp0 }) => {
       setRecipe(response.data[0]);
       x = response.data[0].ItemsId;
       const requestData = { ItemsId: x };
-      console.log(x);
       try {
         const response = await axios.get(
           "http://localhost:5000/api/IngredientMatch",
@@ -79,7 +97,6 @@ const ShowRecipe = ({ userIdApp0 }) => {
   useEffect(() => {
     oneRecipe();
   }, []);
-
   //----------------------pagination----------------------------//
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -153,6 +170,38 @@ const ShowRecipe = ({ userIdApp0 }) => {
     getComments();
   }, []);
 
+
+
+  const AddNewBlog = async () => {
+
+    const blogData = {
+      recipeImage:Recipe.img
+      ,recipeName:Recipe.recipeName
+      ,recipeId:Recipe._id
+      ,userId:userData._id
+      ,userImage:userData.img
+      // ,userComment:userComment
+      // ,commentTime:commentTime
+    };
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/blog",
+        blogData
+      );
+      
+
+    } catch (error) {
+      console.error("Error inserting data:", error);
+    }
+
+
+
+
+
+  }
+
+
   return (
     <>
       <div className="flex h-screen antialiased text-gray-800">
@@ -207,7 +256,7 @@ const ShowRecipe = ({ userIdApp0 }) => {
                     <Card className="w-96 bg-white rounded-lg border p-2 my-4 mx-6">
                       <h3 className="font-bold">comments</h3>
                       <div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col h-40 overflow-y-auto">
                           {Recipe?.comments?.map((comment, index) => {
                             return (
                             <>
@@ -260,14 +309,6 @@ const ShowRecipe = ({ userIdApp0 }) => {
 
                             }
 
-
-
-                           
-
-
-
-
-
                               </>
                             );
                           })}
@@ -285,13 +326,21 @@ const ShowRecipe = ({ userIdApp0 }) => {
                                 onChange={(e) => setComment(e.target.value)}
                               />
                             </div>
-                            <div className="w-full flex justify-end px-3">
+                            <div className="w-full flex justify-between px-3">
+                              <div>
                               <input
                                 type="submit"
                                 className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
                                 defaultValue="Post Comment"
                                 onClick={handleAddComment}
                               />
+                              </div>
+                            
+                           <div>
+                           <AddBlog Recipe={Recipe} userData={userData}/>
+                           </div>
+                            
+
                             </div>
                           </>
                         ) : (

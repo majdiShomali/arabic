@@ -8,7 +8,6 @@ const Kitchens = ({userIdApp0}) => {
   const [Kitchen, setKitchen] = useState([]);
   const { type_Kitchen } = useParams();
 
-  console.log(type_Kitchen);
   return(
   <>
   

@@ -82,26 +82,15 @@ export default function Signup() {
     password:password,
     phone:phone,
     role: type === 'user' ? 0 : 2,
-    // AllIngredientsId:Cards
   };
 
   try {
-    // Send the data to the server using an HTTP POST request
     const response = await axios.post(
       "http://localhost:5000/api/users",
       userData
     );
-  //   let x =[]
-  //   if (response.data.user0.role==0){
-  //   x= [false ,true,true ]
-  // }else if(response.data.user0.role==1){
-  //    x= [true ,false,true ]
-  // }else if(response.data.user0.role==2){
-  //    x= [true ,true,false]
-  // }
+
     localStorage.setItem("auth",(response.data.token))
-    // localStorage.setItem("SignStatus","SignOut")
-    // localStorage.setItem("roles",JSON.stringify(x))
     window.location.href = "http://localhost:3000/";
   } catch (error) {
     console.error("Error inserting data:", error);

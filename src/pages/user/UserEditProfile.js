@@ -24,9 +24,6 @@ function EditProfileBeneficiary() {
 
   const { profileRefresh, updateProfileRefresh } = useContext(UserContext);
 
-
-
-
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

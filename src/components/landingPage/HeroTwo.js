@@ -19,7 +19,7 @@ const Hero = () => {
 
   return (
     <>
-      <div className="relative bg-[#fcfbfb] py-8  shadow-sm">
+      <div className="relative bg-[#fcfbfb] py-8  shadow-sm lg:h-[100vh]">
         <div className="container ">
           <div className="flex flex-col md:flex-row lg:flex-row items-center justify-center ">
            
@@ -31,7 +31,7 @@ const Hero = () => {
                   <img
                     src="https://albwabh.com/wp-content/uploads/2022/05/%D9%8A%D8%B1%D9%8A%D8%AF-%D8%B7%D8%A8%D8%A7%D8%AE-%D8%A3%D9%86-%D9%8A%D8%B4%D9%88%D9%8A-6-%D9%83%D9%8A%D9%84%D9%88-%D8%AC%D8%B1%D8%A7%D9%85-%D9%85%D9%86-%D8%A7%D9%84%D9%84%D8%AD%D9%85-%D8%A5%D8%B0%D8%A7-%D9%83%D8%A7%D9%86-%D9%83%D9%84-%D9%83%D9%8A%D9%84%D9%88-%D8%AC%D8%B1%D8%A7%D9%85-%D9%8A%D8%AD%D8%AA%D8%A7%D8%AC-%D8%A5%D9%84%D9%89-20-%D8%AF%D9%82%D9%8A%D9%82%D8%A9.jpg"
                     alt="hero"
-                    className="w-[33rem] h-[37rem] lg:mr-16 rounded-sm rounded-tr-[7rem]"
+                    className="w-[30rem] h-[33rem] lg:mr-16 rounded-sm rounded-tr-[7rem] mt-10"
                   />
                   <span className="absolute -left-8 -bottom-8 z-[-1]">
                     <svg

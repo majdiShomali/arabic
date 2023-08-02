@@ -5,7 +5,6 @@ const newPayment =  async (req, res) => {
   const image =req.file.path
   const {  CompanyName,CompanyEmail,userId,ingredientName,ingredientType,IngId,TrueName,cardholder,pricePlan,pricePayed,cvv } = req.body;
    
-
   const Payment0 = new Payment({ 
     CompanyName:CompanyName
     ,CompanyEmail:CompanyEmail
