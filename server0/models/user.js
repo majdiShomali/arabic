@@ -52,6 +52,10 @@ const userSchema = new Schema({
         required : false,
         default : false
     },
+    resetPin:{
+        type : Number,
+        required : false,
+    },
     },
      {timestamps : true}
     )

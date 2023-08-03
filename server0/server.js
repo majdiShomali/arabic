@@ -14,6 +14,7 @@ const Protected = require('./middleware/Protected')
 const aboutUsRouts = require('./routes/aboutUsRouter');
 const paymentRouts = require('./routes/paymentRouter');
 const blogRouts = require('./routes/blogRouter');
+const forgetRouts = require('./routes/forgetRouter');
 
 const app = express();
 app.use(cors());
@@ -37,6 +38,7 @@ app.use(aboutUsRouts);
 app.use(ingredientRouts);
 app.use(paymentRouts);
 app.use(blogRouts);
+app.use(forgetRouts);
 app.use('*',notFoundHandler);
 app.use(errorHandler);
 app.use(Protected)

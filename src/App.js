@@ -21,7 +21,7 @@ import UserProfile from "./pages/user/UserProfile";
 import AddYourIng from "./components/landingPage/AddYourIng";
 import PaymentPage from "./components/landingPage/Payment";
 import Profile from "./pages/user/Profile";
-
+import ForgetPassword from "./pages/ForgetPassword";
 
 // ----------------------Provider routes----------------- //
 import ProviderHome from "./pages/providerp/ProviderHome";
@@ -116,6 +116,7 @@ export default function App() {
           <Route path="Kitchen" element={<Kitchen  userIdApp0 ={userIdApp} />} />
           <Route path="UserProfile" element={<UserProfile />} />
           <Route path="Profile" element={<Profile />} />
+          <Route path="ForgetPassword" element={<ForgetPassword />} />
           <Route path="/Kitchen/:type_Kitchen" element={<Kitchens userIdApp0 ={userIdApp} />} />
           <Route path="/*" element={<NoPage404/>} />
         </Routes>
@@ -160,6 +161,7 @@ console.log(userIdApp)
           <Route path="ContactUs" element={<Contact />} />
           <Route path="About" element={<About />} />
           <Route path="ReqIngredient" element={<ReqIngredient />} />
+          <Route path="ForgetPassword" element={<ForgetPassword />} />
           <Route path="ProviderProfile"  element={<ProviderNewProfile userIdApp0 ={userIdApp} />} />
         </Routes>
         <Footer />

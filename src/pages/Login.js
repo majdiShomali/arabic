@@ -228,9 +228,10 @@ useEffect(() => {
                                 Sign-In
                             </span>
                         </button>
+                        <Link to="/ForgetPassword" className="text-blue-500">forget password ?</Link>
                         <p className="mt-6 text-xs text-gray-600 text-center">
                             No Account?
-                            <Link to="/Signup/user" className="border-b border-gray-500 border-dotted">
+                            <Link to="/Signup/user" className="border-b border-gray-500 border-dotted text-blue-500">
                                 Create one
                             </Link>
                            
