@@ -221,7 +221,8 @@ export default function StickyNavbar() {
              <Button
               variant="gradient"
               size="sm"
-              className="hidden lg:inline-block"
+              className="hidden lg:inline-block hover:shadow-non "
+              color="orange"
             >
               <span>login</span>
             </Button>
@@ -296,7 +297,7 @@ export default function StickyNavbar() {
           :
           <Link to="/Login">
           <Button onClick={() => setOpenNav(false)}
-       variant="gradient" size="sm" fullWidth className="mb-2">
+       variant="gradient" size="sm" fullWidth className="mb-2 bg-amber-600">
          <span>Login</span>
        </Button>
        </Link>

@@ -128,7 +128,7 @@ useEffect(() => {
         }
       } catch (error) {
         console.error("Error inserting data:", error);
-        console.log(error.message);
+        setemailp(error.response.data.error)
       }
 
 

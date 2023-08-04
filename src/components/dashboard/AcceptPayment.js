@@ -127,7 +127,7 @@ const AcceptPayment = () => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire(` ${name} has been removed `, "", "success");
+        Swal.fire(` ${IngredientSelected.TrueName} has been removed `, "", "success");
         handleResetNow(CardId, IngredientSelected)
       } else Swal.fire(" Cancelled", "", "error");
     });

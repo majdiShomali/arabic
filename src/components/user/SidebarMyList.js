@@ -57,6 +57,15 @@ export default function Example({ userIdApp0 }) {
   const { EffectStatus, updateEffectStatus } = useContext(KitContext);
   const [open, setOpen] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
+  const [listAnimation, setlistAnimation] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setlistAnimation(true);
+    }, 3000);
+    setlistAnimation(false);
+  }, [MyListSideBarCon]);
+
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -213,14 +222,16 @@ export default function Example({ userIdApp0 }) {
 )}
              
                 
-             
+             <hr className="my-2 border-blue-gray-50" />
 
-              <List>
-                <hr className="my-2 border-blue-gray-50" />
+
+              <List className="">
 
                 {FilterDataItems?.map((e) => {
                   return (
+                    <Card className="my-1 w-full">
                     <ListItem
+                    className="flex w-full justify-end"
                       key={e.ingredientName}
                       onClick={() =>
                         UpdateBeneficiaryId(
@@ -230,25 +241,53 @@ export default function Example({ userIdApp0 }) {
                         )
                       }
                     >
+                     <p className="text-lg font-bold">{e.ingredientName}</p> 
                       <ListItemPrefix>
-                        <img className="w-10 h-10 rounded-full" src={`http://localhost:5000/${e.img}`} />
+                        <img className="w-14 h-full hover:scale-110   ml-5" src={`http://localhost:5000/${e.img}`} />
                       </ListItemPrefix>
-                      {e.ingredientName}
+                      
                     </ListItem>
+                    </Card>
                   );
                 })}
               </List>
             </Card>
           ) : (
-            <div className="fixed top-20 right-0 z-50">
+            <>
+            
+
+            {listAnimation ? 
+            
+            <>
+                 <div className="fixed top-20 right-0 z-50 ">
               <Button
-                className="mr-5 border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+                className="mr-5 border mb-10 border-solid border-[#219D80] border-2 text-[#E8AA42] hover:bg-[#E8AA42] bg-[#219D80] hover:text-[#ffffff]"
                 variant="text"
                 onClick={() => setSideStatus(false)}
               >
                 My List
               </Button>
             </div>
+            
+            </>: <>
+            <div className="fixed top-20 right-0 z-50 animate-bounce ">
+              <Button
+                className="mr-5 border mb-10 border-solid border-[#219D80] border-2 text-[#E8AA42] hover:bg-[#E8AA42] bg-[#219D80] hover:text-[#ffffff]"
+                variant="text"
+                onClick={() => setSideStatus(false)}
+              >
+                My List
+              </Button>
+            </div>
+            
+            
+            </>}
+       
+
+
+            </>
+
+           
           )}
         </>
       ) : null}

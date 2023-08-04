@@ -1,12 +1,9 @@
 // 1- calling the model
 const User = require("../models/user");
 const bcrypt = require('bcrypt');
-const jwt = require("jsonwebtoken");
 
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
-
-const SECRETKEY = process.env.SECRETKEY;
 
 
 const transporter = nodemailer.createTransport({
@@ -16,7 +13,6 @@ const transporter = nodemailer.createTransport({
       pass: "qlnnagwjsettapld",
     },
   });
-
 
   const allForgetUsers = async (req, res) => {
     const { email } = req.body;

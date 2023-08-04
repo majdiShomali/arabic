@@ -356,7 +356,7 @@ export default function Example() {
     setOpenNav(closeNav)
   
   },[closeNav])
-0  
+
 
 
   return (
@@ -411,7 +411,7 @@ export default function Example() {
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
           { localStorage.auth == null ?
          
-          <Button  variant="outlined" size="sm" color="blue-gray" fullWidth>
+          <Button className="bg-amber-600"  variant="outlined" size="sm" color="blue-gray" fullWidth>
              <Link to="/Login"
                onClick={()=>updateNav(false)}
 
