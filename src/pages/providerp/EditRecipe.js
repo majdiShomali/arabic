@@ -4,6 +4,14 @@ import Modal from "@mui/material/Modal";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { Card, Input, Button } from "@material-tailwind/react";
+
+//---------------------redux-----------------//
+import { useDispatch, useSelector } from "react-redux";
+import { addRecipes } from "../../actions/AddRecipe";
+import { fetchProviderRecipes } from "../../actions/GetProviderRecipes";
+
+
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -15,6 +23,11 @@ const style = {
   boxShadow: 3,
   p: 4,
 };
+
+
+
+
+
 const EditRecipe = ({
   recipeId0,
   recipeName0,
@@ -27,7 +40,17 @@ const EditRecipe = ({
   image0,
   ItemsId0,
   nation0,
+  userIdApp
 }) => {
+
+  const dispatch = useDispatch();
+  const { loading, data, error } = useSelector((state) => state.providerRecipes);
+  
+useEffect(()=>{
+if(userIdApp){   
+dispatch(fetchProviderRecipes(userIdApp))
+}
+},[dispatch,userIdApp])
 
   const [name, setName] = useState("");
   const [oldImg, setOldImg] = useState("");
@@ -90,6 +113,7 @@ const EditRecipe = ({
     formData.append("image", productImage);
     formData.append("ItemsId", JSON.stringify(itemsId));
     formData.append("description", description);
+    formData.append("nation", yourSelectedNationValue);
 
 
 
@@ -99,6 +123,8 @@ const EditRecipe = ({
         `http://localhost:5000/api/recipesP/${recipeId0}`,
         formData
       );
+      handleClose()
+      dispatch(fetchProviderRecipes(userIdApp))
    } catch (error) {
     
    }

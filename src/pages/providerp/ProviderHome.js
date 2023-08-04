@@ -660,6 +660,7 @@ const ProviderHome = ({ userIdApp0 }) => {
                       Edit{" "}
                     </Button> */}
                          <EditRecipe
+       userIdApp ={userIdApp0}
        recipeId0={e._id}
       recipeName0 = {e.recipeName}
       category0   = {e.category}
