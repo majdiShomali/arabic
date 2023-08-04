@@ -122,7 +122,6 @@ const deleteRecipe = async (req, res) => {
 const updateRecipeAdmin = async (req, res) => {
   const RecipeId  = req.params.id;
   const updatedRecipeData = req.body;
-
   const Recipe = await Recipes.findByIdAndUpdate(RecipeId, updatedRecipeData, { new: true });
   const updatedRecipe= await Recipe.save();
   res.json(updatedRecipe);

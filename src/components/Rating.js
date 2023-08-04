@@ -5,6 +5,8 @@ import TotalRating from "./TotalRating";
 import Swal from "sweetalert2";
 import {RecipeContext} from "../RecipeContext";
 const Rating = ({ RecipeId, Recipe ,UserIdA,rating }) => {
+console.log(RecipeId, Recipe ,UserIdA,rating )
+
 
   console.log(RecipeId,Recipe)
   const starCount = 5; // Total number of stars
@@ -34,14 +36,10 @@ const showSuccessAlert = (message) => {
   const handleStarClick = async (starIndex) => {
     setFilledStars(starIndex + 1);
 
-   let ids = Recipe?.UsersIdRate
-    let newrate =Recipe?.rate
-    ids.push(UserIdA)
-    newrate.push(starIndex + 1)
-
-
-    const  sum= Recipe.rate?.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
-    const  avg = Recipe.rate.length === 0 ? 1 :Recipe.rate?.length
+    let ids = Recipe.UsersIdRate.length > 0 ?  [...Recipe.UsersIdRate,UserIdA]  : [UserIdA]
+    let newrate =Recipe.rate.length  > 0   ? [...Recipe.rate,starIndex + 1]      :    [starIndex + 1]  
+    const  sum=   Recipe.rate.length === 0 ? (5+newrate[0]) :  Recipe.rate?.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
+    const  avg = Recipe.rate.length === 0 ? 2 :Recipe.rate?.length
 
     try {
       const updatedRecipe = {
