@@ -3,20 +3,12 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { RecipeContext } from "../../RecipeContext";
 import Pagination from "@mui/material/Pagination";
-import Swal from "sweetalert2";
-import Icon from "@mdi/react";
-import { mdiFridge } from "@mdi/js";
-import { mdiHamburgerPlus } from "@mdi/js";
-import { mdiStove } from "@mdi/js";
-import aboutMeal from "../../Images/meals/majdi.jpg";
-import SidebarMyList from "../../components/user/SidebarMyList";
+
 import axios from "axios";
 import {
   Card,
   Input,
-  Checkbox,
   Button,
-  Typography,
 } from "@material-tailwind/react";
 
 import { mdiPlus } from "@mdi/js";
@@ -39,7 +31,6 @@ const ProviderHome = ({ userIdApp0 }) => {
   const { TableContext, setTableContext } = useContext(AllContext);
   const { ChatRefresh0, updateChatRefresh } = useContext(AllContext);
 
-  console.log(AllIngredientsBase);
   const [img, setImg] = useState("");
 
   const onChange = (e) => {
@@ -65,50 +56,9 @@ const ProviderHome = ({ userIdApp0 }) => {
     setProductImage(event.target.files[0]);
   };
 
-  // const [userId ,setUserId] = useState()
-  // const [providerRecipes ,setProviderRecipes] = useState([])
-  // const [ingredientsApi ,setIngredientsApi] = useState([])
-  // const [userDataMyListId, setUserDataMyListId] = useState();
-  // const [MyList, setMyList] = useState([]);
-  // const [MyListN, setMyListN] = useState([]);
   const [userAllIngredients, setUserAllIngredients] = useState();
-  // const [filterDataVegetables0, setFilterDataVegetables0] = useState();
-  // const [filterDataVegetables1, setFilterDataVegetables1] = useState();
+
   const [FilterDataMeals, setFilterDataMeals] = useState([]);
-
-  const fetchProtectedData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/api/providerRecipes/${userIdApp0}`
-      );
-      // setProviderRecipes(response.data)
-      setTable(response.data);
-    } catch (error) {
-      console.error("Error retrieving data:", error);
-    }
-  };
-
-  // const allRecipes = async () => {
-
-  //   try {
-  //     // Send the data to the server using an HTTP POST request
-  //     const response = await axios.get("http://localhost:5000/api/recipes");
-  //     console.log(response.data);
-  //      setTable(response.data)
-  //   } catch (error) {
-  //     console.error("Error inserting data:", error);
-  //   }
-
-  // };
-
-  // useEffect(() => {
-
-  //   allRecipes()
-
-  // },[])
-
-  let AddPlus = mdiPlus;
-  let removMinus = mdiMinus;
 
   const [MyListAdmin, setMyListAdmin] = useState([]);
   const [MyListNAdmin, setMyListNAdmin] = useState([]);
@@ -145,12 +95,10 @@ const ProviderHome = ({ userIdApp0 }) => {
 
   const [name, setName] = useState("");
   const [name1, setName1] = useState("");
-  const [name2, setName2] = useState("");
-  const [name3, setName3] = useState("");
+
   const [link1, setLink1] = useState("");
-  const [link2, setLink2] = useState("");
-  const [link3, setLink3] = useState("");
-  const [currentLinks, setCurrentLinks] = useState([]);
+
+  const [description, setDescription] = useState("");
 
   const [table, setTable] = useState([]);
 
@@ -161,8 +109,7 @@ const ProviderHome = ({ userIdApp0 }) => {
 
   const CreateNew = async () => {
     let link_name001;
-    let link_name002;
-    let link_name003;
+
 
     if (link1 != "") {
       link_name001 = "https://www.youtube.com/embed/".concat(
@@ -172,26 +119,13 @@ const ProviderHome = ({ userIdApp0 }) => {
       link_name001 = link1;
     }
 
-    if (link2 != "") {
-      link_name002 = "https://www.youtube.com/embed/".concat(
-        link2.replace("https://youtu.be/", "")
-      );
-    } else {
-      link_name002 = link2;
-    }
-    if (link3 != "") {
-      link_name003 = "https://www.youtube.com/embed/".concat(
-        link3.replace("https://youtu.be/", "")
-      );
-    } else {
-      link_name003 = link3;
-    }
 
     console.log(foodCards);
     const formData0 = new FormData();
     formData0.append("recipeName", name);
     formData0.append("providerId", userIdApp0);
     formData0.append("category", yourSelectedStateValue);
+    formData0.append("description", description);
     formData0.append("names", JSON.stringify([name1]));
     formData0.append("links", JSON.stringify([link_name001]));
     formData0.append("Items", JSON.stringify(foodCards));
@@ -200,71 +134,27 @@ const ProviderHome = ({ userIdApp0 }) => {
     formData0.append("ItemsId", JSON.stringify(MyListIdAdmin));
     formData0.append("nation", yourSelectedNationValue);
 
-    let tableObj = {
-      recipeName: name,
-      providerId: userIdApp0,
-      category: yourSelectedStateValue,
-      names: [name1, name2, name3],
-      links: [link_name001, link_name002, link_name003],
-      Items: foodCards,
-      ItemsName: foodCardsName,
-      // image:img,
-      ItemsId: MyListIdAdmin,
-    };
 
-    // const userData = {
-    //   recipes: tableObj,
-    // };
     dispatch(addRecipes(formData0)).then(() => {
       dispatch(fetchRecipesP());
     });
-    // try {
-    //   // Send the data to the server using an HTTP POST request
-    //   const response = await axios.post(
-    //     "http://localhost:5000/api/recipes",
-    //     formData0
-    //   );
-    //   updateChatRefresh(response.data)
-    //   console.log(response.data)
-    // } catch (error) {
-    //   console.error("Error inserting data:", error);
-    // }
 
     setName("");
     setName1("");
-    setName2("");
-    setName3("");
     setLink1("");
-    setLink2("");
-    setLink3("");
     setMyListAdmin([]);
     setMyListNAdmin([]);
     setMyListIdAdmin([]);
     updateSidebarIng([]);
     setFoodCards([]);
     setFoodCardsName([]);
-    // let NewItems = [...items];
-    // NewItems.map((et) => {
-    //   et.clicked = "Click to add";
-    // });
-    // setItems(NewItems);
-
-    // allRecipes()
   };
-
-  function ShowVideos(index) {
-    table[index].Links.map((e) => {
-      setCurrentLinks((prevArray) => [...prevArray, e]);
-    });
-  }
 
   const DeleteRecipe = async (Id) => {
     try {
       const response = await axios.delete(
         `http://localhost:5000/api/recipes/${Id}`
       );
-      // fetchUsers(); // Refresh the user list after deleting a user
-      // allRecipes()
       updateChatRefresh(response.data);
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -278,8 +168,7 @@ const ProviderHome = ({ userIdApp0 }) => {
     });
 
     let link_name001;
-    let link_name002;
-    let link_name003;
+
     if (e.links[0] != "") {
       link_name001 = "https://youtu.be/".concat(
         e.links[0].replace("https://www.youtube.com/embed/", "")
@@ -288,52 +177,16 @@ const ProviderHome = ({ userIdApp0 }) => {
       link_name001 = "";
     }
 
-    // if (e.links[1] != "") {
-    //   link_name002 = "https://youtu.be/".concat(
-    //     e.links[1].replace("https://www.youtube.com/embed/", "")
-    //   );
-    // } else {
-    //   link_name002 = "";
-    // }
-
-    // if (e.links[2] != "") {
-    //   link_name003 = "https://youtu.be/".concat(
-    //     e.links[2].replace("https://www.youtube.com/embed/", "")
-    //   );
-    // } else {
-    //   link_name003 = "";
-    // }
-
     setName(e.recipeName);
     setName1(e.names[0]);
-    // setName2(e.names[1]);
-    // setName3(e.names[2]);
+
     setLink1(link_name001);
-    // setLink2(link_name002);
-    // setLink3(link_name003);
+
     setMyListAdmin(e.Items);
-    //  updateSidebarIng(e.Items)
+
     setMyListNAdmin(e.ItemsName);
     setMyListIdAdmin(e.ItemsId);
     setImg(e.img);
-
-    // setUserAllIngredients((prevAccounts) => {
-    //   const newItems = prevAccounts.filter((item) => item.ingredientFlag !== false);
-    //   return newItems;
-    // });
-
-    // let NewItems = [...userAllIngredients];
-    // NewItems.map((et) => {
-
-    //   if (e.ItemsName.includes(et.ingredientName)) {
-    //     et.ingredientFlag = true;
-    //   }
-    // });
-
-    // setUserAllIngredients((prevAccounts) => {
-    //   const newItems = NewItems.filter((item) => item.ingredientFlag !== true);
-    //   return newItems;
-    // });
 
     setButtonStatus("update");
     setButtonStatusId(id);
@@ -352,20 +205,7 @@ const ProviderHome = ({ userIdApp0 }) => {
       link_name001 = link1;
     }
 
-    if (link2 != "") {
-      link_name002 = "https://www.youtube.com/embed/".concat(
-        link2.replace("https://youtu.be/", "")
-      );
-    } else {
-      link_name002 = link2;
-    }
-    if (link3 != "") {
-      link_name003 = "https://www.youtube.com/embed/".concat(
-        link3.replace("https://youtu.be/", "")
-      );
-    } else {
-      link_name003 = link3;
-    }
+
 
     try {
       const formData0 = new FormData();
@@ -382,8 +222,8 @@ const ProviderHome = ({ userIdApp0 }) => {
       const updatedRecipe = {
         recipeName: name,
         category: yourSelectedStateValue,
-        names: [name1, name2, name3],
-        links: [link_name001, link_name002, link_name003],
+        names: [name1],
+        links: [link_name001],
         Items: MyListAdmin,
         ItemsName: MyListNAdmin,
         img: img,
@@ -398,11 +238,7 @@ const ProviderHome = ({ userIdApp0 }) => {
 
       setName("");
       setName1("");
-      setName2("");
-      setName3("");
       setLink1("");
-      setLink2("");
-      setLink3("");
       setMyListAdmin([]);
       setMyListNAdmin([]);
       setMyListIdAdmin([]);
@@ -465,19 +301,15 @@ const ProviderHome = ({ userIdApp0 }) => {
     }
   }, [SidebarIngName]);
 
-  //   useEffect(() => {
-  //     updateSidebarIngName("")
-  // },[])
+
 
   useEffect(() => {
-    // if(SidebarIngName === ""){
     setTable(TableContext);
-    // fetchProtectedData()
     setUserAllIngredients(AllIngredientsBase);
     setFilterDataMeals(AllIngredientsBase);
-    // }
   }, [AllIngredientsBase, TableContext]);
-  console.log(TableContext);
+
+
   const UpdateBeneficiaryId = async (ingredientName, ingredientId) => {
     console.log(ingredientId);
     const newArrayAll = [...userAllIngredients];
@@ -500,14 +332,7 @@ const ProviderHome = ({ userIdApp0 }) => {
         }
       }
     });
-    // setItems(() => {
-    //   return newArrayAll;
-    // });
 
-    //  setUserAllIngredients((prevAccounts) => {
-    //     const newItems = newArrayAll.filter((item) => item.ingredientFlag !== true);
-    //     return newItems;
-    //   });
 
     setUserAllIngredients((prevAccounts) => {
       const newItems = [...prevAccounts];
@@ -570,25 +395,22 @@ const ProviderHome = ({ userIdApp0 }) => {
               }}
             />
 
-<select
-                className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance mr-5"
-                value={yourSelectedStateValueType}
-                onChange={(e) => {
-                  setOptionType(e.target.value);
-                  handleFilterChange(
-                    e.target.value,
-                    yourSelectedStateValueAddress
-                  );
-                }}
-              >
-                <option value=""> All ingredients</option>
-                <option value="vegetables">vegetables</option>
-                <option value="fruit">fruit</option>
-              </select>
-
+            <select
+              className="px-4 py-3 w-48 md:w-60 rounded-md bg-gray-100 border-[#E8AA42] border-2 focus:border-yellow-600 focus:bg-white focus:ring-0 text-sm appearance mr-5"
+              value={yourSelectedStateValueType}
+              onChange={(e) => {
+                setOptionType(e.target.value);
+                handleFilterChange(
+                  e.target.value,
+                  yourSelectedStateValueAddress
+                );
+              }}
+            >
+              <option value=""> All ingredients</option>
+              <option value="vegetables">vegetables</option>
+              <option value="fruit">fruit</option>
+            </select>
           </div>
-         
-         
         </div>
       </div>
 
@@ -692,14 +514,8 @@ const ProviderHome = ({ userIdApp0 }) => {
                 <Input
                   value={name1}
                   onChange={(e) => setName1(e.target.value)}
-                  label="Name 1"
+                  label="Chef name"
                 />
-                <Input
-                  value={name2}
-                  onChange={(e) => setName2(e.target.value)}
-                  label="Name 2"
-                />
-        
               </div>
 
               <div className="mb-4 flex lg:flex-row sm:flex-col">
@@ -708,30 +524,17 @@ const ProviderHome = ({ userIdApp0 }) => {
                   onChange={(e) => setLink1(e.target.value)}
                   label="Youtube link 1"
                 />
-                <Input
-                  value={link2}
-                  onChange={(e) => setLink2(e.target.value)}
-                  label="Youtube link 2"
-                />
-    
               </div>
 
-              <div>
-                <label className="font-medium">Case Image</label>
+           <textarea 
+            className="w-full border border-2"
+            placeholder="Description"
+           value={description}
+           onChange={(e)=> setDescription(e.target.value)}
+           />
 
-       
-
-                <input
-                  className="file-upload-input mx-auto"
-                  type="file"
-                  name="image"
-                  onChange={handleProductImageChange}
-                  accept="image/*"
-                  required
-                />
-              </div>
-
-              <div className="mb-2">
+              <div className="flex w-full justify-center">
+              <div className="mb-2 w-1/2">
                 <select
                   value={yourSelectedStateValue}
                   onChange={(e) => setOption(e.target.value)}
@@ -742,7 +545,8 @@ const ProviderHome = ({ userIdApp0 }) => {
                   <option value="Sweet">Sweets</option>
                 </select>
               </div>
-              <div className="mb-2">
+
+              <div className="mb-2 w-1/2">
                 <select
                   value={yourSelectedNationValue}
                   onChange={(e) => setNation(e.target.value)}
@@ -751,6 +555,20 @@ const ProviderHome = ({ userIdApp0 }) => {
                   <option value="jordanian">jordanian</option>
                   <option value="egyptian ">egyptian </option>
                 </select>
+              </div>
+              </div>
+
+              <div className="flex w-full justify-between border p-1 my-2">
+                <p className="font-medium w-1/2">Recipe Image</p>
+
+                <input
+                  className="file-upload-input  w-1/2"
+                  type="file"
+                  name="image"
+                  onChange={handleProductImageChange}
+                  accept="image/*"
+                  required
+                />
               </div>
 
               {ButtonStatus === "create" ? (

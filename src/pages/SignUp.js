@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo1 from "../Images/vegetables/Lemon.png";
+import Logo1 from "../Images/logo.png";
 import { useState,useEffect } from 'react';
-import imageSign from "../Images/Signin0.png"
-import jwt from 'jwt-decode' // import dependency
+import imageSign from "../Images/logo.png"
 import axios from 'axios';
 import {useParams, useNavigate } from "react-router-dom";
 
@@ -247,7 +246,7 @@ export default function Signup() {
             </div>
         </div>
         <div className="flex-1 bg-indigo-100 text-center hidden lg:flex login_img bg-cover bg-center bg-no-repeat ">
-        <img src={imageSign}/>
+        <img src="https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/chef-cooking.jpg?quality=82&strip=1"/>
 
         </div>
     </div>

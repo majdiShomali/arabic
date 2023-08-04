@@ -1,8 +1,7 @@
 import React, { useEffect, useState ,useContext} from "react";
 import { Link } from "react-router-dom";
-import Logo1 from "../Images/vegetables/Lemon.png";
+import Logo1 from "../Images/logo.png";
 import axios from 'axios';
-import imageSign from "../Images/Signin0.png"
 import { UserContext } from '../UserContext';
 
 import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google';

@@ -33,7 +33,6 @@ import {
   PuzzlePieceIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
-import logo from "../Images/fruits/Lime.png";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 
 const colors = {

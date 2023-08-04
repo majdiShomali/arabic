@@ -2,11 +2,34 @@ const Recipes = require("../models/recipes");
 
 const newRecipes =  async (req, res) => {
 
-  const { recipeName,providerId,category,names,links,Items,ItemsName ,ItemsId,nation} = req.body;
-    const image = req.file.path
-   const Recipes0 = new Recipes({ recipeName: recipeName,nation:nation,providerId:providerId,category:category,names:JSON.parse(names),links:JSON.parse(links),Items:JSON.parse(Items),ItemsName:JSON.parse(ItemsName),img:image ,ItemsId:JSON.parse(ItemsId)});
-    const addRecipes = await Recipes0.save();
-    res.json(addRecipes);
+  const {
+    recipeName,
+    providerId,
+    category,
+    names,
+    links,
+    Items,
+    ItemsName,
+    ItemsId,
+    nation,
+    description
+  } = req.body;
+  const image = req.file.path;
+  const Recipes0 = new Recipes({
+    recipeName: recipeName,
+    nation: nation,
+    providerId: providerId,
+    category: category,
+    description:description,
+    names: JSON.parse(names),
+    links: JSON.parse(links),
+    Items: JSON.parse(Items),
+    ItemsName: JSON.parse(ItemsName),
+    img: image,
+    ItemsId: JSON.parse(ItemsId),
+  });
+  const addRecipes = await Recipes0.save();
+  res.json(addRecipes);
 };
 
 

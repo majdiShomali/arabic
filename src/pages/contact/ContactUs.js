@@ -1,50 +1,20 @@
-import React, { useState,useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-import { AllContext } from "../AllDataContext";
-import { DashboardPendingContext } from "../DashboardPendingContext";
+import { AllContext } from "../../AllDataContext";
 const ContactUs = () => {
-  const { AllDataGet,setAllDataGet} = useContext(AllContext);
-  const { PendingMLength, setPendingMLength } = useContext(DashboardPendingContext);
+  const { AllDataGet, setAllDataGet } = useContext(AllContext);
 
- const [userId ,setUserId] = useState()
- const [userMessages ,setUserMessages] = useState([])
-
-  const fetchProtectedData = async () => {
-    try {
-      const token = localStorage.getItem("auth");
-      if (token) {
-        const response = await axios.get("http://localhost:5000/protected", {
-          headers: {
-            Authorization: token,
-          },
-        });
-    
-        setUserId(response.data.user.id)
-        setUserMessages(response.data.user.message)
-    
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      console.log(false);
-    }
-  };
-
-
-
-
+  const [userId, setUserId] = useState();
+  const [userMessages, setUserMessages] = useState([]);
 
 
 
   useEffect(() => {
-    
     if (localStorage.auth != null) {
-      // fetchProtectedData()
-      setUserId(AllDataGet[0]?._id)
-      setUserMessages(AllDataGet[0]?.message)
+      setUserId(AllDataGet[0]?._id);
+      setUserMessages(AllDataGet[0]?.message);
     }
   }, [AllDataGet]);
 
@@ -54,105 +24,48 @@ const ContactUs = () => {
   const [message0, setMessage] = useState([]);
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
 
     // To passed as the data to be sent.
-  
-let message = userMessages 
-message.push(message0)
-console.log(message)
+
+    let message = userMessages;
+    message.push(message0);
+    console.log(message);
     try {
       const contactMessage = {
         message,
       };
 
-          const updatedUserData = {       
-            messageRead:false       
-          }
-          
-    const response =  await axios.put(`http://localhost:5000/api/usersContactUs/${userId}`, contactMessage);
-    await axios.put(`http://localhost:5000/api/userList/${userId}`,updatedUserData)
+      const updatedUserData = {
+        messageRead: false,
+      };
+
+      const response = await axios.put(
+        `http://localhost:5000/api/usersContactUs/${userId}`,
+        contactMessage
+      );
+      await axios.put(
+        `http://localhost:5000/api/userList/${userId}`,
+        updatedUserData
+      );
     } catch (error) {
       console.error("Error updating user:", error);
     }
     Swal.fire("Success", "Message sent successfully!", "success");
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:5000/usersContactUs",
-    //     contactMessage
-    //   );
-
-    //   if (response.status === 200) {
-    //     Swal.fire("Success", "Message sent successfully!", "success");
-
-    //     setName("");
-    //     setEmail("");
-    //     setPhone("");
-    //     setMessage("");
-    //   } else {
-    //     Swal.fire("Error", "Failed to send message.", "error");
-    //   }
-    // } catch (error) {
-    //   Swal.fire("Error", "An error occurred during form submission.", "error");
-    // }
-
 
   };
 
-
   return (
     <div>
-      <div
-        className="bg-cover bg-center h-screen"
-        style={{
-          backgroundImage:
-            'url("https://media.istockphoto.com/id/1323765737/photo/close-up-of-a-businessman-using-a-laptop-computer-and-a-mobile-phone.jpg?b=1&s=612x612&w=0&k=20&c=dMQ9OWLgVWXir9KBH-vHDkp68s2dodEiEqEVjTf6rF4=")',
-          height: "400px",
-        }}
-      >
-        <div className="flex items-center justify-center h-full  bg-opacity-10">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-white font-bold mb-4">Contact Us</h1>
-
-            <nav className="text-white mb-8">
-              <ol className="list-none p-0 inline-flex">
-                <li className="flex items-center">
-                  <Link to="/" style={{color:"#219D80"}}>
-                    Home
-                  </Link>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 mx-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </li>
-                <li>Contact Us</li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className=""
-       
-      >
-        <section className="relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]"
-        >
+      <div className="">
+        <section className="relative z-10 overflow-hidden bg-white py-20 lg:py-[120px]">
           <div className="container mx-auto">
             <div className="mx-4 flex flex-wrap lg:justify-between">
               <div className="w-full  lg:w-1/2 xl:w-6/12">
-                <div className="mb-12 max-w-[570px] lg:mb-0" style={{ marginRight: "60px", marginLeft: "65px" }}>
+                <div
+                  className="mb-12 max-w-[570px] lg:mb-0"
+                  style={{ marginRight: "60px", marginLeft: "65px" }}
+                >
                   <h2 className="text-dark mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
                     GET IN TOUCH WITH US
                   </h2>
@@ -227,75 +140,63 @@ console.log(message)
               <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
                 <div className="relative rounded-lg bg-white p-8 shadow-lg sm:p-12">
                   <form method="post" onSubmit={handleSubmit}>
-                   { localStorage.auth == null ? <>
-                    <div className="mb-6">
-                      <input
-                        type="text"
-                        placeholder="Your Name"
-                        className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)} required
-                      />
-                    </div>
-                    <div className="mb-6">
-                      <input
-                        type="email"
-                        placeholder="Your Email"
-                        className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)} required
-                      />
-                    </div>
-                    <div className="mb-6">
-                      <input
-                        type="text"
-                        placeholder="Your Phone"
-                        className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
-                        value={phone}
-                        onChange={(event) => setPhone(event.target.value)} required
-                      />
-                    </div>
-                    </> :null
-                    }
+                    {localStorage.auth == null ? (
+                      <>
+                        <div className="mb-6">
+                          <input
+                            type="text"
+                            placeholder="Your Name"
+                            className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="mb-6">
+                          <input
+                            type="email"
+                            placeholder="Your Email"
+                            className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="mb-6">
+                          <input
+                            type="text"
+                            placeholder="Your Phone"
+                            className="text-body-color border-[f0f0f0] focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
+                            value={phone}
+                            onChange={(event) => setPhone(event.target.value)}
+                            required
+                          />
+                        </div>
+                      </>
+                    ) : null}
                     <div className="mb-6">
                       <textarea
                         rows={6}
                         placeholder="Your Message"
                         className="text-body-color border-[f0f0f0] focus:border-primary w-full resize-none rounded border py-3 px-[14px] text-base outline-none focus-visible:shadow-none shadow-md transition duration-300"
                         value={message0}
-                        onChange={(event) => setMessage(event.target.value)} required
+                        onChange={(event) => setMessage(event.target.value)}
+                        required
                       />
                     </div>
                     <div>
-   
-
                       <Button
-                    className="border w-full mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
-                    variant="text"
-                    type="submit"
-                  >
-                    Send Message
-                  </Button>
+                        className="border w-full mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
+                        variant="text"
+                        type="submit"
+                      >
+                        Send Message
+                      </Button>
                     </div>
                   </form>
 
                   <div>
-                    {/* <span className="absolute -top-10 -right-9 z-[-1]">
-                      <svg
-                        width={100}
-                        height={100}
-                        viewBox="0 0 100 100"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M0 100C0 44.7715 0 0 0 0C55.2285 0 100 44.7715 100 100C100 100 100 100 0 100Z"
-                          fill="#E8AA42"
-                        />
-                      </svg>
-                    </span> */}
+        
                     <span className="absolute -right-10 top-[90px] z-[-1]">
                       <svg
                         width={34}
@@ -1095,15 +996,6 @@ console.log(message)
       </div>
     </div>
   );
+};
 
-
-
-
-
-
-
-        
-        }
-     
-
-export default ContactUs
+export default ContactUs;

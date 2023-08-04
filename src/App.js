@@ -8,10 +8,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavListMenu from "./components/Navbar";
 import StickyNavbar from "./components/StickyNavbar";
 import Home from "./pages/user/Home";
-import Contact from "./pages/Contact";
+import Contact from "./pages/contact/Contact";
 import Footer from "./components/FooterU";
 import Kitchen from "./pages/Kitchen";
-import About from "./pages/aboutPage/About";
+// import About from "./pages/aboutPage/About";
+import AboutUs from "./pages/about/AboutUs";
 import Recipes from "./pages/user/Recipes";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/Login";
@@ -107,7 +108,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="/Payment/:cardId/:price" element={<PaymentPage />} />
           <Route path="ContactUs" element={<Contact />} />
-          <Route path="About" element={<About />} />
+          <Route path="About" element={<AboutUs />} />
           <Route path="AddYourIng" element={<AddYourIng />} />
           <Route path="/SignUp/:type" element={<SignUp />} />
           <Route path="LogIn" element={<LogIn />} />
@@ -159,7 +160,7 @@ console.log(userIdApp)
         <Routes>
           <Route index element={<ProviderHome userIdApp0 ={userIdApp} />} />
           <Route path="ContactUs" element={<Contact />} />
-          <Route path="About" element={<About />} />
+          <Route path="About" element={<AboutUs />} />
           <Route path="ReqIngredient" element={<ReqIngredient />} />
           <Route path="ForgetPassword" element={<ForgetPassword />} />
           <Route path="ProviderProfile"  element={<ProviderNewProfile userIdApp0 ={userIdApp} />} />

@@ -4,7 +4,6 @@ import { UserContext } from "../../UserContext";
 import Swal from "sweetalert2";
 
 import {
-  Avatar,
   Navbar,
   Collapse,
   Typography,
@@ -32,7 +31,6 @@ import {
   PuzzlePieceIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
 
 const colors = {
   blue: "bg-blue-50 text-blue-500",

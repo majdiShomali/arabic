@@ -1,10 +1,6 @@
 import React from "react";
-import axios from "axios";
 import { useContext } from "react";
-import { UserContext } from "../../UserContext";
-import { KitContext } from "../../KitchenContext";
 import { RecipeContext } from "../../RecipeContext";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   Card,
@@ -12,27 +8,10 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  Alert,
   Input,
   Button,
 } from "@material-tailwind/react";
 import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  CubeTransparentIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
@@ -51,9 +30,7 @@ const SideBarRecipe = () => {
 
     // const { test, updateTest } = useContext(UserContext);
     const [FilterDataItems, setFilterDataItemss] = useState();
-  
-    const [userAllIngredients0, setUserAllIngredients0] = useState();
-  
+    
 
     useEffect(() => {
       setFilterDataItemss([...SidebarIng])
@@ -77,11 +54,8 @@ const SideBarRecipe = () => {
     const { SidebarIngId, updateSidebarIngId}= useContext(RecipeContext);
 
     const UpdateBeneficiaryId = async (cardId, ingredientFlag,ingredientName) => {
-      // updateRecipeStatus(true)
       updateSidebarIngName(ingredientName)
       updateSidebarIngId(cardId)
-
-      
     };
 
 
