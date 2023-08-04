@@ -11,44 +11,37 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-import { mdiPlus } from "@mdi/js";
-import { mdiMinus } from "@mdi/js";
 
 import SideBarRecipe from "../../components/providerc/SideBarRecipe";
 
 import { AllContext } from "../../AllDataContext";
 
+import EditRecipe from "./EditRecipe";
+
+
 //---------------------redux-----------------//
 import { useDispatch, useSelector } from "react-redux";
 import { addRecipes } from "../../actions/AddRecipe";
-import { fetchRecipesP } from "../../actions/PendingRecipes";
-
+import { fetchProviderRecipes } from "../../actions/GetProviderRecipes";
 const ProviderHome = ({ userIdApp0 }) => {
   const dispatch = useDispatch();
+  const { loading, data, error } = useSelector((state) => state.providerRecipes);
+
+ useEffect(()=>{
+  if(userIdApp0){   
+  dispatch(fetchProviderRecipes(userIdApp0))
+  }
+ },[dispatch,userIdApp0])
+
+
+
 
   const { AllIngredientsBase, setAllIngredientsUserBase } =
-    useContext(AllContext);
+  useContext(AllContext);
   const { TableContext, setTableContext } = useContext(AllContext);
   const { ChatRefresh0, updateChatRefresh } = useContext(AllContext);
 
   const [img, setImg] = useState("");
-
-  const onChange = (e) => {
-    const files = e.target.files;
-    const file = files[0];
-    getBase64(file);
-    console.log(img);
-  };
-  const onLoad = (fileString) => {
-    setImg(fileString);
-  };
-  const getBase64 = (file) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      onLoad(reader.result);
-    };
-  };
 
   const [productImage, setProductImage] = useState(null);
 
@@ -100,7 +93,6 @@ const ProviderHome = ({ userIdApp0 }) => {
 
   const [description, setDescription] = useState("");
 
-  const [table, setTable] = useState([]);
 
   const [yourSelectedStateValue, setOption] = useState("Meal");
   const [yourSelectedNationValue, setNation] = useState("jordanian");
@@ -135,8 +127,9 @@ const ProviderHome = ({ userIdApp0 }) => {
     formData0.append("nation", yourSelectedNationValue);
 
 
+
     dispatch(addRecipes(formData0)).then(() => {
-      dispatch(fetchRecipesP());
+      dispatch(fetchProviderRecipes(userIdApp0))
     });
 
     setName("");
@@ -194,8 +187,6 @@ const ProviderHome = ({ userIdApp0 }) => {
 
   const UpdateNow = async () => {
     let link_name001;
-    let link_name002;
-    let link_name003;
 
     if (link1 != "") {
       link_name001 = "https://www.youtube.com/embed/".concat(
@@ -218,6 +209,7 @@ const ProviderHome = ({ userIdApp0 }) => {
       formData0.append("ItemsName", JSON.stringify(foodCardsName));
       formData0.append("image", productImage);
       formData0.append("ItemsId", JSON.stringify(MyListIdAdmin));
+
 
       const updatedRecipe = {
         recipeName: name,
@@ -304,7 +296,6 @@ const ProviderHome = ({ userIdApp0 }) => {
 
 
   useEffect(() => {
-    setTable(TableContext);
     setUserAllIngredients(AllIngredientsBase);
     setFilterDataMeals(AllIngredientsBase);
   }, [AllIngredientsBase, TableContext]);
@@ -594,7 +585,7 @@ const ProviderHome = ({ userIdApp0 }) => {
       </div>
 
       <div class="flex flex-wrap justify-center items-center">
-        {table?.map((e, i) => {
+        {data?.map((e, i) => {
           return (
             <>
               <div
@@ -661,13 +652,26 @@ const ProviderHome = ({ userIdApp0 }) => {
                   </p>
 
                   <div className="flex justify-around">
-                    <Button
+                    {/* <Button
                       className="mr-5 border mb-10 border-solid border-[#d1aa36] border-2 text-[#060606] hover:bg-[#c9ac39] hover:text-[#ffffff]"
                       variant="text"
                       onClick={() => UpdateRecipe(e, e._id)}
                     >
                       Edit{" "}
-                    </Button>
+                    </Button> */}
+                         <EditRecipe
+       recipeId0={e._id}
+      recipeName0 = {e.recipeName}
+      category0   = {e.category}
+      description0 = {e.description}
+      names0 = {e.names}
+      links0 = {e.links}
+      Items0 = {e.Items}
+      ItemsName0 = {e.ItemsName}
+      image0 = {e.img}
+      ItemsId0 = {e.ItemsId}
+      nation0 = {e.nation}
+      />
 
                     <Button
                       className="mr-5 border mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"

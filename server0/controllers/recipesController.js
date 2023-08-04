@@ -130,13 +130,15 @@ const updateRecipeAdmin = async (req, res) => {
 const updateRecipeProvider = async (req, res) => {
 
 
-  const { recipeName,providerId,category,names,links,Items,ItemsName ,ItemsId} = req.body;
+
+  const { recipeName,category,names,links,Items,ItemsName ,ItemsId,description} = req.body;
+  console.log( recipeName,category,names,links,Items,ItemsName ,ItemsId,description)
   const image = req.file.path
   const RecipeId  = req.params.id;
    const updatedRecipeData = {
      recipeName: recipeName,
-     providerId:providerId,
      category:category,
+     description:description,
      names:JSON.parse(names),
      links:JSON.parse(links),
      Items:JSON.parse(Items),
@@ -146,6 +148,7 @@ const updateRecipeProvider = async (req, res) => {
     flag:false
     };
     
+  
 
   const Recipe = await Recipes.findByIdAndUpdate(RecipeId, updatedRecipeData, { new: true });
   const updatedRecipe= await Recipe.save();

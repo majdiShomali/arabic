@@ -5,6 +5,7 @@ import fetchRecipesReducer from './actions/GetRecipes'
 import fetchRecipesPReducer from './actions/PendingRecipes'
 import fetchFavRecipesReducer from './actions/GetFavRecipes'
 import addRecipesReducer from './actions/AddRecipe'
+import fetchProviderRecipesReducer from './actions/GetProviderRecipes'
 const store = configureStore({
   reducer: {
     userNew:userNewReducer,
@@ -12,6 +13,7 @@ const store = configureStore({
     fetchRecipesP:fetchRecipesPReducer,
     fetchFavRecipes:fetchFavRecipesReducer,
     addedRecipe:addRecipesReducer,
+    providerRecipes:fetchProviderRecipesReducer,
   },
   middleware: [thunkMiddleware],
 });
