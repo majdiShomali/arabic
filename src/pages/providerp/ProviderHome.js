@@ -39,9 +39,6 @@ const ProviderHome = ({ userIdApp0 }) => {
   const { AllIngredientsBase, setAllIngredientsUserBase } =
   useContext(AllContext);
   const { TableContext, setTableContext } = useContext(AllContext);
-  const { ChatRefresh0, updateChatRefresh } = useContext(AllContext);
-
-  const [img, setImg] = useState("");
 
   const [productImage, setProductImage] = useState(null);
 
@@ -96,8 +93,7 @@ const ProviderHome = ({ userIdApp0 }) => {
 
   const [yourSelectedStateValue, setOption] = useState("Meal");
   const [yourSelectedNationValue, setNation] = useState("jordanian");
-  const [ButtonStatus, setButtonStatus] = useState("create");
-  const [ButtonStatusId, setButtonStatusId] = useState();
+
 
   const CreateNew = async () => {
     let link_name001;
@@ -148,102 +144,12 @@ const ProviderHome = ({ userIdApp0 }) => {
       const response = await axios.delete(
         `http://localhost:5000/api/recipes/${Id}`
       );
-      updateChatRefresh(response.data);
+      dispatch(fetchProviderRecipes(userIdApp0))
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   };
 
-  function UpdateRecipe(e, id) {
-    e.ItemsId.map((itemid, i) => {
-      console.log(e.ItemsName[i], itemid);
-      UpdateBeneficiaryId(e.ItemsName[i], itemid);
-    });
-
-    let link_name001;
-
-    if (e.links[0] != "") {
-      link_name001 = "https://youtu.be/".concat(
-        e.links[0].replace("https://www.youtube.com/embed/", "")
-      );
-    } else {
-      link_name001 = "";
-    }
-
-    setName(e.recipeName);
-    setName1(e.names[0]);
-
-    setLink1(link_name001);
-
-    setMyListAdmin(e.Items);
-
-    setMyListNAdmin(e.ItemsName);
-    setMyListIdAdmin(e.ItemsId);
-    setImg(e.img);
-
-    setButtonStatus("update");
-    setButtonStatusId(id);
-  }
-
-  const UpdateNow = async () => {
-    let link_name001;
-
-    if (link1 != "") {
-      link_name001 = "https://www.youtube.com/embed/".concat(
-        link1.replace("https://youtu.be/", "")
-      );
-    } else {
-      link_name001 = link1;
-    }
-
-
-
-    try {
-      const formData0 = new FormData();
-      formData0.append("recipeName", name);
-      formData0.append("providerId", userIdApp0);
-      formData0.append("category", yourSelectedStateValue);
-      formData0.append("names", JSON.stringify([name1]));
-      formData0.append("links", JSON.stringify([link_name001]));
-      formData0.append("Items", JSON.stringify(foodCards));
-      formData0.append("ItemsName", JSON.stringify(foodCardsName));
-      formData0.append("image", productImage);
-      formData0.append("ItemsId", JSON.stringify(MyListIdAdmin));
-
-
-      const updatedRecipe = {
-        recipeName: name,
-        category: yourSelectedStateValue,
-        names: [name1],
-        links: [link_name001],
-        Items: MyListAdmin,
-        ItemsName: MyListNAdmin,
-        img: img,
-      };
-
-      console.log(updatedRecipe);
-      const response = await axios.put(
-        `http://localhost:5000/api/recipesP/${ButtonStatusId}`,
-        formData0
-      );
-      updateChatRefresh(response.data);
-
-      setName("");
-      setName1("");
-      setLink1("");
-      setMyListAdmin([]);
-      setMyListNAdmin([]);
-      setMyListIdAdmin([]);
-      updateSidebarIng([]);
-      setFoodCards([]);
-      setFoodCardsName([]);
-      setButtonStatus("create");
-
-      // fetchUsers(); // Refresh the user list after updating a user
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
-  };
 
   function removeItem0(name, ingredientId) {
     setMyListAdmin((prevAccounts) => {
@@ -562,7 +468,7 @@ const ProviderHome = ({ userIdApp0 }) => {
                 />
               </div>
 
-              {ButtonStatus === "create" ? (
+              
                 <Button
                   className="w-full border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
                   variant="text"
@@ -570,15 +476,7 @@ const ProviderHome = ({ userIdApp0 }) => {
                 >
                   Create
                 </Button>
-              ) : (
-                <Button
-                  className="w-full border mb-10 border-solid border-[#219D80] border-2 text-[#219D80] hover:bg-[#219D80] hover:text-[#ffffff]"
-                  variant="text"
-                  onClick={() => UpdateNow()}
-                >
-                  Update
-                </Button>
-              )}
+             
             </form>
           </div>
         </Card>
@@ -652,13 +550,7 @@ const ProviderHome = ({ userIdApp0 }) => {
                   </p>
 
                   <div className="flex justify-around">
-                    {/* <Button
-                      className="mr-5 border mb-10 border-solid border-[#d1aa36] border-2 text-[#060606] hover:bg-[#c9ac39] hover:text-[#ffffff]"
-                      variant="text"
-                      onClick={() => UpdateRecipe(e, e._id)}
-                    >
-                      Edit{" "}
-                    </Button> */}
+  
                          <EditRecipe
        userIdApp ={userIdApp0}
        recipeId0={e._id}
