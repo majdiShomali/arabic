@@ -38,7 +38,7 @@ export default function StickyNavbar() {
   }, []);
  
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mb-4 mt-2 w-full   flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       
       { localStorage.auth !== undefined ? 
       
@@ -46,12 +46,13 @@ export default function StickyNavbar() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal flex hover:bg-[#219D80] rounded-lg hover:scale-105"
+        className="p-1 px-1 font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
       >
         
         <Link onClick={()=>setOpenNav(false)} to="/Kitchen" className="flex items-center">
+        المطبخ
         <Icon className="text-amber-600 mx-1" path={mdiFridgeOutline} size={1} />
-          Kitchen
+          
         </Link>
 
       </Typography>
@@ -63,12 +64,13 @@ export default function StickyNavbar() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal flex hover:bg-[#219D80] rounded-lg hover:scale-105"
+        className="p-1 px-1 font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
       >
         
         <Link onClick={()=>setOpenNav(false)} to="/" className="flex items-center">
+        الصفحة الرئيسية
+
         <Icon className="text-amber-600 mx-1" path={mdiHomeOutline} size={1} />
-          Home
         </Link>
         
       </Typography>
@@ -76,24 +78,25 @@ export default function StickyNavbar() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal flex hover:bg-[#219D80] rounded-lg hover:scale-105"
+        className="p-1 px-1 font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
       >
        <Link onClick={()=>setOpenNav(false)} to="/About" className="flex items-center">
-
+       حول
         <Icon className="text-amber-600 mx-1" path={mdiInformationOutline} size={1} />
-          About
+          
         </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal flex hover:bg-[#219D80] rounded-lg hover:scale-105 active:bg-blue-gray-500 active:scale-100"
+        className="p-1 px-1 font-normal text-lg  flex hover:bg-[#219D80] rounded-lg hover:scale-105 active:bg-blue-gray-500 active:scale-100"
       >
         <Link  onClick={()=>setOpenNav(false)} to="/contactus" className="flex items-center">
+        نواصل معنا
         <Icon className="text-amber-600 mx-1" path={mdiAccountBoxOutline} size={1} />
         
-          Contact Us
+          
         </Link>
       </Typography>
     </ul>
@@ -196,81 +199,91 @@ export default function StickyNavbar() {
       
       <Navbar className="max-h-[768px] max-w-[100%] w-[100%]  px-10 sticky top-0 z-20">
         <div className="flex items-center justify-between text-blue-gray-900">
+          
+        <div className="flex items-center justify-start  w-40">
+ 
+ { localStorage.auth !== undefined ?
+ 
+ <>
+ <div>
+ <ProfileMenu />  
+ </div>        
+ </>
+ 
+ :
+ <>
+ 
+ <Link to="login">
+  <Button
+   variant="gradient"
+   size="sm"
+   className="hidden lg:inline-block hover:shadow-non "
+   color="orange"
+ >
+   <span>login</span>
+ </Button>
+ </Link>
+ 
+ 
+ </>
+ 
+ 
+ }
+ <div>
+ <IconButton
+   variant="text"
+   className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+   ripple={false}
+   onClick={() => setOpenNav(!openNav)}
+ >
+   {openNav ? (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+       fill="none"
+       className="h-6 w-6"
+       viewBox="0 0 24 24"
+       stroke="currentColor"
+       strokeWidth={2}
+     >
+       <path
+         strokeLinecap="round"
+         strokeLinejoin="round"
+         d="M6 18L18 6M6 6l12 12"
+       />
+     </svg>
+   ) : (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+       className="h-6 w-6"
+       fill="none"
+       stroke="currentColor"
+       strokeWidth={2}
+     >
+       <path
+         strokeLinecap="round"
+         strokeLinejoin="round"
+         d="M4 6h16M4 12h16M4 18h16"
+       />
+     </svg>
+   )}
+ </IconButton>
+ </div>
+         </div>
+
+          <div className=" hidden lg:block">{navList}</div>
+
+      
+
           <Link to="/">
           <Typography
-            className="mr-4 cursor-pointer py-1.5 font-medium flex items-center"
+            className="w-40 cursor-pointer  font-medium flex items-center justify-between"
           >
-            <img className="w-10 h-10 rounded-full mr-3 shadow-md" src={logo}/>
-            Arabic Recipes
+           <p className="text-lg">الوصفات العربية</p> 
+
+            <img className="w-10 h-10 rounded-full  shadow-md" src={logo}/>
+            
           </Typography>
           </Link>
-          <div className="mr-4 hidden lg:block">{navList}</div>
-
-          <div className="flex items-center gap-4">
- 
-            { localStorage.auth !== undefined ?
-            
-            <>
-            <ProfileMenu />          
-            </>
-            
-            :
-            <>
-            
-            <Link to="login">
-             <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block hover:shadow-non "
-              color="orange"
-            >
-              <span>login</span>
-            </Button>
-            </Link>
-            
-            
-            </>
-            
-            
-            }
-            <IconButton
-              variant="text"
-              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-              ripple={false}
-              onClick={() => setOpenNav(!openNav)}
-            >
-              {openNav ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  className="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
-            </IconButton>
-          </div>
         </div>
         <Collapse open={openNav}>
           {navList}

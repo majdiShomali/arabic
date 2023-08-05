@@ -4,7 +4,7 @@ import { useState,useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const BlogSection = () => {
-const [blogs ,setBlogs]=useState(null)
+const [blogs ,setBlogs]=useState([])
   const allBlogs = async () => {
 
     try {
@@ -24,7 +24,6 @@ const [blogs ,setBlogs]=useState(null)
     allBlogs();
   }, []);
 
-
   const navigate = useNavigate();
 
   function ShowVideosMeals(blog) {
@@ -35,11 +34,11 @@ const [blogs ,setBlogs]=useState(null)
 
   return (
     <>
-    
-    <div class="text-center mx-auto mb-[60px] lg:mb-20 max-w-[510px]">
-               <span class="font-semibold text-lg text-primary mb-2 block">
-               Our Blogs
-               </span>
+
+{blogs.length > 0 ? <>
+
+  <div class="text-center mx-auto mb-[60px] lg:mb-20 max-w-[510px]">
+            
                <h2
                   class="
                   font-bold
@@ -50,11 +49,10 @@ const [blogs ,setBlogs]=useState(null)
                   mb-4
                   "
                   >
-                  Our Recent News
+                  المدونات
                </h2>
                <p class="text-base text-body-color">
-                  There are many variations of passages of Lorem Ipsum available
-                  but the majority have suffered alteration in some form.
+                 اطلع على اراء الاشحاص حول الوصفات
                </p>
             </div>
 
@@ -77,11 +75,7 @@ className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-96 mx
           />
         </div>
         <div className="flex items-center justify-between px-4 py-2 overflow-hidden">
-          <span className="text-xs font-medium text-blue-600 uppercase cursor-pointer"
-          onClick={() => ShowVideosMeals(blog)}
-          >
-            Show recipe
-          </span>
+       
           <div className="flex flex-row items-center">
             <div className="text-xs font-medium text-gray-500 flex flex-row items-center mr-2">
               <svg
@@ -141,6 +135,11 @@ className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-96 mx
               <span>7</span>
             </div>
           </div>
+          <span className="text-xs font-medium text-blue-600 uppercase cursor-pointer"
+          onClick={() => ShowVideosMeals(blog)}
+          >
+            اضهر الوصفة
+          </span>
         </div>
         <hr className="border-gray-300" />
         <div className="flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto">
@@ -184,6 +183,12 @@ className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-96 mx
     })}
     
   </section>
+
+
+
+</>  : null}
+    
+
 
 
     
