@@ -64,55 +64,16 @@ useEffect(() => {
 }, [userDataNew]);
 
   const navigate = useNavigate();
-  const { currentLinks, updateCurrentLinks } = useContext(UserContext);
-  const { currentItems, updateCurrentItems } = useContext(UserContext);
   const { AllDataRecipesA, setAllDataRecipesA } = useContext(AllContext);
-  const {UserAllData, setUserAllData} = useContext(AllContext);
-  const {UserIdFinal, setUserIdFinal} = useContext(AllContext);
   const { RecipeRatedRefresh, setRecipeRatedRefresh } = useContext(RecipeContext);
-  const {favRefresh,updateFavRefresh} =useContext(AllContext)
 
   const [tRate, setTrate] = useState(0);
   const [UserIdA, setUserIdA] = useState(0);
 
 
-  const fetchProtectedData = async () => {
-    try {
-      const token = localStorage.getItem("auth");
-  
-      if (token) {
-        const response = await axios.get("http://localhost:5000/protected", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        let id = response.data.user.id
-        setUserIdA(id)
-      
-      }
-    } catch (error) {
-      console.error(error);
-      localStorage.removeItem("auth");
-      window.location.href = "http://localhost:3000/Login";
-    } 
-  };
-
-  // useEffect(() => {
-  //   if (localStorage.auth != null) {
-  //     fetchProtectedData();
-  //   }
-  // }, []);
-
-
-
-
-
 
   useEffect(() => {
-    // const  xx= rate?.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
-    // const aaa = rate.length === 0 ? 1 :rate?.length
     setTrate(parseInt(rating));
-    //   console.log(AllDataRecipesA)
   }, [AllDataRecipesA,RecipeRatedRefresh]);
 
 
@@ -120,16 +81,7 @@ useEffect(() => {
 
   function ShowVideosMeals(index, slicedArrayMeals) {
     navigate(`/ShowRecipe/${cardId}`);
-    console.log(cardId);
-    // let currentVideos0=   slicedArrayMeals[index].links.map((e)=>{
-    //    return e
-    //      })
-    //      let currentItems=   slicedArrayMeals[index].Items.map((e)=>{
-    //          return e
-    //            })
-
-    //  updateCurrentItems(currentItems)
-    //  updateCurrentLinks(currentVideos0)
+ 
   }
   const showSuccessAlert = (message) => {
     Swal.fire({
@@ -162,8 +114,7 @@ const [heartType , setHeartType]=useState(true)
       dispatch(fetchFavRecipes(UserIdA));
       dispatch(fetchRecipes());
 
-      // updateFavRefresh(response)
-      // dispatch(fetchgamesS());
+
     } catch (error) {}
   };
 
@@ -264,13 +215,10 @@ const [heartType , setHeartType]=useState(true)
             <span className="ml-1 lg:text-md">1-2</span>
           </div>
         </div>
-        <p className="mb-2 mt-2 text-gray-800 text-sm h-10">
-        وصفة سريعة وسهلة التحضير ولذيذة للغاية!
+        <p className="mb-2 h-20 mt-2 text-gray-800 text-sm ">
+          {Recipe?.description}
         </p>
-
-        {/* <button className="text-white bg-[#E8CC95] p-2 rounded-md w-full uppercase"
-     onClick={()=>ShowVideosMeals(index,SAMeals)}>Show recipe
-      </button> */}
+ 
 
         <Button
           className=" w-full mt-2 border  border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
