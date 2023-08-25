@@ -33,6 +33,7 @@ const AcceptPayment = () => {
 
   useEffect(() => {
     if (AllIngredientsBase && AllIngredientsBase.length > 0) {
+      console.log(AllIngredientsBase);
       const expiredIngredients = AllIngredientsBase.filter((ingredient) => {
         const createdAt = new Date(ingredient.updatedAt);
         const duration = ingredient.duration;
@@ -73,6 +74,8 @@ const AcceptPayment = () => {
           image: IngredientSelected.TrueImg,
         }
       );
+
+      setExpiredIng([])
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -134,11 +137,6 @@ const AcceptPayment = () => {
   };
 
 
-
-  const handleUpdate = (IngredientSelected_id, IngredientSelected) => {
- 
-  };
-
   return (
     <>
       <div className="bg-[#ffffff] mr-5 ml-5 p-10 rounded-2xl min-h-[calc(50vh)]   ">
@@ -198,25 +196,8 @@ const AcceptPayment = () => {
                 >
                   <p className="text-xs tracking-wide text-gray-600">price</p>
                 </th>
-                <th
-                  colSpan={1}
-                  role="columnheader"
-                  title="Toggle SortBy"
-                  className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
-                  style={{ cursor: "pointer" }}
-                >
-                  <p className="text-xs tracking-wide text-gray-600">role</p>
-                </th>
+   
 
-                <th
-                  colSpan={1}
-                  role="columnheader"
-                  title="Toggle SortBy"
-                  className="border-b border-gray-200 pr-10 pb-[10px] text-start dark:!border-navy-700"
-                  style={{ cursor: "pointer" }}
-                >
-                  <p className="text-xs tracking-wide text-gray-600">Approve</p>
-                </th>
 
                 <th
                   colSpan={1}
@@ -270,27 +251,9 @@ const AcceptPayment = () => {
                         {e.updatedAt}
                       </p>
                     </td>
-                    <td
-                      className="pt-[14px] pb-[18px] sm:text-[14px]"
-                      role="cell"
-                    >
-                      <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        <div className=" w-10 flex flex-col justify-center items-center">
-                          {" "}
-                          <Icon path={mdiHandshakeOutline} size={1} />{" "}
-                          <span>user</span>{" "}
-                        </div>
-                      </p>
-                    </td>
+      
 
-                    <td
-                      className="pt-[14px] pb-[18px] sm:text-[14px]"
-                      role="cell"
-                    >
-                      <button onClick={() => handleUpdate(e._id, e)}>
-                        <Icon color="blue" path={mdiCheckDecagram} size={1} />
-                      </button>
-                    </td>
+                
 
                     <td
                       className="pt-[14px] pb-[18px] sm:text-[14px]"

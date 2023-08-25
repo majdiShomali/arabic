@@ -64,9 +64,10 @@ const AddBlog = ({userData,Recipe}) => {
             ,userImage:userData.img
             ,userComment:description
             ,commentTime:formattedDateTime
+            ,comments:Recipe.comments
           };
 
-          console.log(blogData);
+          console.log(Recipe);
   
           axios
             .post(`http://localhost:5000/api/blog`,

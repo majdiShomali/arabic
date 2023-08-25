@@ -51,7 +51,7 @@ import LiveChat from "./pages/dashboard/Chat"
 import NoPage404 from "./pages/NoPage404";
 import axios from "axios";
 import { LanguageContext } from "./context/LanguageContext";
-
+import PendingBlogs from "./components/dashboard/PendingBlogs";
 
 export default function App() {
   const {selectedLanguage,setSelectedLanguage}=useContext(LanguageContext)
@@ -151,6 +151,7 @@ export default function App() {
             <Route path="AcceptTables" element={<Ingredients />} />
             <Route path="AcceptPayment" element={<AcceptPayment />} />
             <Route path="AcceptIng" element={<AcceptIng />} />
+            <Route path="PendingBlogs" element={<PendingBlogs />} />
             <Route path="Chat" element={<LiveChat />} />
           </Routes>
         </div>

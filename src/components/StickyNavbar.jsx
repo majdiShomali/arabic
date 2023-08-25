@@ -68,7 +68,7 @@ export default function StickyNavbar() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
+        className="p-1 px-1 justify-end font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
       >
         
         <Link onClick={()=>setOpenNav(false)} to="/" className="flex items-center">
@@ -82,7 +82,7 @@ export default function StickyNavbar() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
+        className="p-1 px-1 justify-end font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
       >
        <Link onClick={()=>setOpenNav(false)} to="/About" className="flex items-center">
        حول
@@ -94,7 +94,7 @@ export default function StickyNavbar() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal text-lg  flex hover:bg-[#219D80] rounded-lg hover:scale-105 active:bg-blue-gray-500 active:scale-100"
+        className="p-1 px-1 justify-end font-normal text-lg  flex hover:bg-[#219D80] rounded-lg hover:scale-105 active:bg-blue-gray-500 active:scale-100"
       >
         <Link  onClick={()=>setOpenNav(false)} to="/contactus" className="flex items-center">
         نواصل معنا

@@ -12,6 +12,10 @@ const blogSchema = new Schema({
         type : String,
         required : true
     },
+    comments: {
+        type : Array,
+        required : false
+    },
     recipeId:{
         type: Schema.Types.ObjectId,
         required : true

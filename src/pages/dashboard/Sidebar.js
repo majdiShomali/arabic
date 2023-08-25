@@ -167,6 +167,15 @@ const navigate=useNavigate()
               <p className="text-black block">{allRecipesRef?.length}</p>
             </div>
           </ListItem>
+          
+          <ListItem onClick={() => handleNavigate("/PendingBlogs")} className="hover:bg-amber-500">
+            <ListItemPrefix>
+              <Icon path={mdiFoodTurkey} size={1} />
+            </ListItemPrefix>
+            <div className="flex justify-between w-full">
+              <p className="text-black block">Pending Blogs</p>
+            </div>
+          </ListItem>
       
 
         
@@ -301,6 +310,15 @@ const navigate=useNavigate()
           </ListItem>
         </Link>
 
+        <ListItem onClick={() => handleNavigate("/PendingBlogs")} className="hover:bg-amber-500">
+            <ListItemPrefix>
+              <Icon path={mdiFoodTurkey} size={1} />
+            </ListItemPrefix>
+            <div className="flex justify-between w-full">
+              <p className="text-black block">Pending Blogs</p>
+            </div>
+          </ListItem>
+
         <Link to="/AcceptIng">
           <ListItem className="hover:bg-amber-500">
             <ListItemPrefix>
@@ -314,14 +332,14 @@ const navigate=useNavigate()
           </ListItem>
         </Link>
 
-        <Link to="/AcceptPayment">
-          <ListItem className="hover:bg-amber-500">
+        <ListItem onClick={() => handleNavigate("/AcceptPayment")} 
+          className="hover:bg-amber-500">
             <ListItemPrefix>
               <Icon path={mdiCash} size={1} />
             </ListItemPrefix>
-            <a style={{ color: "black" }}> Payments </a>
+            <a style={{ color: "black" }}> expired Ingredients </a>
           </ListItem>
-        </Link>
+       
 
         <Link to="/EditAboutContact">
           <ListItem className="hover:bg-amber-500">

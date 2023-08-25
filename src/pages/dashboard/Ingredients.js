@@ -230,6 +230,7 @@ const Ingredients = () => {
                 <option value="vegetables">Vegetables</option>
                 <option value="fruits">Fruits</option>
                 <option value="seasoning">seasoning</option>
+                <option value="legumes">legumes</option>
               </select>
             </div>
 
@@ -316,6 +317,8 @@ const Ingredients = () => {
               <option value="">All Type</option>
               <option value="vegetables">vegetables</option>
               <option value="fruit">fruit</option>
+              <option value="seasoning">seasoning</option>
+              <option value="legumes">legumes</option>
             </select>
           </div>
         </div>

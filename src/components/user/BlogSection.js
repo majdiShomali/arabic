@@ -77,7 +77,7 @@ className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-96 mx
         <div className="flex items-center justify-between px-4 py-2 overflow-hidden">
        
           <div className="flex flex-row items-center">
-            <div className="text-xs font-medium text-gray-500 flex flex-row items-center mr-2">
+            {/* <div className="text-xs font-medium text-gray-500 flex flex-row items-center mr-2">
               <svg
                 className="w-4 h-4 mr-1"
                 fill="none"
@@ -99,7 +99,7 @@ className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-96 mx
                 />
               </svg>
               <span>1.5k</span>
-            </div>
+            </div> */}
             <div className="text-xs font-medium text-gray-500 flex flex-row items-center mr-2">
               <svg
                 className="w-4 h-4 mr-1"
@@ -115,9 +115,9 @@ className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-96 mx
                   d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                 />
               </svg>
-              <span>25</span>
+              <span>{blog?.comments?.length}</span>
             </div>
-            <div className="text-xs font-medium text-gray-500 flex flex-row items-center">
+            {/* <div className="text-xs font-medium text-gray-500 flex flex-row items-center">
               <svg
                 className="w-4 h-4 mr-1"
                 fill="none"
@@ -133,7 +133,7 @@ className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-96 mx
                 />
               </svg>
               <span>7</span>
-            </div>
+            </div> */}
           </div>
           <span className="text-xs font-medium text-blue-600 uppercase cursor-pointer"
           onClick={() => ShowVideosMeals(blog)}
