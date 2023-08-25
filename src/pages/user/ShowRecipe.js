@@ -27,8 +27,8 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { locale } from "moment/moment";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserNew } from '../../actions/UserActions';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserNew } from "../../actions/UserActions";
 import AddBlog from "../../components/user/AddBlog";
 const ShowRecipe = ({ userIdApp0 }) => {
   const { AllDataGet, setAllDataGet } = useContext(AllContext);
@@ -40,22 +40,24 @@ const ShowRecipe = ({ userIdApp0 }) => {
   const [RecipeRating, setRecipeRating] = useState(0);
   const [Loading, setLoading] = useState(true);
 
-  const { loading: userLoadingNew, data: userDataNew, error: userErrorNew } = useSelector((state) => state.userNew);
+  const {
+    loading: userLoadingNew,
+    data: userDataNew,
+    error: userErrorNew,
+  } = useSelector((state) => state.userNew);
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({});
 
-
   useEffect(() => {
-    if(localStorage.auth != null){ 
+    if (localStorage.auth != null) {
       const token = localStorage.getItem("auth");
       dispatch(fetchUserNew(token));
-  }
+    }
   }, [dispatch]);
 
   useEffect(() => {
-    setUserData(userDataNew[0])
+    setUserData(userDataNew[0]);
   }, [userDataNew]);
-
 
   const oneRecipe = async () => {
     let x;
@@ -170,38 +172,6 @@ const ShowRecipe = ({ userIdApp0 }) => {
     getComments();
   }, []);
 
-
-
-  const AddNewBlog = async () => {
-
-    const blogData = {
-      recipeImage:Recipe.img
-      ,recipeName:Recipe.recipeName
-      ,recipeId:Recipe._id
-      ,userId:userData._id
-      ,userImage:userData.img
-      // ,userComment:userComment
-      // ,commentTime:commentTime
-    };
-  
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/blog",
-        blogData
-      );
-      
-
-    } catch (error) {
-      console.error("Error inserting data:", error);
-    }
-
-
-
-
-
-  }
-
-
   return (
     <>
       <div className="flex h-screen antialiased text-gray-800">
@@ -235,8 +205,8 @@ const ShowRecipe = ({ userIdApp0 }) => {
             </div>
           </div>
 
-          <div className="flex flex-col flex-auto h-full p-6">
-            <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
+          <div className="flex flex-col flex-auto h-full lg:p-6">
+            <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full lg:p-4">
               <div className="flex flex-col h-full overflow-x-auto mb-4">
                 <div className="flex flex-col lg:flex-col md:flex-col sm:flex-col justify-center items-center">
                   <div className="">
@@ -253,62 +223,55 @@ const ShowRecipe = ({ userIdApp0 }) => {
                     })}
                   </div>
                   <div>
-                    <Card className="w-96 bg-white rounded-lg border p-2 my-4 mx-6">
+                    <Card className="w-96 bg-white rounded-lg border lg:p-2 my-4 lg:mx-6">
                       <h3 className="font-bold">comments</h3>
                       <div>
                         <div className="flex flex-col h-40 overflow-y-auto">
                           {Recipe?.comments?.map((comment, index) => {
                             return (
-                            <>
+                              <>
+                                {Loading === true ? (
+                                  <Card
+                                    key={index}
+                                    className=" rounded-md p-3 ml-3 my-3 relative"
+                                  >
+                                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+                                  </Card>
+                                ) : (
+                                  <>
+                                    <Card
+                                      key={index}
+                                      className=" rounded-md p-3 ml-3 my-3 relative"
+                                    >
+                                      {comment.userId == userIdApp0 ? (
+                                        <Icon
+                                          className="absolute top-1 right-1 hover:scale-105"
+                                          color="red"
+                                          path={mdiDelete}
+                                          size={1}
+                                          title="Delete"
+                                        />
+                                      ) : null}
 
-                            {Loading === true ? 
-                             <Card
-                             key={index}
-                             className=" rounded-md p-3 ml-3 my-3 relative"
-                           >
-                            <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-
-                            </Card>
-                            :
-
-
-                            <>
-                            <Card
-                              key={index}
-                              className=" rounded-md p-3 ml-3 my-3 relative"
-                            >
-                              {comment.userId == userIdApp0 ? (
-                                <Icon
-                                  className="absolute top-1 right-1 hover:scale-105"
-                                  color="red"
-                                  path={mdiDelete}
-                                  size={1}
-                                  title="Delete"
-                                />
-                              ) : null}
-
-                              <div className="flex gap-3 items-center">
-                                <img
-                                  src={`http://localhost:5000/${comment?.img}`}
-                                  className="object-cover w-8 h-8 rounded-full 
+                                      <div className="flex gap-3 items-center">
+                                        <img
+                                          src={`http://localhost:5000/${comment?.img}`}
+                                          className="object-cover w-8 h-8 rounded-full 
                                     border-2 border-emerald-400  shadow-emerald-400"
-                                />
-                                <h3 className="font-bold">
-                                  {comment.firstName}
-                                </h3>
-                                <p className="text-gray-600 text-sm">
-                                  {comment.time}
-                                </p>
-                              </div>
-                              <p className="text-gray-600 mt-2">
-                                {comment.comment}
-                              </p>
-                            </Card>
-                          </>
-
-
-                            }
-
+                                        />
+                                        <h3 className="font-bold">
+                                          {comment.firstName}
+                                        </h3>
+                                        <p className="text-gray-600 text-sm">
+                                          {comment.time}
+                                        </p>
+                                      </div>
+                                      <p className="text-gray-600 mt-2">
+                                        {comment.comment}
+                                      </p>
+                                    </Card>
+                                  </>
+                                )}
                               </>
                             );
                           })}
@@ -328,19 +291,17 @@ const ShowRecipe = ({ userIdApp0 }) => {
                             </div>
                             <div className="w-full flex justify-between px-3">
                               <div>
-                              <input
-                                type="submit"
-                                className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
-                                defaultValue="Post Comment"
-                                onClick={handleAddComment}
-                              />
+                                <input
+                                  type="submit"
+                                  className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+                                  defaultValue="Post Comment"
+                                  onClick={handleAddComment}
+                                />
                               </div>
-                            
-                           <div>
-                           <AddBlog Recipe={Recipe} userData={userData}/>
-                           </div>
-                            
 
+                              <div>
+                                <AddBlog Recipe={Recipe} userData={userData} />
+                              </div>
                             </div>
                           </>
                         ) : (

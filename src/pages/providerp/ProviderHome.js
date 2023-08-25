@@ -131,6 +131,7 @@ const ProviderHome = ({ userIdApp0 }) => {
     setName("");
     setName1("");
     setLink1("");
+    setDescription("")
     setMyListAdmin([]);
     setMyListNAdmin([]);
     setMyListIdAdmin([]);
@@ -498,7 +499,7 @@ const ProviderHome = ({ userIdApp0 }) => {
                   />
                 </div>
                 <div className="p-4">
-                  <h2 className="text-2xl text-[#E8CC95]">{e.recipeName}</h2>
+                  <h2 className="text-2xl text-right text-[#E8CC95]">{e.recipeName}</h2>
                   <div className="flex justify-between mt-2 mb-2 text-[#158467]">
                     <div className="flex items-center">
                       <svg
@@ -545,11 +546,11 @@ const ProviderHome = ({ userIdApp0 }) => {
                       <span className="ml-1 lg:text-xl">1-2</span>
                     </div>
                   </div>
-                  <p className="mb-2 text-gray-800">
-                    A recipe that's quick and easy to make and super tasty!
+                  <p className="mb-2 h-28 text-gray-800">
+                    {e.description}
                   </p>
 
-                  <div className="flex justify-around">
+                  <div className="flex justify-between w-full">
   
                          <EditRecipe
        userIdApp ={userIdApp0}
@@ -567,7 +568,7 @@ const ProviderHome = ({ userIdApp0 }) => {
       />
 
                     <Button
-                      className="mr-5 border mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
+                      className=" w-32 mx-5  mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
                       variant="text"
                       onClick={() => DeleteRecipe(e._id)}
                     >

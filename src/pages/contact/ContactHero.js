@@ -14,14 +14,14 @@ const ContactHero = () => {
     <div className="flex items-center justify-center h-full  bg-opacity-10">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-white font-bold mb-4">
-          Contact Us
+          تواصل معنا
         </h1>
 
         <nav className="text-white mb-8">
           <ol className="list-none p-0 inline-flex">
             <li className="flex items-center">
               <Link to="/" style={{ color: "#219D80" }}>
-                Home
+                الصفحة الرئيسية
               </Link>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ const ContactHero = () => {
                 />
               </svg>
             </li>
-            <li>Contact Us</li>
+            <li>تواصل معنا</li>
           </ol>
         </nav>
       </div>
