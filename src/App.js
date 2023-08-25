@@ -24,6 +24,10 @@ import PaymentPage from "./components/landingPage/Payment";
 import Profile from "./pages/user/Profile";
 import ForgetPassword from "./pages/ForgetPassword";
 
+
+import LoginArabic from "./pages/LoginArabic";
+
+
 // ----------------------Provider routes----------------- //
 import ProviderHome from "./pages/providerp/ProviderHome";
 import ProviderProfile from "./pages/providerp/ProviderProfile";
@@ -46,9 +50,11 @@ import LiveChat from "./pages/dashboard/Chat"
 
 import NoPage404 from "./pages/NoPage404";
 import axios from "axios";
+import { LanguageContext } from "./context/LanguageContext";
 
 
 export default function App() {
+  const {selectedLanguage,setSelectedLanguage}=useContext(LanguageContext)
 
 
   const [hideRouter1, setHideRouterUser] = useState(false);
@@ -111,7 +117,8 @@ export default function App() {
           <Route path="About" element={<AboutUs />} />
           <Route path="AddYourIng" element={<AddYourIng />} />
           <Route path="/SignUp/:type" element={<SignUp />} />
-          <Route path="LogIn" element={<LogIn />} />
+
+          <Route path="LogIn" element={ selectedLanguage ==="AR"  ?   <LoginArabic /> : <LogIn />   } />
           <Route path="ShowRecipe/:id" element={<ShowRecipe userIdApp0 ={userIdApp} />} />
           <Route path="Recipes" element={<Recipes userIdApp0 ={userIdApp} />} />
           <Route path="Kitchen" element={<Kitchen  userIdApp0 ={userIdApp} />} />

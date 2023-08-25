@@ -13,35 +13,12 @@ export default function LogIn() {
   const [passwordp, setpasswordp] = useState("");
 
   const [userGoogle, setUserGoogle] = useState([]);
-  const [errorG, setErrorG] = useState("");
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUserGoogle(codeResponse),
     onError: (error) => console.log("Login Failed:", error),
   });
 
-  const loginG = async (email00, img) => {
-    try {
-      const userData = {
-        email: email00,
-        password: "123456",
-        img: img,
-      };
-      // Send the data to the server using an HTTP POST request
-      const response = await axios.post(
-        "http://localhost:5000/api/usersLogin",
-        userData
-      );
-      console.log("Data inserted:", response.data);
-      if (response.data.error != "incorrect password") {
-        console.log("success");
-        console.log(response.data.token);
-        localStorage.setItem("auth", response.data.token);
-        window.location.href = "http://localhost:3000/";
-      } else {
-        console.log("failed");
-      }
-    } catch (error) {}
-  };
+
 
   useEffect(() => {
     if (userGoogle.length !== 0) {
@@ -94,14 +71,7 @@ export default function LogIn() {
     }
   }, [userGoogle]);
 
-  /* google login  -start */
-  const [user, setUser] = useState([]);
-  const [profile, setProfile] = useState([]);
-
-  const { routs, updateRouts } = useContext(UserContext);
-  const { SignStatus, updateSignStatus } = useContext(UserContext);
-  const { curruntUser, updateSetCurruntUser } = useContext(UserContext);
-
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
 

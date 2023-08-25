@@ -22,11 +22,15 @@ import { Link, useNavigate } from "react-router-dom";
  
 
 import Icon from '@mdi/react';
+import { mdiTranslateVariant } from '@mdi/js';
+
 import { mdiHomeOutline } from '@mdi/js';
 import { mdiFridgeOutline } from '@mdi/js';
 import { mdiInformationOutline } from '@mdi/js';
 import { mdiAccountBoxOutline } from '@mdi/js';
 import logo from "../Images/logo.png"
+import { LanguageContext } from "../context/LanguageContext";
+import { useContext } from "react";
 export default function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
  
@@ -193,6 +197,17 @@ export default function StickyNavbar() {
     );
   }
 
+ const {selectedLanguage,setSelectedLanguage}=useContext(LanguageContext)
+
+
+  const handleLanguage = ()=>{
+ console.log(selectedLanguage);
+ if(selectedLanguage ==="AR"){
+  setSelectedLanguage("EN")
+ }else{
+  setSelectedLanguage("AR")
+ }
+  }
 
  
   return (
@@ -223,12 +238,15 @@ export default function StickyNavbar() {
    <span>تسجيل الدخول</span>
  </Button>
  </Link>
- 
+
  
  </>
  
  
  }
+
+<Icon onClick={()=>handleLanguage()} className="mx-4 hover:scale-105 cursor-pointer" color={"blue"} path={mdiTranslateVariant} size={1} />
+
  <div>
  <IconButton
    variant="text"
