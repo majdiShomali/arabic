@@ -220,7 +220,7 @@ export default function StickyNavbar() {
    className="hidden lg:inline-block hover:shadow-non "
    color="orange"
  >
-   <span>login</span>
+   <span>تسجيل الدخول</span>
  </Button>
  </Link>
  
@@ -311,7 +311,7 @@ export default function StickyNavbar() {
           <Link to="/Login">
           <Button onClick={() => setOpenNav(false)}
        variant="gradient" size="sm" fullWidth className="mb-2 bg-amber-600">
-         <span>Login</span>
+         <span>تسجيل الدخول</span>
        </Button>
        </Link>
           

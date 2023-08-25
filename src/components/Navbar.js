@@ -371,7 +371,7 @@ export default function Example() {
         >
           <Link to="/">
             {/* <img src={logo} alt="logo" width={150} height={50} /> */}
-            <p className="text-black">Arabic Recipes</p>
+            <p className="text-black">الوصفات العربية</p>
           </Link>
         </Typography>
         <div className="hidden lg:block">
@@ -384,7 +384,7 @@ export default function Example() {
               size="sm"
               className="bg-amber-600 hover:shadow-lg-amber-600"
             >
-              LogIn
+              تسجيل الدخول
             </Button>
           ) : (
             <ProfileMenu />
@@ -415,7 +415,7 @@ export default function Example() {
                onClick={()=>updateNav(false)}
 
              >
-            Sign In
+            تسجيل الدخول
             </Link>
           </Button>
           : 

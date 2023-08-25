@@ -74,6 +74,9 @@ const UsersInfo = () => {
     setCurrentPageUsers(pageNumber);
   };
 
+
+
+  
   const handleDelete =(id, name) => {
 
     Swal.fire({
