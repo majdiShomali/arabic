@@ -12,7 +12,9 @@ import { useEffect } from 'react';
 import Rating from '../../components/Rating';
 
 import BlogSection from '../../components/user/BlogSection';
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import the AOS styles
+AOS.init();
 
 const Home = () => {
 
@@ -32,12 +34,12 @@ const Home = () => {
     <Landing/>
 
     <div className="bg-white mt-3 shadow-lg">
-        <section id="food">
+        <section id="food" >
           <br />
           <h2 className=" text-4xl mb-8 tracking-tight font-extrabold text-black  text-center capitalize">
             اي المطابخ التي تفضلها؟
           </h2>
-          <div className="flex flex-wrap mb-10 mx-20">
+          <div className="flex flex-wrap mb-10 mx-20" data-aos="fade-up" data-aos-duration="1000">
             <div className="w-full sm:w-1/2 md:w-1/3 p-4 hover:scale-110 hover:cursor-pointer">
               <div className="relative rounded-lg overflow-hidden">
                 {/* Jordanian Food card */}

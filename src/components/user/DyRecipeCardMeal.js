@@ -168,7 +168,7 @@ const [heartType , setHeartType]=useState(true)
       <h2 className="text-1xl text-end text-[#E8CC95]  text-center text-center">{Name}</h2>
       </div>
       </div>
-        <div className="flex justify-between mt-2 mb-2 text-[#158467]">
+        {/* <div className="flex justify-between mt-2 mb-2 text-[#158467]">
           <div className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +214,7 @@ const [heartType , setHeartType]=useState(true)
             </svg>
             <span className="ml-1 lg:text-md">1-2</span>
           </div>
-        </div>
+        </div> */}
         <p className="mb-2 h-20 mt-2 text-gray-800 text-sm ">
           {Recipe?.description}
         </p>
