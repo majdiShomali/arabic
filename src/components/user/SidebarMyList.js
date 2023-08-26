@@ -159,14 +159,14 @@ export default function Example({ userIdApp0 }) {
                 </Button>
 
                 <Typography variant="h5" color="blue-gray">
-                  Ingredients
+                  المكونات
                 </Typography>
               </div>
               <div className="p-2">
                 <Input
                   color
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                  label="Search"
+                  label="بحث"
                   value={searchItem}
                   onChange={(e) => {
                     filterDataByNameItems(e.target.value);
@@ -204,7 +204,7 @@ export default function Example({ userIdApp0 }) {
                         variant="text"
                         onClick={HandleShow}
                       >
-                        Show Recipe
+                        اضهر الوصفات
                       </Button>
                     ) : null}
 
@@ -215,7 +215,7 @@ export default function Example({ userIdApp0 }) {
                           variant="text"
                           onClick={HandleSave}
                         >
-                          Save
+                          حفض
                         </Button>
                       </>
                     ) : null}
@@ -263,7 +263,7 @@ export default function Example({ userIdApp0 }) {
                       variant="text"
                       onClick={() => setSideStatus(false)}
                     >
-                      My List
+                      قائمتي
                     </Button>
                   </div>
                 </>
@@ -275,7 +275,7 @@ export default function Example({ userIdApp0 }) {
                       variant="text"
                       onClick={() => setSideStatus(false)}
                     >
-                      My List
+                      قائمتي
                     </Button>
                   </div>
                 </>
