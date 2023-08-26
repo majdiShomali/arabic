@@ -12,13 +12,13 @@ const AboutHero = () => {
     >
       <div className="flex items-center justify-center h-full bg-black bg-opacity-10">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">About Us</h1>
+          <h1 className="text-4xl font-bold text-white mb-4"> الوصفات العربية</h1>
 
           <nav className="text-white mb-8">
             <ol className="list-none p-0 inline-flex">
               <li className="flex items-center">
                 <Link to="/" className="text-amber-500">
-                  Home
+                  الصفحة الرئيسية
                 </Link>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ const AboutHero = () => {
                   />
                 </svg>
               </li>
-              <li>About Us</li>
+              <li>حول الوصفات العربية</li>
             </ol>
           </nav>
         </div>

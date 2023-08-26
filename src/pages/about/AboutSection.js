@@ -630,13 +630,13 @@ const AboutSection = () => {
           </div>
           <div className="w-full px-4 lg:w-1/2 xl:w-5/12 texy-black capitalize ">
             <div className="mt-10 lg:mt-0">
-              <span className=" mb-2 block text-lg font-semibold">
-                Why Choose Us
+              <span className=" mb-2 block text-3xl font-semibold text-right">
+                لماذا تختارنا
               </span>
-              <h2 className="text-black mb-8 text-3xl font-bold sm:text-4xl">
+              <h2 className="text-black mb-8 text-3xl text-right font-bold sm:text-4xl">
                 {about_title}
               </h2>
-              <p className="text-body-color mb-8 text-base">{about_us}</p>
+              <p className="text-body-color mb-8 text-base text-right">{about_us}</p>
             </div>
           </div>
         </div>

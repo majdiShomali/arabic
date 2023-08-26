@@ -1,16 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import the AOS styles
+AOS.init();
 function SponserSection() {
   return (
     <div>
       <section>
-        <div className="text-center ">
+        <div className="text-center  " >
           {/* <h3 className="text-3xl sm:text-4xl uppercase leading-normal font-extrabold tracking-tight text-gray-900">
       Who we are
     </h3> */}
         </div>
-        <div class="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="1500">
           <div class="grid grid-cols-1 lg:h-screen lg:grid-cols-2">
             <div class="relative z-10 lg:py-16">
               <div class="relative h-64 sm:h-80 lg:h-full">

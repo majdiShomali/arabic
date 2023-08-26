@@ -11,6 +11,7 @@ import { mdiStove } from "@mdi/js";
 import Pagination from "@mui/material/Pagination";
 import { KitContext } from "../../KitchenContext";
 import { AllContext } from "../../AllDataContext";
+import { UserNewContext } from "../../context/UserNewContext";
 import DyRecipeCardMeal from "../../components/user/DyRecipeCardMeal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRecipes } from "../../actions/GetRecipes";
@@ -19,14 +20,14 @@ const Recipes = ({ userIdApp0 }) => {
   const { AllDataRecipesA, setAllDataRecipesA } = useContext(AllContext);
   const { AllDataGetK, setAllDataGetK } = useContext(AllContext);
   const { favRefresh, updateFavRefresh } = useContext(AllContext);
-
+  const { selectedUserNew,setSelectedUserNew} = useContext(UserNewContext);
   const { loading, data, error } = useSelector((state) => state.fetchRecipes);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchRecipes());
   }, [dispatch]);
-  
+  console.log(data);
   const [table, setTable] = useState([]);
   const [MyListN, updateMyListN] = useState([]);
   const [MyListId, updateMyListId] = useState([]);
@@ -55,11 +56,12 @@ const Recipes = ({ userIdApp0 }) => {
   useEffect(() => {
     allRecipes();
     updateRecipes();
-  }, [data, AllDataGetK,favRefresh]);
+    
+  }, [data, AllDataGetK,favRefresh,MyListId]);
 
   function checkIfAllExist(meal_c, my_list_c, my_id) {
     return (
-      my_id.filter((h) => !MyListId?.includes(h.toLowerCase())).length === 0
+      my_id.filter((h) => !selectedUserNew?.MyListId?.includes(h.toLowerCase())).length === 0
     );
   }
 
@@ -212,10 +214,10 @@ const Recipes = ({ userIdApp0 }) => {
       ) : null}
 
       <div class="flex flex-wrap justify-center p-5">
-        {FilterDataMeals.map((e, i) => {
+        
+        {FilterDataMeals?.map((e, i) => {
           if (checkIfAllExist(e.ItemsName, MyListN, e.ItemsId)) {
-            return (
-              
+            return (           
               <DyRecipeCardMeal
                 key={e._id}
                 Name={e.recipeName}

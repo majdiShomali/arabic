@@ -6,54 +6,49 @@ const FooterU = () => {
   return (
       <footer className="w-full bg-white p-8">
     <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-white text-center md:justify-between">
-      <p>Arabic Recipes</p>
       <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
         <li>
         <Link/>
+        <Link to="/About">
           <Typography
             as="a"
-            href="#"
             color="blue-gray"
             className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
           >
-            About Us
+            حول
           </Typography>
+          </Link>
         </li>
         <li>
+        <Link to="/contact">
           <Typography
             as="a"
-            href="#"
             color="blue-gray"
             className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
           >
-            License
+            تواصل معنا
           </Typography>
+          </Link>
         </li>
         <li>
+          <Link to="/">
           <Typography
             as="a"
-            href="#"
             color="blue-gray"
             className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
           >
-            Contribute
+            الصفحة الرئيسية
           </Typography>
+          </Link>
         </li>
-        <li>
-          <Typography
-            as="a"
-            href="#"
-            color="blue-gray"
-            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-          >
-            Contact Us
-          </Typography>
-        </li>
+   
       </ul>
+      <p>الوصفات العربية</p>
+
     </div>
     <hr className="my-8 border-blue-gray-50" />
     <Typography color="blue-gray" className="text-center font-normal">
-      &copy; 2023 Material Tailwind
+      &copy; حميع الحقوق محفوضة لعام 2023
     </Typography>
   </footer>
   )

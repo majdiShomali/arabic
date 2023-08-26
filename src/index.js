@@ -10,7 +10,7 @@ import AllContext from "./AllDataContext";
 import UserDataProvider from "./UserDataContext";
 import DashboardPendingProvider from "./DashboardPendingContext";
 import LanguageProvider from "./context/LanguageContext";
-
+import UserNewProvider from "./context/UserNewContext";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -25,9 +25,11 @@ root.render(
               <KitProvider>
                 <AllContext>
                   <LanguageProvider>
+                    <UserNewProvider>
                     <Provider store={store}>
                       <App />
                     </Provider>
+                    </UserNewProvider>
                   </LanguageProvider>
                 </AllContext>
               </KitProvider>

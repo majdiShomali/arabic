@@ -159,7 +159,7 @@ const [heartType , setHeartType]=useState(true)
         <div className="  text-gray-800 rounded-full flex items-center">
       
       {Recipe?.UsersIdRate?.includes(UserIdA) ?
-        <TotalRating rating={tRate} />
+        <TotalRating rating={tRate} Recipe={Recipe} />
         : 
         <Rating RecipeId={cardId} UserIdA={UserIdA} Recipe={Recipe} rating={tRate} />
       }

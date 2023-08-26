@@ -124,7 +124,7 @@ const LoginArabic = () => {
           <img src={Logo1} className="w-32 mx-auto" />
         </div>
         <div className="mt-12 flex flex-col items-center">
-          <h1 className="text-2xl xl:text-3xl font-extrabold">Sign-In</h1>
+          <h1 className="text-2xl xl:text-3xl font-extrabold">تسجيل الدخول</h1>
           <div className="w-full flex-1 mt-8">
             <div className="flex flex-col items-center ">
               <button
