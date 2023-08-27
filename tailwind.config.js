@@ -19,6 +19,11 @@ module.exports = withMT({
       '2xl': '1460px',
       // => @media (min-width: 1536px) { ... }
     },
+    variants: {
+      extend: {
+          display: ["group-hover"],
+      },
+  },
   },
   plugins: [],
 });

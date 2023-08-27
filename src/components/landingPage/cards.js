@@ -165,7 +165,7 @@ const Cards = ({ nation }) => {
                     );
                   }}
                 >
-                  <option value="">جيمع المطابخ</option>
+                  <option value="">جميع المطابخ</option>
                   <option value="jordanian">الاردنية</option>
                   <option value="egyptian ">المصرية </option>
                 </select>
@@ -177,20 +177,13 @@ const Cards = ({ nation }) => {
             <input
               type="text"
               placeholder="ابحق عن اسم الوصفة"
-              className="px-8 py-3 w-full rounded-md bg-gray-100 text-right border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
+              className="px-8 py-3 w-full mx-2 rounded-md bg-gray-100 text-right border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
               value={searchTermUsers}
               onChange={(e) => {
                 setSearchTermUsers(e.target.value);
                 filterDataByNameUsers(e.target.value);
               }}
             />
-
-             
-
-              
-           
-
-
 
           </div>
        

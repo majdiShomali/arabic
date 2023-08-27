@@ -215,7 +215,7 @@ const [heartType , setHeartType]=useState(true)
             <span className="ml-1 lg:text-md">1-2</span>
           </div>
         </div> */}
-        <p className="mb-2 h-20 mt-2 text-gray-800 text-sm ">
+        <p className="mb-2 h-20 mt-2  text-right text-gray-800 text-sm ">
           {Recipe?.description}
         </p>
  

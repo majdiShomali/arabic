@@ -14,6 +14,7 @@ import Rating from '../../components/Rating';
 import BlogSection from '../../components/user/BlogSection';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // Import the AOS styles
+import NewRecipeCard from '../../components/user/NewRecipeCard';
 AOS.init();
 
 const Home = () => {
@@ -32,6 +33,8 @@ const Home = () => {
   return (
     <>
     <Landing/>
+
+<NewRecipeCard/>
 
     <div className="bg-white mt-3 shadow-lg">
         <section id="food" >
