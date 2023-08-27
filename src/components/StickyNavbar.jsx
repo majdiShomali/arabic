@@ -98,7 +98,7 @@ export default function StickyNavbar() {
         className="p-1 px-1 justify-end font-normal text-lg  flex hover:bg-[#219D80] rounded-lg hover:scale-105 active:bg-blue-gray-500 active:scale-100"
       >
         <Link  onClick={()=>setOpenNav(false)} to="/contactus" className="flex items-center">
-        نواصل معنا
+        تواصل معنا
         <Icon className="text-amber-600 mx-1" path={mdiAccountBoxOutline} size={1} />
         
           

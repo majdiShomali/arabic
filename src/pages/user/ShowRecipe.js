@@ -30,6 +30,7 @@ import { locale } from "moment/moment";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserNew } from "../../actions/UserActions";
 import AddBlog from "../../components/user/AddBlog";
+import Reviews from "../../components/Reviews";
 const ShowRecipe = ({ userIdApp0 }) => {
   const { AllDataGet, setAllDataGet } = useContext(AllContext);
   const { id } = useParams();
@@ -174,7 +175,7 @@ const ShowRecipe = ({ userIdApp0 }) => {
 
   return (
     <>
-      <div className="flex h-screen antialiased text-gray-800">
+      <div className="flex min-h-screen antialiased text-gray-800">
         <div className="flex flex-row  h-full w-full overflow-x-hidden ">
           <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 hidden md:block lg:block">
             <div className="flex flex-col mt-8">
@@ -222,8 +223,13 @@ const ShowRecipe = ({ userIdApp0 }) => {
                       );
                     })}
                   </div>
-                  <div>
-                    <Card className="w-96 bg-white rounded-lg border lg:p-2 my-4 lg:mx-6">
+               
+                </div>
+              </div>
+
+              <div className="w-full">
+              <Reviews rating={Recipe.rating} Recipe={Recipe }/>
+                    <Card className=" bg-white rounded-lg border lg:p-2 my-4 lg:mx-6">
                       <h3 className="font-bold">comments</h3>
                       <div>
                         <div className="flex flex-col h-40 overflow-y-auto">
@@ -319,11 +325,16 @@ const ShowRecipe = ({ userIdApp0 }) => {
                       </div>
                     </Card>
                   </div>
-                </div>
-              </div>
             </div>
+
+
+            
           </div>
+
+
+          
         </div>
+        
       </div>
 
       {/* <ShowRecipeGa Recipe={Recipe} RecipeIngs={RecipeIngs}/> */}

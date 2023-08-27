@@ -95,7 +95,6 @@ dispatch(fetchProviderRecipes(userIdApp))
   const handleSubmit = async (e) => {
     e.preventDefault();
 
- console.log(link1)
 
 
    const link_name001 = "https://www.youtube.com/embed/".concat(

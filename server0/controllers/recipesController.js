@@ -160,6 +160,17 @@ const updateRecipeFav = async (req, res) => {
   
   res.json(game);
 };
+const updateIng = async (req, res) => {
+  try {
+    const cardId = req.params.id;
+    const {ItemsName,ItemsId } = req.body;
+    const game = await Recipes.findByIdAndUpdate(cardId, { ItemsName: ItemsName,ItemsId:ItemsId }, { new: true });
+    res.json(game);
+  } catch (error) {
+    
+  }
+
+};
 
 module.exports = {
   newRecipes,
@@ -174,5 +185,6 @@ module.exports = {
   updateRecipeFav,
   favoriteRecipes,
   userComment,
-  updateRecipeComment
+  updateRecipeComment,
+  updateIng
   }; 

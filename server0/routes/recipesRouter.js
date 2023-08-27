@@ -14,6 +14,7 @@ router.put("/api/recipes/:id", upload.single("image"), recipesController.updateR
 router.put("/api/recipesP/:id", upload.single("image"), recipesController.updateRecipeProvider);
 router.delete("/api/recipes/:id", recipesController.deleteRecipe);
 router.put("/api/updateRecipeFav/:id" , recipesController.updateRecipeFav);
+router.put("/api/updateIng/:id" , recipesController.updateIng);
 router.put("/api/updateRecipeComment/:id" , recipesController.updateRecipeComment);
 router.get("/api/comment/:id", recipesController.userComment);
 

@@ -18,7 +18,7 @@ const TotalRating = ({ rating ,Recipe }) => {
     <p class="ml-2 text-sm font-bold text-gray-900 dark:text-white">{rating}</p>
     <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
     <a href="#" class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">{Recipe?.UsersIdRate?.length}شخص</a>
-</div>
+  </div>
     
     </>
     // <div className="flex items-center">

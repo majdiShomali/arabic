@@ -5,12 +5,7 @@ import { RecipeContext } from "../../RecipeContext";
 import Pagination from "@mui/material/Pagination";
 
 import axios from "axios";
-import {
-  Card,
-  Input,
-  Button,
-} from "@material-tailwind/react";
-
+import { Card, Input, Button } from "@material-tailwind/react";
 
 import SideBarRecipe from "../../components/providerc/SideBarRecipe";
 
@@ -18,26 +13,24 @@ import { AllContext } from "../../AllDataContext";
 
 import EditRecipe from "./EditRecipe";
 
-
 //---------------------redux-----------------//
 import { useDispatch, useSelector } from "react-redux";
 import { addRecipes } from "../../actions/AddRecipe";
 import { fetchProviderRecipes } from "../../actions/GetProviderRecipes";
 const ProviderHome = ({ userIdApp0 }) => {
   const dispatch = useDispatch();
-  const { loading, data, error } = useSelector((state) => state.providerRecipes);
+  const { loading, data, error } = useSelector(
+    (state) => state.providerRecipes
+  );
 
- useEffect(()=>{
-  if(userIdApp0){   
-  dispatch(fetchProviderRecipes(userIdApp0))
-  }
- },[dispatch,userIdApp0])
-
-
-
+  useEffect(() => {
+    if (userIdApp0) {
+      dispatch(fetchProviderRecipes(userIdApp0));
+    }
+  }, [dispatch, userIdApp0]);
 
   const { AllIngredientsBase, setAllIngredientsUserBase } =
-  useContext(AllContext);
+    useContext(AllContext);
   const { TableContext, setTableContext } = useContext(AllContext);
 
   const [productImage, setProductImage] = useState(null);
@@ -90,14 +83,11 @@ const ProviderHome = ({ userIdApp0 }) => {
 
   const [description, setDescription] = useState("");
 
-
   const [yourSelectedStateValue, setOption] = useState("Meal");
   const [yourSelectedNationValue, setNation] = useState("jordanian");
 
-
   const CreateNew = async () => {
     let link_name001;
-
 
     if (link1 != "") {
       link_name001 = "https://www.youtube.com/embed/".concat(
@@ -106,7 +96,6 @@ const ProviderHome = ({ userIdApp0 }) => {
     } else {
       link_name001 = link1;
     }
-
 
     console.log(foodCards);
     const formData0 = new FormData();
@@ -122,16 +111,14 @@ const ProviderHome = ({ userIdApp0 }) => {
     formData0.append("ItemsId", JSON.stringify(MyListIdAdmin));
     formData0.append("nation", yourSelectedNationValue);
 
-
-
     dispatch(addRecipes(formData0)).then(() => {
-      dispatch(fetchProviderRecipes(userIdApp0))
+      dispatch(fetchProviderRecipes(userIdApp0));
     });
 
     setName("");
     setName1("");
     setLink1("");
-    setDescription("")
+    setDescription("");
     setMyListAdmin([]);
     setMyListNAdmin([]);
     setMyListIdAdmin([]);
@@ -145,12 +132,11 @@ const ProviderHome = ({ userIdApp0 }) => {
       const response = await axios.delete(
         `http://localhost:5000/api/recipes/${Id}`
       );
-      dispatch(fetchProviderRecipes(userIdApp0))
+      dispatch(fetchProviderRecipes(userIdApp0));
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   };
-
 
   function removeItem0(name, ingredientId) {
     setMyListAdmin((prevAccounts) => {
@@ -200,13 +186,10 @@ const ProviderHome = ({ userIdApp0 }) => {
     }
   }, [SidebarIngName]);
 
-
-
   useEffect(() => {
     setUserAllIngredients(AllIngredientsBase);
     setFilterDataMeals(AllIngredientsBase);
   }, [AllIngredientsBase, TableContext]);
-
 
   const UpdateBeneficiaryId = async (ingredientName, ingredientId) => {
     console.log(ingredientId);
@@ -230,7 +213,6 @@ const ProviderHome = ({ userIdApp0 }) => {
         }
       }
     });
-
 
     setUserAllIngredients((prevAccounts) => {
       const newItems = [...prevAccounts];
@@ -267,6 +249,35 @@ const ProviderHome = ({ userIdApp0 }) => {
     );
     setFilterDataMeals(filteredDataUsers);
   };
+
+const [updateStatus,setUpdateStatus] =useState(false)
+const [selectedId,setSelectedId] =useState("")
+  const handleEditIng = (recipe)=>{
+    setSelectedId(recipe._id)
+    setUpdateStatus(true)
+    console.log(recipe);
+    recipe?.ItemsId?.map((id ,index)=>{
+  UpdateBeneficiaryId(recipe.ItemsName[index],id)
+    })
+  }
+
+  const HanleupdateNow = async () => {
+  const formData={ 
+  ItemsName:foodCardsName,
+   ItemsId:MyListIdAdmin
+  }
+    try {
+      const response = await axios.put(
+       `http://localhost:5000/api/updateIng/${selectedId}`,
+       formData
+     );
+     setUpdateStatus(false)
+    //  dispatch(fetchProviderRecipes(userIdApp))
+  } catch (error) {
+   
+  }
+  }
+
   return (
     <>
       <div className="flex justify-center mt-5 mb-5">
@@ -396,6 +407,7 @@ const ProviderHome = ({ userIdApp0 }) => {
         }
       </div>
 
+{!updateStatus ? 
       <div className=" mb-4 mt-4">
         <Card color="transparent" shadow={false}>
           <div className="flex justify-center">
@@ -424,36 +436,36 @@ const ProviderHome = ({ userIdApp0 }) => {
                 />
               </div>
 
-           <textarea 
-            className="w-full border border-2"
-            placeholder="Description"
-           value={description}
-           onChange={(e)=> setDescription(e.target.value)}
-           />
+              <textarea
+                className="w-full border border-2"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
 
               <div className="flex w-full justify-center">
-              <div className="mb-2 w-1/2">
-                <select
-                  value={yourSelectedStateValue}
-                  onChange={(e) => setOption(e.target.value)}
-                  className="w-full border p-2 rounded"
-                >
-                  <option value="Meal">Meals</option>
-                  <option value="Drink">Drinks</option>
-                  <option value="Sweet">Sweets</option>
-                </select>
-              </div>
+                <div className="mb-2 w-1/2">
+                  <select
+                    value={yourSelectedStateValue}
+                    onChange={(e) => setOption(e.target.value)}
+                    className="w-full border p-2 rounded"
+                  >
+                    <option value="Meal">Meals</option>
+                    <option value="Drink">Drinks</option>
+                    <option value="Sweet">Sweets</option>
+                  </select>
+                </div>
 
-              <div className="mb-2 w-1/2">
-                <select
-                  value={yourSelectedNationValue}
-                  onChange={(e) => setNation(e.target.value)}
-                  className="w-full border p-2 rounded"
-                >
-                  <option value="jordanian">jordanian</option>
-                  <option value="egyptian ">egyptian </option>
-                </select>
-              </div>
+                <div className="mb-2 w-1/2">
+                  <select
+                    value={yourSelectedNationValue}
+                    onChange={(e) => setNation(e.target.value)}
+                    className="w-full border p-2 rounded"
+                  >
+                    <option value="jordanian">jordanian</option>
+                    <option value="egyptian ">egyptian </option>
+                  </select>
+                </div>
               </div>
 
               <div className="flex w-full justify-between border p-1 my-2">
@@ -469,20 +481,27 @@ const ProviderHome = ({ userIdApp0 }) => {
                 />
               </div>
 
-              
-                <Button
-                  className="w-full border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
-                  variant="text"
-                  onClick={() => CreateNew()}
-                >
-                  Create
-                </Button>
-             
+              <Button
+                className="w-full border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
+                variant="text"
+                onClick={() => CreateNew()}
+              >
+                Create
+              </Button>
             </form>
           </div>
         </Card>
       </div>
+: 
+<Button
+className=" w-full mb-10 border-solid border-[#7C9070] border-2 text-[#7C9070] hover:bg-[#7C9070] hover:text-[#ffffff]"
+variant="text"
+onClick={HanleupdateNow}
+>
+Update
+</Button>
 
+}
       <div class="flex flex-wrap justify-center items-center">
         {data?.map((e, i) => {
           return (
@@ -499,73 +518,27 @@ const ProviderHome = ({ userIdApp0 }) => {
                   />
                 </div>
                 <div className="p-4">
-                  <h2 className="text-2xl text-right text-[#E8CC95]">{e.recipeName}</h2>
-                  <div className="flex justify-between mt-2 mb-2 text-[#158467]">
-                    <div className="flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      <span className="ml-1 lg:text-xl">30m</span>
-                    </div>
-                    <div className="flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span className="ml-1 lg:text-xl">10</span>
-                    </div>
-                    <div className="flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                      </svg>
-                      <span className="ml-1 lg:text-xl">1-2</span>
-                    </div>
-                  </div>
-                  <p className="mb-2 h-28 text-gray-800">
-                    {e.description}
-                  </p>
+                  <h2 className="text-2xl text-right text-[#E8CC95]">
+                    {e.recipeName}
+                  </h2>
+               
+                  <p className="mb-2 h-28 text-gray-800">{e.description}</p>
 
                   <div className="flex justify-between w-full">
-  
-                         <EditRecipe
-       userIdApp ={userIdApp0}
-       recipeId0={e._id}
-      recipeName0 = {e.recipeName}
-      category0   = {e.category}
-      description0 = {e.description}
-      names0 = {e.names}
-      links0 = {e.links}
-      Items0 = {e.Items}
-      ItemsName0 = {e.ItemsName}
-      image0 = {e.img}
-      ItemsId0 = {e.ItemsId}
-      nation0 = {e.nation}
-      />
+                    <EditRecipe
+                      userIdApp={userIdApp0}
+                      recipeId0={e._id}
+                      recipeName0={e.recipeName}
+                      category0={e.category}
+                      description0={e.description}
+                      names0={e.names}
+                      links0={e.links}
+                      Items0={e.Items}
+                      ItemsName0={e.ItemsName}
+                      image0={e.img}
+                      ItemsId0={e.ItemsId}
+                      nation0={e.nation}
+                    />
 
                     <Button
                       className=" w-32 mx-5  mb-10 border-solid border-[#eb2b2b] border-2 text-[#060606] hover:bg-[#e84242] hover:text-[#ffffff]"
@@ -576,7 +549,9 @@ const ProviderHome = ({ userIdApp0 }) => {
                     </Button>
                   </div>
                 </div>
-                <div className="absolute top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-gray-800 rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
+                <div
+                onClick={()=>handleEditIng(e)}
+                className="absolute top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-gray-800 rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
                   <span>Medium</span>
                 </div>
               </div>
