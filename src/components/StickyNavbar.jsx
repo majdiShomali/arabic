@@ -31,6 +31,7 @@ import { mdiAccountBoxOutline } from '@mdi/js';
 import logo from "../Images/logo.png"
 import { LanguageContext } from "../context/LanguageContext";
 import { useContext } from "react";
+import { HashLink } from "react-router-hash-link";
 export default function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
  
@@ -71,11 +72,11 @@ export default function StickyNavbar() {
         className="p-1 px-1 justify-end font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
       >
         
-        <Link onClick={()=>setOpenNav(false)} to="/" className="flex items-center">
+        <HashLink smooth={true} onClick={()=>setOpenNav(false)} to="/#" className="flex items-center">
         الصفحة الرئيسية
 
         <Icon className="text-amber-600 mx-1" path={mdiHomeOutline} size={1} />
-        </Link>
+        </HashLink>
         
       </Typography>
       <Typography

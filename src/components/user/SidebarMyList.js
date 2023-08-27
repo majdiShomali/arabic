@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AllContext } from "../../AllDataContext";
-
+import { UserNewContext } from "../../context/UserNewContext";
 import {
   Card,
   Typography,
@@ -43,6 +43,8 @@ import { mdiPlus } from "@mdi/js";
 import { mdiMinus } from "@mdi/js";
 
 export default function Example({ userIdApp0 }) {
+  
+  const { selectedUserNewRefresh, setSelectedUserNewRefresh } = useContext(UserNewContext);
   const { AllDataGet, setAllDataGet } = useContext(AllContext);
   const { UpdateAll, setUpdateAll } = useContext(AllContext);
 
@@ -119,17 +121,19 @@ export default function Example({ userIdApp0 }) {
     );
     const trueItemsId = trueItems.map((e) => e._id);
     const trueItemsNames = trueItems.map((e) => e.ingredientName);
-
+      
     try {
       const updatedBeneficiary = {
         MyListId: trueItemsId,
         // MyList: trueItems,
         // MyListn: trueItemsNames,
       };
+      console.log(updatedBeneficiary);
       await axios.put(
         `http://localhost:5000/api/userList/${userIdApp0}`,
         updatedBeneficiary
       );
+      setSelectedUserNewRefresh(updatedBeneficiary)
     } catch (error) {
       console.error("Error updating user:", error);
     } finally {

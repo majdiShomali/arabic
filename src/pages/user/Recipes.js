@@ -60,18 +60,16 @@ const Recipes = ({ userIdApp0 }) => {
   }, [data, AllDataGetK,favRefresh,MyListId]);
 
   function checkIfAllExist(meal_c, my_list_c, my_id) {
+    console.log(my_id,selectedUserNew);
     return (
       my_id.filter((h) => !selectedUserNew?.MyListId?.includes(h.toLowerCase())).length === 0
     );
   }
 
   const [currentPageMeals, setCurrentPageMeals] = useState(1);
-  const [currentPageDrinks, setCurrentPageDrinks] = useState(1);
-  const [currentPageSweet, setCurrentPageSweet] = useState(1);
 
   let totalItemsMeals;
-  let totalItemsDrinks;
-  let totalItemsSweet;
+
 
   let totalPagesMeals;
 
@@ -214,7 +212,7 @@ const Recipes = ({ userIdApp0 }) => {
       ) : null}
 
       <div class="flex flex-wrap justify-center p-5">
-        
+        {console.log(FilterDataMeals)}
         {FilterDataMeals?.map((e, i) => {
           if (checkIfAllExist(e.ItemsName, MyListN, e.ItemsId)) {
             return (           

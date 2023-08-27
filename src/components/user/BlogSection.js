@@ -34,7 +34,7 @@ const [blogs ,setBlogs]=useState([])
 
   return (
     <>
-
+{console.log(blogs)}
 {blogs.length > 0 ? <>
 
   <div class="text-center mx-auto mb-[60px] lg:mb-20 max-w-[510px]">

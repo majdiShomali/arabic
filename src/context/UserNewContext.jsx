@@ -5,6 +5,7 @@ import { useEffect } from "react";
 export const UserNewContext = createContext();
 const UserNewProvider = ( {children} ) => {
   const [selectedUserNew, setSelectedUserNew] = useState();
+  const [selectedUserNewRefresh, setSelectedUserNewRefresh] = useState({});
 
   const fetchProtectedData = async () => {
     try {
@@ -28,12 +29,14 @@ const UserNewProvider = ( {children} ) => {
   };
   useEffect(()=>{
     fetchProtectedData()
-  },[])
+  },[selectedUserNewRefresh])
   return (
-        <>
+        <>  
+
             <UserNewContext.Provider
                 value={{
                     selectedUserNew,setSelectedUserNew,
+                    selectedUserNewRefresh,setSelectedUserNewRefresh
                 }}
             >
                 {children}
