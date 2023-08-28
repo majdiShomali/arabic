@@ -51,7 +51,7 @@ export default function StickyNavbar() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 px-1 font-normal text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
+        className="p-1 px-1 font-normal justify-end  text-lg flex hover:bg-[#219D80] rounded-lg hover:scale-105"
       >
         
         <Link onClick={()=>setOpenNav(false)} to="/Kitchen" className="flex items-center">
@@ -111,11 +111,11 @@ export default function StickyNavbar() {
 
   const profileMenuItems = [
     {
-      label: "Profile",
+      label: "الصفحة الشخصية",
       icon: LifebuoyIcon,
     },
     {
-      label: "Sign Out",
+      label: "تسجيل الخروج",
       icon: PowerIcon,
     },
   ];
@@ -125,11 +125,11 @@ export default function StickyNavbar() {
     const navigate =useNavigate()
     const closeMenu = (label) => {
       setIsMenuOpen(false);
-      if (label == "Sign Out") {
+      if (label == "تسجيل الخروج") {
         localStorage.removeItem("auth");
         window.location.href = "http://localhost:3000/";
         console.log(label);
-      } else if (label == "Profile") {
+      } else if (label == "الصفحة الشخصية") {
         navigate("/Profile")        
       }
     };
@@ -172,17 +172,13 @@ export default function StickyNavbar() {
                 onClick={() => {
                   closeMenu(label);
                 }}
-                className={`flex items-center gap-2 rounded ${
+                className={`flex items-center justify-end gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                     : ""
                 }`}
               >
-                {React.createElement(icon, {
-                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                  strokeWidth: 2,
-                })}
-                <Typography
+                        <Typography
                   as="span"
                   variant="small"
                   className="font-normal"
@@ -190,6 +186,11 @@ export default function StickyNavbar() {
                 >
                   {label}
                 </Typography>
+                {React.createElement(icon, {
+                  className: `h-4 w-4  ${isLastItem ? "text-red-500" : ""}`,
+                  strokeWidth: 2,
+                })}
+        
               </MenuItem>
             );
           })}
@@ -246,7 +247,7 @@ export default function StickyNavbar() {
  
  }
 
-<Icon onClick={()=>handleLanguage()} className="mx-4 hover:scale-105 cursor-pointer" color={"blue"} path={mdiTranslateVariant} size={1} />
+<Icon onClick={()=>handleLanguage()} className="mx-4 hover:scale-105 cursor-pointer" color={"green"} path={mdiTranslateVariant} size={1} />
 
  <div>
  <IconButton
@@ -310,8 +311,8 @@ export default function StickyNavbar() {
           <>
           <Link to="/Profile">
              <Button onClick={() => setOpenNav(false)}
-          variant="gradient" size="sm" fullWidth className="mb-2">
-            <span>Profile</span>
+          variant="gradient" size="sm" color="green" fullWidth className="mb-2 ">
+            <span>الصفحة الشخصية</span>
           </Button>
           </Link>
          
@@ -321,8 +322,8 @@ export default function StickyNavbar() {
               window.location.href = "http://localhost:3000/";
 
              }}
-          variant="gradient" size="sm" fullWidth className="mb-2">
-            <span>LogOut</span>
+          variant="gradient" size="sm"  color="green" fullWidth className="mb-2 ">
+            <span>تسجيل الخروج</span>
           </Button>
           
           </>

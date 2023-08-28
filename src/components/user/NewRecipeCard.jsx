@@ -38,7 +38,7 @@ const NewRecipeCard = () => {
         افضل الوصفات
       </h2>
 
-      <div className=" w-full flex  flex-wrap justify-center items-center">
+      <div className=" w-full flex  flex-wrap gap-5 justify-center items-center">
         {recipes?.map((recipe) => {
           const imgUrl = `http://localhost:5000/${recipe.img}`;
           return (
