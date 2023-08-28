@@ -52,6 +52,7 @@ const NewRecipeCard = () => {
                     alt={recipe.title} // Provide a meaningful alt text
                     className="w-full h-full object-cover "
                   />
+                  
                   <div className="flex flex-col justify-around items-center group h-full w-full absolute right-0 top-0">
                     <div className="w-full bg-[#b39f3b81] trans text-center py-2 hidden group-hover:block translate-y-4 duration-300 ease-in-out fade-in-button">
                       <div className="flex items-center w-full justify-end px-5">

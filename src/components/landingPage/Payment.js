@@ -81,19 +81,6 @@ formData.append('pricePayed',parseInt(pricePayed))
 formData.append('cvv',parseInt(cvv))
 
 
-console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName,image,ingredientType,IngId,TrueName,cvv,cardholder,})
-
-
-    // const paymentData = {
-      // Name: AllDataGet[0].firstName,
-      // cardholder:cardholder ,
-      // email: AllDataGet[0].email,
-      // PostId:cardId,
-      // userId:AllDataGet[0]._id,
-      // price:parseInt(cvv),
-      // cvv:parseInt(cvv),
-    // };
-
 
 
     try {
@@ -105,21 +92,7 @@ console.log({pricePayed,pricePlan,CompanyName,CompanyEmail,userId,ingredientName
 
         showSuccessAlert("thanks for pay",pricePayed)
 
-
-      // try {
-      //   const updatedBeneficiary = {
-      //     payment: true,
-      //   };
-      //   await axios.put(`http://localhost:5000/api/sponsor/${cardId}`, updatedBeneficiary); 
-
-      
-      // } catch (error) {
-      //   console.error("Error updating user:", error);
-      // } 
-
-
-
-      
+  
 
     } catch (error) {
       console.error("Error inserting data:", error);

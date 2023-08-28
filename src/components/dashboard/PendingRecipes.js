@@ -226,7 +226,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">location</p>
+                  <p className="text-xs tracking-wide text-gray-600">Type</p>
                 </th>
                 <th
                   colSpan={1}
@@ -235,17 +235,9 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">price</p>
+                  <p className="text-xs tracking-wide text-gray-600">nation</p>
                 </th>
-                <th
-                  colSpan={1}
-                  role="columnheader"
-                  title="Toggle SortBy"
-                  className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
-                  style={{ cursor: "pointer" }}
-                >
-                  <p className="text-xs tracking-wide text-gray-600">role</p>
-                </th>
+
 
                 <th
                   colSpan={1}
@@ -309,25 +301,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                         {e.nation}
                       </p>
                     </td>
-                    <td
-                      className="pt-[14px] pb-[18px] sm:text-[14px]"
-                      role="cell"
-                    >
-                      <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        
-                        
-                          <div className=" w-10 flex flex-col justify-center items-center">
-                            {" "}
-                            <Icon path={mdiHandshakeOutline} size={1} />{" "}
-                            <span>user</span>{" "}
-                          </div>
-                         
-
-                        
-                      
-
-                      </p>
-                    </td>
+          
 
                     <td
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
@@ -407,7 +381,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">NAME</p>
+                  <p className="text-xs tracking-wide text-gray-600">name</p>
                 </th>
                 <th
                   colSpan={1}
@@ -425,17 +399,9 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                   className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
                   style={{ cursor: "pointer" }}
                 >
-                  <p className="text-xs tracking-wide text-gray-600">price</p>
+                  <p className="text-xs tracking-wide text-gray-600">nation</p>
                 </th>
-                <th
-                  colSpan={1}
-                  role="columnheader"
-                  title="Toggle SortBy"
-                  className="border-b border-gray-200 pr-28 pb-[10px] text-start dark:!border-navy-700"
-                  style={{ cursor: "pointer" }}
-                >
-                  <p className="text-xs tracking-wide text-gray-600">role</p>
-                </th>
+          
 
                 <th
                   colSpan={1}
@@ -499,25 +465,7 @@ const filterDataByNameUsersAp = (searchTermUsers) => {
                         {e.nation}
                       </p>
                     </td>
-                    <td
-                      className="pt-[14px] pb-[18px] sm:text-[14px]"
-                      role="cell"
-                    >
-                      <p className="text-sm font-bold text-navy-700 dark:text-white">
-                        
-                        
-                          <div className=" w-10 flex flex-col justify-center items-center">
-                            {" "}
-                            <Icon path={mdiHandshakeOutline} size={1} />{" "}
-                            <span>user</span>{" "}
-                          </div>
-                         
-
-                        
-                      
-
-                      </p>
-                    </td>
+         
 
                     <td
                       className="pt-[14px] pb-[18px] sm:text-[14px]"
