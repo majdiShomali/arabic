@@ -551,8 +551,8 @@ Update
                 </div>
                 <div
                 onClick={()=>handleEditIng(e)}
-                className="absolute top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-gray-800 rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
-                  <span>Medium</span>
+                className="absolute hover:scale-105 cursor-pointer top-0 right-0 mt-2 mr-2 bg-[#E8CC95] text-gray-800 rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
+                  <span>Edit ingredients</span>
                 </div>
               </div>
             </>

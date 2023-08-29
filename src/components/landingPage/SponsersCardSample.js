@@ -33,7 +33,7 @@ const SponsersCardSample = () => {
                     <div
                       key={e._id}
                       // onClick={() => handelIngredient(e._id,e.ingredientName,e.ingredientType)}
-                      className={` flex-shrink-0 m-1 relative overflow-hidden ${
+                      className={` flex-shrink-0 m-1 relative overflow-hidden mx-5 my-5 ${
                         e.ingredientType == "vegetables"
                           ? "bg-[#219D80]"
                           :e.ingredientType == "fruits" ? "bg-[#E8AA42]"

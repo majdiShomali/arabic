@@ -9,10 +9,10 @@ import {
 const pricingData = [
 
   {
-    mainTitle: "Professional",
-    monthlyPrice: 5,
-    yerlyPrice: 50,
-    infoNote: "Ideal for individuals who need quick access to basic features.",
+    mainTitle: "الاشتراك الحالي",
+    monthlyPrice: 10,
+    yerlyPrice: 100,
+    infoNote: "يمكنك الغاء الاشتراك في اي وقت",
     isSelected: true,
     getIn: [
       {
@@ -174,17 +174,12 @@ useEffect(() => {
     <container className="flex flex-col justify-center items-center py-3 bg-[#f5f0f051] min-h-screen font-sans">
       {/* heading section  */}
       <div className="flex flex-col w-auto px-6 text-center text-2xl sm:text-3xl md:text-4xl">
-        <span className="font-medium">Powerful features for</span>
-        <span
-          className="font-medium pt-4 text-transparent bg-clip-text bg-[#219D80]"
-        >
-          powerful creators.
-        </span>
+ 
         <span className="text-xl mt-4">
-          Chose a plan that&apos;s right for you
+          اختر طريقة الدفع التي تناسبك
         </span>
         <div className="text-base mt-8 md:mt-12 gap-4 flex items-center justify-center pl-5">
-          <span>Pay monthly </span>
+          <span>اشتراك شهري </span>
           <div className="items-center flex">
             <label
               htmlFor="small-toggle"
@@ -202,7 +197,7 @@ useEffect(() => {
               ></div>
             </label>
           </div>
-          <span>Pay yearly</span>
+          <span>اشتراك سنوي</span>
         </div>
       </div>
       <div className="w-[300px] sm:w-[350px] md:w-[590px] flex justify-end pt-2 md:pt-0">
@@ -210,7 +205,7 @@ useEffect(() => {
         <span
           className="text-sm md:text-lg text-[#E8AA42] font-medium pr-2 pt-2"
         >
-          Save 25%
+           25% وفر
         </span>
       </div>
       {/* pricing section   */}
@@ -223,15 +218,15 @@ useEffect(() => {
          />
         {pricingData.map((data, index) => (
           <div
-            className={`flex flex-col h-full max-w-[378px] py-6 px-5 sm:px-10 lg:w-auto xl:w-[378px] rounded-xl ${
+            className={`flex flex-col text-right w-full h-full max-w-[378px] py-6 px-5 sm:px-10 lg:w-auto xl:w-[378px] rounded-xl ${
               data?.isSelected
                 ? `bg-[#219D80] text-white`
                 : "bg-white text-black"
             }`}
             key={index}
           >
-            <div className="flex flex-col text-left">
-              <div className="flex flex-col gap-3">
+            <div className="flex flex-col text-left text-right">
+              <div className="flex flex-col gap-3 ">
                 <span className="text-2xl">{data?.mainTitle}</span>
                 <span>{data?.infoNote}</span>
               </div>
@@ -254,12 +249,12 @@ useEffect(() => {
               </button> */}
 
 
-              <Button
+                 <Button
                     className="w-full border mb-10 border-solid border-[#E8AA42] border-2 text-[#E8AA42] hover:bg-[#E8AA42] hover:text-[#ffffff]"
                     variant="text"
                     onClick={()=>handleCreate2()}
                   >
-                    order Now
+                    اشترك الان
                   </Button>
               {/* <div className="mt-10 space-y-3">
                 {data?.getIn?.map((description, index) => (
