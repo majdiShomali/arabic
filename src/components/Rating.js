@@ -38,8 +38,8 @@ const showSuccessAlert = (message) => {
 
     let ids = Recipe.UsersIdRate.length > 0 ?  [...Recipe.UsersIdRate,UserIdA]  : [UserIdA]
     let newrate =Recipe.rate.length  > 0   ? [...Recipe.rate,starIndex + 1]      :    [starIndex + 1]  
-    const  sum=   Recipe.rate.length === 0 ? (5+newrate[0]) :  Recipe.rate?.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
-    const  avg = Recipe.rate.length === 0 ? 2 :Recipe.rate?.length
+    const  sum=   newrate.length === 0 ? (newrate[0]) :  newrate?.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
+    const  avg = newrate.length === 0 ? 2 :newrate?.length
 
     try {
       const updatedRecipe = {

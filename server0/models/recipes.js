@@ -62,7 +62,7 @@ const recipeSchema = new Schema(
     rating: {
       type: String,
       required: false,
-      default: "5",
+      default: "4.5",
     },
     UsersIdRate: {
       type: Array,

@@ -32,6 +32,7 @@ import { fetchUserNew } from "../../actions/UserActions";
 import AddBlog from "../../components/user/AddBlog";
 import Reviews from "../../components/Reviews";
 import ThreeDotButton from "../../components/ThreeDotButton";
+import { RecipeContext } from "../../RecipeContext";
 const ShowRecipe = ({ userIdApp0 }) => {
   const { AllDataGet, setAllDataGet } = useContext(AllContext);
   const { id } = useParams();
@@ -41,6 +42,7 @@ const ShowRecipe = ({ userIdApp0 }) => {
   const [Recipe, setRecipe] = useState([]);
   const [RecipeRating, setRecipeRating] = useState(0);
   const [Loading, setLoading] = useState(true);
+  const { RecipeRatedRefresh, setRecipeRatedRefresh } = useContext(RecipeContext);
 
   const {
     loading: userLoadingNew,
@@ -100,7 +102,7 @@ const ShowRecipe = ({ userIdApp0 }) => {
   };
   useEffect(() => {
     oneRecipe();
-  }, []);
+  }, [RecipeRatedRefresh]);
   //----------------------pagination----------------------------//
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -249,10 +251,31 @@ const ShowRecipe = ({ userIdApp0 }) => {
                 </div>
               </div>
 
+
               <div className="w-full">
                 <Reviews rating={Recipe.rating} Recipe={Recipe} />
+
                 <Card className=" bg-white rounded-lg border lg:p-2 my-4 lg:mx-6">
-                  <h3 className="font-bold">comments</h3>
+                  <div className=" w-full flex justify-between">
+
+                  
+                  {Recipe?.UsersIdRate?.includes(userIdApp0) || localStorage.auth === undefined ? null : (
+                    <div className="flex ">
+                      <Rating
+                        RecipeId={Recipe._id}
+                        UserIdA={userIdApp0}
+                        Recipe={Recipe}
+                        rating={Recipe.rating}
+                      />
+                      <p>قيم الان </p>
+                    </div>
+                  )}  
+
+
+<h3 className="font-bold text-right">التعليقات</h3>
+
+                  </div>
+          
                   <div>
                     <div className="flex flex-col h-96 overflow-y-auto">
                       {Recipe?.comments?.map((comment, index) => {
