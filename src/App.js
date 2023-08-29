@@ -56,7 +56,6 @@ import PendingBlogs from "./components/dashboard/PendingBlogs";
 export default function App() {
   const {selectedLanguage,setSelectedLanguage}=useContext(LanguageContext)
 
-
   const [hideRouter1, setHideRouterUser] = useState(false);
   const [hideRouter2, setHideRouterAdmin] = useState(true);
   const [hideRouter3, setHideRouterProvider] = useState(true);
